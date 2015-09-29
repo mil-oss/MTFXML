@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Resources>
+    <Directory name="MTFXML" path="MTFXML/NATO_MTF/">
+        <Directory name="NATO_MTF">
+            <Directory name="XML">
+                <File name="directory.xml"/>
+                <File name="MessageList.xml"/>
+            </Directory>
+            <Directory name="XSD">
+                <Directory name="APP-11C-Ch1">
+                    <File name="fields.xsd"/>
+                </Directory>
+                <Directory name="APP-11C-GoE"/>
+                <Directory name="templates"/>
+            </Directory>
+            <Directory name="XSLT">
+                <Directory name="APP-11C-ch1">
+                    <File name="MessageList.xsl"/>
+                    <File name="ConsolidateFields.xsl"/>
+                    <File name="ConsolidateComposites.xsl"/>
+                    <File name="ConsolidateSets.xsl"/>
+                    <File name="ConsolidateMessages.xsl"/>
+                </Directory>
+                <Directory name="APP-11C-GoE"> </Directory>
+            </Directory>
+            <Directory name="HTML">
+                <Directory name="" path=""/>
+            </Directory>
+            <Directory name="IEPD">
+                <Directory name="" path=""/>
+            </Directory>
+        </Directory>
+        <File name="index.html"/>
+    </Directory>
+</Resources>

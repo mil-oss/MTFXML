@@ -1,0 +1,11 @@
+1. Save M2014-10-C0-F Segment Deconfliction Changes.xlsx as XML to Segment_DeconflictionEXCEL.xml
+
+2.  Run XSLT: SegmentsSpreadsheetToXML.xsl .. src=Segment_DeconflictionEXCEL.xml 
+    result=Segment_DeconflictionXML.xml
+
+3.  Run XSLT: Segment_Changes.xsl .. src=Segment_DeconflictionEXCEL.xml 
+    result=Segment_Name_Changes.xml
+
+4. Run XSLT: GoE_Segments.xsl .. Applies Segment_Name_Changes.xml with GoE_Sets, GoE_fields and baseline messages 
+    result=GoE_segments.xsd
+    

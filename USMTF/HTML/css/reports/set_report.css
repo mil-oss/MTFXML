@@ -1,0 +1,173 @@
+/**************************************************************************************************************************************************/
+/*  Author:	       James Eaton                                                                                                                                                   */
+/*  Company:       Northrop Grumman Space & Mission Systems                                                                                              */
+/*  Supporting:     United States (US) Department of Defense (DoD), Defense Information Systems Agency (DISA) GE332  */
+/*  Last Modified: 0923 hours, 14 FEB 2007                                                                                                                              */
+/**************************************************************************************************************************************************/
+
+
+/* Style Definitions */
+tabletxt
+{
+    font-size:10.0pt;
+    font-family:"Courier New";
+}
+
+tableGrid
+{
+    border:solid windowtext 1.0pt;
+    padding:0in 5.4pt 0in 5.4pt;
+    font-size:10.0pt;
+    font-family:"Courier New";
+}
+
+txt{
+    margin:0in;
+    margin-bottom:.0001pt;
+    font-size:10.0pt;
+    font-family:"Times New Roman";
+}
+
+hdr{
+    margin:0in;
+    margin-bottom:.0001pt;
+    font-size:10.0pt;
+    font-family:"Times New Roman";
+}
+
+ftr{
+    margin:0in;
+    margin-bottom:.0001pt;
+    font-size:10.0pt;
+    font-family:"Times New Roman";
+}
+
+link{
+    color:blue;
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+a:link,
+span.MsoHyperlink
+{
+    color:blue;
+    text-decoration:underline;
+}
+
+a:visited,
+span.MsoHyperlinkFollowed
+{
+    color:#606420;
+    text-decoration:underline;
+}
+
+tr{
+    border-top:solid red 5px;
+}
+
+td{
+    padding-right:20ex;
+    padding-left:20ex;
+    padding-bottom:20ex;
+    padding-top:20ex;
+    font-family:courier;
+}
+
+pre
+{
+    margin:0in;
+    margin-bottom:.0001pt;
+    font-size:10.0pt;
+    font-family:"Courier New";
+}
+
+.theader{
+    FONT-FAMILY:Verdana;
+    FONT-WEIGHT:bold;
+    FONT-SIZE:10pt;
+}
+
+.tablecontent{
+    font-size:smaller;
+    vertical-align:bottom;
+    font-family:Courier new;
+}
+
+.TableHeader{
+    font-weight:bold;
+    font-family:Courier new;
+    text-decoration:underline;
+}
+
+.tablecell{
+    padding-right:10px;
+    padding-left:10px;
+    padding-bottom:10px;
+    padding-top:10px;
+}
+
+.textcaption{
+    font-family:verdana;
+    font-size:12pt;
+}
+
+.redcolumn{
+    font-family:Verdana;
+    font-weight:bold;
+    color:red;
+}
+
+.rb{
+    FONT-FAMILY:Verdana;
+    FONT-SIZE:10pt;
+}
+
+.test{
+    border:5px solid green;
+}
+
+.Label{
+    font-weight:bold;
+    font-family:Courier New;
+    font-size:10.0pt;
+}
+
+.redlabel{
+    font-family:Verdana;
+    color:red
+}
+
+.Olabel{
+    font-family:Verdana;
+    vertical-align:middle;
+}
+
+.Data{
+    font-family:Courier New;
+    font-size:10.0pt;
+}
+
+.Menu{
+    padding:5px;
+    background-color:#f0fff0;
+    border:1px solid green;
+}
+
+.MenuBorder{
+    border:1px solid black;
+    width:100%;
+}
+
+.MenuText{
+    font-family:Arial;
+    color:Blue;
+}
+
+.Textbox{
+    font-family:Courier New;
+}
+
+.Listbox{
+    font-family:Courier New;
+}

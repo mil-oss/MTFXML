@@ -1,0 +1,1 @@
+This is the target directory for the XML Schema Garden of Eden conversion XSLT.  Expected files are natomtf_goe_messages.xsd,  natomtf_goe_sets.xsd, natomtf_goe_composites.xsd,natomtf_goe_fields.xsd.

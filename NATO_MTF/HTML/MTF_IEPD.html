@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+      <head>
+            <meta charset="UTF-8" />
+            <title>NATO MTF XML</title>
+            <link rel="stylesheet" type="text/css" href="css/jquery-ui.theme.min.css" />
+            <link rel="stylesheet" type="text/css" href="css/jquery-ui.structure.min.css" />
+            <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" />
+            <link rel="stylesheet" type="text/css" href="css/xmlview.css" />
+            <link rel="stylesheet" type="text/css" href="css/layout-default.css" />
+            <link rel="stylesheet" type="text/css" href="css/schemaView.css" />
+            <link rel="stylesheet" type="text/css" href="css/mtf_fields.css" />
+      </head>
+      <body>
+            <div id="sidebar" class="ui-layout-west hidden">
+                  <h3 class="ctrhdr">NATO MTF MESSAGES</h3>
+                  <div id="fieldtree" class="divcol">
+                        <h3>Messages</h3>
+                        <div id="msglinks" class="scrollcol">
+                              <p id="HELACK"><span>ACKNOWLEDGEMENT TO HELICOPTER REQUEST</span></p>
+                              <p id="ACTORD"><span>ACTIVATION ORDER MESSAGE</span></p>
+                              <p id="ACTREQ"><span>ACTIVATION REQUEST MESSAGE</span></p>
+                              <p id="ACTWARN"><span>ACTIVATION WARNING MESSAGE</span></p>
+                              <p id="AIRALLOC"><span>AIR ALLOCATION MESSAGE</span></p>
+                              <p id="AIRATTACKWARN"><span>AIR ATTACK WARNING</span></p>
+                              <p id="ADACTREP"><span>AIR DEFENSE ACTIVITY REPORT</span></p>
+                              <p id="AIRINTREP"><span>AIR INTELLIGENCE REPORT</span></p>
+                              <p id="ALZREP"><span>AIR LANDING ZONE REPORT</span></p>
+                              <p id="AMISMONREP"><span>AIR MISSION MONITORING REPORT</span></p>
+                              <p id="AOD"><span>AIR OPERATIONS DIRECTIVE</span></p>
+                              <p id="AIRSTAR"><span>AIR STATUS REPORT</span></p>
+                              <p id="AIRSUPREQ"><span>AIR SUPPORT REQUEST</span></p>
+                              <p id="ATO"><span>AIR TASKING ORDER</span></p>
+                              <p id="AARCTM"><span>AIR TO AIR REFUELLING COMBINED TASK
+                                          MESSAGE</span></p>
+                              <p id="ATSTAT"><span>AIR TRANSPORT STATUS REPORT</span></p>
+                              <p id="AEWALLOCATION"><span>AIRBORNE EARLY WARNING
+                                    ALLOCATION</span></p>
+                              <p id="AEWCOMPLIANCE"><span>AIRBORNE EARLY WARNING
+                                    COMPLIANCE</span></p>
+                              <p id="AEWLOGSITREP"><span>AIRBORNE EARLY WARNING LOGISTICS SITUATION
+                                          REPORT</span></p>
+                              <p id="AEWMISREP"><span>AIRBORNE EARLY WARNING MISSION
+                                    REPORT</span></p>
+                              <p id="AEWREQUEST"><span>AIRBORNE EARLY WARNING REQUEST</span></p>
+                              <p id="AEWSORNUM"><span>AIRBORNE EARLY WARNING SORTIE NUMBER
+                                          REPORT</span></p>
+                              <p id="AEWOPSTAT"><span>AIRBORNE EARLY WARNING STATUS OF FORCES
+                                          REPORT</span></p>
+                              <p id="AEWTACREP"><span>AIRBORNE EARLY WARNING TACTICAL CONTROL
+                                          REPORT</span></p>
+                              <p id="AIRMOVE"><span>AIRMOVE DETAILS</span></p>
+                              <p id="ACMREQ"><span>AIRSPACE CONTROL MEANS REQUEST</span></p>
+                              <p id="ACO"><span>AIRSPACE CONTROL ORDER</span></p>
+                              <p id="AFUAMS"><span>AMMUNITION FIRE UNIT-AMMUNITION STATUS</span></p>
+                              <p id="AFUDCMD"><span>AMMUNITION FIRE UNIT-DEPLOYMENT
+                                    COMMAND</span></p>
+                              <p id="AFUFUS"><span>AMMUNITION FIRE UNIT-FIRE UNIT STATUS</span></p>
+                              <p id="ARRESTREP"><span>ARREST REPORT</span></p>
+                              <p id="ATIATR"><span>ARTILLERY TARGET INTELLIGENCE-ARTILLERY TARGET
+                                          REPORT</span></p>
+                              <p id="ATITIR"><span>ARTILLERY TARGET INTELLIGENCE-TARGET INFORMATION
+                                          REQUEST</span></p>
+                              <p id="BARNSTORM"><span>BARNSTORM</span></p>
+                              <p id="BARREP"><span>BARRIER REPORT</span></p>
+                              <p id="BATRECEVACREQ"><span>BATTLEFIELD RECOVERY EVACUATION
+                                          REQUEST</span></p>
+                              <p id="BATRECEVACTASK"><span>BATTLEFIELD RECOVERY EVACUATION
+                                          TASK</span></p>
+                              <p id="BIOINTREC"><span>BIOGRAPHICAL INTELLIGENCE RECORD</span></p>
+                              <p id="BOMBREP"><span>BOMB, SHELL, ROCKET OR MORTAR REPORT</span></p>
+                              <p id="BOMBWARN"><span>BOMB THREAT WARNING</span></p>
+                              <p id="BRDMLORD"><span>BRIDGE DEMOLITION ORDER</span></p>
+                              <p id="BRDMLRECCEORD"><span>BRIDGE DEMOLITION RECONNAISSANCE
+                                          ORDER</span></p>
+                              <p id="BRDMLRECCEREP"><span>BRIDGE DEMOLITION RECONNAISSANCE
+                                          REPORT</span></p>
+                              <p id="BRDMLREP"><span>BRIDGE DEMOLITION REPORT</span></p>
+                              <p id="BRIDGEREP"><span>BRIDGE REPORT</span></p>
+                              <p id="CARGOTRAFFIC"><span>CARGO TRAFFIC MESSAGE</span></p>
+                              <p id="CASEVACREQ"><span>CASUALTY EVACUATION REQUEST</span></p>
+                              <p id="CBRN1BIO"><span>CBRN 1 BIOLOGICAL REPORT</span></p>
+                              <p id="CBRN1CHEM"><span>CBRN 1 CHEMICAL REPORT</span></p>
+                              <p id="CBRN1NUC"><span>CBRN 1 NUCLEAR REPORT</span></p>
+                              <p id="CBRN1RAD"><span>CBRN 1 RADIOLOGICAL REPORT</span></p>
+                              <p id="CBRN2BIO"><span>CBRN 2 BIOLOGICAL REPORT</span></p>
+                              <p id="CBRN2CHEM"><span>CBRN 2 CHEMICAL REPORT</span></p>
+                              <p id="CBRN2NUC"><span>CBRN 2 NUCLEAR REPORT</span></p>
+                              <p id="CBRN2RAD"><span>CBRN 2 RADIOLOGICAL REPORT</span></p>
+                              <p id="CBRN3BIO"><span>CBRN 3 BIOLOGICAL REPORT</span></p>
+                              <p id="CBRN3CHEM"><span>CBRN 3 CHEMICAL REPORT</span></p>
+                              <p id="CBRN3NUC"><span>CBRN 3 NUCLEAR REPORT</span></p>
+                              <p id="CBRN3RAD"><span>CBRN 3 RADIOLOGICAL REPORT</span></p>
+                              <p id="CBRN4BIO"><span>CBRN 4 BIOLOGICAL REPORT</span></p>
+                              <p id="CBRN4CHEM"><span>CBRN 4 CHEMICAL REPORT</span></p>
+                              <p id="CBRN4NUC"><span>CBRN 4 NUCLEAR REPORT</span></p>
+                              <p id="CBRN4RAD"><span>CBRN 4 RADIOLOGICAL REPORT</span></p>
+                              <p id="CBRN5BIO"><span>CBRN 5 BIOLOGICAL REPORT</span></p>
+                              <p id="CBRN5CHEM"><span>CBRN 5 CHEMICAL REPORT</span></p>
+                              <p id="CBRN5NUC"><span>CBRN 5 NUCLEAR REPORT</span></p>
+                              <p id="CBRN5RAD"><span>CBRN 5 RADIOLOGICAL REPORT</span></p>
+                              <p id="CBRN6BIO"><span>CBRN 6 BIOLOGICAL REPORT</span></p>
+                              <p id="CBRN6CHEM"><span>CBRN 6 CHEMICAL REPORT</span></p>
+                              <p id="CBRN6NUC"><span>CBRN 6 NUCLEAR REPORT</span></p>
+                              <p id="CBRN6RAD"><span>CBRN 6 RADIOLOGICAL REPORT</span></p>
+                              <p id="CBRNBWR"><span>CBRN BASIC WIND REPORT</span></p>
+                              <p id="CBRNCDR"><span>CBRN CHEMICAL DOWNWIND REPORT</span></p>
+                              <p id="CBRNEDR"><span>CBRN EFFECTIVE DOWNWIND REPORT</span></p>
+                              <p id="CBRNHAZWARN"><span>CBRN HAZARDOUS WARNING REPORT</span></p>
+                              <p id="CBRNMIR"><span>CBRN MISSILE INTERCEPT REPORT</span></p>
+                              <p id="CBRNSITREP"><span>CBRN SITUATION REPORT</span></p>
+                              <p id="CCISSTATREP"><span>CCIS STATUS REPORT</span></p>
+                              <p id="CISSITREP"><span>CIS SITUATION REPORT</span></p>
+                              <p id="CIMICREP"><span>CIVIL MILITARY COOPERATION REPORT</span></p>
+                              <p id="CMOSITREP"><span>CIVIL MILITARY OPERATIONS SITUATION
+                                          REPORT</span></p>
+                              <p id="COLATDAMREP"><span>COLLATERAL DAMAGE REPORT</span></p>
+                              <p id="CCSTATREP"><span>COMMAND AND CONTROL STATUS REPORT</span></p>
+                              <p id="ASSESSREP"><span>COMMANDERS ASSESSMENT REPORT</span></p>
+                              <p id="COMMEDREP"><span>COMMANDERS MEDICAL REPORT</span></p>
+                              <p id="COMCAPREP"><span>COMMON CAPTURE REPORT</span></p>
+                              <p id="COMMGATEWAYACC"><span>COMMUNICATIONS GATEWAY
+                                    ACCEPTANCE</span></p>
+                              <p id="COMMGATEWAYESTA"><span>COMMUNICATIONS GATEWAY
+                                          ESTABLISHMENT</span></p>
+                              <p id="COMMGATEWAYREQ"><span>COMMUNICATIONS GATEWAY REQUEST</span></p>
+                              <p id="COMMGATEWAYSTAT"><span>COMMUNICATIONS GATEWAY STATUS
+                                          REPORT</span></p>
+                              <p id="COMSPOT"><span>COMMUNICATIONS SPOT REPORT</span></p>
+                              <p id="COMTECHREP-TYPEA"><span>COMPLEMENTARY TECHNICAL REPORT - TYPE
+                                          A</span></p>
+                              <p id="COMTECHREP-TYPEB"><span>COMPLEMENTARY TECHNICAL REPORT - TYPE
+                                          B</span></p>
+                              <p id="COMTECHREP-TYPEC"><span>COMPLEMENTARY TECHNICAL REPORT - TYPE
+                                          C</span></p>
+                              <p id="COMPASSESSREP"><span>COMPLIANCE ASSESSMENT REPORT</span></p>
+                              <p id="CCLREP"><span>CONTROL COORDINATION LINE REPORT</span></p>
+                              <p id="CIINTREP"><span>COUNTER-INTELLIGENCE AND SECURITY
+                                    REPORT</span></p>
+                              <p id="CIINTSUM"><span>COUNTER-INTELLIGENCE AND SECURITY
+                                          SUMMARY</span></p>
+                              <p id="CISUPINTREP"><span>COUNTER-INTELLIGENCE AND SECURITY
+                                          SUPPLEMENTARY REPORT</span></p>
+                              <p id="COVERAGE"><span>COVERAGE MISSION ORDER AND REPORT</span></p>
+                              <p id="CMO"><span>COVERAGE MISSION ORDER</span></p>
+                              <p id="CAL"><span>CRITICAL ASSET LIST</span></p>
+                              <p id="CROSSDECKREQ"><span>CROSS-DECK OPERATIONS REQUEST</span></p>
+                              <p id="CROSSDECKRESP"><span>CROSS-DECK OPERATIONS RESPONSE</span></p>
+                              <p id="DEPENDREP"><span>DEPLOYMENT END REPORT</span></p>
+                              <p id="DEPLOYREP"><span>DEPLOYMENT REPORT</span></p>
+                              <p id="DEPSTARTREP"><span>DEPLOYMENT START REPORT</span></p>
+                              <p id="DEDOCREP"><span>DETAILED DOCUMENT REPORT</span></p>
+                              <p id="DIVEACC"><span>DIVING ACCIDENT</span></p>
+                              <p id="DZREP"><span>DROP ZONE REPORT</span></p>
+                              <p id="DIR"><span>DYNAMIC INTELLIGENCE REPORT</span></p>
+                              <p id="EWAM"><span>ELECTRONIC WARFARE APPROVAL MESSAGE</span></p>
+                              <p id="EWMSNSUM"><span>ELECTRONIC WARFARE MISSION SUMMARY</span></p>
+                              <p id="EWRTM"><span>ELECTRONIC WARFARE REQUESTING TASKING
+                                          MESSAGE</span></p>
+                              <p id="EWSTOPJAM"><span>ELECTRONIC WARFARE STOP JAMMING
+                                    MESSAGE</span></p>
+                              <p id="EWSUM"><span>ELECTRONIC WARFARE SUMMARY</span></p>
+                              <p id="EMBUREP"><span>EMERGENCY BURIAL REPORT</span></p>
+                              <p id="EMREQDEL"><span>EMERGENT REQUIREMENT DELIVERY</span></p>
+                              <p id="EMREQREP"><span>EMERGENT REQUIREMENT REPLY</span></p>
+                              <p id="EMREQREQ"><span>EMERGENT REQUIREMENT REQUEST</span></p>
+                              <p id="ENEMYCONTACTREP"><span>ENEMY CONTACT REPORT</span></p>
+                              <p id="ENSITREP"><span>ENEMY LAND FORCES SITUATION REPORT</span></p>
+                              <p id="SPOTREP"><span>ENEMY SIGHTING REPORT</span></p>
+                              <p id="ENGAGEREP"><span>ENGAGEMENT OF HOSTILE AIRCRAFT
+                                    REPORT</span></p>
+                              <p id="ENGOPO"><span>ENGINEER ANNEX TO THE OPERATION ORDER</span></p>
+                              <p id="ENGRDATAREP"><span>ENGINEER DATA REPORT</span></p>
+                              <p id="ENGMATREQREL"><span>ENGINEER MATERIEL REQUEST RELEASE
+                                          ORDER</span></p>
+                              <p id="ENGRECCEORD"><span>ENGINEER RECCE ORDER</span></p>
+                              <p id="ENGRECCEREP"><span>ENGINEER RECCE REPORT</span></p>
+                              <p id="ENGREP"><span>ENGINEER REPORT</span></p>
+                              <p id="ENGRRESREP"><span>ENGINEER RESOURCES REPORT</span></p>
+                              <p id="ENGTASKREP"><span>ENGINEER TASK STATUS REPORT</span></p>
+                              <p id="ENGSTATREP"><span>ENGINEER UNIT STATUS REPORT</span></p>
+                              <p id="EODINCREP"><span>EOD INCIDENT REPORT</span></p>
+                              <p id="EODTASKREP"><span>EOD TASKING / EOD REPORT</span></p>
+                              <p id="EORTASKREP"><span>EOR TASKING / EOR REPORT</span></p>
+                              <p id="EQUIPINTREC"><span>EQUIPMENT INTELLIGENCE RECORD</span></p>
+                              <p id="EVACREQ"><span>EVACUATION REQUEST</span></p>
+                              <p id="EVENTINTREC"><span>EVENT INTELLIGENCE RECORD</span></p>
+                              <p id="EVENTREP"><span>EVENTS REPORT</span></p>
+                              <p id="FMCFF"><span>FIRE MISSION-CALL FOR FIRE</span></p>
+                              <p id="FMFMC"><span>FIRE MISSION-FIRE MISSION COMMAND</span></p>
+                              <p id="FMMTO"><span>FIRE MISSION-MESSAGE TO OBSERVER</span></p>
+                              <p id="FMSUB"><span>FIRE MISSION-SUBSEQUENT ADJUSTMENT</span></p>
+                              <p id="FIRSTHOSTILEACT"><span>FIRST HOSTILE ACT REPORT</span></p>
+                              <p id="FORCEPREP"><span>FORCE PREPARE MESSAGE</span></p>
+                              <p id="FRAGO"><span>FRAGMENTARY ORDER</span></p>
+                              <p id="FREQMAN"><span>FREQUENCY MANAGEMENT</span></p>
+                              <p id="FFI"><span>FRIENDLY FORCE INFORMATION</span></p>
+                              <p id="GAPREP"><span>GAP CROSSING COMPLETION REPORT</span></p>
+                              <p id="GAPORD"><span>GAP CROSSING EXECUTION ORDER</span></p>
+                              <p id="GAPRECCEORD"><span>GAP RECONNAISSANCE ORDER</span></p>
+                              <p id="GAPRECCEREP"><span>GAP RECONNAISSANCE REPORT</span></p>
+                              <p id="ENGGSREP"><span>GENERAL ENGINEER SUPPORT COMPLETION
+                                          REPORT</span></p>
+                              <p id="ENGGSORD"><span>GENERAL ENGINEER SUPPORT EXECUTION
+                                    ORDER</span></p>
+                              <p id="ENGGSRECCEORD"><span>GENERAL ENGINEER SUPPORT RECONNAISSANCE
+                                          ORDER</span></p>
+                              <p id="ENGGSRECCEREP"><span>GENERAL ENGINEER SUPPORT RECONNAISSANCE
+                                          REPORT</span></p>
+                              <p id="GENINFOMSG"><span>GENERAL INFORMATION MESSAGE</span></p>
+                              <p id="GEOSITREP"><span>GEOGRAPHIC SITUATION REPORT</span></p>
+                              <p id="HELLSREP"><span>HELICOPTER LANDING SITE REPORT</span></p>
+                              <p id="HELOPSUM"><span>HELICOPTER OPERATIONAL SUMMARY</span></p>
+                              <p id="HELQUEST"><span>HELICOPTER REQUEST</span></p>
+                              <p id="HELTASK"><span>HELICOPTER TASK</span></p>
+                              <p id="HNSREQ"><span>HOST NATION SUPPORT REQUEST</span></p>
+                              <p id="IFFPROD"><span>IFF PROCEDURES</span></p>
+                              <p id="IMAGEINTREC"><span>IMAGERY ROOT RECORD</span></p>
+                              <p id="IMPLREQ"><span>IMPLEMENTATION REQUEST</span></p>
+                              <p id="INCREP"><span>INCIDENT REPORT</span></p>
+                              <p id="INCSPOTREP"><span>INCIDENT SPOT REPORT</span></p>
+                              <p id="INFLIGHTREP"><span>INFLIGHT REPORT</span></p>
+                              <p id="INTRELREC"><span>INTELLIGENCE RELATIONSHIP RECORD</span></p>
+                              <p id="INTREP"><span>INTELLIGENCE REPORT</span></p>
+                              <p id="INTREQ"><span>INTELLIGENCE REQUEST</span></p>
+                              <p id="INTSUM"><span>INTELLIGENCE SUMMARY</span></p>
+                              <p id="INTENDCHOP"><span>INTEND CHANGE OF OPCON MESSAGE</span></p>
+                              <p id="INTTOLAY"><span>INTENT TO LAY MINEFIELD</span></p>
+                              <p id="ICTYREP"><span>INTERNATIONAL CRIMINAL TRIBUNAL FOR FORMER
+                                          YUGOSLAVIA REPORT</span></p>
+                              <p id="JAMWARN"><span>JAMMING WARNING</span></p>
+                              <p id="KILLBOX"><span>KILLBOX MESSAGE</span></p>
+                              <p id="LCSINTENTIONS"><span>LANDING CRAFT AIR CUSHION (LCAC) CONTROL
+                                          SHIP INTENTIONS</span></p>
+                              <p id="LASERWARN"><span>LASER TARGET MARKING WARNING
+                                    MESSAGE</span></p>
+                              <p id="LALCREPORT"><span>LOCAL AIR LOGISTIC COORDINATOR
+                                    REPORT</span></p>
+                              <p id="LOGASSESSREP"><span>LOGISTIC ASSESSMENT REPORT</span></p>
+                              <p id="LOGDEFREP"><span>LOGISTIC DEFICIENCY REPORT</span></p>
+                              <p id="LOGSITLAND"><span>LOGISTIC SITUATION REPORT LAND
+                                    FORCES</span></p>
+                              <p id="LOGSITREPMAR"><span>LOGISTIC SITUATION REPORT
+                                    MARITIME</span></p>
+                              <p id="LOGSURPLUS"><span>LOGISTIC SURPLUS REPORT</span></p>
+                              <p id="LOGUPDATE"><span>LOGISTIC UPDATE REPORT</span></p>
+                              <p id="LOGASREQ"><span>LOGISTICS ASSISTANCE REQUEST</span></p>
+                              <p id="LOGASRESP"><span>LOGISTICS ASSISTANCE RESPONSE</span></p>
+                              <p id="MAPREQ"><span>MAP REQUEST</span></p>
+                              <p id="LOCATOR"><span>MARITIME FORCE LOCATOR</span></p>
+                              <p id="MARINTREP"><span>MARITIME INTELLIGENCE REPORT</span></p>
+                              <p id="MARINTSUM"><span>MARITIME INTELLIGENCE SUMMARY</span></p>
+                              <p id="PURPLE"><span>MARITIME MISSION ANALYSIS SUMMARY
+                                    REPORT</span></p>
+                              <p id="GREEN"><span>MARITIME UNIT EXECUTION ORDER</span></p>
+                              <p id="MEDCASREPTRACK"><span>MEDICAL CASUALTY REPORTING AND
+                                          TRACKING</span></p>
+                              <p id="MERSITREP"><span>MERCHANT SHIPPING SITUATION REPORT</span></p>
+                              <p id="MERSITSUM"><span>MERCHANT SHIPPING SITUATION SUMMARY</span></p>
+                              <p id="MSGCORRCANX"><span>MESSAGE CORRECTION OR
+                                    CANCELLATION</span></p>
+                              <p id="METCM"><span>METEOROLOGICAL-COMPUTER</span></p>
+                              <p id="METRFM"><span>METEOROLOGICAL-REQUEST FOR MET</span></p>
+                              <p id="METTA"><span>METEOROLOGICAL-TARGET ACQUISITION</span></p>
+                              <p id="MIJIWARNREP"><span>MIJI WARNING REPORT</span></p>
+                              <p id="MCMREP"><span>MINE COUNTERMEASURES REPORT</span></p>
+                              <p id="MTRANSIT"><span>MINE COUNTERMEASURES TRANSIT
+                                          INSTRUCTIONS</span></p>
+                              <p id="OPTASKMINING"><span>MINE TASKING</span></p>
+                              <p id="MINCLRREP"><span>MINEFIELD CLEARING COMPLETION
+                                    REPORT</span></p>
+                              <p id="MINCLRORD"><span>MINEFIELD CLEARING EXECUTION ORDER</span></p>
+                              <p id="MINCLRRECCEORD"><span>MINEFIELD CLEARING RECONNAISSANCE
+                                          ORDER</span></p>
+                              <p id="MINCLRRECCEREP"><span>MINEFIELD CLEARING RECONNAISSANCE
+                                          REPORT</span></p>
+                              <p id="MINLAYORD"><span>MINEFIELD LAYING ORDER</span></p>
+                              <p id="MINLAYRECCEORD"><span>MINEFIELD LAYING RECONNAISSANCE
+                                          ORDER</span></p>
+                              <p id="MINLAYRECCEREP"><span>MINEFIELD LAYING RECONNAISSANCE
+                                          REPORT</span></p>
+                              <p id="MINLAYREP"><span>MINEFIELD LAYING REPORT</span></p>
+                              <p id="MLAYREP"><span>MINELAYING REPORT</span></p>
+                              <p id="MISREP"><span>MISSION REPORT</span></p>
+                              <p id="MODATTACK"><span>MODIFICATION-ATTACK CRITERIA</span></p>
+                              <p id="MODXCLUDE"><span>MODIFICATION-EXCLUDE CRITERIA</span></p>
+                              <p id="MOVASSESSREP"><span>MOVEMENT ASSESSMENT REPORT</span></p>
+                              <p id="MCR"><span>MOVEMENT COMPLETION REPORT</span></p>
+                              <p id="MEO"><span>MOVEMENT EXECUTION ORDER</span></p>
+                              <p id="MOVEREP"><span>MOVEMENT REPORT</span></p>
+                              <p id="MOVREQ"><span>MOVEMENT REQUEST</span></p>
+                              <p id="MWO"><span>MOVEMENT WARNING ORDER</span></p>
+                              <p id="TRANSAR"><span>NATO AIR TRANSPORT ACCEPT REFUSE
+                                    REPORT</span></p>
+                              <p id="ATMISCOMP"><span>NATO AIRLIFT MISSION COMPLETION
+                                    MESSAGE</span></p>
+                              <p id="ATCORDACK"><span>NATO AIRLIFT MISSION COORDINATION
+                                          ACKNOWLEDGEMENT MESSAGE</span></p>
+                              <p id="ATCORD"><span>NATO AIRLIFT MISSION COORDINATION
+                                    MESSAGE</span></p>
+                              <p id="ATMISDEL"><span>NATO AIRLIFT MISSION DELAYED REPORT</span></p>
+                              <p id="ATMISPROG"><span>NATO AIRLIFT MISSION PROGRESS
+                                    REPORT</span></p>
+                              <p id="NARAT"><span>NATO REQUEST FOR AIR TRANSPORT</span></p>
+                              <p id="NAVOPDEF"><span>NAVAL OPERATIONAL DEFECT</span></p>
+                              <p id="NAVPOSREP"><span>NAVAL POSITION REPORT</span></p>
+                              <p id="NAVSITREP"><span>NAVAL SITUATION REPORT</span></p>
+                              <p id="NAVSITSUM"><span>NAVAL SITUATION SUMMARY</span></p>
+                              <p id="NNFPCOMFP"><span>NON-NUCLEAR FIRE PLANNING-COMPUTE FIRE
+                                          PLAN</span></p>
+                              <p id="NNFPFP"><span>NON-NUCLEAR FIRE PLANNING-FIRE PLAN</span></p>
+                              <p id="NNFPRESFU"><span>NON-NUCLEAR FIRE PLANNING-RESERVE FIRE
+                                          UNIT</span></p>
+                              <p id="STRIKWARN"><span>NUCLEAR STRIKE WARNING MESSAGE</span></p>
+                              <p id="OBSEXORD"><span>OBSTACLE EXECUTION ORDER</span></p>
+                              <p id="OBSEXREP"><span>OBSTACLE EXECUTION REPORT</span></p>
+                              <p id="OBSRECCEORD"><span>OBSTACLE RECONNAISSANCE ORDER</span></p>
+                              <p id="OBSRECCEREP"><span>OBSTACLE RECONNAISSANCE REPORT</span></p>
+                              <p id="OBSREP"><span>OBSTACLE REPORT</span></p>
+                              <p id="AIRSTAT"><span>OFFENSIVE WEAPON SYSTEM AND AIR DEFENCE STATUS
+                                          REPORT</span></p>
+                              <p id="OFFSTOFR"><span>OFFSET OFFER MESSAGE</span></p>
+                              <p id="GRASSHOPPEREXECUTE"><span>OPERATION GRASSHOPPER
+                                    EXECUTE</span></p>
+                              <p id="GRASSHOPPERREQUEST"><span>OPERATION GRASSHOPPER
+                                    REQUEST</span></p>
+                              <p id="OPGEN"><span>OPERATIONAL GENERAL MATTERS</span></p>
+                              <p id="OPSTATCARGO"><span>OPERATIONAL STATUS CARGO</span></p>
+                              <p id="OPSTATCASP"><span>OPERATIONAL STATUS CASP</span></p>
+                              <p id="OPSTATRASREQ"><span>OPERATIONAL STATUS REPLENISHMENT AT SEA
+                                          REQUIREMENTS</span></p>
+                              <p id="OPSTATRAS"><span>OPERATIONAL STATUS REPLENISHMENT AT
+                                    SEA</span></p>
+                              <p id="OPSTATUNIT"><span>OPERATIONAL STATUS UNIT</span></p>
+                              <p id="OPTASKAMPHIB"><span>OPERATIONAL TASKING AMPHIBIOUS
+                                          OPERATIONS</span></p>
+                              <p id="OPTASKAAW"><span>OPERATIONAL TASKING ANTI-AIR
+                                    WARFARE</span></p>
+                              <p id="OPTASKASW"><span>OPERATIONAL TASKING ANTI-SUBMARINE
+                                          WARFARE</span></p>
+                              <p id="OPTASKCOMMS"><span>OPERATIONAL TASKING
+                                    COMMUNICATIONS</span></p>
+                              <p id="OPTASKLINK"><span>OPERATIONAL TASKING DATA LINKS</span></p>
+                              <p id="OPTASKDIVE"><span>OPERATIONAL TASKING DIVE</span></p>
+                              <p id="OPTASKEW"><span>OPERATIONAL TASKING ELECTRONIC
+                                    WARFARE</span></p>
+                              <p id="OPTASKNCAGS"><span>OPERATIONAL TASKING FOR NAVAL COOPERATION
+                                          AND GUIDANCE FOR SHIPPING</span></p>
+                              <p id="OPTASKASUW"><span>OPERATIONAL TASKING OF ANTI-SURFACE
+                                          WARFARE</span></p>
+                              <p id="OPTASKAIR"><span>OPERATIONAL TASKING ORGANIC
+                                    AIRCRAFT</span></p>
+                              <p id="OPTASKRAS"><span>OPERATIONAL TASKING REPLENISHMENT AT
+                                          SEA</span></p>
+                              <p id="OPTASKLOGFLC"><span>OPTASK LOGISTIC FORCE LOGISTIC COORDINATOR
+                                          INSTRUCTIONS</span></p>
+                              <p id="OPTASKLOGMNLC"><span>OPTASK LOGISTIC MULTINATIONAL LOGISTIC
+                                          COMMANDER DIRECTIVE</span></p>
+                              <p id="ORBATAIR"><span>ORDER OF BATTLE - AIR FORCES</span></p>
+                              <p id="ORBATLAND"><span>ORDER OF BATTLE - LAND FORCES</span></p>
+                              <p id="ORBATSEA"><span>ORDER OF BATTLE SEA</span></p>
+                              <p id="ORBATTOALAND-AIR"><span>ORDER OF BATTLE TRANSFER OF AUTHORITY
+                                          MESSAGE - LAND AND AIR</span></p>
+                              <p id="ORBATTOASEA"><span>ORDER OF BATTLE TRANSFER OF AUTHORITY
+                                          SEA</span></p>
+                              <p id="OWNSITREP"><span>OWN LAND FORCES SITUATION REPORT</span></p>
+                              <p id="PTLREP"><span>PATROL REPORT</span></p>
+                              <p id="PSOCOMASSESSREP"><span>PEACE SUPPORT OPERATIONS COMMANDERS
+                                          ASSESSMENT REPORT</span></p>
+                              <p id="PERSREP"><span>PERSONNEL REPORT</span></p>
+                              <p id="PLACEINTREC"><span>PLACE INTELLIGENCE RECORD</span></p>
+                              <p id="PRETECHREP"><span>PRELIMINARY TECHNICAL REPORT</span></p>
+                              <p id="PRESENCE"><span>PRESENCE REPORT</span></p>
+                              <p id="PCSINTENTIONS"><span>PRIMARY CONTROL SHIP INTENTIONS</span></p>
+                              <p id="PWINTERREP"><span>PRISONER OF WAR INTERROGATION
+                                    REPORT</span></p>
+                              <p id="PWPERSREC"><span>PRISONER OF WAR PERSONAL RECORD</span></p>
+                              <p id="PSYREP"><span>PSYCHOLOGICAL OPERATIONS REPORT</span></p>
+                              <p id="PISITREP"><span>PUBLIC INFORMATION SITUATION REPORT</span></p>
+                              <p id="RAILREP"><span>RAILROAD RECONNAISSANCE REPORT</span></p>
+                              <p id="REALESTREQ"><span>REAL ESTATE REQUEST</span></p>
+                              <p id="REALESTRESP"><span>REAL ESTATE RESPONSE</span></p>
+                              <p id="RECEXREP"><span>RECONNAISSANCE EXPLOITATION REPORT</span></p>
+                              <p id="RELINQTAC"><span>RELINQUISH SUBMARINE TACON</span></p>
+                              <p id="REPAIRDIR"><span>REPAIR DIRECTIVE</span></p>
+                              <p id="WSMREQ"><span>REQUEST FOR WATERSPACE MANAGEMENT AREA</span></p>
+                              <p id="DMLORD"><span>RESERVED DEMOLITION ORDER</span></p>
+                              <p id="RESPONSE"><span>RESPONSE TO AIR SUPPORT REQUEST</span></p>
+                              <p id="DELTREP"><span>RIVER ESTUARY REPORT</span></p>
+                              <p id="FORDREP"><span>RIVER FORD RECONNAISSANCE REPORT</span></p>
+                              <p id="RMPSITSUM"><span>RMP SITUATION SUMMARY</span></p>
+                              <p id="RBTMAINTORD"><span>ROAD, BRIDGE OR TUNNEL MAINTENANCE
+                                          ORDER</span></p>
+                              <p id="RBTMAINTREP"><span>ROAD, BRIDGE OR TUNNEL MAINTENANCE
+                                          REPORT</span></p>
+                              <p id="RBTRECCEORD"><span>ROAD, BRIDGE OR TUNNEL RECONNAISSANCE
+                                          ORDER</span></p>
+                              <p id="RBTRECCEREP"><span>ROAD, BRIDGE OR TUNNEL RECONNAISSANCE
+                                          REPORT</span></p>
+                              <p id="RDMOVBID"><span>ROAD MOVEMENT BID</span></p>
+                              <p id="RDMOVCREDIT"><span>ROAD MOVEMENT CREDIT</span></p>
+                              <p id="ROUTEREP"><span>ROAD ROUTE RECONNAISSANCE REPORT</span></p>
+                              <p id="ROUTERECCEORD"><span>ROUTE RECONNAISSANCE ORDER</span></p>
+                              <p id="ROUTERECCEREP"><span>ROUTE RECONNAISSANCE REPORT</span></p>
+                              <p id="ROEAUTH"><span>RULES OF ENGAGEMENT AUTHORIZATION</span></p>
+                              <p id="ROEIMPL"><span>RULES OF ENGAGEMENT IMPLEMENTATION</span></p>
+                              <p id="ROEREQ"><span>RULES OF ENGAGEMENT REQUEST</span></p>
+                              <p id="SAILNOTE"><span>SAILING NOTIFICATION</span></p>
+                              <p id="SAILSIG"><span>SAILING SIGNAL - LOAD ADVICE</span></p>
+                              <p id="SSTO"><span>SAM SHORAD TACTICAL ORDER</span></p>
+                              <p id="SATVULREP"><span>SATELLITE VULNERABILITY REPORT</span></p>
+                              <p id="SCATMINORD"><span>SCATTERABLE MINEFIELD ORDER</span></p>
+                              <p id="SCATMINREC"><span>SCATTERABLE MINEFIELD RECORD</span></p>
+                              <p id="SCATMINREP"><span>SCATTERABLE MINEFIELD REPORT</span></p>
+                              <p id="SCATMINREQ"><span>SCATTERABLE MINEFIELD REQUEST</span></p>
+                              <p id="SCATMINWARN"><span>SCATTERABLE MINEFIELD WARNING</span></p>
+                              <p id="SCRAMBLE"><span>SCRAMBLE ORDER</span></p>
+                              <p id="SEAMOV"><span>SEA MOVEMENT RESOURCE SIGNAL</span></p>
+                              <p id="SARIR"><span>SEARCH AND RESCUE INCIDENT REPORT</span></p>
+                              <p id="SARREQ"><span>SEARCH AND RESCUE REQUEST</span></p>
+                              <p id="SARSIT"><span>SEARCH AND RESCUE SITUATION SUMMARY
+                                    REPORT</span></p>
+                              <p id="SENSCOVREP"><span>SENSOR COVERAGE REPORT</span></p>
+                              <p id="SHORADLOCSTAT"><span>SHORT RANGE AIR DEFENSE LOCATION AND
+                                          STATUS REPORT</span></p>
+                              <p id="SIDATREP"><span>SITE DATA REPORT</span></p>
+                              <p id="SITREP"><span>SITUATION REPORT</span></p>
+                              <p id="SUBNOI"><span>SUB-SURFACE NOTICE OF INTENTION</span></p>
+                              <p id="SUBCHOP"><span>SUBMARINE CHANGE OF OPCON MESSAGE</span></p>
+                              <p id="SUBDANGER"><span>SUBMARINE DANGER AREA NOTICE</span></p>
+                              <p id="SUBFORCEREP"><span>SUBMARINE FORCE REPORT</span></p>
+                              <p id="SUBFORSUM"><span>SUBMARINE FORCE SUMMARY</span></p>
+                              <p id="SUBNOTECHANGEREQ"><span>SUBMARINE NOTICE CHANGE
+                                    REQUEST</span></p>
+                              <p id="SUBNOTECHANGE"><span>SUBMARINE NOTICE CHANGE</span></p>
+                              <p id="SUBNOTEREQ"><span>SUBMARINE NOTICE REQUEST</span></p>
+                              <p id="SUBNOTE"><span>SUBMARINE NOTICE</span></p>
+                              <p id="OPSTATREADINESS"><span>SUBMARINE OPERATION CAPABILITY
+                                          STATUS</span></p>
+                              <p id="SUBSITREP"><span>SUBMARINE SITUATION REPORT</span></p>
+                              <p id="SUBSUPREQ"><span>SUBMARINE SUPPORT REQUEST</span></p>
+                              <p id="SUBTASK"><span>SUBMARINE TASKING</span></p>
+                              <p id="SUPINTREP"><span>SUPPLEMENTARY INTELLIGENCE REPORT</span></p>
+                              <p id="SPRTACA"><span>SUPPORT-AIRSPACE COORDINATION AREA</span></p>
+                              <p id="SPRTGEOM"><span>SUPPORT-BATTLEFIELD GEOMETRY</span></p>
+                              <p id="SURFREP"><span>SURF REPORT</span></p>
+                              <p id="COVREP"><span>SURFACE-TO-AIR WEAPON SYSTEM COVERAGE
+                                          REPORT</span></p>
+                              <p id="SAWREP"><span>SURFACE-TO-AIR WEAPON UNIT STATUS AND
+                                          AVAILABILITY REPORT</span></p>
+                              <p id="SFCTPTREPLY"><span>SURFACE TRANSPORT REPLY</span></p>
+                              <p id="SFCTPTREQ"><span>SURFACE TRANSPORT REQUEST</span></p>
+                              <p id="SURREP"><span>SURVIVABILITY COMPLETION REPORT</span></p>
+                              <p id="SURORD"><span>SURVIVABILITY EXECUTION ORDER</span></p>
+                              <p id="SURRECCEORD"><span>SURVIVABILITY RECONNAISSANCE
+                                    ORDER</span></p>
+                              <p id="SURRECCEREP"><span>SURVIVABILITY RECONNAISSANCE
+                                    REPORT</span></p>
+                              <p id="SYSRRM"><span>SYSTEM REPLY MESSAGE</span></p>
+                              <p id="SYSRFR"><span>SYSTEM-REQUEST FOR REPORT</span></p>
+                              <p id="TACBEREP"><span>TACTICAL BEACH RECONNAISSANCE REPORT</span></p>
+                              <p id="TRACKREP"><span>TARGET TRACK REPORT</span></p>
+                              <p id="TARGETINTREC"><span>TARGETING RECORD</span></p>
+                              <p id="ROUTCHANG"><span>TASK ORGANISATION AND ROUTING
+                                    CHANGE</span></p>
+                              <p id="ROUTSTAT"><span>TASK ORGANISATION AND ROUTING STATUS</span></p>
+                              <p id="TEMPSMA"><span>TEMPORARY SIGNAL MESSAGE ADDRESS</span></p>
+                              <p id="TRANSCPL"><span>TRANSFER COMPLETE MESSAGE</span></p>
+                              <p id="TUNNELREP"><span>TUNNEL RECONNAISSANCE REPORT</span></p>
+                              <p id="UWOBJECTNOTE"><span>UNDERWATER OBJECT NOTIFICATION</span></p>
+                              <p id="UNITINTREC"><span>UNIT INTELLIGENCE RECORD</span></p>
+                              <p id="WSMALLOCSTAT"><span>WATERSPACE MANAGEMENT ALLOCATION AND STATUS
+                                          MESSAGE</span></p>
+                              <p id="WCO"><span>WEAPON CONTROL ORDER</span></p>
+                              <p id="SHREDREP"><span>WEAPON SENSOR READINESS REPORT</span></p>
+                              <p id="WEZREQ"><span>WEAPONS ENGAGEMENT ZONE (WEZ) REQUEST</span></p>
+                        </div>
+                  </div>
+            </div>
+            <div class="ui-layout-center">
+                  <div id="xmlhead" class="ctrhdr ui-layout-north">
+                        <div id="iepdhdr" class="toplabel" style="width:100%">MESSAGE
+                              INFORMATION</div>
+                  </div>
+                  <div id="xsdview" class="ui-layout-west">
+                        <b class="toplabel ui-layout-north">XML SCHEMAS</b>
+                        <div class="ui-layout-center">
+                              <div id="msgxsd" class="xsdvw ui-layout-north"></div>
+                              <div id="setsxsd" class="xsdvw ui-layout-center"></div>
+                        </div>
+                        <div class="ui-layout-south">
+                              <div id="compsxsd" class="xsdvw ui-layout-north"></div>
+                              <div id="fieldsxsd" class="xsdvw ui-layout-center"></div>
+                        </div>
+                  </div>
+                  <div id="docsview" class="ui-layout-center">
+                        <b class="toplabel ui-layout-north">DOCUMENTATON</b>
+                        <div id="msgdoc" class="ui-layout-center"></div>
+                  </div>
+                  <div id="formview" class="ui-layout-east">
+                        <b class="toplabel ui-layout-north">SAMPLE FORM</b>
+                        <div id="msgfrm" class="ui-layout-center"></div>
+                  </div>
+            </div>
+            <div class="ui-layout-south hidden"
+                  style="padding-left: 50px; border-top:thin black solid;"> </div>
+            <div id="logdialog" title="Dialog" class="noselect" style="display:none;"></div>
+            <div id="waitdialog" title="Wait" class="noselect" style="display:none;">
+                  <p></p>
+                  <div id="Init_prog" class="pbar"> </div>
+                  <div id="progMsg" style="width:80%; margin-top:10px;">
+                        <div>Loaded: </div>
+                  </div>
+            </div>
+            <script type="text/javascript" src="js/lib/jquery/jquery-2.1.1.min.js"></script>
+            <script type="text/javascript" src="js/lib/jquery/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="js/lib/jquery/jquery.layout.min.js"></script>
+            <script type="text/javascript" src="js/lib/Saxonce/Saxonce.nocache.js"></script>
+            <script type="text/javascript" src="js/lib/compression/base64-string-v1.1.0.js"></script>
+            <script type="text/javascript" src="js/lib/compression/lz-string-1.3.3-min.js"></script>
+            <script type="text/javascript" src="js/xmlDb.js"></script>
+            <script type="text/javascript" src="js/iepdView.js"></script>
+            <script type="text/javascript" src="js/goeresources.js"></script>
+            <script type="text/javascript" src="js/syncData.js"></script>
+            <script type="text/javascript" src="js/xmlview.js"></script>
+            <script type="text/javascript" src="js/mtf_form.js"></script>
+      </body>
+</html>

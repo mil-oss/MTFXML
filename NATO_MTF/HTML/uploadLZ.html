@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Upload Compressed XML</title>
+    </head>
+    <body
+        style="font-size: 16px; font-size: 68.75%; font-family: Verdana, helvetica, arial, sans-serif;">
+        <div style="width:300px; margin-left:auto; margin-right:auto;">
+            <div>This tool is used to upload LZ compressed XML files to a server for retrieval and
+                use using an IndexedDB webapp.</div>
+            <div style="margin-top:20px; text-align:center;">
+                <button id="zipbtn">Compress Resources</button>
+            </div>
+            <div style="margin-top:20px; height:60%; text-align:center;">
+                <button id="schemazipbtn">Compress Schemas</button>
+            </div>
+            <div id="progress"
+                style="height:400px;margin-top:10px;overflow-y:auto;border:thin solid black;"
+                ></div>
+        </div>
+        <script type="text/javascript" src="js/lib/jquery/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/lib/jquery/jquery.layout.min.js"></script>
+        <script type="text/javascript" src="js/lib/compression/base64-string-v1.1.0.js"></script>
+        <script type="text/javascript" src="js/lib/compression/lz-string-1.3.3-min.js"></script>
+        <script type="text/javascript" src="js/goeresources.js"></script>
+        <script type="text/javascript" src="js/syncData.js"></script>
+        <script type="text/javascript" src="js/uploadLZ.js"></script>
+    </body>
+</html>

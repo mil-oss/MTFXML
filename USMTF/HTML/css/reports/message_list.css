@@ -1,0 +1,21 @@
+/**************************************************************************************************************************************************/
+/*  Author:	       James Eaton                                                                                                                                                   */
+/*  Company:       Northrop Grumman Space & Mission Systems                                                                                              */
+/*  Supporting:     United States (US) Department of Defense (DoD), Defense Information Systems Agency (DISA) GE332  */
+/*  Last Modified: 1008 hours, 15 FEB 2007                                                                                                                              */
+/**************************************************************************************************************************************************/
+
+td { 
+	font-family: "courier new", serif;
+}
+
+.snleTableHeader {
+	font-weight: bold;
+	font-family: courier;
+	text-decoration: underline;
+}
+
+.snleCells {
+	padding-bottom: 5px;
+	font-family: "courier new", serif;
+}

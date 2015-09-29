@@ -1,0 +1,209 @@
+/* CSS Document */
+html, body {
+    height:100%; 
+    margin: 0; 
+    padding: 0; }
+html>body {
+    font-size: 16px; 
+    font-size: 68.75%;
+} /* Reset Base Font Size */
+body {
+    font-family: Verdana, helvetica, arial, sans-serif;
+    font-size: 68.75%;
+    background: #fff;
+    color: #333;
+}
+h1, h2, h3 { 
+    font-family: 'trebuchet ms', verdana, arial; 
+    padding: 5px; 
+    margin: 0 
+}
+h4{
+    margin: 2px;
+    padding: 2px;  
+}
+h1 { 
+    font-size: large 
+}
+#sidebar{
+    padding: 4px;
+    width:100%;
+}
+#fieldtree{
+    font-size:10px;
+}
+#baselineview{
+    border:solid thin black;
+    overflow-y:scroll;
+}
+#elementview{
+    border:solid thin black;
+    overflow-y:scroll;
+}
+#typeview{
+    border:solid thin black;
+    overflow-y:scroll;
+}
+#msglinks{
+    overflow-x:hidden;
+}
+#setlinks{
+    overflow-x:hidden;
+}
+#compositelinks{
+    overflow-x:hidden;
+}
+#fieldlinks{
+    overflow-x:hidden;
+}
+#stat_tble{
+    font-size: 12px;
+    width:100%;
+}
+#stat_tble tr td div{
+    text-align:center;
+    height:16px;
+}
+#stat_tble tr td{
+    padding:2px;
+}
+#banner { 
+    padding: 15px; 
+    width:98%;
+    min-width:1400px;
+    margin:0 auto;
+    background-color: #06b; 
+    color: white; 
+    font-size: large; 
+    border-bottom: 1px solid #ccc;
+    background: url(images/bg.gif) 
+        repeat-x; text-align: center } 
+#viewpanel{
+    display:none;
+}
+#infodialog{
+    padding-top:10px;
+}
+#rptviewbtn{
+    cursor:pointer;
+}
+#xmlview{
+    cursor:pointer;
+}
+.scrollcol{
+    position:relative;
+    height:60%;
+    padding:1px;
+}
+.dedent{
+    margin-left:-22px;
+    background:white;
+}
+.ctrhdr{
+    padding-top:5px;
+    font-size:14px; 
+    text-align: center;
+    font-weight: bold;
+}
+.toplabel{
+    margin-top:8px; 
+    font-size:12px; 
+    width:50%;
+    display: inline;
+    float:left;
+}
+.xmltoplabel{
+    margin-top:8px; 
+    font-size:12px; 
+    width:100%;
+    display: inline;
+    float:left;
+}
+.waiting {
+    cursor: progress !important;
+}
+.xmlnodetree{
+    height:95%;
+    padding:1px;
+}
+.xmlnodetree ul{
+    margin-left:-30px;
+}
+.divcol{
+    float:left;
+    width:100%;
+}
+.scrollcol p{
+    width:95%;
+    cursor:pointer;
+
+    border:thin solid black;
+    border-radius: 2px;
+    padding:5px;
+    box-shadow: 2px 2px 2px #888888;
+    margin: 2px;
+    text-align:center;
+}
+.att{
+    font-weight:bold;
+    color:black;
+}
+.ctr{
+    text-align:center;
+}
+.smhdr{
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+.stat{
+    text-align:center;
+}
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.ui-accordion .ui-accordion-content{
+    padding: 1em 1em;
+}
+.progress-label {
+    float:left;
+    margin-left:45%;
+    text-shadow: 1px 1px 0 #fff;
+    line-height: 10px;
+}
+.progress-load {
+    text-shadow: 1px 1px 0 #fff;
+    line-height: 10px;
+}
+.ui-progressbar-value{
+    border: none;
+}
+.hidden{
+    display:none;
+}
+.ui-layout-pane{
+    padding:0; 
+    padding-bottom:5px; 
+}
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+.datalink{
+    color:blue;
+    cursor:pointer;
+}
+.pbar{
+    height:2px;
+    width:250px;
+    border:thin black solid;
+    cursor:pointer;
+}
+.ui-layout-west{}
+.ui-layout-south {}
+.ui-layout-east {}
+.ui-layout-center {}
+.ui-layout-north {}

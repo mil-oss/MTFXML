@@ -1,0 +1,65 @@
+/**************************************************************************************************************************************************/
+/*  Author:	       James Eaton                                                                                                                                                   */
+/*  Company:       Northrop Grumman Space & Mission Systems                                                                                              */
+/*  Supporting:     United States (US) Department of Defense (DoD), Defense Information Systems Agency (DISA) GE332  */
+/*  Last Modified: 1117 hours, 18 JAN 2007                                                                                                                              */
+/**************************************************************************************************************************************************/
+
+td { 
+	font-family: "courier new", serif;
+}
+
+/* The 'a' CSS statement is not needed until links are included in the future. */
+/* a {
+	color: blue;
+} */ 
+
+/* This is used in the CMWT but not in this style sheet */
+/* .msgTextBoxes {
+	padding-right: 20px;
+	padding-left: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	font-family: "courier new", serif;
+	height: 20px;
+} */
+
+/* This is used in the CMWT but not in this style sheet */			
+/* .Textbox {
+	font-family: "courier new", serif;
+} */
+
+.snleTableHeader {
+	font-weight: bold;
+	font-family: courier;
+	text-decoration: underline;
+}
+
+.snleCells {
+	padding-bottom: 5px;
+	font-family: "courier new", serif;
+}
+
+/* This is used in the CMWT but not in this style sheet */
+/* .example-remarks {
+	font-family: "courier new", serif;
+} */
+
+/* This is used in the CMWT but not in this style sheet */
+/* .RemarksExampleHeader {
+	font-weight: bold;
+	font-family: "courier new", serif;
+	text-decoration: underline;
+} */
+
+/* This is used in the CMWT but not in this style sheet */
+/* .newMessageMenu {
+	padding: 5px;
+	background-color: honeydew;
+	border: 1px solid green;
+} */
+
+/* This is used in the CMWT but not in this style sheet */
+/* .actionMenu {
+	float: left;
+} */

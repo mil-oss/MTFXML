@@ -1,0 +1,81 @@
+#divMessageLevelData{
+    width:100%;
+    min-width:700px;
+    margin-left:auto;
+    margin-right:auto;
+    border:solid thin blue;
+    font-family:courier, fixed, monospace
+}
+#setstable{
+    float:left;
+}
+
+.tablesect{
+    clear:left;
+}
+
+.settablehd{
+    background-color:#FFFFEE;
+    vertical-align: top;
+}
+
+.green{
+    color:green;
+}
+
+.fleft{
+    float:left;
+    width:65%;
+    min-width:65%;
+    border-right:solid thin blue;
+}
+
+.fleft div{
+    padding:4px;
+}
+
+.fright{
+    float:right;
+    width:30%;
+    min-width:25%;
+    padding-bottom:4px;
+    padding-right:4px;
+}
+
+.fright div{
+    padding:4px;
+}
+
+#hdr{
+    min-width:700px;
+}
+
+.txt{
+    display:inline-block;
+    padding:4px;
+    border-top:solid thin blue;
+}
+
+.txt div{
+    padding:4px;
+}
+
+#setstable{
+ min-width:700px;
+    margin-left:auto;
+    margin-right:auto;
+    border:solid thin blue;
+}
+
+table{
+    padding:10px;
+}
+table,
+th,
+td{
+    border:none;
+}
+th,
+td{
+    padding:5px;
+}

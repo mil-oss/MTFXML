@@ -1,0 +1,1 @@
+This is the targer folder for Garden of Eden USMTF XML Schema documents.  Expected files are GoE_messages.xsd, GoE_segments.xsd, GoE_sets.xsd, fields.xsd, and IC-ISM-v2.xsd.

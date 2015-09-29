@@ -1,0 +1,1 @@
+These templates contain the namespace information for the various XML Schema documents.
