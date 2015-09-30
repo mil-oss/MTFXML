@@ -3,10 +3,10 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     
-    <xsl:variable name="normflds" select="document('../../XSD/Normalized/work/NormalizedSimpleTypes.xsd')"/>
+    <xsl:variable name="normflds" select="document('../../../XSD/Normalized/work/NormalizedSimpleTypes.xsd')"/>
 
     <xsl:template match="/">
-        <xsl:result-document href="{'../../XSD/Normalized/NormalizedSimpleTypes.xsd'}">
+        <xsl:result-document href="{'../../../XSD/Normalized/NormalizedSimpleTypes.xsd'}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"

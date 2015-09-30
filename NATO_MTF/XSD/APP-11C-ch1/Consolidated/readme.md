@@ -1,1 +1,0 @@
-This is the target directory for the XML Schema consolidation XSLT.  Expected files are messages.xsd, sets.xsd, composites.xsd, and fields.xsd.
