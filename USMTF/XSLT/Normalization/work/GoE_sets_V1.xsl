@@ -32,21 +32,51 @@
     <!--Baseline Fields XML Schema document-->
     <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
     <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
-
+    
     <!--Set deconfliction and annotation changes-->
-    <xsl:variable name="set_Changes"
-        select="document('../../XSD/Deconflicted/Set_DeconflictionXML.xml')/USMTF_Sets"/>
+    <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_DeconflictionXML.xml')/USMTF_Sets"/>
 
     <!--Root level complexTypes-->
     <xsl:variable name="complex_types">
-        <xsl:apply-templates select="$baseline_sets_xsd/xsd:schema/xsd:complexType" mode="global"/>
+        <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType">
+            <xsl:variable name="elname">
+                <xsl:value-of select="substring(@name,0,string-length(@name)-3)"/>
+            </xsl:variable>
+            <xsl:variable name="setid">
+                <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
+            </xsl:variable>
+            <xsl:variable name="newname">
+                <xsl:choose>
+                    <xsl:when test="$setid='1APHIB'">
+                        <xsl:text>AmphibiousForceCompositionType</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="$setid='MARACT'">
+                        <xsl:text>MaritimeActivityType</xsl:text>
+                    </xsl:when>
+                    <xsl:when
+                        test="exists($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
+                        <xsl:value-of select="translate($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/()', '')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="substring(@name,0,string-length(@name)-3)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsd:complexType name="{concat($newname,'Type')}">
+                <xsl:apply-templates select="@*[not(name() = 'name')]"/>
+                <xsl:apply-templates select="*"/>
+                <xsl:if test="@name = 'SetBaseType'">
+                    <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                </xsl:if>
+            </xsd:complexType>
+        </xsl:for-each>
     </xsl:variable>
 
     <!--Root level elements-->
     <xsl:variable name="global_elements">
         <xsl:for-each select="$complex_types/xsd:complexType">
             <xsl:variable name="elname">
-                <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
+                <xsl:value-of select="substring(@name,0,string-length(@name)-3)"/>
             </xsl:variable>
             <xsl:variable name="setid">
                 <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
@@ -60,9 +90,7 @@
                             mode="propname"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of
-                            select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"
-                        />
+                        <xsl:value-of select="substring(@name,0,string-length(@name)-3)"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -100,42 +128,6 @@
                 </xsl:for-each>
             </xsd:schema>
         </xsl:result-document>
-    </xsl:template>
-
-    <xsl:template match="xsd:complexType" mode="global">
-        <xsl:variable name="elname">
-            <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
-        </xsl:variable>
-        <xsl:variable name="setid">
-            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
-        </xsl:variable>
-        <xsl:variable name="newname">
-            <xsl:choose>
-                <xsl:when test="$setid = '1APHIB'">
-                    <xsl:text>AmphibiousForceCompositionType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$setid = 'MARACT'">
-                    <xsl:text>MaritimeActivityType</xsl:text>
-                </xsl:when>
-                <xsl:when
-                    test="exists($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
-                    <xsl:value-of
-                        select="translate($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
-                    />
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of
-                        select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsd:complexType name="{concat($newname,'Type')}">
-            <xsl:apply-templates select="@*[not(name() = 'name')]"/>
-            <xsl:apply-templates select="*"/>
-            <xsl:if test="@name = 'SetBaseType'">
-                <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-            </xsl:if>
-        </xsd:complexType>
     </xsl:template>
 
     <!-- Elements in Fields simple global types converted to references..-->
@@ -179,37 +171,30 @@
     <!-- type references are converted to local with SimpleType naming convention after verifying that it isn't ComplexType.-->
     <xsl:template match="xsd:element[@type]">
         <!--Create complex or simple type reference to match with global type in GoE fields-->
-        <!--Because types have been normalized, it is necessary use element name to match-->
-        <xsl:variable name="type_element">
+        <xsl:variable name="typename">
             <xsl:choose>
                 <xsl:when test="starts-with(@type, 'f:')">
                     <xsl:value-of
-                        select="substring-after(substring(@type, 0, string-length(@type) - 3), 'f:')"
+                        select="substring-after(concat(substring(@type, 0, string-length(@type) - 3), 'SimpleType'), 'f:')"
                     />
                 </xsl:when>
                 <xsl:when test="starts-with(@type, 'c:')">
-                    <xsl:value-of
-                        select="substring-after(substring(@type, 0, string-length(@type) - 3), 'c:')"
-                    />
+                    <xsl:value-of select="substring-after(@type, 'c:')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="substring(@type, 0, string-length(@type) - 3)"/>
+                    <xsl:value-of select="@type"/>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="match_type">
-            <xsl:value-of
-                select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $type_element]/@type"/>
         </xsl:variable>
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="type">
                 <xsl:choose>
-                    <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:simpleType/@name = $match_type">
-                        <xsl:value-of select="concat('field:', $match_type)"/>
+                    <xsl:when test="$goe_fields_xsd//xsd:simpleType/@name = $typename">
+                        <xsl:value-of select="concat('field:', $typename)"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="concat($type_element, 'Type')"/>
+                        <xsl:value-of select="$typename"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
@@ -220,35 +205,18 @@
     <!-- base references are converted to local with SimpleType or ComplexType naming convention.-->
     <xsl:template match="xsd:extension[@base]">
         <!--Create complex or simple type reference to match with global type in GoE fields-->
-        <!--Because types have been normalized, it is necessary use element name to match-->
-        <xsl:variable name="base_element">
+        <xsl:variable name="basename">
             <xsl:choose>
                 <xsl:when test="starts-with(@base, 'f:')">
                     <xsl:value-of
-                        select="substring-after(substring(@base, 0, string-length(@base) - 3), 'f:')"
+                        select="substring-after(concat(substring(@base, 0, string-length(@base) - 3), 'SimpleType'), 'f:')"
                     />
                 </xsl:when>
                 <xsl:when test="starts-with(@base, 'c:')">
-                    <xsl:value-of
-                        select="substring-after(substring(@base, 0, string-length(@base) - 3), 'c:')"
-                    />
+                    <xsl:value-of select="substring-after(@base, 'c:')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="substring(@base, 0, string-length(@base) - 3)"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="match_base">
-            <xsl:choose>
-                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]/@type">
-                    <xsl:value-of
-                        select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]/@type"
-                    />
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of
-                        select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]/xsd:simpleType/xsd:restriction/@base"
-                    />
+                    <xsl:value-of select="@base"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -256,26 +224,21 @@
             <xsl:apply-templates select="@*"/>
             <xsl:attribute name="base">
                 <xsl:choose>
-                    <xsl:when test="@base = 'SetBaseType'">
-                        <xsl:text>SetBaseType</xsl:text>
+                    <!--FreeTextSimpleType converted to  FreeTextType in complexTypes-->
+                    <xsl:when test="$basename = 'FreeTextSimpleType'">
+                        <xsl:text>field:FreeTextType</xsl:text>
                     </xsl:when>
-                    <xsl:when test="@base = 'AmplificationType'">
-                        <xsl:text>AmplificationType</xsl:text>
+                    <xsl:when test="$basename = 'MissionVerificationIndexType'">
+                        <xsl:text>field:MissionVerificationIndexComplexType</xsl:text>
                     </xsl:when>
-                    <xsl:when test="@base = 'NarrativeInformationType'">
-                        <xsl:text>NarrativeInformationType</xsl:text>
+                    <xsl:when test="$goe_fields_xsd//xsd:complexType/@name = $basename">
+                        <xsl:value-of select="concat('field:', $basename)"/>
                     </xsl:when>
-                    <xsl:when test="@base = 'f:FreeTextType'">
-                        <xsl:text>field:FreeTextSimpleType</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:complexType[@name = $match_base]">
-                        <xsl:value-of select="concat('field:', $match_base)"/>
-                    </xsl:when>
-                    <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:simpleType[@name = $match_base]">
-                        <xsl:value-of select="concat('field:', $match_base)"/>
+                    <xsl:when test="$goe_fields_xsd//xsd:simpleType/@name = $basename">
+                        <xsl:value-of select="concat('field:', $basename)"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="$match_base"/>
+                        <xsl:value-of select="$basename"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:attribute>
@@ -395,7 +358,7 @@
     <!--Copy element and use template mode to convert elements to attributes in FIELD element-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="FieldFormat" xmlns="urn:mtf:mil:6040b:sets">
+            <xsl:element name="FieldFormat">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
             </xsl:element>

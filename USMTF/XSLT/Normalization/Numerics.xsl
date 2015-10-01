@@ -62,11 +62,6 @@
         </xsl:variable>
         <xsl:variable name="min" select="xsd:restriction/xsd:minInclusive/@value"/>
         <xsl:variable name="max" select="xsd:restriction/xsd:maxInclusive/@value"/>
-        <xsl:variable name="normtype">
-            <xsl:call-template name="NormIntegerType">
-                <xsl:with-param name="pattern" select="xsd:restriction/xsd:pattern/@value"/>
-            </xsl:call-template>
-        </xsl:variable>
         <xsl:element name="xsd:element">
             <xsl:attribute name="name">
                 <xsl:value-of select="$nm"/>
@@ -75,64 +70,14 @@
             <xsd:simpleType>
                 <xsl:element name="xsd:restriction">
                     <xsl:attribute name="base">
-                        <xsl:value-of select="$normtype/xsd:simpleType/@name"/>
+                        <xsl:text>xsd:integer</xsl:text>
                     </xsl:attribute>
-                    <xsl:if
-                        test="not($normtype/xsd:simpleType/xsd:restriction/xsd:minInclusive/@value = $min)">
-                        <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"
-                        />
-                    </xsl:if>
-                    <xsl:if
-                        test="not($normtype/xsd:simpleType/xsd:restriction/xsd:minInclusive/@value = $max)">
-                        <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"
-                        />
-                    </xsl:if>
+                    <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
+                    <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
                     <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
                 </xsl:element>
             </xsd:simpleType>
         </xsl:element>
-    </xsl:template>
-
-    <xsl:template name="NormIntegerType">
-        <xsl:param name="pattern"/>
-        <xsl:choose>
-            <xsl:when test="ends-with($pattern, '{1,1}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntOneSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{2,2}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntTwoSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{3,3}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntThreeSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{4,4}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntFourSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{5,5}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntFiveSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{6,6}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntSixSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{7,7}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntSevenSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{8,8}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntEightSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{9,9}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntNineSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{10,10}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntTenSimpleType']"/>
-            </xsl:when>
-            <xsl:when test="ends-with($pattern, '{15,15}')">
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntFifteenSimpleType']"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy-of select="$integerSimpleTypes[@name = 'IntSimpleType']"/>
-            </xsl:otherwise>
-        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="*">
@@ -195,43 +140,6 @@
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:variable>
-        <xsl:variable name="normtype">
-            <xsl:choose>
-                <xsl:when test="$fractionDigits = 1">
-                    <xsl:text>DecimalOneSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 2">
-                    <xsl:text>DecimalTwoSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 3">
-                    <xsl:text>DecimalThreeSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 4">
-                    <xsl:text>DecimalFourSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 5">
-                    <xsl:text>DecimalFiveSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 6">
-                    <xsl:text>DecimalSixSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 7">
-                    <xsl:text>DecimalSevenSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 8">
-                    <xsl:text>DecimalEightSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 9">
-                    <xsl:text>DecimalNineSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:when test="$fractionDigits = 10">
-                    <xsl:text>DecimalTenSimpleType</xsl:text>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>DecimalSimpleType</xsl:text>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
         <xsl:element name="xsd:element">
             <xsl:attribute name="name">
                 <xsl:value-of select="$nm"/>
@@ -240,19 +148,23 @@
             <xsd:simpleType>
                 <xsl:element name="xsd:restriction">
                     <xsl:attribute name="base">
-                        <xsl:value-of select="$normtype"/>
+                        <xsl:text>xsd:decimal</xsl:text>
                     </xsl:attribute>
                     <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
                     <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
+                    <xsl:element name="xsd:fractionDigits">
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="$fractionDigits"/>
+                        </xsl:attribute>
+                    </xsl:element>
+                    <xsl:element name="xsd:totalDigits">
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="number($maxlen) - 1"/>
+                        </xsl:attribute>
+                    </xsl:element>
                     <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
-                    <xsl:if test="$minlen=$maxlen">
-                        <xsl:element name="xsd:totalDigits">
-                            <xsl:attribute name="value">
-                                <xsl:value-of select="number($minlen)-1"/>
-                            </xsl:attribute>
-                        </xsl:element>
-                    </xsl:if>
                 </xsl:element>
+
             </xsd:simpleType>
         </xsl:element>
     </xsl:template>
@@ -377,7 +289,7 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="*:FudName">
         <Field name="{text()}"/>
     </xsl:template>

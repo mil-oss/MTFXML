@@ -21,29 +21,30 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="yes"/>
-    
+
     <!--Baseline XML Schema-->
     <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
     <!--Normalized xsd:simpleTypes-->
     <xsl:variable name="normenumerationtypes"
         select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
     <!--Output-->
-    <xsl:variable name="outdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
-    
+    <xsl:variable name="enumoutdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
+    <xsl:variable name="fixedoutdoc" select="'../../XSD/Normalized/FixedElements.xsd'"/>
+
     <!--xsd:simpleTypes with Enumerations-->
     <xsl:variable name="enumtypes">
         <xsl:apply-templates
-            select="$fields_xsd/*/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][count(xsd:enumeration) > 1]]">
+            select="$fields_xsd/*/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]">
             <xsl:sort select="@name"/>
         </xsl:apply-templates>
     </xsl:variable>
-    
+
     <!--xsd:simpleTypes with a single Enumeration will be converted to an xsd:element with a fixed value-->
-    <xsl:variable name="oneitemenums">
+  <!--  <xsl:variable name="oneitemenums">
         <xsl:apply-templates
             select="$fields_xsd/*/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][count(xsd:enumeration) = 1]]"
             mode="fixed"/>
-    </xsl:variable>
+    </xsl:variable>-->
 
     <!--This returns a list of generated xsd:elements and associated unique xsd:simpleType-->
     <xsl:variable name="enumelementsandtypes">
@@ -61,7 +62,7 @@
     </xsl:variable>
 
     <xsl:template match="/">
-        <xsl:result-document href="{$outdoc}">
+        <xsl:result-document href="{$enumoutdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
@@ -73,14 +74,20 @@
                 <xsl:for-each select="$enumelementsandtypes/*[name() = 'xsd:element']">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
-                </xsl:for-each>
-                <xsl:comment>**** FIXED VALUE ELEMENTS ****</xsl:comment>
+                </xsl:for-each>              
+            </xsd:schema>
+        </xsl:result-document>
+        <!--<xsl:result-document href="{$fixedoutdoc}">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsl:for-each select="$oneitemenums/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
             </xsd:schema>
-        </xsl:result-document>
+        </xsl:result-document>-->
     </xsl:template>
 
     <!-- ******** simpleType Generation ********-->
@@ -200,12 +207,15 @@
     </xsl:template>
 
     <!--For Single Enumeration Types converted to Elements-->
-    <xsl:template match="xsd:appinfo[ancestor::xsd:simpleType/xsd:restriction[count(xsd:enumeration)=1]]">
+    <xsl:template
+        match="xsd:appinfo[ancestor::xsd:simpleType/xsd:restriction[count(xsd:enumeration) = 1]]">
         <xsl:copy copy-namespaces="no">
             <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
-                <xsl:apply-templates select="ancestor::xsd:simpleType/xsd:restriction/xsd:enumeration/xsd:annotation/xsd:appinfo/*" mode="attr"/>
+                <xsl:apply-templates
+                    select="ancestor::xsd:simpleType/xsd:restriction/xsd:enumeration/xsd:annotation/xsd:appinfo/*"
+                    mode="attr"/>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
@@ -229,15 +239,6 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="*:FudExplanation" mode="attr">
-        <xsl:variable name="txt" select="normalize-space(text())"/>
-        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
-            <xsl:attribute name="explanation">
-                <xsl:value-of select="normalize-space(text())"/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>
-
     <xsl:template match="*:DataCode" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
@@ -256,6 +257,9 @@
         </xsl:if>
     </xsl:template>
 
+
+    <xsl:template match="*:FudExplanation" mode="attr"/>
+    <xsl:template match="*:Explanation" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
     <xsl:template match="*:VersionIndicator" mode="attr"/>

@@ -11,6 +11,7 @@
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                <xsl:comment></xsl:comment>
                 <xsl:comment>**** STRINGS ****</xsl:comment>
                 <xsl:apply-templates
                     select="$normflds/xsd:schema/xsd:simpleType[xsd:restriction/@base = 'xsd:string'][not(xsd:restriction/xsd:enumeration)]">

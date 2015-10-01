@@ -1,11 +1,12 @@
-This document describes the process by which MTF XML Schema simpleTypes are normalized and streamlined for practical use.
+This document describes the process by which MTF XML Schema xsd:simpleTypes are normalized and streamlined for practical use.
 
-1. Overriding Principle: The creation of a "Type" for every field in MTF simply by adding "Type" or "SimpleType" to each field name does not leverage the concept of Typing appropriately.  Many fields have identical content restrictions.  By comparing regular expressions, numerical content, and enumerations the number of simpleTypes are significantly reduced and the XML implementation of the MIL STDs employs reuse, extension and restriction effectively.
+1. Overriding Principle: The creation of a "Type" for every field in MTF simply by adding "Type" or "SimpleType" to each field name does not leverage the concept of Typing appropriately.  Many fields have identical content restrictions.  By comparing regular expressions, numerical content, and enumerations the number of xsd:simpleTypes are significantly reduced and the XML implementation of the MIL STDs employs reuse, extension and restriction effectively.
 
 1. STRINGS
+
     a. Regular Expression Comparison
     
-        (1) Fields with identical regular expresssions (REGEX) exclusive of length can be assigend common simpleTypes.  Length restrictions are applied at the element level.
+        (1) Fields with identical regular expresssions (REGEX) exclusive of length can be assigend common xsd:simpleTypes.  Length restrictions are applied at the element level.
         
         (2) The NormlizedSimpleTypes.xsd has been created based on analysis to determine common REGEX categories for re-use.  The Stingse.xsl applies these types to simnpleTypes with min and max length restrictions removed in order to generate Elements with common types.  Min and max are assigned at the element level.
                 
@@ -21,9 +22,6 @@ This document describes the process by which MTF XML Schema simpleTypes are norm
         
         (2) The Stings.xsl replaces all uses of BlankSpaceCharacterType with a BlankSpaceSimpleType, and generates the BlankSpace element which has this type.
         
-    d. String type normalization reduces the number of string SimpleTypes from 1624 to 153 without impacting message content.
-   
-
 
 3. ENUMERATIONS
 
@@ -31,20 +29,37 @@ This document describes the process by which MTF XML Schema simpleTypes are norm
     
         (1) The use of a simple type with a restriction and a single enumeration is a result of vapid adherence to a "best practice" which advises avoidance of fixed and default values.  Creation of "Types" for elements which will only ever contain one value and will never be extended or restricted is pointless.  
         
-        (2)  The Enumerations.xsl converts simpleTypes with single enumerations to elements with fixed values so that they can be directly referenced from complexTypes as global elements from fields.xsd.
+        (2)  The Enumerations.xsl converts xsd:simpleTypes with single enumerations to elements with fixed values so that they can be directly referenced from complexTypes as global elements from fields.xsd.
          
     b.  Common Enumerations.
 
-        (1) Elements with identical Enumerations can be typed using a common simpleType definition.    
+        (1) Elements with identical Enumerations can be typed using a common xsd:simpleType definition.    
         
         (2) The NormlizedSimpleTypes.xsd has been created based on analysis to determine reusable enumeration sets.  The Enumerations.xsl applies these types to elements when content is equivalent, and include annotations at the element level.
         
-    c.   Enumeration normalization reduces the number of enumerated SimpleTypes from 1766 to 1473 without impacting message content
-    
+ 
 4. NUMERICS
 
    a.   Integers
    
+        (1) The use of xsd:simpleTypes for integers serves no purpose since XML Schema provides all means necessary to describe and validate integer content.
+        
+        (2) Numerics.xsl converts all xsd:simpleTypes with xsd:decimal restrictions to elements.
+   
    b.   Decimals
    
-5. Summary    
+        (1) The use of xsd:simpleTypes for decimals serves no purpose since XML Schema provides all means necessary to describe and validate decimal content.
+        
+        (2) Numerics.xsl converts all xsd:simpleTypes with xsd:integer restrictions to elements.
+        
+           
+5. Summary. 
+
+    a. String type normalization reduces the number of string xsd:simpleTypes from 1624 to 153 without impacting message content.
+    
+    b. Enumeration normalization reduces the number of enumerated xsd:simpleTypes from 1766 to 1473 without impacting message content.
+    
+    c. Numeric normalization eliminates 1337 integer xsd:simpleTypes and 245 decimal xsd:simpleTypes.
+    
+       
+---

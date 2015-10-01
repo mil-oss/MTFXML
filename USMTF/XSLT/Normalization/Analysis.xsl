@@ -12,7 +12,7 @@
     
     <xsl:template match="/">
         <Fields>
-            <SimpleTypes>
+            <BaselineSimpleTypes>
                 <xsl:attribute name="StringFieldsCount">
                     <xsl:value-of select="count($mtf_fields/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern])"/>
                 </xsl:attribute>
@@ -25,7 +25,7 @@
                 <xsl:attribute name="IntegerFieldsCount">
                     <xsl:value-of select="count($mtf_fields/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:integer']])"/>
                 </xsl:attribute>
-            </SimpleTypes>
+            </BaselineSimpleTypes>
         </Fields>
     </xsl:template>
     
