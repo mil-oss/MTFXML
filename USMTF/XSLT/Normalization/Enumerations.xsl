@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/* 
+ * Copyright (C) 2015 JD NEUSHUL
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+    <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="yes"/>
+    
+    <!--Baseline XML Schema-->
     <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
-    <xsl:variable name="outdoc" select="'../../XSD/Normalized/FixedElements.xsd'"/>
+    <!--Normalized xsd:simpleTypes-->
+    <xsl:variable name="normenumerationtypes"
+        select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
+    <!--Output-->
+    <xsl:variable name="outdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
+    
+    <!--xsd:simpleTypes with Enumerations-->
+    <xsl:variable name="enumtypes">
+        <xsl:apply-templates
+            select="$fields_xsd/*/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][count(xsd:enumeration) > 1]]">
+            <xsl:sort select="@name"/>
+        </xsl:apply-templates>
+    </xsl:variable>
+    
+    <!--xsd:simpleTypes with a single Enumeration will be converted to an xsd:element with a fixed value-->
     <xsl:variable name="oneitemenums">
         <xsl:apply-templates
             select="$fields_xsd/*/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][count(xsd:enumeration) = 1]]"
-            mode="enum"/>
+            mode="fixed"/>
+    </xsl:variable>
+
+    <!--This returns a list of generated xsd:elements and associated unique xsd:simpleType-->
+    <xsl:variable name="enumelementsandtypes">
+        <xsl:apply-templates select="$enumtypes/*" mode="el"/>
+    </xsl:variable>
+
+    <!--This consolidates normalized and unique xsd:simpleTypes for sorting  -->
+    <xsl:variable name="combinedTypes">
+        <xsl:for-each select="$normenumerationtypes">
+            <xsl:copy-of select="."/>
+        </xsl:for-each>
+        <xsl:for-each select="$enumelementsandtypes/*[name() = 'xsd:simpleType']">
+            <xsl:copy-of select="."/>
+        </xsl:for-each>
     </xsl:variable>
 
     <xsl:template match="/">
@@ -16,12 +66,73 @@
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsl:copy-of select="$oneitemenums"/>
+                <xsl:for-each select="$combinedTypes/*">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+                <xsl:for-each select="$enumelementsandtypes/*[name() = 'xsd:element']">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+                <xsl:comment>**** FIXED VALUE ELEMENTS ****</xsl:comment>
+                <xsl:for-each select="$oneitemenums/*">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
 
-    <xsl:template match="xsd:simpleType" mode="enum">
+    <!-- ******** simpleType Generation ********-->
+    <xsl:template match="xsd:simpleType">
+        <xsl:element name="{name()}">
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="text()"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="xsd:simpleType/@name">
+        <xsl:attribute name="name">
+            <xsl:value-of select="concat(substring(., 0, string-length(.) - 3), 'SimpleType')"/>
+        </xsl:attribute>
+    </xsl:template>
+
+    <!-- ******** Element Generation ********-->
+    <xsl:template match="xsd:simpleType" mode="el">
+        <xsl:variable name="restr" select="xsd:restriction"/>
+        <xsl:variable name="match">
+            <xsl:copy-of select="$normenumerationtypes[deep-equal(xsd:restriction, $restr)]"/>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="string-length($match/*/@name) > 0">
+                <xsl:element name="xsd:element">
+                    <xsl:attribute name="name">
+                        <xsl:value-of select="substring-before(@name, 'SimpleType')"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="$match/*/@name"/>
+                    </xsl:attribute>
+                    <xsl:copy-of select="xsd:annotation"/>
+                </xsl:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:element name="xsd:element">
+                    <xsl:attribute name="name">
+                        <xsl:value-of select="substring-before(@name, 'SimpleType')"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="@name"/>
+                    </xsl:attribute>
+                    <xsl:copy-of select="xsd:annotation"/>
+                </xsl:element>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- ******** Fixed Value Element Generation ********-->
+    <xsl:template match="xsd:simpleType" mode="fixed">
         <xsl:element name="xsd:element">
             <xsl:attribute name="name">
                 <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
@@ -33,6 +144,7 @@
         </xsl:element>
     </xsl:template>
 
+    <!-- ******** FORMATIING ********-->
     <xsl:template match="*">
         <xsl:element name="{name()}">
             <xsl:apply-templates select="@*"/>
@@ -79,6 +191,16 @@
 
     <!--Copy element and use template mode to convert elements to attributes-->
     <xsl:template match="xsd:appinfo">
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*" mode="attr"/>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
+
+    <!--For Single Enumeration Types converted to Elements-->
+    <xsl:template match="xsd:appinfo[ancestor::xsd:simpleType/xsd:restriction[count(xsd:enumeration)=1]]">
         <xsl:copy copy-namespaces="no">
             <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
                 <xsl:apply-templates select="@*"/>
@@ -152,5 +274,18 @@
     <xsl:template match="*:DataItemSponsor" mode="attr"/>
     <xsl:template match="*:DataItemSequenceNumber" mode="attr"/>
 
+    <xsl:template match="*" mode="copy">
+        <xsl:copy>
+            <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:apply-templates select="text()" mode="copy"/>
+            <xsl:apply-templates select="*" mode="copy"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@*" mode="copy">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="text()" mode="copy">
+        <xsl:value-of select="."/>
+    </xsl:template>
 
 </xsl:stylesheet>

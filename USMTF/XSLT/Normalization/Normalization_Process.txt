@@ -1,11 +1,50 @@
 This document describes the process by which MTF XML Schema simpleTypes are normalized and streamlined for practical use.
 
-1. Overriding Principle: The creation of a "Type" for every field in MTF simply by adding "Type" or "SimpleType" to each field name does not leverage the concept of Typing correctly.  Many fields have identical content restrictions.  By comparing regular expressions, numerical content, and enumerations the number of simpleTypes are significantly reduced and the XML implementation of the MIL STDs employs reuse, extension and restriction effectively.
+1. Overriding Principle: The creation of a "Type" for every field in MTF simply by adding "Type" or "SimpleType" to each field name does not leverage the concept of Typing appropriately.  Many fields have identical content restrictions.  By comparing regular expressions, numerical content, and enumerations the number of simpleTypes are significantly reduced and the XML implementation of the MIL STDs employs reuse, extension and restriction effectively.
 
-1. Single Enumerations.
-    a. Rationale: The use of a simple type with a restriction and a single enumeration is a result of vapid adherence to a "best practice" which advises avoidance of fixed and default values.  Creation of "Types" for elements which will only ever contain one value and will never be extended or restricted is pointless.  
-    b. Solution: The SingleEnums.xsl converts simpleTypes with single enumerations to elements with fixed values so that they can be directly referenced from complexTypes as global elements from fields.xsd.
+1. STRINGS
+    a. Regular Expression Comparison
     
-2.  Common Enumerations.
-    a. Rationale: Elements with identical Enumerations can be typed using a common simpleType definition.    
-    b. Solution: The SingleEnums.xsl converts simpleTypes with single enumerations to elements with fixed values so that they can be directly referenced from complexTypes as global elements from fields.xsd.
+        (1) Fields with identical regular expresssions (REGEX) exclusive of length can be assigend common simpleTypes.  Length restrictions are applied at the element level.
+        
+        (2) The NormlizedSimpleTypes.xsd has been created based on analysis to determine common REGEX categories for re-use.  The Stingse.xsl applies these types to simnpleTypes with min and max length restrictions removed in order to generate Elements with common types.  Min and max are assigned at the element level.
+                
+    b. FreeText simplification
+    
+        (1)  The baseline XML Schema defines FreeTextType using a complexType which extends a simpleType in order to include the xsd:space attribute which can be used or preserve whitespace or not.  This is not used anywhere in the standard.  If it were to be used - it can be applied by extension in that case.
+        
+        (2) The Stings.xsl replaces all uses of FreeTextType with the normalized AlphaNumericSpecialFreeTextSimpleType, and generates the FreeText element which has this type.
+        
+    c. BlankSpace simplification
+    
+        (1)  The baseline XML Schema defines BlankSpaceCharacterType using a complexType which extends a simpleType in order to include the xsd:space attribute which can be used or preserve whitespace or not.  This is not used anywhere in the standard.  If it were to be used - it can be applied by extension in that case.
+        
+        (2) The Stings.xsl replaces all uses of BlankSpaceCharacterType with a BlankSpaceSimpleType, and generates the BlankSpace element which has this type.
+        
+    d. String type normalization reduces the number of string SimpleTypes from 1624 to 153 without impacting message content.
+   
+
+
+3. ENUMERATIONS
+
+    a. Single Enumerations.
+    
+        (1) The use of a simple type with a restriction and a single enumeration is a result of vapid adherence to a "best practice" which advises avoidance of fixed and default values.  Creation of "Types" for elements which will only ever contain one value and will never be extended or restricted is pointless.  
+        
+        (2)  The Enumerations.xsl converts simpleTypes with single enumerations to elements with fixed values so that they can be directly referenced from complexTypes as global elements from fields.xsd.
+         
+    b.  Common Enumerations.
+
+        (1) Elements with identical Enumerations can be typed using a common simpleType definition.    
+        
+        (2) The NormlizedSimpleTypes.xsd has been created based on analysis to determine reusable enumeration sets.  The Enumerations.xsl applies these types to elements when content is equivalent, and include annotations at the element level.
+        
+    c.   Enumeration normalization reduces the number of enumerated SimpleTypes from 1766 to 1473 without impacting message content
+    
+4. NUMERICS
+
+   a.   Integers
+   
+   b.   Decimals
+   
+5. Summary    
