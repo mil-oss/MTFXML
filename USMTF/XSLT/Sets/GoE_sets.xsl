@@ -32,10 +32,10 @@
     <!--Baseline Fields XML Schema document-->
     <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
     <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
-
     <!--Set deconfliction and annotation changes-->
     <xsl:variable name="set_Changes"
         select="document('../../XSD/Deconflicted/Set_DeconflictionXML.xml')/USMTF_Sets"/>
+    <xsl:variable name="output" select="'../../XSD/GoE_Schema/GoE_sets.xsd'"/>
 
     <!--Root level complexTypes-->
     <xsl:variable name="complex_types">
@@ -77,9 +77,8 @@
         </xsl:for-each>
     </xsl:variable>
 
-
     <xsl:template match="/">
-        <xsl:result-document href="../../XSD/GoE_Schema/GoE_sets.xsd">
+        <xsl:result-document href="{$output}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:field="urn:mtf:mil:6040b:fields"
                 xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
@@ -104,7 +103,7 @@
 
     <xsl:template match="xsd:complexType" mode="global">
         <xsl:variable name="elname">
-            <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
+            <xsl:value-of select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
         </xsl:variable>
         <xsl:variable name="setid">
             <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
@@ -124,8 +123,7 @@
                     />
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of
-                        select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
+                    <xsl:value-of select="$elname"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -337,33 +335,73 @@
 
     <!--Copy annotation only if it has descendents with text content-->
     <xsl:template match="xsd:annotation">
+        <xsl:variable name="setid">
+            <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier/text()"/>
+        </xsl:variable>
+        <xsl:variable name="doc">
+            <xsl:apply-templates select="xsd:documentation/text()"/>
+        </xsl:variable>
+        <xsl:variable name="desc">
+            <xsl:apply-templates select="xsd:appinfo/*:SetFormatDescription/text()"/>
+            <xsl:apply-templates select="xsd:appinfo/*:FieldFormatDefinition/text()"/>
+        </xsl:variable>
+        <xsl:variable name="newdesc">
+            <xsl:value-of select="normalize-space($set_Changes/*[@SETNAMESHORT = $setid][@ProposedSetFormatDescription][1]/@ProposedSetFormatDescription)"/>
+        </xsl:variable>
+        <xsl:variable name="doc">
+            <xsl:choose>
+                <xsl:when test="string-length($newdesc) > 0">
+                    <xsl:value-of select="$newdesc"/>
+                </xsl:when>
+                <xsl:when test="string-length($doc) > 0">
+                    <xsl:value-of select="$doc"/>
+                </xsl:when>
+                <xsl:when test="string-length($desc) > 0">
+                    <xsl:value-of select="$desc"/>
+                </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
+                <xsl:if test="not(xsd:documentation)">
+                    <xsd:documentation>
+                        <xsl:value-of select="$doc"/>
+                    </xsd:documentation>
+                </xsl:if>
                 <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*"/>
+                <xsl:apply-templates select="*">
+                    <xsl:with-param name="doc" select="$doc"/>
+                </xsl:apply-templates>
             </xsl:copy>
         </xsl:if>
     </xsl:template>
 
     <!--Copy documentation only if it has text content-->
     <xsl:template match="xsd:documentation">
-        <xsl:if test="text()">
+        <xsl:param name="doc"/>
+        <xsl:if test="string-length($doc) > 0">
             <xsl:copy copy-namespaces="no">
-                <xsl:apply-templates select="text()"/>
+                <xsl:value-of select="$doc"/>
             </xsl:copy>
         </xsl:if>
     </xsl:template>
 
     <!--Copy element and use template mode to convert elements to attributes in SET element-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
+        <xsl:param name="doc"/>
         <xsl:variable name="setid">
             <xsl:value-of select="*:SetFormatIdentifier/text()"/>
         </xsl:variable>
         <xsl:copy copy-namespaces="no">
             <xsl:element name="SetFormat" xmlns="urn:mtf:mil:6040b:sets">
                 <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*" mode="attr"/>
-                <xsl:apply-templates select="$set_Changes/*[@SETNAMESHORT = $setid]/@*" mode="chg"/>
+                <xsl:apply-templates select="*" mode="attr">
+                    <xsl:with-param name="doc" select="$doc"/>
+                </xsl:apply-templates>
+                <xsl:apply-templates select="$set_Changes/*[@SETNAMESHORT = $setid]/@*[string-length(.)&gt;0][1]" mode="chg">
+                    <xsl:with-param name="doc" select="$doc"/>
+                </xsl:apply-templates>
+                <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
@@ -372,32 +410,41 @@
 
     <!--Replace Data Specified in Deconfliction XML Document-->
     <xsl:template match="@ProposedSetFormatPositionName" mode="chg">
-        <xsl:attribute name="SetFormatPositionName">
+        <xsl:attribute name="positionName">
             <xsl:value-of select="."/>
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="@ProposedSetFormatName" mode="chg">
-        <xsl:attribute name="SetFormatName">
+        <xsl:attribute name="name">
             <xsl:value-of select="."/>
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="@ProposedSetFormatDescription" mode="chg">
-        <xsl:attribute name="SetFormatDescription">
-            <xsl:value-of select="."/>
-        </xsl:attribute>
+        <xsl:param name="doc"/>
+        <xsl:if test="not(normalize-space(.) = $doc)">
+            <xsl:attribute name="description">
+                <xsl:value-of select="."/>
+            </xsl:attribute>
+        </xsl:if>
     </xsl:template>
     <xsl:template match="@ProposedSetFormatPositionConceptChanges" mode="chg">
-        <xsl:attribute name="SetFormatPositionConcept">
+        <xsl:if test="not(normalize-space(.) = ' ') and not(normalize-space(.) = '')">
+        <xsl:attribute name="concept">
             <xsl:value-of select="."/>
         </xsl:attribute>
+        </xsl:if>
     </xsl:template>
 
     <!--Copy element and use template mode to convert elements to attributes in FIELD element-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
+        <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
             <xsl:element name="FieldFormat" xmlns="urn:mtf:mil:6040b:sets">
                 <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*" mode="attr"/>
+                <xsl:apply-templates select="*" mode="attr">
+                    <xsl:with-param name="doc" select="$doc"/>
+                </xsl:apply-templates>
+                <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
@@ -427,6 +474,129 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
+
+    <!--Convert appinfo items-->
+    <xsl:template match="*:SetFormatName" mode="attr">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="name">
+                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SetFormatIdentifier" mode="attr">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="id">
+                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:VersionIndicator" mode="attr">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="version">
+                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SetFormatPositionConcept" mode="attr">
+        <xsl:param name="doc"/>
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not($doc = normalize-space(text()))">
+            <xsl:attribute name="concept">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SetFormatPositionName" mode="attr">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="positionName">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:FieldFormatPositionName" mode="attr">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="positionName">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:FieldFormatPositionConcept" mode="attr">
+        <xsl:param name="doc"/>
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
+            <xsl:attribute name="concept">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:FieldFormatName" mode="attr">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="name">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:FieldFormatDefinition" mode="attr">
+        <xsl:param name="doc"/>
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
+            <xsl:attribute name="definition">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:FieldFormatRemark" mode="attr">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="remark">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
+                <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
+                    <xsl:value-of select="normalize-space(text())"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
+                    <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SetFormatExample" mode="examples">
+        <xsl:if
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
+                <xsl:element name="Example" namespace="urn:mtf:mil:6040b:sets">
+                    <xsl:value-of select="normalize-space(text())"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:SetFormatExample">
+                    <xsl:element name="Example" namespace="urn:mtf:mil:6040b:sets">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
+    <xsl:template match="*:OccurrenceCategory" mode="attr"/>
+    <xsl:template match="*:SetFormatExample" mode="attr"/>
+    <xsl:template match="*:SetFormatRelatedDocuments" mode="attr"/>
+    <xsl:template match="*:RepeatabilityForGroupOfFields" mode="attr"/>
+    <xsl:template match="*:SetFormatDescription" mode="attr"/>
+    <xsl:template match="*:FieldFormatRelatedDocument" mode="attr"/>
 
     <!--Filter unneeded nodes-->
     <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>

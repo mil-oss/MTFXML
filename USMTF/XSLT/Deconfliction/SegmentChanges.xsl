@@ -5,9 +5,9 @@
 
     <!--This transform extracts usable XML from MS EXCEL documents saved as XML-->
 
-    <xsl:variable name="msgs" select="document('../../XSD/Baseline_Schemas/messages.xsd')"/>
-    <xsl:variable name="sourceDoc" select="document('Segment_DeconflictionEXCEL.xml')"/>
-    <xsl:variable name="outputDoc" select="'Segment_Name_Changes.xml'"/>
+    <xsl:variable name="msgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
+    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/Segment_DeconflictionEXCEL.xml')"/>
+    <xsl:variable name="outputDoc" select="'../../XSD/Deconflicted/Segment_Name_Changes.xml'"/>
 
     <!--Create Attributes from first row labels-->
     <xsl:variable name="attributes">
