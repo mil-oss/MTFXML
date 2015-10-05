@@ -34,7 +34,7 @@
     <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
     <!--Set deconfliction and annotation changes-->
     <xsl:variable name="set_Changes"
-        select="document('../../XSD/Deconflicted/Set_DeconflictionXML.xml')/USMTF_Sets"/>
+        select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
     <xsl:variable name="output" select="'../../XSD/GoE_Schema/GoE_sets.xsd'"/>
 
     <!--Root level complexTypes-->
@@ -111,10 +111,10 @@
         <xsl:variable name="newname">
             <xsl:choose>
                 <xsl:when test="$setid = '1APHIB'">
-                    <xsl:text>AmphibiousForceCompositionType</xsl:text>
+                    <xsl:text>AmphibiousForceComposition</xsl:text>
                 </xsl:when>
                 <xsl:when test="$setid = 'MARACT'">
-                    <xsl:text>MaritimeActivityType</xsl:text>
+                    <xsl:text>MaritimeActivity</xsl:text>
                 </xsl:when>
                 <xsl:when
                     test="exists($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
@@ -439,7 +439,7 @@
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="FieldFormat" xmlns="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Field" xmlns="urn:mtf:mil:6040b:sets">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr">
                     <xsl:with-param name="doc" select="$doc"/>
@@ -452,7 +452,7 @@
     <xsl:template match="xsd:appinfo" mode="ref">
         <xsl:param name="fldinfo"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="FieldFormat" namespace="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:sets">
                 <xsl:apply-templates select="*" mode="attr"/>
                 <xsl:if test="parent::xsd:annotation/parent::xsd:extension">
                     <xsl:variable name="ffdno">
@@ -463,18 +463,16 @@
                     <xsl:variable name="ffdinfo">
                         <xsl:copy-of select="$goe_fields_xsd//*:Field[@ffirnFudn = $ffdno]"/>
                     </xsl:variable>
-                    <xsl:attribute name="FieldFormatName">
+                    <xsl:attribute name="name">
                         <xsl:value-of select="$ffdinfo/*/@FudName"/>
                     </xsl:attribute>
-                    <xsl:attribute name="FieldFormatDefinition">
+                    <xsl:attribute name="explanation">
                         <xsl:value-of select="$ffdinfo/*/@FudExplanation"/>
                     </xsl:attribute>
-                    <xsl:if test="contains(*:FieldFormatRemark/text(), $ffdno)"> </xsl:if>
                 </xsl:if>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
-
     <!--Convert appinfo items-->
     <xsl:template match="*:SetFormatName" mode="attr">
         <xsl:if
@@ -561,7 +559,7 @@
     </xsl:template>
     <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
         <xsl:if
-            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text())='NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
                 <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
                     <xsl:value-of select="normalize-space(text())"/>

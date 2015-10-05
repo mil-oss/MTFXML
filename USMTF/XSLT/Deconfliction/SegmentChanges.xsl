@@ -89,8 +89,8 @@
             </xsl:variable>
             <xsl:if test="not($ProposedElementName = $Elname)">
                 <xsl:element name="Segment">
-                    <xsl:attribute name="MsgId">
-                        <xsl:value-of select="*:Cell[1]/*:Data/text()"/>
+                    <xsl:attribute name="MtfId">
+                        <xsl:value-of select="*:Cell[2]/*:Data/text()"/>
                     </xsl:attribute>
                     <xsl:attribute name="ElementName">
                         <xsl:value-of select="concat($Elname, 'Segment')"/>
@@ -99,7 +99,14 @@
                         <xsl:value-of select="normalize-space(substring-after($newname,':'))"/>
                     </xsl:attribute>
                     <xsl:attribute name="NewElementName">
-                        <xsl:value-of select="concat($ProposedElementName, 'Segment')"/>
+                        <xsl:choose>
+                            <xsl:when test="ends-with($ProposedElementName,'Segment')">
+                                <xsl:value-of select="$ProposedElementName"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="concat($ProposedElementName, 'Segment')"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:attribute>
                 </xsl:element>
             </xsl:if>
