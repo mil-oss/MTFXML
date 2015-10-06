@@ -33,36 +33,67 @@
     <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
     <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
     <!--Set deconfliction and annotation changes-->
-    <xsl:variable name="set_Changes"
-        select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
+    <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
     <xsl:variable name="output" select="'../../XSD/GoE_Schema/GoE_sets.xsd'"/>
 
     <!--Root level complexTypes-->
     <xsl:variable name="complex_types">
-        <xsl:apply-templates select="$baseline_sets_xsd/xsd:schema/xsd:complexType" mode="global"/>
-    </xsl:variable>
-
-    <!--Root level elements-->
-    <xsl:variable name="global_elements">
-        <xsl:for-each select="$complex_types/xsd:complexType">
+        <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType">
             <xsl:variable name="elname">
-                <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
+                <xsl:value-of select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
             </xsl:variable>
             <xsl:variable name="setid">
                 <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
             </xsl:variable>
             <xsl:variable name="newname">
                 <xsl:choose>
+                    <xsl:when test="$setid = '1APHIB'">
+                        <xsl:text>AmphibiousForceComposition</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="$setid = 'MARACT'">
+                        <xsl:text>MaritimeActivity</xsl:text>
+                    </xsl:when>
                     <xsl:when
-                        test="exists($set_Changes/*/*[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
-                        <xsl:apply-templates
-                            select="$set_Changes/*[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]"
-                            mode="propname"/>
+                        test="exists($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0])">
+                        <xsl:value-of
+                            select="translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
+                        />
                     </xsl:when>
                     <xsl:otherwise>
+                        <xsl:value-of select="$elname"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:element name="xsd:complexType">
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($newname,'Type')"/>
+                </xsl:attribute>
+                <xsl:apply-templates select="*"/>
+                <xsl:if test="@name = 'SetBaseType'">
+                    <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                </xsl:if>
+            </xsl:element>
+        </xsl:for-each>
+    </xsl:variable>
+
+    <!--Root level elements-->
+    <xsl:variable name="global_elements">
+        <xsl:for-each select="$complex_types/xsd:complexType">
+            <xsl:variable name="elname">
+                <xsl:value-of select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
+            </xsl:variable>
+            <xsl:variable name="setid">
+                <xsl:value-of select="xsd:annotation/xsd:appinfo/*:Set/@id"/>
+            </xsl:variable>
+            <xsl:variable name="newname">
+                <xsl:choose>
+                    <xsl:when
+                        test="exists($set_Changes/*/*[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
                         <xsl:value-of
-                            select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"
-                        />
+                            select="translate($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$elname"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -101,44 +132,8 @@
         </xsl:result-document>
     </xsl:template>
 
-    <xsl:template match="xsd:complexType" mode="global">
-        <xsl:variable name="elname">
-            <xsl:value-of select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
-        </xsl:variable>
-        <xsl:variable name="setid">
-            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
-        </xsl:variable>
-        <xsl:variable name="newname">
-            <xsl:choose>
-                <xsl:when test="$setid = '1APHIB'">
-                    <xsl:text>AmphibiousForceComposition</xsl:text>
-                </xsl:when>
-                <xsl:when test="$setid = 'MARACT'">
-                    <xsl:text>MaritimeActivity</xsl:text>
-                </xsl:when>
-                <xsl:when
-                    test="exists($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
-                    <xsl:value-of
-                        select="translate($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
-                    />
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$elname"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsd:complexType name="{concat($newname,'Type')}">
-            <xsl:apply-templates select="@*[not(name() = 'name')]"/>
-            <xsl:apply-templates select="*"/>
-            <xsl:if test="@name = 'SetBaseType'">
-                <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-            </xsl:if>
-        </xsd:complexType>
-    </xsl:template>
-
     <!-- Elements in Fields simple global types converted to references..-->
     <xsl:template match="xsd:element[@name][not(@nillable)][not(@type)]">
-        <!-- <xsl:template match="xsd:element[@name][not(@nillable)][not(@type)][not(@name='GroupOfFields')]">-->
         <xsl:variable name="nm">
             <xsl:value-of select="@name"/>
         </xsl:variable>
@@ -393,7 +388,7 @@
             <xsl:value-of select="*:SetFormatIdentifier/text()"/>
         </xsl:variable>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="SetFormat" xmlns="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:sets">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr">
                     <xsl:with-param name="doc" select="$doc"/>

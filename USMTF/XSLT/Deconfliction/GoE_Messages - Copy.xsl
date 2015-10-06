@@ -23,15 +23,14 @@
     <xsl:output method="xml" indent="yes"/>
 
     <xsl:variable name="mtfmsgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
-    <xsl:variable name="mtfsets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
 
     <xsl:variable name="fields" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
     <xsl:variable name="sets" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
     <xsl:variable name="segments" select="document('../../XSD/GoE_Schema/GoE_segments.xsd')"/>
-    <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
-    <xsl:variable name="segment_Changes" select="document('../../XSD/Deconflicted/Segment_Name_Changes.xml')/USMTF_Segments"/>
-    
     <xsl:variable name="outputdoc" select="'../../XSD/GoE_Schema/GoE_messages.xsd'"/>
+    
+    <xsl:variable name="vAllowedSymbols"
+        select="'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'"/>
 
     <xsl:variable name="msgs">
         <xsl:apply-templates select="$mtfmsgs/xsd:schema/xsd:element" mode="el"/>
@@ -116,36 +115,34 @@
     <xsl:template match="xsd:schema/xsd:element/xsd:annotation/xsd:appinfo" mode="ctype"/>
 
     <xsl:template match="xsd:element" mode="ctype">
-        <xsl:variable name="elname">
-            <xsl:value-of select="@name"/>
-        </xsl:variable>
-        <xsl:variable name="setid">
-            <xsl:value-of select="$mtfsets/xsd:schema/xsd:complexType[@name=concat($elname,'Type')]/xsd:annotation/xsd:appinfo/*:SetFormatIdentifier"/>
-        </xsl:variable>
-        <xsl:variable name="newname">
-            <xsl:choose>
-                <xsl:when test="$setid = '1APHIB'">
-                    <xsl:text>AmphibiousForceComposition</xsl:text>
+        <xsl:variable name="nm">
+            <!--<xsl:choose>
+              <xsl:when test="starts-with(@name,'_')">
+                    <xsl:value-of select="@name"/>
                 </xsl:when>
-                <xsl:when test="$setid = 'MARACT'">
-                    <xsl:text>MaritimeActivity</xsl:text>
-                </xsl:when>
-                <xsl:when
-                    test="exists($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0])">
-                    <xsl:value-of
-                        select="translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
-                    />
+                <xsl:when test="contains(@name,'_')">
+                    <xsl:value-of select="substring-before(@name,'_')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$elname"/>
+                    <xsl:value-of select="@name"/>
                 </xsl:otherwise>
-            </xsl:choose>
+            </xsl:choose>-->
+            <xsl:value-of select="@name"/>
         </xsl:variable>
-        <xsl:choose>           
-            <xsl:when test="exists($sets/xsd:schema/xsd:element[@name=$newname])">
+        <xsl:choose>
+            <xsl:when test="exists($sets/xsd:schema/xsd:element[@name=$nm])">
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('set:',$newname)"/>
+                        <xsl:value-of select="concat('set:',$nm)"/>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="@*[not(name()='name')]" mode="ctype"/>
+                    <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
+                </xsl:copy>
+            </xsl:when>
+            <xsl:when test="exists($fields/xsd:schema/xsd:element[@name=$nm])">
+                <xsl:copy copy-namespaces="no">
+                    <xsl:attribute name="ref">
+                        <xsl:value-of select="concat('field:',$nm)"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name()='name')]" mode="ctype"/>
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
@@ -154,7 +151,7 @@
             <xsl:when test="starts-with(./xsd:complexType/xsd:complexContent/xsd:extension/@base,'s:')">
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="name">
-                        <xsl:value-of select="$newname"/>
+                        <xsl:value-of select="$nm"/>
                     </xsl:attribute>
                     <xsl:attribute name="type">
                         <xsl:value-of select="replace(xsd:complexType/xsd:complexContent/xsd:extension/@base,'s:','set:')"/>
@@ -173,39 +170,14 @@
     </xsl:template>
 
     <xsl:template match="xsd:element[ends-with(@name,'Segment')]" mode="ctype">
-        <xsl:variable name="elname">
-            <xsl:value-of select="@name"/>
-        </xsl:variable>
-        <xsl:variable name="mtfid">
-            <xsl:value-of select="ancestor::xsd:element[parent::xsd:schema]/xsd:annotation/xsd:appinfo/*:MtfIdentifier"/>
-        </xsl:variable>
-        <xsl:variable name="newname">
-            <xsl:choose>
-                <xsl:when
-                    test="exists($segment_Changes/Segment[@MtfId = $mtfid and @ElementName=$elname])">
-                    <xsl:value-of
-                        select="$segment_Changes/Segment[@MtfId = $mtfid and @ElementName=$elname]/@NewElementName"
-                    />
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$elname"/>
-                </xsl:otherwise>
-            </xsl:choose>
+        <xsl:variable name="nm">
+            <xsl:value-of select="substring(@name,0,string-length(@name)-6)"/>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="exists($segments/xsd:schema/xsd:element[@name=$newname])">
+            <xsl:when test="exists($segments/xsd:schema/xsd:element[@name=$nm])">
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('seg:',$newname)"/>
-                    </xsl:attribute>
-                    <xsl:apply-templates select="@*[not(name()='name')]" mode="ctype"/>
-                    <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
-                </xsl:copy>
-            </xsl:when>
-            <xsl:when test="exists($segments/xsd:schema/xsd:element[@name=$elname])">
-                <xsl:copy copy-namespaces="no">
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('seg:',$elname)"/>
+                        <xsl:value-of select="concat('seg:',$nm)"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name()='name')]" mode="ctype"/>
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
@@ -219,6 +191,73 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+
+<!--    <xsl:template match="xsd:element[starts-with(@name,'GeneralText_')]" mode="ctype">
+        <xsl:variable name="per">&#46;</xsl:variable>
+        <xsl:variable name="apos">&#34;</xsl:variable>
+        <xsl:variable name="doc">
+            <xsl:value-of
+                select="upper-case(*/ancestor::xsd:element[1]/xsd:annotation/xsd:documentation)"/>
+        </xsl:variable>
+        <xsl:variable name="UseDesc">
+            <xsl:value-of
+                select="upper-case(xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription)"/>
+        </xsl:variable>
+        <xsl:variable name="TextInd">
+            <xsl:value-of select="normalize-space(substring-after($UseDesc,'MUST EQUAL'))"/>
+        </xsl:variable>
+        <xsl:variable name="CCase">
+            <xsl:call-template name="CamelCase">
+                <xsl:with-param name="text">
+                    <xsl:value-of select="replace($TextInd,$apos,'')"/>
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:variable name="nametxt0">
+            <!-\-handle 2 special cases with parens-\->
+            <xsl:value-of
+                select="translate(translate(concat('GenText',replace(replace($CCase,'(TAS)',''),'(mpa)','')),' ()',''),translate(., $vAllowedSymbols, ''),'')"
+            />
+        </xsl:variable>
+        <!-\-handle 2 special cases with GenTextAcsign and OperationalTaskingCommonTacticalPicture Gentext -\->
+        <xsl:variable name="nametxt">
+            <xsl:choose>
+                <xsl:when test="$nametxt0='GenTextAcsign'">
+                    <xsl:choose>
+                        <xsl:when test="contains($doc,'AIRBORNE')">
+                            <xsl:value-of select="concat($nametxt0,'Airborne')"/>
+                        </xsl:when>
+                        <xsl:when test="contains($doc,'GROUND')">
+                            <xsl:value-of select="concat($nametxt0,'GroundAlert')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="concat($nametxt0,'Shipborne')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:when test="$nametxt0='GenTextArchitectureConfigurationAmplification'">
+                    <xsl:choose>
+                        <xsl:when test="contains($doc,'BGDBM')">
+                            <xsl:value-of select="concat($nametxt0,'Bgdm')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$nametxt0"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$nametxt0"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:copy copy-namespaces="no">
+            <xsl:attribute name="name">
+                <xsl:value-of select="$nametxt"/>
+            </xsl:attribute>
+            <xsl:apply-templates select="@*[not(name()='name')]" mode="ctype"/>
+            <xsl:apply-templates select="*" mode="ctype"/>
+        </xsl:copy>
+    </xsl:template>-->
 
     <xsl:template match="xsd:element[starts-with(@name, 'GeneralText_')]" mode="ctype">
         <xsl:variable name="per">&#46;</xsl:variable>
@@ -346,14 +385,14 @@
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
                 <xsl:when test="child::node()[starts-with(name(),'Set')]">
-                    <Set>
+                    <SetFormat>
                         <xsl:apply-templates select="*[string-length(text())&gt;0]" mode="attr"/>
-                    </Set>
+                    </SetFormat>
                 </xsl:when>
                 <xsl:when test="child::node()[starts-with(name(),'Segment')]">
-                    <Segment>
+                    <SegmentStructure>
                         <xsl:apply-templates select="*[string-length(text())&gt;0]" mode="attr"/>
-                    </Segment>
+                    </SegmentStructure>
                 </xsl:when>
             </xsl:choose>
         </xsl:copy>

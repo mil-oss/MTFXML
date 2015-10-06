@@ -34,8 +34,6 @@
     <xsl:variable name="decimal_fields_xsd" select="document('../../XSD/Normalized/Decimals.xsd')"/>
     <xsl:variable name="enumerated_fields_xsd"
         select="document('../../XSD/Normalized/Enumerations.xsd')"/>
-    <!--<xsl:variable name="fixed_fields_xsd"
-        select="document('../../XSD/Normalized/FixedElements.xsd')"/>-->
 
     <!--Normalized xsd:simpleTypes-->
     <xsl:variable name="normalizedsimpletypes"
