@@ -39,13 +39,6 @@
         </xsl:apply-templates>
     </xsl:variable>
 
-    <!--xsd:simpleTypes with a single Enumeration will be converted to an xsd:element with a fixed value-->
-  <!--  <xsl:variable name="oneitemenums">
-        <xsl:apply-templates
-            select="$fields_xsd/*/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][count(xsd:enumeration) = 1]]"
-            mode="fixed"/>
-    </xsl:variable>-->
-
     <!--This returns a list of generated xsd:elements and associated unique xsd:simpleType-->
     <xsl:variable name="enumelementsandtypes">
         <xsl:apply-templates select="$enumtypes/*" mode="el"/>
@@ -64,30 +57,41 @@
     <xsl:template match="/">
         <xsl:result-document href="{$enumoutdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
+                xmlns:ism="urn:us:gov:ic:ism:v2"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                targetNamespace="urn:mtf:mil:6040b:fields"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified">
+                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:complexType name="FieldEnumeratedBaseType">
+                    <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                        </xsd:extension>
+                    </xsd:simpleContent>
+                </xsd:complexType>
                 <xsl:for-each select="$combinedTypes/*">
                     <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
+                    <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
+                        <xsl:copy-of select="xsd:annotation"/>
+                        <xsd:simpleContent>
+                            <xsd:restriction base="FieldEnumeratedBaseType">
+                                <xsl:for-each select="xsd:restriction/xsd:enumeration">
+                                    <xsl:copy-of select="."/>
+                                </xsl:for-each>
+                            </xsd:restriction>
+                        </xsd:simpleContent>
+                    </xsd:complexType>
                 </xsl:for-each>
                 <xsl:for-each select="$enumelementsandtypes/*[name() = 'xsd:element']">
                     <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>              
-            </xsd:schema>
-        </xsl:result-document>
-        <!--<xsl:result-document href="{$fixedoutdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsl:for-each select="$oneitemenums/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
+                    <xsd:element name="{@name}" type="{concat(substring-before(@type,'SimpleType'),'Type')}">
+                        <xsl:copy-of select="xsd:annotation"/>
+                    </xsd:element>
                 </xsl:for-each>
             </xsd:schema>
-        </xsl:result-document>-->
+        </xsl:result-document>
     </xsl:template>
 
     <!-- ******** simpleType Generation ********-->
@@ -136,19 +140,6 @@
                 <xsl:copy-of select="."/>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
-
-    <!-- ******** Fixed Value Element Generation ********-->
-    <xsl:template match="xsd:simpleType" mode="fixed">
-        <xsl:element name="xsd:element">
-            <xsl:attribute name="name">
-                <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
-            </xsl:attribute>
-            <xsl:attribute name="fixed">
-                <xsl:value-of select="xsd:restriction/xsd:enumeration/@value"/>
-            </xsl:attribute>
-            <xsl:apply-templates select="xsd:annotation"/>
-        </xsl:element>
     </xsl:template>
 
     <!-- ******** FORMATIING ********-->

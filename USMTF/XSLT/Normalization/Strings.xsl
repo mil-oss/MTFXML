@@ -28,7 +28,7 @@
     consolidate fields and composites as global elements in the "Fields" XML Schema for the GoE refactor.-->
 
     <!--Baseline Fields XML Schema document-->
-    <xsl:variable name="mtf_simpletypestr"
+    <xsl:variable name="mtf_str"
         select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
 
     <xsl:variable name="outputdoc" select="'../../XSD/Normalized/Strings.xsd'"/>
@@ -38,8 +38,8 @@
         select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
 
 
-    <xsl:variable name="str_simpletypes">
-        <xsl:for-each select="$mtf_simpletypestr">
+    <xsl:variable name="str_types">
+        <xsl:for-each select="$mtf_str">
             <xsl:variable name="pattern" select="xsd:restriction/xsd:pattern/@value"/>
             <xsl:variable name="patternvalue">
                 <!-- Remove length qualifiers-->
@@ -67,11 +67,17 @@
     </xsl:variable>
 
     <!-- Contains a list of all baseline and normalized xsd:simpleTypes for sorting on output.-->
-    <xsl:variable name="allsimpletypes">
+    <xsl:variable name="alltypes">
         <xsl:for-each select="$normalizedstrtypes">
-            <xsl:copy-of select="."/>
+            <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
+            <xsd:simpleContent>
+                <xsd:restriction base="FieldStringBaseType">
+                    <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                </xsd:restriction>
+            </xsd:simpleContent>
+            </xsd:complexType>
         </xsl:for-each>
-        <xsl:for-each select="$str_simpletypes/*">
+        <xsl:for-each select="$str_types/*">
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
@@ -80,11 +86,11 @@
     <!-- Contains a list of xsd:elements with normalized xsd:simpleTypes and 
         including xsd:maxLength and xsd:minLength extensions for xsd:simpleTypes 
         with base xsd:string-->
-    <xsl:variable name="global_simple_elements">
-        <xsl:apply-templates select="$mtf_simpletypestr" mode="el">
+    <xsl:variable name="global_elements">
+        <xsl:apply-templates select="$mtf_str" mode="el">
             <xsl:sort select="@name"/>
         </xsl:apply-templates>
-        <xsd:element name="BlankSpaceCharacter" type="BlankSpaceSimpleType"/>
+        <xsd:element name="BlankSpaceCharacter" type="BlankSpaceType"/>
     </xsl:variable>
 
 
@@ -93,13 +99,24 @@
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:ism="urn:us:gov:ic:ism:v2"
                 targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsl:for-each select="$allsimpletypes/*">
+                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                
+                <xsd:complexType name="FieldStringBaseType">
+                    <xsd:simpleContent>
+                        <xsd:extension base="xsd:string">
+                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                        </xsd:extension>
+                    </xsd:simpleContent>
+                </xsd:complexType>
+                
+                <xsl:for-each select="$alltypes/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
-                <xsl:for-each select="$global_simple_elements/*">
+                <xsl:for-each select="$global_elements/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
@@ -108,15 +125,14 @@
     </xsl:template>
 
     <!-- ******************** SIMPLE TYPES ******************** -->
-    <!--Convert xsd:simpleType to NIME SImpleType naming convention-->
     <xsl:template match="xsd:simpleType" mode="stypes">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*"/>
-            <xsl:attribute name="name">
-                <xsl:value-of select="concat(substring(@name, 0, string-length(@name) - 3), 'SimpleType')"/>
-            </xsl:attribute>
-            <xsl:apply-templates select="*"/>
-        </xsl:copy>
+        <xsd:complexType name="{@name}">
+            <xsd:simpleContent>
+                <xsd:restriction base="FieldStringBaseType">
+                    <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                </xsd:restriction>
+            </xsd:simpleContent>
+        </xsd:complexType>
     </xsl:template>
 
     <!--Call patternValue template to remove min and max length qualifiers in RegEx
@@ -125,7 +141,7 @@
         <xsl:copy copy-namespaces="no">
             <xsl:attribute name="value">
                 <xsl:call-template name="patternValue">
-                    <xsl:with-param name="pattern" select="@value"/>
+                    <xsl:with-param name="pattern" select="replace(@value,'&#x20;',' ')"/>
                 </xsl:call-template>
             </xsl:attribute>
         </xsl:copy>
@@ -210,21 +226,23 @@
                 <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
             </xsl:attribute>
             <xsl:apply-templates select="xsd:annotation"/>
-            <xsd:simpleType>
+            <xsd:complexType>
+                <xsd:simpleContent>
                 <xsl:choose>
                     <xsl:when test="string-length($type) > 0">
-                        <xsd:restriction base="{$type}">
+                        <xsd:restriction base="{concat(substring-before($type,'SimpleType'),'Type')}">
                             <xsl:apply-templates select="xsd:restriction/*" mode="el"/>
                         </xsd:restriction>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsd:restriction
-                            base="{concat(substring(@name,0,string-length(@name)-3),'SimpleType')}">
+                            base="{concat(substring-before(@name,'SimpleType'),'Type')}">
                             <xsl:apply-templates select="xsd:restriction/*" mode="el"/>
                         </xsd:restriction>
                     </xsl:otherwise>
                 </xsl:choose>
-            </xsd:simpleType>
+                </xsd:simpleContent>
+            </xsd:complexType>
         </xsl:element>
     </xsl:template>
 

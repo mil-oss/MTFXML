@@ -54,33 +54,27 @@
         <xsl:text>&#10;</xsl:text>
         <xsl:comment> ************** STRING FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$string_fields_xsd/xsd:schema/*">
+        <xsl:for-each select="$string_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
             <xsl:copy-of select="."/>
         </xsl:for-each>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>************** INTEGER FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$integer_fields_xsd/xsd:schema/*">
+        <xsl:for-each select="$integer_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
             <xsl:copy-of select="."/>
         </xsl:for-each>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>*************** DECIMAL FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$decimal_fields_xsd/xsd:schema/*">
+        <xsl:for-each select="$decimal_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
             <xsl:copy-of select="."/>
         </xsl:for-each>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>************* ENUMERATED FIELDS *************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$enumerated_fields_xsd/xsd:schema/*">
+        <xsl:for-each select="$enumerated_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
             <xsl:copy-of select="."/>
         </xsl:for-each>
-        <!--<xsl:text>&#10;</xsl:text>
-        <xsl:comment>************ FIXED VALUE FIELDS ************</xsl:comment>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$fixed_fields_xsd/xsd:schema/*">
-            <xsl:copy-of select="."/>
-        </xsl:for-each>-->
     </xsl:variable>
 
     <!--Build re-factored xsd:complexTypes using GoE schema design and references-->
@@ -95,9 +89,13 @@
     <xsl:template match="/">
         <xsl:result-document href="{$output_fields_xsd}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
+                xmlns:ism="urn:us:gov:ic:ism:v2"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                targetNamespace="urn:mtf:mil:6040b:fields"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified">
+                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsl:copy-of select="$refactor_fields_xsd"/>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** COMPOSITE TYPES **************</xsl:comment>

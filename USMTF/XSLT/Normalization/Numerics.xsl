@@ -7,11 +7,6 @@
         select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:integer']]"/>
     <xsl:variable name="decimals_xsd"
         select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:decimal']]"/>
-    <!--Normalized Types-->
-    <xsl:variable name="integerSimpleTypes"
-        select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:integer']]"/>
-    <xsl:variable name="decimalSimpleTypes"
-        select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:decimal']]"/>
     <!--Output-->
     <xsl:variable name="integersoutputdoc" select="'../../XSD/Normalized/Integers.xsd'"/>
     <xsl:variable name="decimalsoutputdoc" select="'../../XSD/Normalized/Decimals.xsd'"/>
@@ -28,11 +23,17 @@
         <xsl:result-document href="{$integersoutputdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:ism="urn:us:gov:ic:ism:v2"
                 targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsl:for-each select="$integerSimpleTypes">
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
+                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:complexType name="FieldIntegerBaseType">
+                    <xsd:simpleContent>
+                        <xsd:extension base="xsd:integer">
+                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                        </xsd:extension>
+                    </xsd:simpleContent>
+                </xsd:complexType>
                 <xsl:for-each select="$integers/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
@@ -42,11 +43,17 @@
         <xsl:result-document href="{$decimalsoutputdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:ism="urn:us:gov:ic:ism:v2"
                 targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsl:for-each select="$decimalSimpleTypes">
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
+                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:complexType name="FieldDecimalBaseType">
+                    <xsd:simpleContent>
+                        <xsd:extension base="xsd:decimal">
+                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                        </xsd:extension>
+                    </xsd:simpleContent>
+                </xsd:complexType>
                 <xsl:for-each select="$decimals/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
@@ -67,16 +74,18 @@
                 <xsl:value-of select="$nm"/>
             </xsl:attribute>
             <xsl:apply-templates select="xsd:annotation"/>
-            <xsd:simpleType>
+            <xsd:complexType>
+                <xsd:simpleContent>
                 <xsl:element name="xsd:restriction">
                     <xsl:attribute name="base">
-                        <xsl:text>xsd:integer</xsl:text>
+                        <xsl:text>FieldIntegerBaseType</xsl:text>
                     </xsl:attribute>
                     <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
                     <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
                     <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
                 </xsl:element>
-            </xsd:simpleType>
+                </xsd:simpleContent>
+            </xsd:complexType>
         </xsl:element>
     </xsl:template>
 
@@ -145,10 +154,11 @@
                 <xsl:value-of select="$nm"/>
             </xsl:attribute>
             <xsl:apply-templates select="xsd:annotation"/>
-            <xsd:simpleType>
+            <xsd:complexType>
+                <xsd:simpleContent>
                 <xsl:element name="xsd:restriction">
                     <xsl:attribute name="base">
-                        <xsl:text>xsd:decimal</xsl:text>
+                        <xsl:text>FieldDecimalBaseType</xsl:text>
                     </xsl:attribute>
                     <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
                     <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
@@ -164,8 +174,8 @@
                     </xsl:element>
                     <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
                 </xsl:element>
-
-            </xsd:simpleType>
+                </xsd:simpleContent>
+            </xsd:complexType>
         </xsl:element>
     </xsl:template>
 
