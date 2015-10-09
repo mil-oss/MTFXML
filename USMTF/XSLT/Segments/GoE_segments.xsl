@@ -279,7 +279,7 @@
                     <xsd:extension base="set:GeneralTextType">
                         <xsd:sequence>
                             <xsd:element name="GentextTextIndicator"
-                                type="field:AlphaNumericBlankSpecialTextSimpleType" minOccurs="1"
+                                type="field:AlphaNumericBlankSpecialTextType" minOccurs="1"
                                 fixed="{replace($TextInd,$apos,'')}"/>
                             <xsd:element ref="field:FreeTextField" minOccurs="1"/>
                         </xsd:sequence>
@@ -622,6 +622,8 @@
     <xsl:template match="*:Repeatability" mode="attr"/>
 
     <!--Filter unneeded nodes-->
+    <xsl:template match="xsd:attribute[@name='setSeq']"/>
+    <xsl:template match="xsd:attributeGroup[@ref='ism:SecurityAttributesGroup']"/>
     <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>
     <xsl:template match="*:ColumnarIndicator" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>

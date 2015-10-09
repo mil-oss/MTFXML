@@ -36,15 +36,6 @@
     <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
     <xsl:variable name="output" select="'../../XSD/GoE_Schema/GoE_sets.xsd'"/>
 
-    <xsl:variable name="goe_types">
-        <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')]">
-            <xsl:copy>
-                <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*"/>
-            </xsl:copy>
-        </xsl:for-each>
-    </xsl:variable>
-
     <!--Root level complexTypes-->
     <xsl:variable name="complex_types">
         <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')]">
@@ -124,17 +115,17 @@
                     </xsd:sequence>
                     <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                 </xsd:complexType>
-                <xsl:for-each select="$goe_types/*">
+                <xsl:for-each select="$complex_types/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
-                <!--<xsl:for-each select="$global_elements/*">
+                <xsl:for-each select="$global_elements/*">
                     <xsl:sort select="@name"/>
                     <xsl:variable name="n" select="@name"/>
                     <xsl:if test="not(preceding-sibling::*[@name = $n])">
                         <xsl:copy-of select="." copy-namespaces="no"/>
                     </xsl:if>
-                </xsl:for-each>-->
+                </xsl:for-each>
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
@@ -159,116 +150,111 @@
     </xsl:template>
 
     <xsl:template match="xsd:element[@name = 'GroupOfFields']"/>
+  
+    <xsl:template match="xsd:element[@nillable]">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="text()"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:copy>
+    </xsl:template>
 
-<!--    <xsl:template match="xsd:element[//xsd:extension]">
+    <xsl:template match="xsd:element[not(@nillable)][not(@name = 'GroupOfFields')]">
         <xsl:variable name="b">
             <xsl:value-of select="xsd:complexType/*/xsd:extension/@base"/>
         </xsl:variable>
-        <xsl:variable name="base">
+        <xsl:variable name="basetype">
             <xsl:choose>
-                <xsl:when test="starts-with($b, 'f:')">
-                    <xsl:value-of select="substring-after($b, 'f:')"/>
-                </xsl:when>
-                <xsl:when test="starts-with($b, 'c:')">
-                    <xsl:value-of select="substring-after($b, 'c:')"/>
+                <xsl:when test="contains($b, ':')">
+                    <xsl:value-of select="substring-after($b, ':')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$b"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="basel" select="$goe_fields_xsd/xsd:schema/xsd:element[@name =substring(@base, 0, string-length(@base) - 3)]"/>
-        <xsl:variable name="basetype">
+        <xsl:variable name="basel" select="substring(@basetype, 0, string-length(@basetype) - 3)"/>
+        <xsl:copy copy-namespaces="no">
             <xsl:choose>
-                <xsl:when test="exists($basel/@type)">
-                    <xsl:value-of select="$basel/@type"/>
-            </xsl:when>
-                <xsl:when test="exists($basel/xsd:complexType/*/xsd:restriction/@base)">
-                    <xsl:value-of select="$basel/xsd:complexType/*/xsd:restriction/@base"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="@base"/>
-            </xsl:otherwise>
+                <xsl:when test="@name = 'RoutingIndicator'">
+                    <xsl:attribute name="ref">
+                        <xsl:text>field:RoutingIndicator</xsl:text>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                </xsl:when>
+                <xsl:when test="@name = 'Activity'">
+                    <xsl:attribute name="ref">
+                        <xsl:text>field:Activity</xsl:text>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                </xsl:when>
+                <xsl:when test="@name = 'Event'">
+                    <xsl:attribute name="ref">
+                        <xsl:text>field:Event</xsl:text>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                </xsl:when>
+                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
+                    <xsl:attribute name="ref">
+                        <xsl:value-of select="concat('field:',$basel)"/>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                </xsl:when>
+                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction">
+                    <xsl:apply-templates select="@*"/>
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="concat('field:',$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction/@type)"/>
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]">
+                    <xsl:apply-templates select="@*"/>
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="concat('field:',$basetype)"/>
+                    </xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="@*"/>
+                    <xsl:apply-templates select="*"/>
+                </xsl:otherwise>
             </xsl:choose>
-        </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="not(@nillable) and $basel">
-                <xsd:element ref="{concat('field:',$basel/@name)}">
-                    <xsl:apply-templates select="@*[not(name() = 'name')]"/>
-                </xsd:element>
-            </xsl:when>
-            <xsl:when test="$basel/xsd:complexType/xsd:simpleContent/xsd:restriction/@base='FieldEnumeratedBaseType'">
-                <xsd:element name="{@name}">
-                    <xsl:apply-templates select="@*[not(name() = 'name') and not(name() = 'type')]"/>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                    <xsd:complexType>
-                        <xsd:simpleContent>
-                            <xsd:restriction base="field:FieldEnumeratedBaseType">
-                                <xsl:apply-templates select="$basel/xsd:complexType/xsd:simpleContent/xsd:restriction"/>
-                            </xsd:restriction>
-                        </xsd:simpleContent>
-                    </xsd:complexType>
-                </xsd:element>
-            </xsl:when>
-            <xsl:when test="$basel/xsd:complexType/xsd:simpleContent/xsd:restriction/@base='FieldIntegerBaseType'">
-                <xsd:element name="{@name}">
-                    <xsl:apply-templates select="@*[not(name() = 'name') and not(name() = 'type')]"/>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                    <xsd:complexType>
-                        <xsd:simpleContent>
-                            <xsd:restriction base="field:FieldIntegerBaseType">
-                                <xsl:apply-templates select="$basel/xsd:complexType/xsd:simpleContent/xsd:restriction/*"/>
-                            </xsd:restriction>
-                        </xsd:simpleContent>
-                    </xsd:complexType>
-                </xsd:element>
-            </xsl:when>
-            <xsl:when test="$basel/xsd:complexType/xsd:simpleContent/xsd:restriction/@base='FieldDecimalBaseType'">
-                <xsl:variable name="dec" select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]/xsd:complexType/xsd:simpleContent/xsd:restriction"/>
-                <xsd:element name="{@name}">
-                    <xsl:apply-templates select="@*[not(name() = 'name') and not(name() = 'type')]"/>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                    <xsd:complexType>
-                        <xsd:simpleContent>
-                            <xsd:restriction base="field:FieldDecimalBaseType">
-                                <xsl:apply-templates select="$dec/*"/>
-                            </xsd:restriction>
-                        </xsd:simpleContent>
-                    </xsd:complexType>
-                </xsd:element>
-            </xsl:when>
-            <xsl:when test="$basel/xsd:complexType/xsd:simpleContent/xsd:restriction/@base='FieldStringBaseType'">
-                <xsd:element name="{@name}">
-                    <xsl:apply-templates select="@*[not(name() = 'name') and not(name() = 'type')]"/>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                    <xsd:complexType>
-                        <xsd:simpleContent>
-                            <xsd:restriction base="field:FieldStringBaseType">
-                                <xsl:apply-templates select="$basel/xsd:complexType/xsd:simpleContent/xsd:restriction/*"/>
-                            </xsd:restriction>
-                        </xsd:simpleContent>
-                    </xsd:complexType>
-                </xsd:element>
-            </xsl:when>
-        </xsl:choose>
-    </xsl:template>-->
-
-    <xsl:template match="xsd:extension[starts-with(@base, 'f:')]">
-        <xsl:copy>
-            <xsl:attribute name="base">
-                <xsl:value-of select="substring-after(@base, 'f:')"/>
-            </xsl:attribute>
-            <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="xsd:extension[starts-with(@base, 'c:')]">
-        <xsl:copy>
-            <xsl:attribute name="base">
-                <xsl:value-of select="substring-after(@base, 'c:')"/>
-            </xsl:attribute>
+    <xsl:template match="xsd:extension[@base = 'SetBaseType']">
+        <xsd:extension base="SetBaseType">
             <xsl:apply-templates select="*"/>
-        </xsl:copy>
+        </xsd:extension>
+    </xsl:template>
+
+    <xsl:template match="xsd:extension">
+        <xsl:variable name="basetype">
+            <xsl:choose>
+                <xsl:when test="contains(@base, ':')">
+                    <xsl:value-of select="substring-after(@base, ':')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="@base"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="basel" select="substring($basetype,0,string-length($basetype)-3)"/>
+        <xsl:choose>
+            <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
+                <xsd:extension base="{concat('field:',$basetype)}"/>
+            </xsl:when>
+            <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction">
+                <xsd:restriction base="{concat('field:',$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction/@base)}">
+                    <xsl:apply-templates select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction/*"/>
+                </xsd:restriction>
+                <!--<xsl:copy-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction"/>-->
+            </xsl:when>
+            <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]/@type">
+                <xsd:extension base="{concat('field:',$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]/@type)}"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsd:extension base="{concat($basel,'Type')}"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template match="xsd:sequence[ancestor::xsd:element[@name = 'GroupOfFields'][1]]">
@@ -376,144 +362,6 @@
 
     <!--*****************************************************-->
 
-    <xsl:template match="xsd:element" mode="sets">
-        <xsl:variable name="nm">
-            <xsl:value-of select="@name"/>
-        </xsl:variable>
-        <xsl:variable name="field">
-            <xsl:value-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $nm]"/>
-        </xsl:variable>
-        <xsl:variable name="ftypename">
-            <xsl:value-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $nm]/@type"/>
-        </xsl:variable>
-        <xsl:variable name="fbase">
-            <xsl:value-of select="$field/xsd:complexType/xsd:simpleContent/xsd:restriction/@base"/>
-        </xsl:variable>
-        <xsl:variable name="ftype">
-            <xsl:value-of select="$goe_fields_xsd/xsd:schema/xsd:complexType[@name = $ftypename]"/>
-        </xsl:variable>
-        <xsl:variable name="extbase">
-            <xsl:value-of select=".//xsd:extension/@base"/>
-        </xsl:variable>
-        <xsl:variable name="base_element">
-            <xsl:choose>
-                <xsl:when test="starts-with($extbase, 'f:')">
-                    <xsl:value-of select="substring-after(substring($extbase, 0, string-length($extbase) - 3), 'f:')"/>
-                </xsl:when>
-                <xsl:when test="starts-with($extbase, 'c:')">
-                    <xsl:value-of select="substring-after(substring($extbase, 0, string-length($extbase) - 3), 'c:')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="substring($extbase, 0, string-length($extbase) - 3)"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="match_base">
-            <xsl:choose>
-                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]/@type">
-                    <xsl:value-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]/@type"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]//xsd:restriction/@base"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:choose>
-            <xsl:when test="@name = 'Amplification'">
-                <xsd:element name="Amplification" type="AmplificationType" minOccurs="0" maxOccurs="0"/>
-            </xsl:when>
-            <xsl:when test="@name = 'NarrativeInformation'">
-                <xsd:element name="NarrativeInformation" type="NarrativeInformationType" minOccurs="0" maxOccurs="0"/>
-            </xsl:when>
-            <xsl:when test="exists($field/xsd:simpleContent/xsd:restriction[@base = 'FieldStringBaseType'])">
-                <xsl:choose>
-                    <xsl:when test="@nillable">
-                        <xsd:element name="{@name}">
-                            <xsd:complexType>
-                                <xsd:complexContent>
-                                    <xsd:restriction base="{concat('field:',$field/xsd:simpleContent/xsd:restriction/@base)}">
-                                        <xsl:apply-templates select="$field/xsd:simpleContent/xsd:restriction/*"/>
-                                    </xsd:restriction>
-                                </xsd:complexContent>
-                            </xsd:complexType>
-                        </xsd:element>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsd:element name="{@name}" type="{$field/xsd:complexType/xsd:simpleContent/xsd:restriction/@base}">
-                            <xsd:apply-templates select="@*[not(name()='name'][not(name()='type']"/>
-                        </xsd:element>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:when>
-            <xsl:when
-                test="exists($goe_fields_xsd/xsd:schema/xsd:complexType[@name = $nm]/xsd:simpleContent/xsd:restriction[@base = 'FieldEnumeratedBaseType'])">
-                <xsd:element name="{@name}" type="{$field/xsd:complexType/xsd:simpleContent/xsd:restriction/@base}">
-                    <xsd:apply-templates select="@*[not(name()='name'][not(name()='type']"/>
-                </xsd:element>
-            </xsl:when>
-            <xsl:when test="exists($goe_fields_xsd/xsd:schema/xsd:complexType[@name = $nm]/xsd:sequence)">
-                <xsd:element name="{@name}" type="{$fbase}">
-                    <xsd:apply-templates select="@*[not(name()='name'][not(name()='type']"/>
-                </xsd:element>
-            </xsl:when>
-        </xsl:choose>
-    </xsl:template>
-
-    <xsl:template match="xsd:element[@name = 'FreeText']" mode="sets">
-        <xsd:element name="FreeText" type="field:AlphaNumericSpecialFreeTextType" minOccurs="1" maxOccurs="1" nillable="true"/>
-    </xsl:template>
-
-    <xsl:template match="xsd:extension[@base = 'SetBaseType']" mode="sets">
-        <xsd:extension base="SetBaseType">
-            <xsl:apply-templates select="*"/>
-        </xsd:extension>
-    </xsl:template>
-
-    <!-- base references are converted to local with SimpleType or ComplexType naming convention.-->
-    <xsl:template match="xsd:extension[@base][not(@base = 'SetBaseType')]" mode="sets">
-        <!--Create complex or simple type reference to match with global type in GoE fields-->
-        <!--Because types have been normalized, it is necessary use element name to match-->
-        <xsl:variable name="base_element">
-            <xsl:choose>
-                <xsl:when test="starts-with(@base, 'f:')">
-                    <xsl:value-of select="substring-after(substring(@base, 0, string-length(@base) - 3), 'f:')"/>
-                </xsl:when>
-                <xsl:when test="starts-with(@base, 'c:')">
-                    <xsl:value-of select="substring-after(substring(@base, 0, string-length(@base) - 3), 'c:')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="substring(@base, 0, string-length(@base) - 3)"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="match_base">
-            <xsl:choose>
-                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]/@type">
-                    <xsl:value-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]/@type"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]//xsd:restriction/@base"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsd:restriction>
-            <xsl:apply-templates select="@*"/>
-            <xsl:attribute name="base">
-                <xsl:choose>
-                    <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]">
-                        <xsl:value-of select="concat('field:', $match_base)"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$match_base"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:apply-templates
-                select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $base_element]/xsd:complexType/xsd:simpleContent/xsd:restriction/*"/>
-        </xsd:restriction>
-        <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
-    </xsl:template>
-
     <xsl:template match="@*" mode="chg"/>
     <!--Replace Data Specified in Deconfliction XML Document-->
     <xsl:template match="@ProposedSetFormatPositionName" mode="chg">
@@ -541,7 +389,6 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
     <!--Copy element and use template mode to convert elements to attributes in FIELD element-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:param name="doc"/>
@@ -558,7 +405,6 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="xsd:appinfo" mode="ref">
         <xsl:param name="fldinfo"/>
         <xsl:copy copy-namespaces="no">
@@ -725,5 +571,4 @@
     <xsl:template match="xsd:restriction[@base = 'xsd:integer']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:string']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
-
 </xsl:stylesheet>
