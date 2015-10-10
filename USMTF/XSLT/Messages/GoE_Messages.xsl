@@ -316,7 +316,7 @@
                     <xsd:extension base="set:GeneralTextType">
                         <xsd:sequence>
                             <xsd:element name="GentextTextIndicator"
-                                type="field:AlphaNumericBlankSpecialTextSimpleType" minOccurs="1"
+                                type="field:AlphaNumericBlankSpecialTextType" minOccurs="1"
                                 fixed="{translate(replace($TextInd,$apos,''),'”','')}"/>
                             <xsd:element ref="field:FreeTextField" minOccurs="1"/>
                         </xsd:sequence>
@@ -332,15 +332,14 @@
         <xsl:variable name="per">.</xsl:variable>
         <xsl:variable name="UseDesc">
             <xsl:value-of
-                select="upper-case(*/ancestor::xsd:element[1]/xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription)"
+                select="normalize-space(upper-case(*/ancestor::xsd:element[1]/xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription))"
             />
         </xsl:variable>
         <xsl:variable name="TextInd">
             <xsl:choose>
                 <xsl:when test="contains($UseDesc, $per)">
                     <xsl:value-of
-                        select="normalize-space(substring-before(substring-after($UseDesc, 'MUST EQUAL'), $per))"
-                    />
+                        select="translate(substring-after($UseDesc, 'MUST EQUAL'), '”.', '')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="normalize-space(substring-after($UseDesc, 'MUST EQUAL'))"
@@ -358,7 +357,7 @@
                         <xsl:text>GentextTextIndicator</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:text>field:AlphaNumericBlankSpecialTextSimpleType</xsl:text>
+                        <xsl:text>field:AlphaNumericBlankSpecialTextType</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="minOccurs">
                         <xsl:text>1</xsl:text>
@@ -415,7 +414,7 @@
                     <xsd:extension base="set:HeadingInformationType">
                         <xsd:sequence>
                             <xsd:element name="FieldAssignment"
-                                type="field:AlphaNumericBlankSpecialTextSimpleType" minOccurs="1"
+                                type="field:AlphaNumericBlankSpecialTextType" minOccurs="1"
                                 fixed="{translate(replace($TextInd,$apos,''),'”','')}"/>
                             <xsd:element ref="field:FreeTextField" minOccurs="1"/>
                         </xsd:sequence>
@@ -540,7 +539,6 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
     <xsl:template match="*:SetFormatPositionName" mode="attr">
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
@@ -549,7 +547,6 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
     <xsl:template match="*:SetFormatPositionNumber" mode="attr">
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
@@ -558,7 +555,6 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
     <xsl:template match="*:SetFormatPositionConcept" mode="attr">
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
@@ -567,9 +563,6 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
-    <xsl:template match="*:OccurrenceCategory" mode="attr"/>
-    
+    <xsl:template match="*:OccurrenceCategory" mode="attr"/>   
     <xsl:template match="*:Repeatability" mode="attr"/>
-
 </xsl:stylesheet>
