@@ -68,7 +68,17 @@
                 </xsd:complexType>
                 <xsl:for-each select="$combinedTypes/*">
                     <xsl:sort select="@name"/>
-                    <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
+                    <xsl:variable name="nm">
+                        <xsl:choose>
+                            <xsl:when test="contains(@name,'SimpleType')">
+                                <xsl:value-of select="concat(substring-before(@name, 'SimpleType'),'Type')"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="@name"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <xsd:complexType name="{$nm}">
                         <xsl:copy-of select="xsd:annotation"/>
                         <xsd:simpleContent>
                             <xsd:restriction base="FieldEnumeratedBaseType">
@@ -81,7 +91,7 @@
                 </xsl:for-each>
                 <xsl:for-each select="$enumelementsandtypes/*[name() = 'xsd:element']">
                     <xsl:sort select="@name"/>
-                    <xsd:element name="{@name}" type="{concat(substring-before(@type,'SimpleType'),'Type')}">
+                    <xsd:element name="{@name}" type="{@type}">
                         <xsl:copy-of select="xsd:annotation"/>
                     </xsd:element>
                 </xsl:for-each>
@@ -98,26 +108,20 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="xsd:simpleType/@name">
-        <xsl:attribute name="name">
-            <xsl:value-of select="concat(substring(., 0, string-length(.) - 3), 'SimpleType')"/>
-        </xsl:attribute>
-    </xsl:template>
-
     <!-- ******** Element Generation ********-->
     <xsl:template match="xsd:simpleType" mode="el">
         <xsl:variable name="restr" select="xsd:restriction"/>
         <xsl:variable name="match">
             <xsl:copy-of select="$normenumerationtypes[deep-equal(xsd:restriction, $restr)]"/>
         </xsl:variable>
-        <xsl:choose>
+        <xsl:choose>         
             <xsl:when test="string-length($match/*/@name) > 0">
                 <xsl:element name="xsd:element">
                     <xsl:attribute name="name">
-                        <xsl:value-of select="substring-before(@name, 'SimpleType')"/>
+                        <xsl:value-of select="substring(@name, 0,string-length(@name)-3)"/>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:value-of select="$match/*/@name"/>
+                        <xsl:value-of select="concat(substring-before($match/*/@name, 'SimpleType'),'Type')"/>
                     </xsl:attribute>
                     <xsl:copy-of select="xsd:annotation"/>
                 </xsl:element>
@@ -125,7 +129,7 @@
             <xsl:otherwise>
                 <xsl:element name="xsd:element">
                     <xsl:attribute name="name">
-                        <xsl:value-of select="substring-before(@name, 'SimpleType')"/>
+                        <xsl:value-of select="substring(@name, 0,string-length(@name)-3)"/>
                     </xsl:attribute>
                     <xsl:attribute name="type">
                         <xsl:value-of select="@name"/>
@@ -163,9 +167,9 @@
             <xsl:copy copy-namespaces="no">
                 <xsl:apply-templates select="@*"/>
                 <xsl:if
-                    test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
+                    test="exists(xsd:appinfo/*:Explanation) and not(xsd:documentation/text())">
                     <xsl:element name="xsd:documentation">
-                        <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
+                        <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:Explanation[1])"/>
                     </xsl:element>
                 </xsl:if>
                 <xsl:apply-templates select="*"/>
@@ -185,23 +189,9 @@
     <!--Copy element and use template mode to convert elements to attributes-->
     <xsl:template match="xsd:appinfo">
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+            <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):change01:elementals">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
-            </xsl:element>
-        </xsl:copy>
-    </xsl:template>
-
-    <!--For Single Enumeration Types converted to Elements-->
-    <xsl:template
-        match="xsd:appinfo[ancestor::xsd:simpleType/xsd:restriction[count(xsd:enumeration) = 1]]">
-        <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
-                <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*" mode="attr"/>
-                <xsl:apply-templates
-                    select="ancestor::xsd:simpleType/xsd:restriction/xsd:enumeration/xsd:annotation/xsd:appinfo/*"
-                    mode="attr"/>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
@@ -243,8 +233,6 @@
         </xsl:if>
     </xsl:template>
 
-
-    <xsl:template match="*:FudExplanation" mode="attr"/>
     <xsl:template match="*:Explanation" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>

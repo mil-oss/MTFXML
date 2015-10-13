@@ -126,7 +126,7 @@
         <xsd:complexType name="{@name}">
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
-                    <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                    <xsl:apply-templates select="xsd:restriction/*"/>
                 </xsd:restriction>
             </xsd:simpleContent>
         </xsd:complexType>
@@ -232,8 +232,7 @@
                         </xsd:restriction>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsd:restriction
-                            base="{concat(substring-before(@name,'SimpleType'),'Type')}">
+                        <xsd:restriction base="{@name}">
                             <xsl:apply-templates select="xsd:restriction/*" mode="el"/>
                         </xsd:restriction>
                     </xsl:otherwise>

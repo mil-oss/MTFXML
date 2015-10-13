@@ -21,7 +21,7 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <xsl:variable name="MsgList" select="document('../../XML/MessageList.xml')"/>
+    <xsl:variable name="MsgList" select="document('../../XSD/Normalized/MessageList.xml')"/>
     <xsl:variable name="ConsolidateFieldsPath" select="'../../XSD/APP-11C-ch1/Consolidated/fields.xsd'"/>
 
     <xsl:variable name="allfields">
@@ -34,6 +34,10 @@
         </xsl:apply-templates>
     </xsl:variable>
 
+    <xsl:variable name="alltypes">
+        <xsl:apply-templates select="$uniquefields/field" mode="gettypes"/>
+    </xsl:variable>
+
     <xsl:template match="/">
         <xsl:result-document method="xml" href="{$ConsolidateFieldsPath}">
             <xsd:schema targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals" 
@@ -43,7 +47,7 @@
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns="urn:int:nato:mtf:app-11(c):change01:elementals">
                 <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
-                <xsl:apply-templates select="$uniquefields/field" mode="gettypes"/>
+                <xsl:copy-of select="$alltypes" copy-namespaces="no"/>
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
@@ -84,13 +88,31 @@
                 <xsl:with-param name="nm" select="string(@name)"/>
             </xsl:apply-templates>
         </xsl:variable>
-        <xsl:copy-of select="$t/*[1]"/>
+        <xsl:copy-of select="$t/*[1]" copy-namespaces="no"/>
     </xsl:template>
 
     <xsl:template match="Msg" mode="typelist">
         <xsl:param name="nm"/>
-        <xsl:copy-of select="document(concat(@path,'/fields.xsd'))/xsd:schema/xsd:*[@name=$nm]"
-            copy-namespaces="no"/>
+        <xsl:copy-of select="document(concat(@path,'/fields.xsd'))/xsd:schema/xsd:simpleType[@name=$nm]" copy-namespaces="no"/>
+    </xsl:template>
+    
+    
+    <xsl:template match="*" mode="copy">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="text()"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="@*" mode="copy">
+        <xsl:copy copy-namespaces="no">
+            <xsl:value-of select="."/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="text()" mode="copy">
+        <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
 </xsl:stylesheet>

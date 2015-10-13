@@ -23,7 +23,7 @@
     <xsl:variable name="MsgFile" select="document('../../XSD/APP-11C-ch1/Messages/fields.xsd')"/>
     <xsl:variable name="MsgList" select="$MsgFile//*[@name='MessageTextFormatIdentifierType']"/>
     <xsl:variable name="MsgPath" select="'../../XSD/APP-11C-ch1/Messages/'"/>
-    <xsl:variable name="MsgListPath" select="'../../XML/MessageList.xml'"/>
+    <xsl:variable name="MsgListPath" select="'../../XSD/Normalized/MessageList.xml'"/>
 
 
     <xsl:template match="/">

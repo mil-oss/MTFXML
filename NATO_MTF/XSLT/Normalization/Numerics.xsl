@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
+    version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <!--Baseline xsd:simpleTypes-->
     <xsl:variable name="integers_xsd"
@@ -21,12 +21,9 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$integersoutputdoc}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):change01:elementals"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals"
-                xml:lang="en-GB"
-                elementFormDefault="unqualified"
-                attributeFormDefault="unqualified">    
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):change01:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals" xml:lang="en-GB" elementFormDefault="unqualified"
+                attributeFormDefault="unqualified">
                 <xsd:complexType name="FieldIntegerBaseType">
                     <xsd:simpleContent>
                         <xsd:extension base="xsd:integer"/>
@@ -39,17 +36,12 @@
             </xsd:schema>
         </xsl:result-document>
         <xsl:result-document href="{$decimalsoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                xmlns:ism="urn:us:gov:ic:ism:v2"
-                targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):change01:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals" xml:lang="en-GB" elementFormDefault="unqualified"
+                attributeFormDefault="unqualified">
                 <xsd:complexType name="FieldDecimalBaseType">
                     <xsd:simpleContent>
-                        <xsd:extension base="xsd:decimal">
-                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-                        </xsd:extension>
+                        <xsd:extension base="xsd:decimal"/>
                     </xsd:simpleContent>
                 </xsd:complexType>
                 <xsl:for-each select="$decimals/*">
@@ -74,14 +66,14 @@
             <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexType>
                 <xsd:simpleContent>
-                <xsl:element name="xsd:restriction">
-                    <xsl:attribute name="base">
-                        <xsl:text>FieldIntegerBaseType</xsl:text>
-                    </xsl:attribute>
-                    <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
-                    <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
-                    <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
-                </xsl:element>
+                    <xsl:element name="xsd:restriction">
+                        <xsl:attribute name="base">
+                            <xsl:text>FieldIntegerBaseType</xsl:text>
+                        </xsl:attribute>
+                        <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
+                        <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
+                        <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
+                    </xsl:element>
                 </xsd:simpleContent>
             </xsd:complexType>
         </xsl:element>
@@ -135,6 +127,12 @@
                 <xsl:with-param name="value2">
                     <xsl:value-of select="$max"/>
                 </xsl:with-param>
+                <xsl:with-param name="patterns">
+                    <xsl:for-each select="xsd:restriction/xsd:pattern">
+                        <xsl:copy-of select="." copy-namespaces="no"/>
+                    </xsl:for-each>
+                </xsl:with-param>
+
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="totalDigitCount">
@@ -154,24 +152,24 @@
             <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexType>
                 <xsd:simpleContent>
-                <xsl:element name="xsd:restriction">
-                    <xsl:attribute name="base">
-                        <xsl:text>FieldDecimalBaseType</xsl:text>
-                    </xsl:attribute>
-                    <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
-                    <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
-                    <xsl:element name="xsd:fractionDigits">
-                        <xsl:attribute name="value">
-                            <xsl:value-of select="$fractionDigits"/>
+                    <xsl:element name="xsd:restriction">
+                        <xsl:attribute name="base">
+                            <xsl:text>FieldDecimalBaseType</xsl:text>
                         </xsl:attribute>
+                        <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
+                        <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
+                        <xsl:element name="xsd:fractionDigits">
+                            <xsl:attribute name="value">
+                                <xsl:value-of select="$fractionDigits"/>
+                            </xsl:attribute>
+                        </xsl:element>
+                        <xsl:element name="xsd:totalDigits">
+                            <xsl:attribute name="value">
+                                <xsl:value-of select="number($maxlen) - 1"/>
+                            </xsl:attribute>
+                        </xsl:element>
+                        <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
                     </xsl:element>
-                    <xsl:element name="xsd:totalDigits">
-                        <xsl:attribute name="value">
-                            <xsl:value-of select="number($maxlen) - 1"/>
-                        </xsl:attribute>
-                    </xsl:element>
-                    <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
-                </xsl:element>
                 </xsd:simpleContent>
             </xsd:complexType>
         </xsl:element>
@@ -181,6 +179,7 @@
     <xsl:template name="FindMaxDecimals">
         <xsl:param name="value1"/>
         <xsl:param name="value2"/>
+        <xsl:param name="patterns"/>
         <xsl:choose>
             <xsl:when test="contains($value1, '.') and contains($value2, '.')">
                 <xsl:if
@@ -208,19 +207,17 @@
             <xsl:when test="contains($value2, '.')">
                 <xsl:value-of select="string-length(substring-after($value2, '.'))"/>
             </xsl:when>
-            <xsl:when test="(not(contains($value1, '.')) and not(contains($value2, '.')))">
-                <xsl:if test="string-length($value1) > string-length($value2)">
-                    <xsl:value-of select="string-length(substring-after($value1, '.'))"/>
-                </xsl:if>
-                <xsl:if test="string-length($value1) &lt; string-length($value2)">
-                    <xsl:value-of select="string-length(substring-after($value2, '.'))"/>
-                </xsl:if>
-                <xsl:if test="string-length($value2) = string-length($value1)">
-                    <xsl:value-of select="string-length(substring-after($value1, '.'))"/>
-                </xsl:if>
-            </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="'Error'"/>
+                <xsl:variable name="decvals">
+                    <xsl:for-each select="$patterns/*">
+                        <xsl:if test="contains(@value,'\.')">
+                        <xsl:element name="val">
+                            <xsl:value-of select="number(substring-before(substring-after(substring-after(@value, '\.'), '{'), '}'))"/>
+                        </xsl:element>
+                        </xsl:if>
+                    </xsl:for-each>
+                </xsl:variable>
+                <xsl:value-of select="max($decvals/val)"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -232,14 +229,10 @@
         <xsl:variable name="value1nodecimal">
             <xsl:choose>
                 <xsl:when test="contains($value1, '.') and contains($value1, '-')">
-                    <xsl:value-of
-                        select="substring-after(concat(substring-before($value1, '.'), substring-after($value1, '.')), '-')"
-                    />
+                    <xsl:value-of select="substring-after(concat(substring-before($value1, '.'), substring-after($value1, '.')), '-')"/>
                 </xsl:when>
                 <xsl:when test="contains($value1, '.')">
-                    <xsl:value-of
-                        select="concat(substring-before($value1, '.'), substring-after($value1, '.'))"
-                    />
+                    <xsl:value-of select="concat(substring-before($value1, '.'), substring-after($value1, '.'))"/>
                 </xsl:when>
                 <xsl:when test="contains($value1, '-')">
                     <xsl:value-of select="substring-after($value1, '-')"/>
@@ -252,14 +245,10 @@
         <xsl:variable name="value2nodecimal">
             <xsl:choose>
                 <xsl:when test="contains($value2, '.') and contains($value2, '-')">
-                    <xsl:value-of
-                        select="substring-after(concat(substring-before($value2, '.'), substring-after($value2, '.')), '-')"
-                    />
+                    <xsl:value-of select="substring-after(concat(substring-before($value2, '.'), substring-after($value2, '.')), '-')"/>
                 </xsl:when>
                 <xsl:when test="contains($value2, '.')">
-                    <xsl:value-of
-                        select="concat(substring-before($value2, '.'), substring-after($value2, '.'))"
-                    />
+                    <xsl:value-of select="concat(substring-before($value2, '.'), substring-after($value2, '.'))"/>
                 </xsl:when>
                 <xsl:when test="contains($value2, '-')">
                     <xsl:value-of select="substring-after($value2, '-')"/>
