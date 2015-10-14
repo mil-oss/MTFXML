@@ -327,8 +327,6 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="xsd:annotation[parent::xsd:extension]"/>
-
     <!--Copy documentation only if it has text content-->
     <xsl:template match="xsd:documentation">
         <xsl:param name="doc"/>

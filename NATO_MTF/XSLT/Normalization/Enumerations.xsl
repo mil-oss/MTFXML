@@ -55,9 +55,9 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$enumoutdoc}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):change01:elementals"
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals"
+                targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals"
                 xml:lang="en-GB"
                 elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">    
@@ -189,7 +189,7 @@
     <!--Copy element and use template mode to convert elements to attributes-->
     <xsl:template match="xsd:appinfo">
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):change01:elementals">
+            <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):goe:elementals">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
             </xsl:element>

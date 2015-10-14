@@ -21,8 +21,8 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$integersoutputdoc}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):change01:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals" xml:lang="en-GB" elementFormDefault="unqualified"
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
                 <xsd:complexType name="FieldIntegerBaseType">
                     <xsd:simpleContent>
@@ -36,8 +36,8 @@
             </xsd:schema>
         </xsl:result-document>
         <xsl:result-document href="{$decimalsoutputdoc}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):change01:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals" xml:lang="en-GB" elementFormDefault="unqualified"
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
                 <xsd:complexType name="FieldDecimalBaseType">
                     <xsd:simpleContent>

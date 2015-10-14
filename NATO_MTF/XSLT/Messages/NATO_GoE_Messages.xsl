@@ -22,18 +22,18 @@
 
     <xsl:output method="xml" indent="yes"/>
 
-    <xsl:variable name="mtfmsgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
-    <xsl:variable name="mtfsets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
+    <xsl:variable name="mtfmsgs" select="document('../../XSD/APP-11C-ch1/Consolidated/messages.xsd')"/>
+    <xsl:variable name="mtfsets" select="document('../../XSD/APP-11C-ch1/Consolidated/sets.xsd')"/>
 
-    <xsl:variable name="fields" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
-    <xsl:variable name="sets" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
-    <xsl:variable name="segments" select="document('../../XSD/GoE_Schema/GoE_segments.xsd')"/>
+    <xsl:variable name="fields" select="document('../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd')"/>
+    <xsl:variable name="sets" select="document('../../XSD/APP-11C-GoE/natomtf_goe_sets.xsd')"/>
+    <xsl:variable name="segments" select="document('../../XSD/APP-11C-GoE/natomtf_goe_segments.xsd')"/>
     <xsl:variable name="set_Changes"
         select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
     <xsl:variable name="segment_Changes"
         select="document('../../XSD/Deconflicted/Segment_Name_Changes.xml')/USMTF_Segments"/>
 
-    <xsl:variable name="outputdoc" select="'../../XSD/GoE_Schema/GoE_messages.xsd'"/>
+    <xsl:variable name="outputdoc" select="'../../XSD/APP-11C-GoE/natomtf_goe_messages.xsd'"/>
 
     <xsl:variable name="msgs">
         <xsl:apply-templates select="$mtfmsgs/xsd:schema/xsd:element" mode="el"/>
@@ -47,15 +47,13 @@
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xml:lang="en-US" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns="urn:mtf:mil:6040b" targetNamespace="urn:mtf:mil:6040b"
-                xmlns:field="urn:mtf:mil:6040b:fields" xmlns:set="urn:mtf:mil:6040b:sets"
-                xmlns:seg="urn:mtf:mil:6040b:segments"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                xmlns:ism="urn:us:gov:ic:ism:v2" elementFormDefault="unqualified"
+                xmlns:field="urn:int:nato:mtf:app-11(c):goe:elementals" 
+                xmlns:set="urn:int:nato:mtf:app-11(c):goe:sets"
+                xmlns:seg="urn:int:nato:mtf:app-11(c):goe:segments"
                 attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:mtf:mil:6040b:fields" schemaLocation="GoE_fields.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:sets" schemaLocation="GoE_sets.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:segments" schemaLocation="GoE_segments.xsd"/>
-                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:elementals" schemaLocation="natomtf_goe_fields.xsd"/>
+                <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:sets" schemaLocation="natomtf_goe_sets.xsd"/>
+                <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:segments" schemaLocation="natomtf_goe_segments.xsd"/>
                 <xsl:copy-of select="$ctypes"/>
                 <xsl:copy-of select="$msgs"/>
             </xsd:schema>

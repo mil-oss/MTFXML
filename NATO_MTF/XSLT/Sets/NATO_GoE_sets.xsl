@@ -22,7 +22,7 @@
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <!--  This XSLT refactors baseline USMTF "fields" XML Schema by replacing annotation elements
+    <!--  This XSLT refactors baseline NATO MTF "fields" XML Schema by replacing annotation elements
     with attributes, removing unused elements and other adjustments-->
 
     <!--Fields from the baseline Composites XML Schema are also included as ComplexTypes in accordance with the intent to 
@@ -30,11 +30,11 @@
     type references are converted to local.-->
 
     <!--Baseline Fields XML Schema document-->
-    <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
-    <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
+    <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/sets.xsd')"/>
+    <xsl:variable name="goe_fields_xsd" select="document('../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd')"/>
     <!--Set deconfliction and annotation changes-->
     <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
-    <xsl:variable name="output" select="'../../XSD/GoE_Schema/GoE_sets.xsd'"/>
+    <xsl:variable name="output" select="'../../XSD/APP-11C-GoE/natomtf_goe_sets.xsd'"/>
 
     <!--Root level complexTypes-->
     <xsl:variable name="complex_types">
@@ -103,17 +103,20 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$output}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:fields"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:sets"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:mtf:mil:6040b:fields" schemaLocation="GoE_fields.xsd"/>
-                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:sets"
+                xmlns:field="urn:int:nato:mtf:app-11(c):goe:elementals"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:mtf:app-11(c):goe:sets"
+                xml:lang="en-GB"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified">
+                <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:elementals"
+                    schemaLocation="natomtf_goe_fields.xsd"/>
                 <xsd:complexType name="SetBaseType">
                     <xsd:sequence>
                         <xsd:element name="Amplification" type="AmplificationType" minOccurs="0" maxOccurs="1"/>
-                        <xsd:element name="NarrativeInformation" type="NarrativeInformationType" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element name="Narrative" type="NarrativeType" minOccurs="0" maxOccurs="1"/>
                     </xsd:sequence>
-                    <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                 </xsd:complexType>
                 <xsl:for-each select="$complex_types/*">
                     <xsl:sort select="@name"/>
@@ -225,6 +228,13 @@
             <xsl:apply-templates select="*"/>
         </xsd:extension>
     </xsl:template>
+    
+    <!--QRoutePointDesignatorType changed to QRoutePointCodeType-->
+    <xsl:template match="xsd:extension[@base = 'c:QRoutePointDesignatorType']">
+        <xsd:extension base="field:QRoutePointCodeType">
+            <xsl:apply-templates select="*"/>
+        </xsd:extension>
+    </xsl:template>
 
     <xsl:template match="xsd:extension">
         <xsl:variable name="basetype">
@@ -240,19 +250,24 @@
         <xsl:variable name="basel" select="substring($basetype,0,string-length($basetype)-3)"/>
         <xsl:choose>
             <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
-                <xsd:extension base="{concat('field:',$basetype)}"/>
+                <xsd:extension base="{concat('field:',$basetype)}">
+                    <xsl:apply-templates select="*"/>
+                </xsd:extension>
             </xsl:when>
             <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction">
                 <xsd:restriction base="{concat('field:',$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction/@base)}">
                     <xsl:apply-templates select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction/*"/>
                 </xsd:restriction>
-                <!--<xsl:copy-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction"/>-->
             </xsl:when>
             <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]/@type">
-                <xsd:extension base="{concat('field:',$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]/@type)}"/>
+                <xsd:extension base="{concat('field:',$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]/@type)}">
+                    <xsl:apply-templates select="*"/>
+                </xsd:extension>
             </xsl:when>
             <xsl:otherwise>
-                <xsd:extension base="{concat($basel,'Type')}"/>
+                <xsd:extension base="{concat($basel,'Type')}">
+                    <xsl:apply-templates select="*"/>
+                </xsd:extension>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -314,7 +329,7 @@
         </xsl:variable>
         <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
-                <xsl:if test="not(xsd:documentation)">
+                <xsl:if test="not(xsd:documentation) and string-length($doc)&gt;0">
                     <xsd:documentation>
                         <xsl:value-of select="$doc"/>
                     </xsd:documentation>
@@ -326,8 +341,6 @@
             </xsl:copy>
         </xsl:if>
     </xsl:template>
-
-    <xsl:template match="xsd:annotation[parent::xsd:extension]"/>
 
     <!--Copy documentation only if it has text content-->
     <xsl:template match="xsd:documentation">
@@ -346,7 +359,7 @@
             <xsl:value-of select="*:SetFormatIdentifier/text()"/>
         </xsl:variable>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Set" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr">
                     <xsl:with-param name="doc" select="$doc"/>
@@ -356,6 +369,7 @@
                 </xsl:apply-templates>
                 <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
                 <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
+                <xsl:apply-templates select="*:SetFormatRelatedDocument" mode="docs"/>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
@@ -393,7 +407,7 @@
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" xmlns="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Field" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr">
                     <xsl:with-param name="doc" select="$doc"/>
@@ -401,14 +415,14 @@
                 <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr">
                     <xsl:with-param name="doc" select="$doc"/>
                 </xsl:apply-templates>
-                <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
+                <xsl:apply-templates select="*:FieldFormatRelatedDocuments" mode="docs"/>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="xsd:appinfo" mode="ref">
         <xsl:param name="fldinfo"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
                 <xsl:apply-templates select="*" mode="attr"/>
                 <xsl:if test="parent::xsd:annotation/parent::xsd:extension">
                     <xsl:variable name="ffdno">
@@ -517,6 +531,20 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    <xsl:template match="*:FieldFormatSponsor" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="sponsor">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:Justification" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="alignment">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
     <xsl:template match="*:ColumnName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="column">
@@ -524,14 +552,35 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-    <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
+    <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="usage">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>  
+    <xsl:template match="*:FieldFormatRelatedDocuments" mode="docs">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
-            <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
-                <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
+            <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocuments)">
+                <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
-                <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
-                    <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
+                <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocuments">
+                    <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SetFormatRelatedDocument" mode="docs">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
+            <xsl:if test="not(preceding-sibling::*:SetFormatRelatedDocument)">
+                <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                    <xsl:value-of select="normalize-space(text())"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:SetFormatRelatedDocument">
+                    <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
@@ -541,11 +590,11 @@
     <xsl:template match="*:SetFormatExample" mode="examples">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
-                <xsl:element name="Example" namespace="urn:mtf:mil:6040b:sets">
+                <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:SetFormatExample">
-                    <xsl:element name="Example" namespace="urn:mtf:mil:6040b:sets">
+                    <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
@@ -558,13 +607,14 @@
     <xsl:template match="*:SetFormatRelatedDocuments" mode="attr"/>
     <xsl:template match="*:RepeatabilityForGroupOfFields" mode="attr"/>
     <xsl:template match="*:SetFormatDescription" mode="attr"/>
-    <xsl:template match="*:FieldFormatRelatedDocument" mode="attr"/>
+    <xsl:template match="*:FieldFormatRelatedDocuments" mode="attr"/>
     <!--Filter unneeded nodes-->
+    
     <xsl:template match="xsd:attributeGroup"/>
+    <xsl:template match="*:FieldFormatStructure" mode="attr"/>
     <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>
     <xsl:template match="*:ColumnarIndicator" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
-    <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>
     <xsl:template match="xsd:attribute[@name = 'ffSeq']"/>
     <xsl:template match="xsd:attribute[@name = 'ffirnFudn']"/>
     <!--Filter empty xsd:annotations-->

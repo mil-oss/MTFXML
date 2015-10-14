@@ -72,7 +72,14 @@
             <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
-                    <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                    <xsl:choose>
+                        <xsl:when test="@name='AlphaNumericBlankSpecialTextSimpleType'">
+                            <xsd:pattern value="{concat(./xsd:restriction/xsd:pattern/@value,'+')}"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsd:restriction>
             </xsd:simpleContent>
             </xsd:complexType>
@@ -97,9 +104,9 @@
     <!--    OUTPUT RESULT-->
     <xsl:template match="/">
         <xsl:result-document href="{$outputdoc}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):change01:elementals"
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals"
+                targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals"
                 xml:lang="en-GB"
                 elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">               
@@ -303,13 +310,13 @@
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
                 <xsl:when test="exists(ancestor::xsd:enumeration)">
-                    <xsl:element name="Enum" namespace="urn:int:nato:mtf:app-11(c):change01:elementals">
+                    <xsl:element name="Enum" namespace="urn:int:nato:mtf:app-11(c):goe:elementals">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):change01:elementals">
+                    <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):goe:elementals">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>

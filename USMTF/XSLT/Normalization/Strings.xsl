@@ -72,7 +72,14 @@
             <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
-                    <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                <xsl:choose>
+                    <xsl:when test="@name='AlphaNumericBlankSpecialTextSimpleType'">
+                            <xsd:pattern value="{concat(./xsd:restriction/xsd:pattern/@value,'+')}"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                            <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                    </xsl:otherwise>
+                </xsl:choose>
                 </xsd:restriction>
             </xsd:simpleContent>
             </xsd:complexType>

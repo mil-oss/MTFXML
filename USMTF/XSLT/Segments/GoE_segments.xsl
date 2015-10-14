@@ -613,6 +613,7 @@
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
+    <xsl:template match="*:AlternativeType" mode="attr"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:SetFormatExample" mode="attr"/>
     <xsl:template match="*:SetFormatRelatedDocuments" mode="attr"/>

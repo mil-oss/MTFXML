@@ -21,7 +21,7 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <!--  This XSLT refactors baseline USMTF "fields" XML Schema by replacing annotation elements
+    <!--  This XSLT refactors baseline NATO MTF "fields" XML Schema by replacing annotation elements
     with attributes, removing unused elements and other adjustments-->
 
     <!--Fields from the baseline Composites XML Schema are also included as ComplexTypes in accordance with the intent to 
@@ -40,14 +40,14 @@
         select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
 
     <!--Simple Fields Baseline XML Schema document-->
-    <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
+    <xsl:variable name="fields_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')"/>
 
     <!--Composite Fields Baseline XML Schema document-->
     <xsl:variable name="composites_xsd"
-        select="document('../../XSD/Baseline_Schema/composites.xsd')"/>
+        select="document('../../XSD/APP-11C-ch1/Consolidated/composites.xsd')"/>
 
     <!--Output Document-->
-    <xsl:variable name="output_fields_xsd" select="'../../XSD/GoE_Schema/GoE_fields.xsd'"/>
+    <xsl:variable name="output_fields_xsd" select="'../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd'"/>
 
     <!--Consolidated xsd:simpleTypes and xsd:elements for local referenece by xsd:complexTypes-->
     <xsl:variable name="refactor_fields_xsd">
@@ -55,25 +55,40 @@
         <xsl:comment> ************** STRING FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$string_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
-            <xsl:copy-of select="."/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>************** INTEGER FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$integer_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
-            <xsl:copy-of select="."/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
+        <!--Special case .. This is the only Integer complexType used -->
+        <xsd:complexType name="_4WGridRowType">
+            <xsd:annotation> 
+                <xsd:appinfo>             
+                    <Field xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" name="4W GRID ROW"/>
+                </xsd:appinfo>
+            </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:restriction base="FieldIntegerBaseType">
+                        <xsd:minInclusive value="1"/>
+                        <xsd:maxInclusive value="24"/>
+                        <xsd:pattern value="[\-0-9]{2}"/>
+                    </xsd:restriction>
+                </xsd:simpleContent>
+        </xsd:complexType>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>*************** DECIMAL FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$decimal_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
-            <xsl:copy-of select="."/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>************* ENUMERATED FIELDS *************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$enumerated_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
-            <xsl:copy-of select="."/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
 
@@ -88,14 +103,12 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$output_fields_xsd}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
-                xmlns:ism="urn:us:gov:ic:ism:v2"
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:fields"
-                xml:lang="en-US"
+                targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals"
+                xml:lang="en-GB"
                 elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsl:copy-of select="$refactor_fields_xsd"/>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** COMPOSITE TYPES **************</xsl:comment>
@@ -117,7 +130,7 @@
             <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
-
+    
     <!--Create global xsd:element nodes for xsd:complexTypes -->
     <xsl:template match="xsd:complexType" mode="el">
         <xsd:element>
@@ -129,6 +142,45 @@
             </xsl:attribute>
         </xsd:element>
     </xsl:template>
+    
+    <!-- ******************** NAME CONFLICTS BETWEEN FIELDS AND COMPOSITES ******************** -->
+    <xsl:template match="xsd:complexType[@name='DutyOtherType']">
+        <xsd:complexType name="DutyOtherCodeType">
+            <xsl:apply-templates select="@*[not(name()='name')]"/>
+            <xsl:apply-templates select="*"/>
+        </xsd:complexType>
+    </xsl:template>
+    
+    <xsl:template match="xsd:complexType[@name='DutyOtherType'][xsd:sequence]" mode="el">
+        <xsd:element>
+            <xsl:attribute name="name">
+                <xsl:text>DutyOtherCode</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="type">
+                <xsl:text>DutyOtherCodeType</xsl:text>
+            </xsl:attribute>
+        </xsd:element>
+    </xsl:template>
+    
+    <xsl:template match="xsd:complexType[@name='QRoutePointDesignatorType']">
+        <xsd:complexType name="QRoutePointCodeType">
+            <xsl:apply-templates select="@*[not(name()='name')]"/>
+            <xsl:apply-templates select="*"/>
+        </xsd:complexType>
+    </xsl:template>
+    
+    <xsl:template match="xsd:complexType[@name='QRoutePointDesignatorType'][xsd:sequence]" mode="el">
+        <xsd:element>
+            <xsl:attribute name="name">
+                <xsl:text>QRoutePointCode</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="type">
+                <xsl:text>QRoutePointCodeType</xsl:text>
+            </xsl:attribute>
+        </xsd:element>
+    </xsl:template>
+    
+    <!-- ************************************************************************************** -->
 
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->
     <xsl:template match="xsd:element[@type]">
@@ -219,6 +271,10 @@
                     <xsl:attribute name="type">
                         <xsl:choose>
                             <xsl:when test="$composites_xsd//xsd:complexType/@name = $typename">
+                                <xsl:value-of select="$typename"/>
+                            </xsl:when>
+                            <xsl:when
+                                test="$refactor_fields_xsd/xsd:complexType/@name = $typename">
                                 <xsl:value-of select="$typename"/>
                             </xsl:when>
                             <xsl:otherwise>
@@ -350,12 +406,12 @@
     <xsl:template match="xsd:appinfo">
         <xsl:if test="not(preceding-sibling::xsd:appinfo)">
             <xsl:copy copy-namespaces="no">
-                <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+                <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):goe:elementals">
                     <xsl:apply-templates select="@*"/>
                     <xsl:apply-templates select="*" mode="attr"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::xsd:appinfo">
-                    <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+                    <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):goe:elementals">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>
