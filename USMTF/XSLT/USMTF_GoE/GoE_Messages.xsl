@@ -105,6 +105,7 @@
         </xsl:attribute>
     </xsl:template>
 
+    <!--Build Messages using GoE nodes-->
     <xsl:template match="xsd:schema/xsd:element" mode="ctype">
         <xsd:complexType name="{concat(@name,'Type')}">
             <xsl:apply-templates select="@*" mode="ctype"/>
@@ -422,6 +423,12 @@
                 </xsd:complexContent>
             </xsd:complexType>
         </xsl:copy>
+    </xsl:template>
+
+    <!--Assign fixed value to MessageIdentifier-->
+    
+    <xsl:template match="xsd:element[@name='MessageIdentifier']" mode="ctype">
+        
     </xsl:template>
 
     <xsl:template match="xsd:schema/xsd:element/xsd:complexType" mode="ctype">

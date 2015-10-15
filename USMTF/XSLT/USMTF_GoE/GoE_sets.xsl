@@ -149,7 +149,12 @@
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
-    <xsl:template match="xsd:element[@name = 'GroupOfFields']"/>
+    <xsl:template match="xsd:element[@name = 'GroupOfFields']">
+        <xsl:apply-templates select="xsd:complexType/xsd:sequence" mode="group">
+            <xsl:with-param name="min" select="@minOccurs"/>
+            <xsl:with-param name="max" select="@maxOccurs"/>
+        </xsl:apply-templates>
+    </xsl:template>
   
     <xsl:template match="xsd:element[@nillable]">
         <xsl:copy copy-namespaces="no">
@@ -257,12 +262,12 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="xsd:sequence[ancestor::xsd:element[@name = 'GroupOfFields'][1]]">
-        <xsl:copy>
-            <xsl:copy-of select="ancestor::xsd:element[@name = 'GroupOfFields'][1]/@minOccurs"/>
-            <xsl:copy-of select="ancestor::xsd:element[@name = 'GroupOfFields'][1]/@maxOccurs"/>
+    <xsl:template match="xsd:sequence" mode="group">
+        <xsl:param name="min"/>
+        <xsl:param name="max"/>
+        <xsd:sequence minOccurs='{$min}' maxOccurs='{$max}'>
             <xsl:apply-templates select="*"/>
-        </xsl:copy>
+        </xsd:sequence>
     </xsl:template>
 
     <!--Convert elements in xsd:appinfo to attributes-->
@@ -289,7 +294,7 @@
             <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier/text()"/>
         </xsl:variable>
         <xsl:variable name="doc">
-            <xsl:apply-templates select="xsd:documentation/text()"/>
+            <xsl:value-of select="normalize-space(xsd:documentation/text())"/>
         </xsl:variable>
         <xsl:variable name="desc">
             <xsl:apply-templates select="xsd:appinfo/*:SetFormatDescription/text()"/>
@@ -314,7 +319,7 @@
         </xsl:variable>
         <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
-                <xsl:if test="not(xsd:documentation)">
+                <xsl:if test="not(xsd:documentation and string-length($doc)&gt;0)">
                     <xsd:documentation>
                         <xsl:value-of select="$doc"/>
                     </xsd:documentation>

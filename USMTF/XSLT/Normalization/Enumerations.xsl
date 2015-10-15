@@ -22,14 +22,30 @@
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="yes"/>
 
-    <!--Baseline XML Schema-->
     <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
-    <!--Normalized xsd:simpleTypes-->
-    <xsl:variable name="normenumerationtypes"
-        select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
+    <xsl:variable name="normalized_fields_xsd" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
+    
+    <!--Baseline Fields XML Schema document-->
+    <xsl:variable name="strings_xsd"
+        select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
+    <xsl:variable name="integers_xsd"
+        select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:integer']]"/>
+    <xsl:variable name="decimals_xsd"
+        select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:decimal']]"/>
+    <xsl:variable name="enumerations_xsd"
+        select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]"/>
+    
     <!--Output-->
-    <xsl:variable name="enumoutdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
-    <xsl:variable name="fixedoutdoc" select="'../../XSD/Normalized/FixedElements.xsd'"/>
+    <xsl:variable name="string_outputdoc" select="'../../XSD/Normalized/Strings.xsd'"/>
+    <xsl:variable name="integersoutputdoc" select="'../../XSD/Normalized/Integers.xsd'"/>
+    <xsl:variable name="decimalsoutputdoc" select="'../../XSD/Normalized/Decimals.xsd'"/>
+    <xsl:variable name="enumerationsoutdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
+    
+    <!--A normalized list of xsd:string types with common REGEX patterns without length qualifiers for re-use globally-->
+    <xsl:variable name="normalizedstrtypes"
+        select="$normalized_fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
+    <xsl:variable name="normenumerationtypes"
+        select="$normalized_fields_xsd/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
 
     <!--xsd:simpleTypes with Enumerations-->
     <xsl:variable name="enumtypes">
@@ -45,7 +61,7 @@
     </xsl:variable>
 
     <!--This consolidates normalized and unique xsd:simpleTypes for sorting  -->
-    <xsl:variable name="combinedTypes">
+    <xsl:variable name="enumcombinedTypes">
         <xsl:for-each select="$normenumerationtypes">
             <xsl:copy-of select="."/>
         </xsl:for-each>
@@ -55,7 +71,7 @@
     </xsl:variable>
 
     <xsl:template match="/">
-        <xsl:result-document href="{$enumoutdoc}">
+        <xsl:result-document href="{$enumerationsoutdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
                 xmlns:ism="urn:us:gov:ic:ism:v2"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -71,7 +87,7 @@
                         </xsd:extension>
                     </xsd:simpleContent>
                 </xsd:complexType>
-                <xsl:for-each select="$combinedTypes/*">
+                <xsl:for-each select="$enumcombinedTypes/*">
                     <xsl:sort select="@name"/>
                     <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
                         <xsl:copy-of select="xsd:annotation"/>
@@ -193,20 +209,6 @@
             <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
-            </xsl:element>
-        </xsl:copy>
-    </xsl:template>
-
-    <!--For Single Enumeration Types converted to Elements-->
-    <xsl:template
-        match="xsd:appinfo[ancestor::xsd:simpleType/xsd:restriction[count(xsd:enumeration) = 1]]">
-        <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
-                <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*" mode="attr"/>
-                <xsl:apply-templates
-                    select="ancestor::xsd:simpleType/xsd:restriction/xsd:enumeration/xsd:annotation/xsd:appinfo/*"
-                    mode="attr"/>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
