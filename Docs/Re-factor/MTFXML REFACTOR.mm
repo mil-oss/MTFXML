@@ -1,6 +1,6 @@
 <map version="freeplane 1.3.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
-<node TEXT="MTFXML REFACTOR" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1444857466659"><hook NAME="MapStyle">
+<node TEXT="MTFXML REFACTOR" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1444928140481"><hook NAME="MapStyle">
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node">
@@ -50,7 +50,7 @@
 </map_styles>
 </hook>
 <hook NAME="AutomaticEdgeColor" COUNTER="7"/>
-<node TEXT="Background" POSITION="right" ID="ID_396111513" CREATED="1444853751150" MODIFIED="1444857225719" VSHIFT="-10">
+<node TEXT="Background" POSITION="right" ID="ID_396111513" CREATED="1444853751150" MODIFIED="1444928136842" VSHIFT="30">
 <edge COLOR="#ff00ff"/>
 <node TEXT="The current XML Schema for US and NATO MTF are designed for piecemeal implementation of messages based on commonly defined XML nodes which are maintained in relational databases.  This makes normalization, re-use, and configuration management difficult." ID="ID_199156720" CREATED="1444853786014" MODIFIED="1444855645114" HGAP="10" VSHIFT="-10"/>
 <node TEXT="Because the current XML Schema design does not support implementation of the entire standard, there are persistent mismatches of messages implemented and versions across systems." ID="ID_1369603701" CREATED="1444854247374" MODIFIED="1444855622928" VSHIFT="-20"/>
@@ -63,12 +63,12 @@
 <node TEXT="The resulting XML Schema products will support all requirements for the text based slash delimited MTF format, and will avoid alteration of XML element names except where absolutely necessary for naming deconfliction of global nodes.  Except for a few cases, XML instances from the current standard will validate against the re-factored XML Schemas if common namespaces are assigned." ID="ID_64571144" CREATED="1444855955886" MODIFIED="1444856261655" HGAP="30" VSHIFT="10"/>
 <node TEXT="This project is intended to support holistic implementation of the standards in order to facilitate use in web services, allow conversion between US and NATO specification, conversion between message versions, and interoperability with other standard formats." ID="ID_589380055" CREATED="1444856263166" MODIFIED="1444856474104" VSHIFT="10"/>
 </node>
-<node TEXT="Usage" POSITION="right" ID="ID_1638087420" CREATED="1444856923121" MODIFIED="1444857230346" VSHIFT="-50">
+<node TEXT="Usage" POSITION="right" ID="ID_1638087420" CREATED="1444856923121" MODIFIED="1444928140479" VSHIFT="-10">
 <edge COLOR="#ffff00"/>
 <node TEXT="The process for converting from current standard formats is provided for purposes of integrity, testing and verification.  For most use cases, the generated XML Schemas can be used without repeating this conversion." ID="ID_226841617" CREATED="1444856932239" MODIFIED="1444857188442" VSHIFT="-20"/>
 <node TEXT="Reference implementation products are intended for re-use and distribution in order to promote interoperability and uniformity in implementations.  These products should load the provided re-factored XML Schemas and provide intended MTF messaging functionality for every message and message component." ID="ID_1184157034" CREATED="1444857042207" MODIFIED="1444857227178"/>
 </node>
-<node TEXT="Caveats" POSITION="right" ID="ID_98871154" CREATED="1444857235839" MODIFIED="1444857630187" VSHIFT="-30">
+<node TEXT="Caveats" POSITION="right" ID="ID_98871154" CREATED="1444857235839" MODIFIED="1444928138529" VSHIFT="-70">
 <edge COLOR="#7c0000"/>
 <node TEXT="All data resources are restricted for distribution.  This requires complete separation of presentation and data.  No implementations may retain data from the XML Schema resources in code." ID="ID_996714687" CREATED="1444857241999" MODIFIED="1444857458193"/>
 <node TEXT="Alteration or further re-factoring of the provided XML Schema must implement new namespace assignments." ID="ID_1920187984" CREATED="1444857468671" MODIFIED="1444857550443" VSHIFT="10"/>

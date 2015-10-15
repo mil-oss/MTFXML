@@ -31,10 +31,10 @@
     <xsl:variable name="baseline_msgs" select="document('../../XSD/APP-11C-ch1/Consolidated/messages.xsd')"/>
     <xsl:variable name="goe_sets_xsd" select="document('../../XSD/APP-11C-GoE/natomtf_goe_sets.xsd')"/>
     <xsl:variable name="goe_fields_xsd" select="document('../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd')"/>
-    <xsl:variable name="new_segment_names"
-        select="document('../../XSD/Deconflicted/Segment_Name_Changes.xml')"/>
-    <xsl:variable name="new_set_names"
-        select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')"/>
+    <!--<xsl:variable name="new_segment_names"
+        select="document('../../XSD/Deconflicted/Segment_Name_Changes.xml')"/>-->
+    <!--<xsl:variable name="new_set_names"
+        select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')"/>-->
     <xsl:variable name="outputdoc" select="'../../XSD/APP-11C-GoE/natomtf_goe_segments.xsd'"/>
 
     <!-- ***********************  Segment Elements  ************************-->
@@ -62,17 +62,17 @@
             </xsl:variable>
             <xsl:copy copy-namespaces="no">
                 <xsl:attribute name="name">
-                    <xsl:choose>
+<!--                    <xsl:choose>
                         <xsl:when
                             test="$new_segment_names/USMTF_Segments/Segment[@MtfId = $mtfid and @ElementName = $baseline_name]">
                             <xsl:value-of
                                 select="$new_segment_names/USMTF_Segments/Segment[@MtfId = $mtfid and @ElementName = $baseline_name]/@NewElementName"
                             />
                         </xsl:when>
-                        <xsl:otherwise>
+                        <xsl:otherwise>-->
                             <xsl:value-of select="$baseline_name"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                        <!--</xsl:otherwise>
+                    </xsl:choose>-->
                 </xsl:attribute>
                 <xsl:attribute name="id">
                     <xsl:value-of
@@ -209,20 +209,20 @@
                 select="$baseline_sets/xsd:schema/xsd:complexType[@name = concat($elname, 'Type')]/xsd:annotation/xsd:appinfo/*:SetFormatIdentifier"
             />
         </xsl:variable>
-        <xsl:variable name="newSetName">
+<!--        <xsl:variable name="newSetName">
             <xsl:value-of
                 select="translate($new_set_names/USMTF_Sets/Set[@SETNAMESHORT = $setID][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
             />
-        </xsl:variable>
+        </xsl:variable>-->
         <xsl:choose>
-            <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = $newSetName">
+<!--            <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = $newSetName">
                 <xsl:element name="xsd:element">
                     <xsl:attribute name="ref">
                         <xsl:value-of select="concat('set:', $newSetName)"/>
                     </xsl:attribute>
                     <xsl:copy-of select="xsd:annotation"/>
                 </xsl:element>
-            </xsl:when>
+            </xsl:when>-->
             <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = $elname">
                 <xsl:element name="xsd:element">
                     <xsl:attribute name="ref">
@@ -386,16 +386,16 @@
                 select="$baseline_sets/xsd:schema/xsd:complexType[@name = concat($match, 'Type')]/xsd:annotation/xsd:appinfo/*:SetFormatIdentifier"
             />
         </xsl:variable>
-        <xsl:variable name="SetChangedName">
+<!--        <xsl:variable name="SetChangedName">
             <xsl:value-of
                 select="translate($new_set_names/USMTF_Sets/Set[@SETNAMESHORT = $setID][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
             />
-        </xsl:variable>
+        </xsl:variable>-->
         <xsl:choose>
-            <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element[@name = $SetChangedName]/@type">
+<!--            <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element[@name = $SetChangedName]/@type">
                 <xsl:value-of
                     select="$goe_sets_xsd/xsd:schema/xsd:element[@name = $SetChangedName]/@type"/>
-            </xsl:when>
+            </xsl:when>-->
             <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element[@name = $match]/@type">
                 <xsl:value-of select="$goe_sets_xsd/xsd:schema/xsd:element[@name = $match]/@type"/>
             </xsl:when>
