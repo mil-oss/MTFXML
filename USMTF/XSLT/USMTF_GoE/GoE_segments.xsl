@@ -189,7 +189,7 @@
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
-    <xsl:template match="xsd:element[not(starts-with(@name, 'GeneralText_'))]" mode="global">
+    <xsl:template match="xsd:element[not(starts-with(@name, 'GeneralText'))][not(starts-with(@name, 'HeadingInformation'))]" mode="global">
         <xsl:variable name="elname">
             <xsl:choose>
                 <xsl:when test="contains(@name, '_')">
@@ -247,7 +247,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="xsd:element[starts-with(@name, 'GeneralText_')]" mode="global">
+    <xsl:template match="xsd:element[starts-with(@name, 'GeneralText')]" mode="global">
         <xsl:variable name="per">&#46;</xsl:variable>
         <xsl:variable name="apos">&#34;</xsl:variable>
         <xsl:variable name="lparen">&#40;</xsl:variable>
@@ -264,7 +264,7 @@
                     <xsl:value-of select="replace($TextInd, $apos, '')"/>
                 </xsl:with-param>
             </xsl:call-template>
-        </xsl:variable>
+        </xsl:variable>       
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
             <!--handle 2 special cases with parens-->
@@ -289,6 +289,51 @@
         </xsl:copy>
     </xsl:template>
 
+    <xsl:template match="xsd:element[starts-with(@name, 'HeadingInformation')]" mode="global">
+        <xsl:variable name="per">&#46;</xsl:variable>
+        <xsl:variable name="apos">&#34;</xsl:variable>
+        <xsl:variable name="lparen">&#40;</xsl:variable>
+        <xsl:variable name="rparen">&#41;</xsl:variable>
+        <xsl:variable name="UseDesc">
+            <xsl:value-of
+                select="translate(upper-case(xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription), '.', '')"/>
+        </xsl:variable>
+        <xsl:variable name="TextInd">
+            <xsl:value-of select="normalize-space(substring-after($UseDesc, 'MUST EQUAL'))"/>
+        </xsl:variable>
+        <xsl:variable name="CCase">
+            <xsl:call-template name="CamelCase">
+                <xsl:with-param name="text">
+                    <xsl:value-of select="replace($TextInd, $apos, '')"/>
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:copy copy-namespaces="no">
+            <!--<xsl:apply-templates select="@*"/>-->
+            <!--handle 2 special cases with parens-->
+            <xsl:attribute name="name">
+                <xsl:value-of
+                    select="translate(concat('HeadingInformation', replace(replace($CCase, '(TAS)', ''), '(mpa)', '')), ' ,/”()', '')"
+                />
+            </xsl:attribute>
+            <xsl:element name="xsd:annotation">
+                <xsl:apply-templates select="xsd:annotation/*" mode="ctype"/>
+            </xsl:element>
+            <xsd:complexType>
+                <xsd:complexContent>
+                    <xsd:extension base="set:HeadingInformationType">
+                        <xsd:sequence>
+                            <xsd:element name="FieldAssignment"
+                                type="field:AlphaNumericBlankSpecialTextType" minOccurs="1"
+                                fixed="{translate(replace($TextInd,$apos,''),'”','')}"/>
+                            <xsd:element ref="field:FreeTextField" minOccurs="1"/>
+                        </xsd:sequence>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
+        </xsl:copy>
+    </xsl:template>
+    
     <xsl:template match="xsd:extension[@base]" mode="global">
         <!--Create complex or simple type reference to match with global type in GoE fields-->
         <!--Because types have been normalized, it is necessary use element name to match-->

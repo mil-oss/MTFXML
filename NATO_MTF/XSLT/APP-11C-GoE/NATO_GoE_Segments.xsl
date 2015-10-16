@@ -27,7 +27,6 @@
     <!--The Resulting Global Elements will be included in the "usmtf_fields" XML Schema per proposed changes of September 2014-->
     <!--Duplicate Segment Names are deconflicted using an XML document containing affected messages, elements and approved changes-->
 
-    <xsl:variable name="baseline_sets" select="document('../../XSD/APP-11C-ch1/Consolidated/sets.xsd')"/>
     <xsl:variable name="baseline_msgs" select="document('../../XSD/APP-11C-ch1/Consolidated/messages.xsd')"/>
     <xsl:variable name="goe_sets_xsd" select="document('../../XSD/APP-11C-GoE/natomtf_goe_sets.xsd')"/>
     <xsl:variable name="goe_fields_xsd" select="document('../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd')"/>
@@ -62,17 +61,7 @@
             </xsl:variable>
             <xsl:copy copy-namespaces="no">
                 <xsl:attribute name="name">
-<!--                    <xsl:choose>
-                        <xsl:when
-                            test="$new_segment_names/USMTF_Segments/Segment[@MtfId = $mtfid and @ElementName = $baseline_name]">
-                            <xsl:value-of
-                                select="$new_segment_names/USMTF_Segments/Segment[@MtfId = $mtfid and @ElementName = $baseline_name]/@NewElementName"
-                            />
-                        </xsl:when>
-                        <xsl:otherwise>-->
                             <xsl:value-of select="$baseline_name"/>
-                        <!--</xsl:otherwise>
-                    </xsl:choose>-->
                 </xsl:attribute>
                 <xsl:attribute name="id">
                     <xsl:value-of
@@ -190,7 +179,7 @@
         <xsl:value-of select="normalize-space(translate(.,'&#34;',''))"/>
     </xsl:template>
 
-    <xsl:template match="xsd:element[not(starts-with(@name, 'GeneralText_'))]" mode="global">
+    <xsl:template match="xsd:element[not(starts-with(@name, 'GeneralText'))]" mode="global">
         <xsl:variable name="elname">
             <xsl:choose>
                 <xsl:when test="starts-with(@name, '_')">
@@ -204,25 +193,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="setID">
-            <xsl:value-of
-                select="$baseline_sets/xsd:schema/xsd:complexType[@name = concat($elname, 'Type')]/xsd:annotation/xsd:appinfo/*:SetFormatIdentifier"
-            />
-        </xsl:variable>
-<!--        <xsl:variable name="newSetName">
-            <xsl:value-of
-                select="translate($new_set_names/USMTF_Sets/Set[@SETNAMESHORT = $setID][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
-            />
-        </xsl:variable>-->
         <xsl:choose>
-<!--            <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = $newSetName">
-                <xsl:element name="xsd:element">
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('set:', $newSetName)"/>
-                    </xsl:attribute>
-                    <xsl:copy-of select="xsd:annotation"/>
-                </xsl:element>
-            </xsl:when>-->
             <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = $elname">
                 <xsl:element name="xsd:element">
                     <xsl:attribute name="ref">
@@ -251,7 +222,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="xsd:element[starts-with(@name, 'GeneralText_')]" mode="global">
+    <xsl:template match="xsd:element[starts-with(@name, 'GeneralText')]" mode="global">
         <xsl:variable name="per">&#46;</xsl:variable>
         <xsl:variable name="apos">&#34;</xsl:variable>
         <xsl:variable name="lparen">&#40;</xsl:variable>
@@ -292,7 +263,7 @@
             </xsd:complexType>
         </xsl:copy>
     </xsl:template>
-
+    
     <xsl:template match="xsd:extension[@base]" mode="global">
         <!--Create complex or simple type reference to match with global type in GoE fields-->
         <!--Because types have been normalized, it is necessary use element name to match-->
@@ -381,21 +352,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="setID">
-            <xsl:value-of
-                select="$baseline_sets/xsd:schema/xsd:complexType[@name = concat($match, 'Type')]/xsd:annotation/xsd:appinfo/*:SetFormatIdentifier"
-            />
-        </xsl:variable>
-<!--        <xsl:variable name="SetChangedName">
-            <xsl:value-of
-                select="translate($new_set_names/USMTF_Sets/Set[@SETNAMESHORT = $setID][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
-            />
-        </xsl:variable>-->
         <xsl:choose>
-<!--            <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element[@name = $SetChangedName]/@type">
-                <xsl:value-of
-                    select="$goe_sets_xsd/xsd:schema/xsd:element[@name = $SetChangedName]/@type"/>
-            </xsl:when>-->
             <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element[@name = $match]/@type">
                 <xsl:value-of select="$goe_sets_xsd/xsd:schema/xsd:element[@name = $match]/@type"/>
             </xsl:when>

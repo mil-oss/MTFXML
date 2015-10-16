@@ -72,14 +72,17 @@
             <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
-                <xsl:choose>
-                    <xsl:when test="@name='AlphaNumericBlankSpecialTextSimpleType'">
-                            <xsd:pattern value="{concat(./xsd:restriction/xsd:pattern/@value,'+')}"/>
-                    </xsl:when>
-                    <xsl:otherwise>
+                    <xsl:choose>
+                        <xsl:when test="ends-with(./xsd:restriction/xsd:pattern/@value,'}')">
                             <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                        </xsl:when>
+                        <xsl:when test="ends-with(./xsd:restriction/xsd:pattern/@value,'*')">
+                            <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsd:pattern value="{concat(./xsd:restriction/xsd:pattern/@value,'+')}"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsd:restriction>
             </xsd:simpleContent>
             </xsd:complexType>
@@ -136,7 +139,7 @@
         <xsd:complexType name="{@name}">
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
-                    <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                    <xsl:apply-templates select="xsd:restriction/*"/>
                 </xsd:restriction>
             </xsd:simpleContent>
         </xsd:complexType>
@@ -146,10 +149,23 @@
     for matching and output-->
     <xsl:template match="xsd:pattern">
         <xsl:copy copy-namespaces="no">
-            <xsl:attribute name="value">
+            <xsl:variable name="val">
                 <xsl:call-template name="patternValue">
                     <xsl:with-param name="pattern" select="replace(@value,'&#x20;',' ')"/>
                 </xsl:call-template>
+            </xsl:variable>
+            <xsl:attribute name="value">
+                <xsl:choose>
+                    <xsl:when test="ends-with($val,'}')">
+                        <xsl:value-of select="$val"/>
+                    </xsl:when>
+                    <xsl:when test="ends-with($val,'*')">
+                        <xsl:value-of select="$val"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($val,'+')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>
@@ -242,8 +258,7 @@
                         </xsd:restriction>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsd:restriction
-                            base="{concat(substring-before(@name,'SimpleType'),'Type')}">
+                         <xsd:restriction base="{@name}">
                             <xsl:apply-templates select="xsd:restriction/*" mode="el"/>
                         </xsd:restriction>
                     </xsl:otherwise>

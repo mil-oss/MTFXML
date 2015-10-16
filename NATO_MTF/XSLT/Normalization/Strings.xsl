@@ -73,7 +73,7 @@
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
                     <xsl:choose>
-                        <xsl:when test="contains(./xsd:restriction/xsd:pattern/@value,'{')">
+                        <xsl:when test="ends-with(./xsd:restriction/xsd:pattern/@value,'}')">
                             <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -143,10 +143,20 @@
     for matching and output-->
     <xsl:template match="xsd:pattern">
         <xsl:copy copy-namespaces="no">
-            <xsl:attribute name="value">
+            <xsl:variable name="val">
                 <xsl:call-template name="patternValue">
                     <xsl:with-param name="pattern" select="replace(@value,'&#x20;',' ')"/>
                 </xsl:call-template>
+            </xsl:variable>
+            <xsl:attribute name="value">
+                <xsl:choose>
+                    <xsl:when test="ends-with($val,'}')">
+                        <xsl:value-of select="$val"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($val,'+')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>

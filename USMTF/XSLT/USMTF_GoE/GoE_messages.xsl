@@ -265,7 +265,7 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="xsd:element[starts-with(@name, 'GeneralText_')]" mode="ctype">
+    <xsl:template match="xsd:element[starts-with(@name, 'GeneralText')]" mode="ctype">
         <xsl:variable name="per">&#46;</xsl:variable>
         <xsl:variable name="apos">&#34;</xsl:variable>
         <xsl:variable name="lparen">&#40;</xsl:variable>
@@ -327,7 +327,7 @@
         </xsl:copy>
     </xsl:template>       
    
-    <xsl:template match="xsd:extension[@base = 's:GeneralTextType']" mode="ctype">
+    <!--<xsl:template match="xsd:extension[@base = 's:GeneralTextType']" mode="ctype">
         <xsl:variable name="apos">&#34;</xsl:variable>
         <xsl:variable name="quot">"</xsl:variable>
         <xsl:variable name="per">.</xsl:variable>
@@ -378,9 +378,9 @@
             </xsl:element>
             <xsl:apply-templates select="xsd:attribute"/>
         </xsl:element>
-    </xsl:template>
+    </xsl:template>-->
 
-    <xsl:template match="xsd:element[starts-with(@name, 'HeadingInformation_')]" mode="ctype">
+    <xsl:template match="xsd:element[starts-with(@name, 'HeadingInformation')]" mode="ctype">
         <xsl:variable name="per">&#46;</xsl:variable>
         <xsl:variable name="apos">&#34;</xsl:variable>
         <xsl:variable name="lparen">&#40;</xsl:variable>
@@ -423,291 +423,6 @@
                 </xsd:complexContent>
             </xsd:complexType>
         </xsl:copy>
-    </xsl:template>
-
-    <!--Assign fixed value to MessageIdentifier-->
-    <xsl:template match="xsd:element[@name='MessageIdentifierType']" mode="ctype">
-        <xsd:element name="MessageIdentifierType">
-            <xsd:annotation>
-            <xsd:documentation/>
-            <xsd:appinfo>
-                <Set name="MESSAGE IDENTIFIER"
-                    id="MSGID"
-                    SetFormatSponsor="DISA"
-                    version="B.1.01.06">
-                    <Example>MSGID/ABSTAT/MIL-STD-6040(SERIES)/B.0.01.00/1ST FW-DO/1201003 /20090214T132530Z/DEV/2/USA/UNCLASSIFED//</Example>
-                    <Example>MSGID/ABSTAT/MIL-STD-6040(SERIES)/B.0.01.01/1ST FW-DO/1201003 /20090714T182530Z/-/-/USA/CONFIDENTIAL/USA CAN GBR//</Example>
-                    <Example>MSGID/ABSTAT/MIL-STD-6040(SERIES)/B.1.01.02/1ST FW-DO/1201003/FEB/DEV /2/USA/OTHER:DOS UNCLASSIFED FOR INTERNET//</Example>
-                </Set>
-            </xsd:appinfo>
-            </xsd:annotation>
-            <xsd:complexContent>
-            <xsd:extension base="SetBaseType">
-                <xsd:sequence>
-                    <xsd:element name="StandardOfMessageTextFormat"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="true">
-                        <xsd:annotation>
-                            <xsd:documentation>The military standard that contains the message format rules.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="STANDARD OF MESSAGE TEXT FORMAT"
-                                    identifier="A"
-                                    name="Standard"
-                                    definition="The standard from which the message is derived."
-                                    version="B.1.01.00"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:simpleContent>
-                                <xsd:extension base="field:StandardOfMessageTextFormatType"/>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="VersionOfMessageTextFormat"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="true">
-                        <xsd:annotation>
-                            <xsd:documentation>The version of the message text format. The message version consists of four parts: Part 1 is the edition letter of MIL-STD-6040(SERIES), e.g., A, B, C through Z, Part 2 is the change number of the edition (0-5), Part 3 is the major change for the message, e.g., 01-99, and Part 4 is the minor change for the message, e.g., 00-99.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="VERSION OF MESSAGE TEXT FORMAT"
-                                    identifier="A"
-                                    name="Standard"
-                                    definition="The standard from which the message is derived."
-                                    version="B.1.01.00"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:simpleContent>
-                                <xsd:extension base="field:VersionOfMessageTextFormatType"/>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="Originator" minOccurs="1" maxOccurs="1" nillable="true">
-                        <xsd:annotation>
-                            <xsd:documentation>The identifier of the originator of the message.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="ORIGINATOR"
-                                    identifier="A"
-                                    name="Originator"
-                                    definition="ANY COMBINATION OF CHARACTERS WHICH UNIQUELY IDENTIFY THE ORIGINATOR OF A MESSAGE."
-                                    version="B.1.01.00"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:simpleContent>
-                                <xsd:restriction base="field:AlphaNumericBlankSpecialTextType">
-                                    <xsd:minLength value="1"/>
-                                    <xsd:maxLength value="30"/>
-                                </xsd:restriction>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="MessageSerialNumber" minOccurs="0" maxOccurs="1">
-                        <xsd:annotation>
-                            <xsd:documentation>The serial number assigned to a specific message. The originating command may develop the message serial number by any method.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="MESSAGE SERIAL NUMBER"
-                                    identifier="A"
-                                    name="SerialNumber"
-                                    definition="A UNIQUE IDENTIFIER SEQUENTIALLY ASSIGNED BY AN ORIGINATOR."
-                                    version="B.1.01.00"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:simpleContent>
-                                <xsd:restriction base="field:AlphaNumericSpecialFileCodeType">
-                                    <xsd:minLength value="1"/>
-                                    <xsd:maxLength value="7"/>
-                                </xsd:restriction>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="ReferenceTimeOfPublication"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="true">
-                        <xsd:annotation>
-                            <xsd:documentation>The reference time of publication using either the ISO 8601 standardized date-time or the abbreviated month name.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="REFERENCE TIME OF PUBLICATION"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:choice>
-                                <xsd:element name="DateTimeIso">
-                                    <xsd:annotation>
-                                        <xsd:documentation>The reference time of publication using either the ISO 8601 standardized date-time or the abbreviated month name.</xsd:documentation>
-                                        <xsd:appinfo>
-                                            <Field identifier="A"
-                                                name="InternationalStandardDateAndTime"
-                                                definition="A designation of a specified chronological point measured using Coordinated Universal Time (UTC) ISO 8601 as a standard of reference; example: 20090214T132530Z. This is expressed using a compacted ISO notation YYYYMMDDTHHMMSSZ where YYYY represents a year, MM represents a month in values from 01 to 12, DD represents a day in values from 01 to 31, character T is the time delimiter, HH represents an hour from 00 to 23, MM represents a minute from 00 to 59, SS represents the seconds from 00 to 59, and Z represents the time zone."
-                                                remark="ALLOWED ENTRIES: (0000 to 9999); (01 to 12); (01 to 31); T; (00 to 23); (00 to 59); (00 to 59); Z."
-                                                version="B.1.02.00"/>
-                                        </xsd:appinfo>
-                                    </xsd:annotation>
-                                    <xsd:complexType>
-                                        <xsd:simpleContent>
-                                            <xsd:extension base="field:DateTimeIsoType"/>
-                                        </xsd:simpleContent>
-                                    </xsd:complexType>
-                                </xsd:element>
-                                <xsd:element name="MonthName">
-                                    <xsd:annotation>
-                                        <xsd:documentation>The reference time of publication using either the ISO 8601 standardized date-time or the abbreviated month name.</xsd:documentation>
-                                        <xsd:appinfo>
-                                            <Field identifier="B"
-                                                name="MonthName"
-                                                definition="THE NAME OF A SPECIFIC MONTH WHICH IS ONE OF THE TWELVE PARTS INTO WHICH A YEAR IS DIVIDED AS DEFINED BY THE GREGORIAN CALENDAR."
-                                                version="B.1.01.00"/>
-                                        </xsd:appinfo>
-                                    </xsd:annotation>
-                                    <xsd:complexType>
-                                        <xsd:simpleContent>
-                                            <xsd:extension base="field:MonthNameType"/>
-                                        </xsd:simpleContent>
-                                    </xsd:complexType>
-                                </xsd:element>
-                            </xsd:choice>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="Qualifier" minOccurs="0" maxOccurs="1">
-                        <xsd:annotation>
-                            <xsd:documentation>A qualifier which caveats a message status.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="QUALIFIER"
-                                    identifier="A"
-                                    name="Qualifier"
-                                    definition="A QUALIFIER WHICH CAVEATS A MESSAGE STATUS."
-                                    version="B.1.01.00"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:simpleContent>
-                                <xsd:extension base="field:QualifierType"/>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="SerialNumberOfQualifier" minOccurs="0" maxOccurs="1">
-                        <xsd:annotation>
-                            <xsd:documentation>A number assigned serially to identify the sequential version of a message qualifier for a basic message.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="SERIAL NUMBER OF QUALIFIER"
-                                    identifier="A"
-                                    name="Number"
-                                    definition="AN IDENTIFIER OF AN ENTITY, COMMONLY CONSIDERED TO BE OR REFERRED TO AS A 'NUMBER.'"
-                                    version="B.1.01.01"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:simpleContent>
-                                <xsd:restriction base="field:FieldIntegerBaseType">
-                                    <xsd:minInclusive value="1"/>
-                                    <xsd:maxInclusive value="999"/>
-                                    <xsd:pattern value="[0-9]{1,3}"/>
-                                </xsd:restriction>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="MessageSecurityPolicy"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="true">
-                        <xsd:annotation>
-                            <xsd:documentation>The security policy that applies to the information contained in a message text format.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="MESSAGE SECURITY POLICY"
-                                    identifier="A"
-                                    name="SecurityMarkingsSchemaAttributes"
-                                    definition="THE MARKINGS USED IN AN XML SCHEMA TO DOCUMENT SECURITY MARKINGS ATTRIBUTES."
-                                    version="B.1.01.00"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:simpleContent>
-                                <xsd:restriction base="field:AlphaBlankTextType">
-                                    <xsd:minLength value="1"/>
-                                    <xsd:maxLength value="50"/>
-                                </xsd:restriction>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="MessageSecurityClassification"
-                        minOccurs="1"
-                        maxOccurs="1"
-                        nillable="true">
-                        <xsd:annotation>
-                            <xsd:documentation>The security classification of the message.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="MESSAGE SECURITY CLASSIFICATION"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:choice>
-                                <xsd:element name="MessageSecurityClassificationExtended">
-                                    <xsd:annotation>
-                                        <xsd:documentation>The security classification of the message.</xsd:documentation>
-                                        <xsd:appinfo>
-                                            <Field identifier="A"
-                                                name="SecurityMarkingsSchemaAttributes"
-                                                definition="THE MARKINGS USED IN AN XML SCHEMA TO DOCUMENT SECURITY MARKINGS ATTRIBUTES."
-                                                version="B.1.01.00"/>
-                                        </xsd:appinfo>
-                                    </xsd:annotation>
-                                    <xsd:complexType>
-                                        <xsd:simpleContent>
-                                            <xsd:extension base="field:MessageSecurityClassificationExtendedType"/>
-                                        </xsd:simpleContent>
-                                    </xsd:complexType>
-                                </xsd:element>
-                                <xsd:element name="MessageSecurityClassificationOther">
-                                    <xsd:annotation>
-                                        <xsd:documentation>The security classification of the message.</xsd:documentation>
-                                        <xsd:appinfo>
-                                            <Field identifier="B"
-                                                name="SecurityMarkingsSchemaAttributes"
-                                                definition="THE MARKINGS USED IN AN XML SCHEMA TO DOCUMENT SECURITY MARKINGS ATTRIBUTES."
-                                                version="B.1.01.00"/>
-                                        </xsd:appinfo>
-                                    </xsd:annotation>
-                                    <xsd:complexType>
-                                        <xsd:simpleContent>
-                                            <xsd:restriction base="field:AlphaNumericBlankSpecialTextType">
-                                                <xsd:minLength value="1"/>
-                                                <xsd:maxLength value="50"/>
-                                            </xsd:restriction>
-                                        </xsd:simpleContent>
-                                    </xsd:complexType>
-                                </xsd:element>
-                            </xsd:choice>
-                        </xsd:complexType>
-                    </xsd:element>
-                    <xsd:element name="MessageSecurityCategory" minOccurs="0" maxOccurs="1">
-                        <xsd:annotation>
-                            <xsd:documentation>The security category that applies to the information contained in a message text format.</xsd:documentation>
-                            <xsd:appinfo>
-                                <Field positionName="MESSAGE SECURITY CATEGORY"
-                                    identifier="A"
-                                    name="SecurityMarkingsSchemaAttributes"
-                                    definition="THE MARKINGS USED IN AN XML SCHEMA TO DOCUMENT SECURITY MARKINGS ATTRIBUTES."
-                                    version="B.1.01.00"/>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:complexType>
-                            <xsd:simpleContent>
-                                <xsd:restriction base="field:AlphaBlankTextType">
-                                    <xsd:minLength value="1"/>
-                                    <xsd:maxLength value="50"/>
-                                </xsd:restriction>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsd:element>
-                </xsd:sequence>
-                <xsd:attribute name="setid" type="xsd:string" fixed="MSGID"/>
-            </xsd:extension>
-        </xsd:complexContent>
-        </xsd:element>
     </xsl:template>
 
     <xsl:template match="xsd:schema/xsd:element/xsd:complexType" mode="ctype">
@@ -851,4 +566,56 @@
     </xsl:template>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>   
     <xsl:template match="*:Repeatability" mode="attr"/>
+    
+    <!--*************** Message Identifier Fixed Values **********************-->
+    
+    <xsl:template match="xsd:element[@name = 'MessageIdentifier']" mode="ctype">
+        <xsd:element name="MessageIdentifier">
+            <xsl:apply-templates select="@*" mode="msgid"/>
+            <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:annotation" mode="msgid"/>
+            <xsd:complexType>
+                <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:complexContent" mode="msgid">
+                    <xsl:with-param name="msgid" select="ancestor::xsd:complexType/xsd:attribute[@name = 'mtfid']/@fixed"/>
+                </xsl:apply-templates>
+            </xsd:complexType>
+        </xsd:element>
+    </xsl:template>
+    <xsl:template match="*" mode="msgid">
+        <xsl:param name="msgid"/>
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*" mode="msgid"/>
+            <xsl:apply-templates select="*" mode="msgid">
+                <xsl:with-param name="msgid" select="$msgid"/>
+            </xsl:apply-templates>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="*:Example" mode="msgid"/>
+    
+    <xsl:template match="@*" mode="msgid">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="@base[.='SetBaseType']" mode="msgid">
+        <xsl:attribute name="base">
+            <xsl:text>set:SetBaseType</xsl:text>
+        </xsl:attribute>
+    </xsl:template>
+    <xsl:template match="text()" mode="msgid">
+        <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
+    </xsl:template>
+    <xsl:template match="*[@name = 'MessageTextFormatIdentifier']" mode="msgid">
+        <xsl:param name="msgid"/>
+        <xsd:element name="MessageTextFormatIdentifier" type="field:MessageTextFormatIdentifierType" minOccurs="1" maxOccurs="1" nillable="true"
+            fixed="{$msgid}"/>
+    </xsl:template>
+    <xsl:template match="*[@name = 'Standard']" mode="msgid">
+        <xsl:param name="msgid"/>
+        <xsd:element name="MessageTextFormatIdentifier" type="field:MessageTextFormatIdentifierType" minOccurs="1" maxOccurs="1" nillable="true"
+            fixed="{$msgid}"/>
+        <xsd:element name="Standard" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
+            fixed="MIL-STD-6040(SERIES)"/>
+    </xsl:template>
+    <xsl:template match="*[@name = 'Version']" mode="msgid">
+        <xsd:element name="Version" type="field:VersionOfMessageTextFormatSimpleType" minOccurs="1" maxOccurs="1" nillable="true" fixed="B.1.01.12"/>
+    </xsl:template>
+    
 </xsl:stylesheet>
