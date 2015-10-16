@@ -98,7 +98,7 @@
 
     <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()">
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:value-of select="normalize-space(translate(.,'&#34;',''))"/>
     </xsl:template>
 
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Segment')]]">
@@ -139,12 +139,12 @@
             <xsl:when
                 test="preceding-sibling::*[name() = $nm] and not($txt = ' ') and not(*) and not($txt = '')">
                 <xsl:attribute name="{concat(name(),count(preceding-sibling::*[name()=$nm]))}">
-                    <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:attribute>
             </xsl:when>
             <xsl:when test="not($txt = ' ') and not(*) and not($txt = '')">
                 <xsl:attribute name="{name()}">
-                    <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:attribute>
             </xsl:when>
         </xsl:choose>
@@ -187,7 +187,7 @@
 
     <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()" mode="global">
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:value-of select="normalize-space(translate(.,'&#34;',''))"/>
     </xsl:template>
 
     <xsl:template match="xsd:element[not(starts-with(@name, 'GeneralText_'))]" mode="global">
@@ -473,7 +473,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="name">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -481,7 +481,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="usage">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -489,7 +489,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="usage">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -509,7 +509,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="concept">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -517,7 +517,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="name">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -525,7 +525,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="id">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -533,7 +533,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="version">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -542,7 +542,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not($doc = normalize-space(text()))">
             <xsl:attribute name="concept">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -550,7 +550,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="positionName">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -558,7 +558,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="positionName">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -567,7 +567,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="concept">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -575,7 +575,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="name">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -584,7 +584,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="definition">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -592,7 +592,7 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="remark">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -601,11 +601,11 @@
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
                 <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:segments">
-                    <xsl:value-of select="normalize-space(text())"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
                     <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:segments">
-                        <xsl:value-of select="normalize-space(text())"/>
+                        <xsl:apply-templates select="text()"/>
                     </xsl:element>
                 </xsl:for-each>
             </xsl:if>
@@ -616,11 +616,11 @@
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
                 <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:segments">
-                    <xsl:value-of select="normalize-space(text())"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:SetFormatExample">
                     <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:segments">
-                        <xsl:value-of select="normalize-space(text())"/>
+                        <xsl:apply-templates select="text()"/>
                     </xsl:element>
                 </xsl:for-each>
             </xsl:if>

@@ -73,11 +73,11 @@
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
                     <xsl:choose>
-                        <xsl:when test="@name='AlphaNumericBlankSpecialTextSimpleType'">
-                            <xsd:pattern value="{concat(./xsd:restriction/xsd:pattern/@value,'+')}"/>
+                        <xsl:when test="contains(./xsd:restriction/xsd:pattern/@value,'{')">
+                            <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                            <xsd:pattern value="{concat(./xsd:restriction/xsd:pattern/@value,'+')}"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsd:restriction>

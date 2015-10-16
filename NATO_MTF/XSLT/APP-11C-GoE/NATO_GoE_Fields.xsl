@@ -385,7 +385,7 @@
                 <xsl:if
                     test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
                     <xsl:element name="xsd:documentation">
-                        <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
+                        <xsl:apply-templates select="xsd:appinfo[1]/*:FudExplanation[1]/text()"/>
                     </xsl:element>
                 </xsl:if>
                 <xsl:apply-templates select="*"/>
@@ -425,14 +425,14 @@
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="{name()}">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
 
     <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()">
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:value-of select="replace(normalize-space(.), '&#34;', '')"/>
     </xsl:template>
     <!-- _______________________________________________________ -->
 
@@ -440,7 +440,7 @@
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="name">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>

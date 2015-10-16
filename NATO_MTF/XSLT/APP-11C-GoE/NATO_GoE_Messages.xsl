@@ -91,17 +91,7 @@
     <xsl:template match="xsd:schema/xsd:element/xsd:annotation/xsd:appinfo" mode="ctype"/>
     <xsl:template match="xsd:element" mode="ctype">
         <xsl:variable name="elname">
-<!--            <xsl:choose>
-                <xsl:when test="starts-with(@name, '_')">
-                    <xsl:value-of select="@name"/>
-                </xsl:when>
-                <xsl:when test="contains(@name, '_')">
-                    <xsl:value-of select="substring-before(@name, '_')"/>
-                </xsl:when>
-                <xsl:otherwise>-->
-                    <xsl:value-of select="@name"/>
-                <!--</xsl:otherwise>
-            </xsl:choose>-->
+            <xsl:value-of select="@name"/>
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="exists($sets/xsd:schema/xsd:element[@name = $elname])">
@@ -347,7 +337,7 @@
         </xsl:copy>
     </xsl:template>
     <xsl:template match="text()" mode="ctype">
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:value-of select="replace(normalize-space(.), '&#34;', '')"/>
     </xsl:template>
     <xsl:template match="@*" mode="ctype">
         <xsl:copy-of select="."/>
@@ -429,4 +419,55 @@
     </xsl:template>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
+    <!--***********************************************************-->
+    <xsl:template match="xsd:element[@name = 'MessageIdentifier']" mode="ctype">
+        <xsd:element name="MessageIdentifier">
+            <xsl:apply-templates select="@*" mode="msgid"/>
+            <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:annotation" mode="msgid"/>
+            <xsd:complexType>
+                <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:complexContent" mode="msgid">
+                    <xsl:with-param name="msgid" select="ancestor::xsd:complexType/xsd:attribute[@name = 'mtfid']/@fixed"/>
+                </xsl:apply-templates>
+            </xsd:complexType>
+        </xsd:element>
+    </xsl:template>
+    <xsl:template match="*" mode="msgid">
+        <xsl:param name="msgid"/>
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*" mode="msgid"/>
+            <xsl:apply-templates select="*" mode="msgid">
+                <xsl:with-param name="msgid" select="$msgid"/>
+            </xsl:apply-templates>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="*:Example" mode="msgid"/>
+    <!--<xsl:template match="xsd:complexContent" mode="msgid">
+        <xsl:param name="msgid"/>
+        <xsl:apply-templates select="*" mode="msgid">
+            <xsl:with-param name="msgid" select="$msgid"/>
+        </xsl:apply-templates>
+    </xsl:template>-->
+    <xsl:template match="@*" mode="msgid">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="@base[.='SetBaseType']" mode="msgid">
+        <xsl:attribute name="base">
+            <xsl:text>set:SetBaseType</xsl:text>
+        </xsl:attribute>
+    </xsl:template>
+    <xsl:template match="text()" mode="msgid">
+        <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
+    </xsl:template>
+    <xsl:template match="*[@name = 'MessageTextFormatIdentifier']" mode="msgid">
+        <xsl:param name="msgid"/>
+        <xsd:element name="MessageTextFormatIdentifier" type="field:MessageTextFormatIdentifierType" minOccurs="1" maxOccurs="1" nillable="true"
+            fixed="{$msgid}"/>
+    </xsl:template>
+    <xsl:template match="*[@name = 'Standard']" mode="msgid">
+        <xsd:element name="Standard" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
+            fixed="APP-11(C)"/>
+    </xsl:template>
+    <xsl:template match="*[@name = 'Version']" mode="msgid">
+        <xsd:element name="Version" type="field:VersionOfMessageTextFormatType" minOccurs="1" maxOccurs="1" nillable="true" fixed="CHANGE01"/>
+    </xsl:template>
 </xsl:stylesheet>

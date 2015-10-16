@@ -33,7 +33,6 @@
     <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/sets.xsd')"/>
     <xsl:variable name="goe_fields_xsd" select="document('../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd')"/>
     <!--Set deconfliction and annotation changes-->
-    <!--<xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>-->
     <xsl:variable name="output" select="'../../XSD/APP-11C-GoE/natomtf_goe_sets.xsd'"/>
 
     <!--Root level complexTypes-->
@@ -43,27 +42,9 @@
                 <xsl:value-of select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
             </xsl:variable>
             <xsl:variable name="setid">
-                <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
+                <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
             </xsl:variable>
-            <xsl:variable name="newname">
-                <!--<xsl:choose>-->
-                    <!--<xsl:when test="$setid = '1APHIB'">
-                        <xsl:text>AmphibiousForceComposition</xsl:text>
-                    </xsl:when>-->
-                    <!--<xsl:when test="$setid = 'MARACT'">
-                        <xsl:text>MaritimeActivity</xsl:text>
-                    </xsl:when>-->
-                    <!--<xsl:when test="exists($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0])">
-                        <xsl:value-of
-                            select="translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
-                        />
-                    </xsl:when>-->
-                    <!--<xsl:otherwise>-->
-                        <xsl:value-of select="$elname"/>
-                    <!--</xsl:otherwise>-->
-                <!--</xsl:choose>-->
-            </xsl:variable>
-            <xsd:complexType name="{concat($newname, 'Type')}">
+            <xsd:complexType name="{concat($elname, 'Type')}">
                 <xsl:apply-templates select="*"/>
             </xsd:complexType>
         </xsl:for-each>
@@ -75,27 +56,12 @@
             <xsl:variable name="elname">
                 <xsl:value-of select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
             </xsl:variable>
-            <xsl:variable name="setid">
-                <xsl:value-of select="xsd:annotation/xsd:appinfo/*:Set/@id"/>
-            </xsl:variable>
-            <xsl:variable name="newname">
- <!--               <xsl:choose>
-                    <xsl:when test="exists($set_Changes/*/*[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
-                        <xsl:value-of
-                            select="translate($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
-                        />
-                    </xsl:when>
-                    <xsl:otherwise>-->
-                        <xsl:value-of select="$elname"/>
-                    <!--</xsl:otherwise>
-                </xsl:choose>-->
-            </xsl:variable>
             <xsd:element>
                 <xsl:attribute name="name">
-                    <xsl:value-of select="$newname"/>
+                    <xsl:value-of select="$elname"/>
                 </xsl:attribute>
                 <xsl:attribute name="type">
-                    <xsl:value-of select="concat($newname, 'Type')"/>
+                    <xsl:value-of select="concat($elname, 'Type')"/>
                 </xsl:attribute>
             </xsd:element>
         </xsl:for-each>
@@ -103,15 +69,10 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$output}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:sets"
-                xmlns:field="urn:int:nato:mtf:app-11(c):goe:elementals"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:mtf:app-11(c):goe:sets"
-                xml:lang="en-GB"
-                elementFormDefault="unqualified"
-                attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:elementals"
-                    schemaLocation="natomtf_goe_fields.xsd"/>
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:sets" xmlns:field="urn:int:nato:mtf:app-11(c):goe:elementals"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:mtf:app-11(c):goe:sets" xml:lang="en-GB"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:elementals" schemaLocation="natomtf_goe_fields.xsd"/>
                 <xsd:complexType name="SetBaseType">
                     <xsd:sequence>
                         <xsd:element name="Amplification" type="AmplificationType" minOccurs="0" maxOccurs="1"/>
@@ -149,11 +110,15 @@
 
     <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()">
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:value-of select="normalize-space(translate(.,'&#34;',''))"/>
     </xsl:template>
 
-    <xsl:template match="xsd:element[@name = 'GroupOfFields']"/>
-  
+    <xsl:template match="xsd:element[@name = 'GroupOfFields']">
+        <xsd:sequence minOccurs="{@minOccurs}" maxOccurs="{@maxOccurs}">
+            <xsl:apply-templates select="xsd:complexType/xsd:sequence/*"/>
+        </xsd:sequence>
+    </xsl:template>
+
     <xsl:template match="xsd:element[@nillable]">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
@@ -199,20 +164,20 @@
                 </xsl:when>
                 <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
                     <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('field:',$basel)"/>
+                        <xsl:value-of select="concat('field:', $basel)"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="xsd:annotation"/>
                 </xsl:when>
                 <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction">
                     <xsl:apply-templates select="@*"/>
                     <xsl:attribute name="type">
-                        <xsl:value-of select="concat('field:',$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction/@type)"/>
+                        <xsl:value-of select="concat('field:', $goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction/@type)"/>
                     </xsl:attribute>
                 </xsl:when>
                 <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]">
                     <xsl:apply-templates select="@*"/>
                     <xsl:attribute name="type">
-                        <xsl:value-of select="concat('field:',$basetype)"/>
+                        <xsl:value-of select="concat('field:', $basetype)"/>
                     </xsl:attribute>
                 </xsl:when>
                 <xsl:otherwise>
@@ -228,7 +193,7 @@
             <xsl:apply-templates select="*"/>
         </xsd:extension>
     </xsl:template>
-    
+
     <!--QRoutePointDesignatorType changed to QRoutePointCodeType-->
     <xsl:template match="xsd:extension[@base = 'c:QRoutePointDesignatorType']">
         <xsd:extension base="field:QRoutePointCodeType">
@@ -247,7 +212,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="basel" select="substring($basetype,0,string-length($basetype)-3)"/>
+        <xsl:variable name="basel" select="substring($basetype, 0, string-length($basetype) - 3)"/>
         <xsl:choose>
             <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
                 <xsd:extension base="{concat('field:',$basetype)}">
@@ -272,12 +237,10 @@
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="xsd:sequence[ancestor::xsd:element[@name = 'GroupOfFields'][1]]">
-        <xsl:copy>
-            <xsl:copy-of select="ancestor::xsd:element[@name = 'GroupOfFields'][1]/@minOccurs"/>
-            <xsl:copy-of select="ancestor::xsd:element[@name = 'GroupOfFields'][1]/@maxOccurs"/>
+    <xsl:template match="xsd:element[@name='DutyOtherAndAssociatedCode']/xsd:complexType/xsd:complexContent">
+        <xsd:simpleContent>
             <xsl:apply-templates select="*"/>
-        </xsl:copy>
+        </xsd:simpleContent>
     </xsl:template>
 
     <!--Convert elements in xsd:appinfo to attributes-->
@@ -292,7 +255,7 @@
             </xsl:when>
             <xsl:when test="not($txt = ' ') and not(*) and not($txt = '')">
                 <xsl:attribute name="{name()}">
-                    <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:attribute>
             </xsl:when>
         </xsl:choose>
@@ -301,7 +264,7 @@
     <!--Copy annotation only if it has descendents with text content-->
     <xsl:template match="xsd:annotation">
         <xsl:variable name="setid">
-            <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier/text()"/>
+            <xsl:apply-templates select="xsd:appinfo/*:SetFormatIdentifier/text()"/>
         </xsl:variable>
         <xsl:variable name="doc">
             <xsl:apply-templates select="xsd:documentation/text()"/>
@@ -310,15 +273,8 @@
             <xsl:apply-templates select="xsd:appinfo/*:SetFormatDescription/text()"/>
             <xsl:apply-templates select="xsd:appinfo/*:FieldFormatDefinition/text()"/>
         </xsl:variable>
-<!--        <xsl:variable name="newdesc">
-            <xsl:value-of
-                select="normalize-space($set_Changes/*[@SETNAMESHORT = $setid][@ProposedSetFormatDescription][1]/@ProposedSetFormatDescription)"/>
-        </xsl:variable>-->
         <xsl:variable name="doc">
             <xsl:choose>
-<!--                <xsl:when test="string-length($newdesc) > 0">
-                    <xsl:value-of select="$newdesc"/>
-                </xsl:when>-->
                 <xsl:when test="string-length($doc) > 0">
                     <xsl:value-of select="$doc"/>
                 </xsl:when>
@@ -329,15 +285,19 @@
         </xsl:variable>
         <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
-                <xsl:if test="not(xsd:documentation) and string-length($doc)&gt;0">
-                    <xsd:documentation>
-                        <xsl:value-of select="$doc"/>
-                    </xsd:documentation>
-                </xsl:if>
-                <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*">
-                    <xsl:with-param name="doc" select="$doc"/>
-                </xsl:apply-templates>
+                <xsl:choose>
+                    <xsl:when test="not(xsd:documentation) and string-length($doc) > 0">
+                        <xsd:documentation>
+                            <xsl:value-of select="$doc"/>
+                        </xsd:documentation>
+                        <xsl:apply-templates select="*[not(name() = 'xsd:documentation')]"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:apply-templates select="*">
+                            <xsl:with-param name="doc" select="$doc"/>
+                        </xsl:apply-templates>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:copy>
         </xsl:if>
     </xsl:template>
@@ -345,18 +305,25 @@
     <!--Copy documentation only if it has text content-->
     <xsl:template match="xsd:documentation">
         <xsl:param name="doc"/>
-        <xsl:if test="string-length($doc) > 0">
-            <xsl:copy copy-namespaces="no">
-                <xsl:value-of select="$doc"/>
-            </xsl:copy>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="string-length($doc) > 0">
+                <xsl:copy copy-namespaces="no">
+                    <xsl:value-of select="$doc"/>
+                </xsl:copy>
+            </xsl:when>
+            <xsl:when test="string-length(text()) > 0">
+                <xsl:copy copy-namespaces="no">
+                    <xsl:apply-templates select="text()"/>
+                </xsl:copy>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <!--Copy element and use template mode to convert elements to attributes in SET element-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
         <xsl:param name="doc"/>
         <xsl:variable name="setid">
-            <xsl:value-of select="*:SetFormatIdentifier/text()"/>
+            <xsl:apply-templates select="*:SetFormatIdentifier/text()"/>
         </xsl:variable>
         <xsl:copy copy-namespaces="no">
             <xsl:element name="Set" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
@@ -364,7 +331,7 @@
                 <xsl:apply-templates select="*" mode="attr">
                     <xsl:with-param name="doc" select="$doc"/>
                 </xsl:apply-templates>
-<!--                <xsl:apply-templates select="$set_Changes/*[@SETNAMESHORT = $setid]/@*[string-length(.) > 0][1]" mode="chg">
+                <!--                <xsl:apply-templates select="$set_Changes/*[@SETNAMESHORT = $setid]/@*[string-length(.) > 0][1]" mode="chg">
                     <xsl:with-param name="doc" select="$doc"/>
                 </xsl:apply-templates>-->
                 <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
@@ -376,34 +343,6 @@
 
     <!--*****************************************************-->
 
-<!--    <xsl:template match="@*" mode="chg"/>
-    <!-\-Replace Data Specified in Deconfliction XML Document-\->
-    <xsl:template match="@ProposedSetFormatPositionName" mode="chg">
-        <xsl:attribute name="positionName">
-            <xsl:value-of select="."/>
-        </xsl:attribute>
-    </xsl:template>
-    <xsl:template match="@ProposedSetFormatName" mode="chg">
-        <xsl:attribute name="name">
-            <xsl:value-of select="."/>
-        </xsl:attribute>
-    </xsl:template>
-    <xsl:template match="@ProposedSetFormatDescription" mode="chg">
-        <xsl:param name="doc"/>
-        <xsl:if test="not(normalize-space(.) = $doc)">
-            <xsl:attribute name="description">
-                <xsl:value-of select="."/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>
-    <xsl:template match="@ProposedSetFormatPositionConceptChanges" mode="chg">
-        <xsl:if test="not(normalize-space(.) = ' ') and not(normalize-space(.) = '')">
-            <xsl:attribute name="concept">
-                <xsl:value-of select="."/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>-->
-    
     <!--Copy element and use template mode to convert elements to attributes in FIELD element-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:param name="doc"/>
@@ -446,21 +385,21 @@
     <xsl:template match="*:SetFormatName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="name">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:SetFormatIdentifier" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="id">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:VersionIndicator" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="version">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -468,21 +407,21 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not($doc = normalize-space(text()))">
             <xsl:attribute name="concept">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:SetFormatPositionName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="positionName">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:FieldFormatPositionName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="positionName">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -490,14 +429,14 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="concept">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:FieldFormatName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="name">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -505,7 +444,7 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="definition">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -513,7 +452,7 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="identifier">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -521,54 +460,54 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="name">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:FieldFormatRemark" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="remark">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:FieldFormatSponsor" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="sponsor">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:Justification" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="alignment">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:ColumnName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="column">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="usage">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
-    </xsl:template>  
+    </xsl:template>
     <xsl:template match="*:FieldFormatRelatedDocuments" mode="docs">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocuments)">
                 <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
-                    <xsl:value-of select="normalize-space(text())"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocuments">
                     <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
-                        <xsl:value-of select="normalize-space(text())"/>
+                        <xsl:apply-templates select="text()"/>
                     </xsl:element>
                 </xsl:for-each>
             </xsl:if>
@@ -578,11 +517,11 @@
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:SetFormatRelatedDocument)">
                 <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
-                    <xsl:value-of select="normalize-space(text())"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:SetFormatRelatedDocument">
                     <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
-                        <xsl:value-of select="normalize-space(text())"/>
+                        <xsl:apply-templates select="text()"/>
                     </xsl:element>
                 </xsl:for-each>
             </xsl:if>
@@ -592,11 +531,11 @@
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
                 <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
-                    <xsl:value-of select="normalize-space(text())"/>
+                    <xsl:apply-templates select="text()"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:SetFormatExample">
                     <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
-                        <xsl:value-of select="normalize-space(text())"/>
+                        <xsl:apply-templates select="text()"/>
                     </xsl:element>
                 </xsl:for-each>
             </xsl:if>
@@ -610,7 +549,6 @@
     <xsl:template match="*:SetFormatDescription" mode="attr"/>
     <xsl:template match="*:FieldFormatRelatedDocuments" mode="attr"/>
     <!--Filter unneeded nodes-->
-    
     <xsl:template match="xsd:attributeGroup"/>
     <xsl:template match="*:FieldFormatStructure" mode="attr"/>
     <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>
