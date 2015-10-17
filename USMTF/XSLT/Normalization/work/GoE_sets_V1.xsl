@@ -109,11 +109,11 @@
     <xsl:template match="/">
         <xsl:result-document href="../../XSD/GoE_Schema/GoE_sets.xsd">
             <xsd:schema xmlns="urn:mtf:mil:6040b:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                xmlns:field="urn:mtf:mil:6040b:fields"
+                xmlns:field="urn:mtf:mil:6040b:goe:fields"
                 xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
                 xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:sets"
                 xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:mtf:mil:6040b:fields" schemaLocation="GoE_fields.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsl:for-each select="$complex_types/*">
                     <xsl:sort select="@name"/>

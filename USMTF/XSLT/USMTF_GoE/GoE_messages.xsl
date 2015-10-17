@@ -630,7 +630,7 @@
         <xsl:param name="msgid"/>
         <xsd:element name="MessageTextFormatIdentifier" type="field:MessageTextFormatIdentifierType" minOccurs="1" maxOccurs="1" nillable="true"
             fixed="{$msgid}"/>
-        <xsd:element name="Version" type="field:VersionOfMessageTextFormatSimpleType" minOccurs="1" maxOccurs="1" nillable="true" fixed="B.1.01.12"/>
+        <xsd:element name="Version" type="field:VersionOfMessageTextFormatType" minOccurs="1" maxOccurs="1" nillable="true" fixed="B.1.01.12"/>
     </xsl:template>
     <xsl:template match="*[@name = 'StandardOfMessageTextFormat']" mode="msgid">
         <xsd:element name="Standard" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"

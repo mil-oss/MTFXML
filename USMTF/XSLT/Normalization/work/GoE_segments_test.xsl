@@ -35,9 +35,9 @@
     <xsl:template match="/">
         <xsl:result-document href="../../XSD/GoE_segments.xsd">
             <xsd:schema xmlns="urn:mtf:mil:6040b:segments"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:fields"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields"
                 xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:segments">
-                <xsd:import namespace="urn:mtf:mil:6040b:fields"
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields"
                     schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:mtf:mil:6040b:sets" schemaLocation="GoE_sets.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>

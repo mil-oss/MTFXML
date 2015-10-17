@@ -388,13 +388,29 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    
+    <xsl:template match="*:FudExplanation" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="explanation">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:VersionIndicator" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="version">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
 
     <!-- ******************** FILTERS ******************** -->
     <xsl:template match="xsd:element/xsd:annotation"/>
-    <xsl:template match="*:FudExplanation" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
-    <xsl:template match="*:VersionIndicator" mode="attr"/>
     <xsl:template match="*:FudRelatedDocument" mode="attr"/>
     <!-- _______________________________________________________ -->
 

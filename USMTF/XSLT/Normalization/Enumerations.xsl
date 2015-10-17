@@ -206,7 +206,7 @@
     <!--Copy element and use template mode to convert elements to attributes-->
     <xsl:template match="xsd:appinfo">
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:fields">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
             </xsl:element>

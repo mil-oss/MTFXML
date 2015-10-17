@@ -117,9 +117,9 @@
     <!--    OUTPUT RESULT-->
     <xsl:template match="/">
         <xsl:result-document href="{$outputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
+                targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsl:for-each select="$allsimpletypes/*">
                     <xsl:sort select="@name"/>
@@ -560,13 +560,13 @@
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
                 <xsl:when test="exists(ancestor::xsd:enumeration)">
-                    <xsl:element name="Enum" namespace="urn:mtf:mil:6040b:fields">
+                    <xsl:element name="Enum" namespace="urn:mtf:mil:6040b:goe:fields">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+                    <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:fields">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>

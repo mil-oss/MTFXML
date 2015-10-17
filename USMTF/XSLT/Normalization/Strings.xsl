@@ -331,13 +331,13 @@
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
                 <xsl:when test="exists(ancestor::xsd:enumeration)">
-                    <xsl:element name="Enum" namespace="urn:mtf:mil:6040b:fields">
+                    <xsl:element name="Enum" namespace="urn:mtf:mil:6040b:goe:fields">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+                    <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:fields">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>
@@ -361,6 +361,34 @@
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
     <!-- _______________________________________________________ -->
+    
+    <xsl:template match="*:FudName" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="name">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:FudExplanation" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="explanation">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:VersionIndicator" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="version">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    
 
     <!-- ******************** FILTERS ******************** -->
     <xsl:template match="*[@name = 'FreeTextType']"/>
@@ -382,7 +410,6 @@
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
-    <xsl:template match="*:VersionIndicator" mode="attr"/>
     <xsl:template match="*:MinimumLength" mode="attr"/>
     <xsl:template match="*:MaximumLength" mode="attr"/>
     <xsl:template match="*:LengthLimitation" mode="attr"/>
