@@ -19,8 +19,9 @@
 -->
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:set="urn:mtf:mil:6040b:sets"
-    xmlns:segment="urn:mtf:mil:6040b:segments" exclude-result-prefixes="xsd" version="2.0">
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:set="urn:mtf:mil:6040b:goe:sets"
+    xmlns:segment="urn:mtf:mil:6040b:goe:segments" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output encoding="UTF-8" method="xml" indent="yes"/>
 
     <!--This Transform produces a "Garden of Eden" style global elements XML Schema for Segments in the USMTF Military Message Standard.-->
@@ -99,11 +100,20 @@
     <xsl:template match="text()">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
+    
+    <!--Copy documentation only it has text content-->
+    <xsl:template match="xsd:documentation">
+        <xsl:if test="text()">
+            <xsl:copy copy-namespaces="no">
+                <xsl:apply-templates select="text()"/>
+            </xsl:copy>
+        </xsl:if>
+    </xsl:template>
 
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Segment')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Segment" xmlns="urn:mtf:mil:6040b:segments">
+            <xsl:element name="Segment" xmlns="urn:mtf:mil:6040b:goe:segments">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
             </xsl:element>
@@ -113,7 +123,7 @@
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:segments">
+            <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:goe:segments">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
             </xsl:element>
@@ -123,7 +133,7 @@
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" xmlns="urn:mtf:mil:6040b:segments">
+            <xsl:element name="Field" xmlns="urn:mtf:mil:6040b:goe:segments">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
             </xsl:element>
@@ -295,8 +305,7 @@
         <xsl:variable name="lparen">&#40;</xsl:variable>
         <xsl:variable name="rparen">&#41;</xsl:variable>
         <xsl:variable name="UseDesc">
-            <xsl:value-of
-                select="translate(upper-case(xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription), '.', '')"/>
+            <xsl:value-of select="translate(upper-case(xsd:annotation/xsd:appinfo/*:Set/@usage), '.', '')"/>
         </xsl:variable>
         <xsl:variable name="TextInd">
             <xsl:value-of select="normalize-space(substring-after($UseDesc, 'MUST EQUAL'))"/>
@@ -317,7 +326,7 @@
                 />
             </xsl:attribute>
             <xsl:element name="xsd:annotation">
-                <xsl:apply-templates select="xsd:annotation/*" mode="ctype"/>
+                <xsl:apply-templates select="xsd:annotation/*" mode="global"/>
             </xsl:element>
             <xsd:complexType>
                 <xsd:complexContent>
@@ -395,11 +404,14 @@
     <!--Build XML Schema and add Global Elements and Complex Types -->
     <xsl:template match="/">
         <xsl:result-document href="../../XSD/GoE_Schema/GoE_segments.xsd">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:segments"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:fields"
-                xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:segments">
-                <xsd:import namespace="urn:mtf:mil:6040b:fields" schemaLocation="GoE_fields.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:sets" schemaLocation="GoE_sets.xsd"/>
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:segments"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:field="urn:mtf:mil:6040b:goe:fields"
+                xmlns:set="urn:mtf:mil:6040b:goe:sets"
+                xmlns:ism="urn:us:gov:ic:ism:v2" 
+                targetNamespace="urn:mtf:mil:6040b:goe:segments">
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="GoE_sets.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsl:copy-of select="$global_types"/>
                 <xsl:copy-of select="$global_elements"/>
@@ -483,7 +495,7 @@
     <xsl:template match="xsd:appinfo" mode="ref">
         <xsl:param name="fldinfo"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:segments">
                 <xsl:apply-templates select="*" mode="attr"/>
                 <xsl:if test="parent::xsd:annotation/parent::xsd:extension">
                     <xsl:variable name="ffdno">
@@ -631,11 +643,11 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
-                <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
+                <xsl:element name="Document" namespace="urn:mtf:mil:6040b:segments">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
-                    <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
+                    <xsl:element name="Document" namespace="urn:mtf:mil:6040b:segments">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
@@ -646,11 +658,11 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
-                <xsl:element name="Example" namespace="urn:mtf:mil:6040b:sets">
+                <xsl:element name="Example" namespace="urn:mtf:mil:6040b:segments">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:SetFormatExample">
-                    <xsl:element name="Example" namespace="urn:mtf:mil:6040b:sets">
+                    <xsl:element name="Example" namespace="urn:mtf:mil:6040b:segments">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>

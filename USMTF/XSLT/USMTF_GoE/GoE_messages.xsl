@@ -46,15 +46,16 @@
     <xsl:template match="/">
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xml:lang="en-US" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                xmlns="urn:mtf:mil:6040b" targetNamespace="urn:mtf:mil:6040b"
-                xmlns:field="urn:mtf:mil:6040b:fields" xmlns:set="urn:mtf:mil:6040b:sets"
-                xmlns:seg="urn:mtf:mil:6040b:segments"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns="urn:mtf:mil:6040b:goe:mtf" 
+                targetNamespace="urn:mtf:mil:6040b:goe:mtf"
+                xmlns:field="urn:mtf:mil:6040b:goe:fields" 
+                xmlns:set="urn:mtf:mil:6040b:goe:sets"
+                xmlns:seg="urn:mtf:mil:6040b:goe:segments"
                 xmlns:ism="urn:us:gov:ic:ism:v2" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:mtf:mil:6040b:fields" schemaLocation="GoE_fields.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:sets" schemaLocation="GoE_sets.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:segments" schemaLocation="GoE_segments.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="GoE_sets.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:segments" schemaLocation="GoE_segments.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsl:copy-of select="$ctypes"/>
                 <xsl:copy-of select="$msgs"/>
@@ -93,16 +94,6 @@
             </MsgInfo>
             <xsl:apply-templates select="*[name() = 'MtfStructuralRelationship']" mode="attr"/>
         </xsl:copy>
-    </xsl:template>
-
-    <!--Include Rules as attribute strings.  Replace double quotes with single quotes-->
-    <xsl:template match="*" mode="trimattr">
-        <xsl:variable name="apos">&#39;</xsl:variable>
-        <xsl:variable name="quot">&#34;</xsl:variable>
-        <xsl:attribute name="{substring-after(name(),'MtfStructuralRelationship')}">
-            <xsl:value-of select="normalize-space(replace(., $quot, $apos))"
-                disable-output-escaping="yes"/>
-        </xsl:attribute>
     </xsl:template>
 
     <!--Build Messages using GoE nodes-->
@@ -498,9 +489,29 @@
     </xsl:template>
 
     <xsl:template match="*[name() = 'MtfStructuralRelationship']" mode="attr">
-        <xsl:element name="{name()}">
-            <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
-        </xsl:element>
+        <!--OMIT RULES ENFORCED BY ASSIGNED FIXED VALUES-->
+        <xsl:choose>
+            <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(),'[3]F1')"/>
+            <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(),'[3]F2')"/>
+            <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(),'[3]F3')"/>
+            <xsl:otherwise>
+                <xsl:element name="{name()}">
+                    <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
+                </xsl:element>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+    </xsl:template>
+    
+    <!--Include Rules as attribute strings.  Replace double quotes with single quotes-->
+    <xsl:template match="*" mode="trimattr">
+        <xsl:variable name="apos">&#39;</xsl:variable>
+        <xsl:variable name="quot">&#34;</xsl:variable>
+        <xsl:variable name="nm" select="substring-after(name(),'MtfStructuralRelationship')"/>
+        <xsl:attribute name="{$nm}">
+            <xsl:value-of select="normalize-space(replace(., $quot, $apos))"
+                disable-output-escaping="yes"/>
+        </xsl:attribute>
     </xsl:template>
 
     <xsl:template name="CamelCase">
@@ -570,12 +581,13 @@
     <!--*************** Message Identifier Fixed Values **********************-->
     
     <xsl:template match="xsd:element[@name = 'MessageIdentifier']" mode="ctype">
+        <xsl:variable name="msgid" select="ancestor::xsd:complexType/xsd:attribute[@name = 'mtfid']/@fixed"/>
         <xsd:element name="MessageIdentifier">
             <xsl:apply-templates select="@*" mode="msgid"/>
             <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:annotation" mode="msgid"/>
             <xsd:complexType>
-                <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:complexContent" mode="msgid">
-                    <xsl:with-param name="msgid" select="ancestor::xsd:complexType/xsd:attribute[@name = 'mtfid']/@fixed"/>
+                <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/*" mode="msgid">
+                    <xsl:with-param name="msgid" select="$msgid"/>
                 </xsl:apply-templates>
             </xsd:complexType>
         </xsd:element>
@@ -587,9 +599,20 @@
             <xsl:apply-templates select="*" mode="msgid">
                 <xsl:with-param name="msgid" select="$msgid"/>
             </xsl:apply-templates>
-        </xsl:copy>
+       </xsl:copy>
+    </xsl:template>
+    <xsl:template match="xsd:documentation" mode="msgid">
+        <xsl:if test="string-length(text())&gt;0">
+            <xsl:copy-of select="." copy-namespaces="no"/>
+        </xsl:if>
     </xsl:template>
     <xsl:template match="*:Example" mode="msgid"/>
+    
+    <xsl:template match="*:Set" mode="msgid">
+        <xsl:element name="Set" namespace="urn:mtf:mil:6040b:goe:mtf">
+        <xsl:apply-templates select="@*" mode="msgid"/>
+        </xsl:element>
+    </xsl:template>
     
     <xsl:template match="@*" mode="msgid">
         <xsl:copy-of select="."/>
@@ -602,20 +625,16 @@
     <xsl:template match="text()" mode="msgid">
         <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
     </xsl:template>
-    <xsl:template match="*[@name = 'MessageTextFormatIdentifier']" mode="msgid">
+    <xsl:template match="*[@name = 'MessageTextFormatIdentifierType']" mode="msgid"/>
+    <xsl:template match="*[@name = 'VersionOfMessageTextFormat']" mode="msgid">
         <xsl:param name="msgid"/>
         <xsd:element name="MessageTextFormatIdentifier" type="field:MessageTextFormatIdentifierType" minOccurs="1" maxOccurs="1" nillable="true"
             fixed="{$msgid}"/>
+        <xsd:element name="Version" type="field:VersionOfMessageTextFormatSimpleType" minOccurs="1" maxOccurs="1" nillable="true" fixed="B.1.01.12"/>
     </xsl:template>
-    <xsl:template match="*[@name = 'Standard']" mode="msgid">
-        <xsl:param name="msgid"/>
-        <xsd:element name="MessageTextFormatIdentifier" type="field:MessageTextFormatIdentifierType" minOccurs="1" maxOccurs="1" nillable="true"
-            fixed="{$msgid}"/>
+    <xsl:template match="*[@name = 'StandardOfMessageTextFormat']" mode="msgid">
         <xsd:element name="Standard" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
             fixed="MIL-STD-6040(SERIES)"/>
     </xsl:template>
-    <xsl:template match="*[@name = 'Version']" mode="msgid">
-        <xsd:element name="Version" type="field:VersionOfMessageTextFormatSimpleType" minOccurs="1" maxOccurs="1" nillable="true" fixed="B.1.01.12"/>
-    </xsl:template>
-    
+
 </xsl:stylesheet>

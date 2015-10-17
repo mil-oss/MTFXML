@@ -21,10 +21,10 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$integersoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:ism="urn:us:gov:ic:ism:v2"
-                targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
+                targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="FieldIntegerBaseType">
@@ -41,10 +41,10 @@
             </xsd:schema>
         </xsl:result-document>
         <xsl:result-document href="{$decimalsoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:ism="urn:us:gov:ic:ism:v2"
-                targetNamespace="urn:mtf:mil:6040b:fields" xml:lang="en-US"
+                targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="FieldDecimalBaseType">

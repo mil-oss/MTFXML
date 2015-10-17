@@ -103,10 +103,13 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$output}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:fields"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:sets"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:field="urn:mtf:mil:6040b:goe:fields" 
+                xmlns:ism="urn:us:gov:ic:ism:v2" 
+                targetNamespace="urn:mtf:mil:6040b:goe:sets"
                 xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:mtf:mil:6040b:fields" schemaLocation="GoE_fields.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="SetBaseType">
                     <xsd:sequence>
@@ -349,7 +352,7 @@
             <xsl:value-of select="*:SetFormatIdentifier/text()"/>
         </xsl:variable>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:goe:sets">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr">
                     <xsl:with-param name="doc" select="$doc"/>
@@ -396,7 +399,7 @@
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" xmlns="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Field" xmlns="urn:mtf:mil:6040b:goe:sets">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr">
                     <xsl:with-param name="doc" select="$doc"/>
@@ -411,7 +414,7 @@
     <xsl:template match="xsd:appinfo" mode="ref">
         <xsl:param name="fldinfo"/>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:sets">
+            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:sets">
                 <xsl:apply-templates select="*" mode="attr"/>
                 <xsl:if test="parent::xsd:annotation/parent::xsd:extension">
                     <xsl:variable name="ffdno">
@@ -530,11 +533,11 @@
     <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
-                <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
+                <xsl:element name="Document" namespace="urn:mtf:mil:6040b:goe:sets">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
-                    <xsl:element name="Document" namespace="urn:mtf:mil:6040b:sets">
+                    <xsl:element name="Document" namespace="urn:mtf:mil:6040b:goe:sets">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
@@ -544,11 +547,11 @@
     <xsl:template match="*:SetFormatExample" mode="examples">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
-                <xsl:element name="Example" namespace="urn:mtf:mil:6040b:sets">
+                <xsl:element name="Example" namespace="urn:mtf:mil:6040b:goe:sets">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:SetFormatExample">
-                    <xsl:element name="Example" namespace="urn:mtf:mil:6040b:sets">
+                    <xsl:element name="Example" namespace="urn:mtf:mil:6040b:goe:sets">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>

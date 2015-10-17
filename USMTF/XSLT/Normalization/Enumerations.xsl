@@ -72,10 +72,10 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$enumerationsoutdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
                 xmlns:ism="urn:us:gov:ic:ism:v2"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:fields"
+                targetNamespace="urn:mtf:mil:6040b:goe:fields"
                 xml:lang="en-US"
                 elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">

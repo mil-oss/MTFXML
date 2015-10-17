@@ -88,10 +88,10 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$output_fields_xsd}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:fields"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
                 xmlns:ism="urn:us:gov:ic:ism:v2"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:fields"
+                targetNamespace="urn:mtf:mil:6040b:goe:fields"
                 xml:lang="en-US"
                 elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
@@ -350,12 +350,12 @@
     <xsl:template match="xsd:appinfo">
         <xsl:if test="not(preceding-sibling::xsd:appinfo)">
             <xsl:copy copy-namespaces="no">
-                <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+                <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:fields">
                     <xsl:apply-templates select="@*"/>
                     <xsl:apply-templates select="*" mode="attr"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::xsd:appinfo">
-                    <xsl:element name="Field" namespace="urn:mtf:mil:6040b:fields">
+                    <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:fields">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>
