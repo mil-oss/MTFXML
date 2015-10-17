@@ -148,118 +148,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
-    <!--<xsl:template match="xsd:element[starts-with(@name, 'GeneralText')]" mode="ctype">
-        <xsl:variable name="per">&#46;</xsl:variable>
-        <xsl:variable name="apos">&#34;</xsl:variable>
-        <xsl:variable name="lparen">&#40;</xsl:variable>
-        <xsl:variable name="rparen">&#41;</xsl:variable>
-        <xsl:variable name="UseDesc">
-            <xsl:value-of select="translate(upper-case(xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription), '.', '')"/>
-        </xsl:variable>
-        <xsl:variable name="TextInd">
-            <xsl:value-of select="normalize-space(substring-after($UseDesc, 'MUST EQUAL'))"/>
-        </xsl:variable>
-        <xsl:variable name="CCase">
-            <xsl:call-template name="CamelCase">
-                <xsl:with-param name="text">
-                    <xsl:value-of select="replace($TextInd, $apos, '')"/>
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:copy copy-namespaces="no">
-            <!-\-<xsl:apply-templates select="@*"/>-\->
-            <!-\-handle 2 special cases with parens-\->
-            <xsl:attribute name="name">
-                <!-\-GENTEXT NAME DECONFLICTION-\->
-                <xsl:choose>
-                    <xsl:when
-                        test="contains(xsd:annotation/xsd:documentation, 'GENTEXT/ACSIGN') and contains(xsd:annotation/xsd:documentation, 'airborne')">
-                        <xsl:text>GenTextAirborneAcsign</xsl:text>
-                    </xsl:when>
-                    <xsl:when
-                        test="contains(xsd:annotation/xsd:documentation, 'GENTEXT/ACSIGN') and contains(xsd:annotation/xsd:documentation, 'ground')">
-                        <xsl:text>GenTextGroundAcsign</xsl:text>
-                    </xsl:when>
-                    <xsl:when
-                        test="contains(xsd:annotation/xsd:documentation, 'GENTEXT/ACSIGN') and contains(xsd:annotation/xsd:documentation, 'shipborne')">
-                        <xsl:text>GenTextShipborneAcsign</xsl:text>
-                    </xsl:when>
-                    <xsl:when
-                        test="contains(xsd:annotation/xsd:documentation, 'GENTEXT/ARCHITECTURE') and contains(xsd:annotation/xsd:documentation, 'BGDBM')">
-                        <xsl:text>GenTextBGDBMArchitectureConfigurationAmplification</xsl:text>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="translate(concat('GenText', replace(replace($CCase, '(TAS)', ''), '(mpa)', '')), ' ,/”()', '')"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:attribute>
-            <xsl:element name="xsd:annotation">
-                <xsl:apply-templates select="xsd:annotation/*" mode="ctype"/>
-            </xsl:element>
-            <xsd:complexType>
-                <xsd:complexContent>
-                    <xsd:extension base="set:GeneralTextType">
-                        <xsd:sequence>
-                            <xsd:element name="GentextTextIndicator" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1"
-                                fixed="{translate(replace($TextInd,$apos,''),'”','')}"/>
-                            <xsd:element ref="field:FreeTextField" minOccurs="1"/>
-                        </xsd:sequence>
-                    </xsd:extension>
-                </xsd:complexContent>
-            </xsd:complexType>
-        </xsl:copy>
-    </xsl:template>-->
-    <!--<xsl:template match="xsd:extension[@base = 's:GeneralTextType']" mode="ctype">
-        <xsl:variable name="apos">&#34;</xsl:variable>
-        <xsl:variable name="quot">"</xsl:variable>
-        <xsl:variable name="per">.</xsl:variable>
-        <xsl:variable name="UseDesc">
-            <xsl:value-of
-                select="normalize-space(upper-case(*/ancestor::xsd:element[1]/xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription))"/>
-        </xsl:variable>
-        <xsl:variable name="TextInd">
-            <xsl:choose>
-                <xsl:when test="contains($UseDesc, $per)">
-                    <xsl:value-of select="translate(substring-after($UseDesc, 'MUST EQUAL'), '”.', '')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="normalize-space(substring-after($UseDesc, 'MUST EQUAL'))"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:element name="xsd:extension">
-            <xsl:attribute name="base">
-                <xsl:text>set:GeneralTextType</xsl:text>
-            </xsl:attribute>
-            <xsl:element name="xsd:sequence">
-                <xsl:element name="xsd:element">
-                    <xsl:attribute name="name">
-                        <xsl:text>GentextTextIndicator</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:text>field:AlphaNumericBlankSpecialTextType</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="minOccurs">
-                        <xsl:text>1</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="fixed">
-                        <xsl:value-of select="replace(replace($TextInd, $apos, ''), '”', '')"/>
-                    </xsl:attribute>
-                </xsl:element>
-                <xsl:element name="xsd:element">
-                    <xsl:attribute name="ref">
-                        <xsl:text>field:FreeTextField</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="minOccurs">
-                        <xsl:text>1</xsl:text>
-                    </xsl:attribute>
-                </xsl:element>
-            </xsl:element>
-            <xsl:apply-templates select="xsd:attribute"/>
-        </xsl:element>
-    </xsl:template>-->
-    
     <xsl:template match="xsd:schema/xsd:element/xsd:complexType" mode="ctype">
         <xsl:apply-templates select="@*" mode="ctype"/>
         <xsl:apply-templates select="*" mode="ctype"/>
@@ -381,11 +269,9 @@
     </xsl:template>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
-    
-    
+
     <!--*************** Message Identifier Fixed Values **********************-->
-    
-    
+
     <xsl:template match="xsd:element[@name = 'MessageIdentifier']" mode="ctype">
         <xsd:element name="MessageIdentifier">
             <xsl:apply-templates select="@*" mode="msgid"/>
@@ -399,6 +285,7 @@
     </xsl:template>
     <xsl:template match="*" mode="msgid">
         <xsl:param name="msgid"/>
+        <xsl:variable name="nm" select="@name"/>
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="msgid"/>
             <xsl:apply-templates select="*" mode="msgid">
@@ -407,11 +294,20 @@
         </xsl:copy>
     </xsl:template>
     <xsl:template match="*:Example" mode="msgid"/>
-
+    <xsl:template match="*:Set" mode="msgid">
+        <xsl:element name="Set" namespace="urn:mtf:mil:6040b:goe:mtf">
+            <xsl:apply-templates select="@*" mode="msgid"/>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="*:Field" mode="msgid">
+        <xsl:element name="Set" namespace="urn:mtf:mil:6040b:goe:mtf">
+            <xsl:apply-templates select="@*" mode="msgid"/>
+        </xsl:element>
+    </xsl:template>
     <xsl:template match="@*" mode="msgid">
         <xsl:copy-of select="."/>
     </xsl:template>
-    <xsl:template match="@base[.='SetBaseType']" mode="msgid">
+    <xsl:template match="@base[. = 'SetBaseType']" mode="msgid">
         <xsl:attribute name="base">
             <xsl:text>set:SetBaseType</xsl:text>
         </xsl:attribute>
@@ -429,6 +325,7 @@
             fixed="APP-11(C)"/>
     </xsl:template>
     <xsl:template match="*[@name = 'Version']" mode="msgid">
-        <xsd:element name="Version" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true" fixed="CHANGE01"/>
+        <xsd:element name="Version" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
+            fixed="CHANGE01"/>
     </xsl:template>
 </xsl:stylesheet>

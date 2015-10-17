@@ -67,29 +67,39 @@
         </xsl:for-each>
     </xsl:variable>
 
+    <xsl:variable name="all_sets">
+        <xsd:complexType name="SetBaseType">
+            <xsd:sequence>
+                <xsd:element name="Amplification" type="AmplificationType" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="Narrative" type="NarrativeType" minOccurs="0" maxOccurs="1"/>
+            </xsd:sequence>
+        </xsd:complexType>
+        <xsl:for-each select="$complex_types/*">
+            <xsl:sort select="@name"/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
+        </xsl:for-each>
+        <xsl:for-each select="$global_elements/*">
+            <xsl:sort select="@name"/>
+            <xsl:variable name="n" select="@name"/>
+            <xsl:if test="not(preceding-sibling::*[@name = $n])">
+                <xsl:copy-of select="." copy-namespaces="no"/>
+            </xsl:if>
+        </xsl:for-each>
+    </xsl:variable>
+
+<!--    <xsl:variable name="messageIdentifierFields">
+        <xsl:for-each select="$all_sets/xsd:complexType[@name='MessageIdentifier']/*">
+            <xsl:copy-of select="."/>
+        </xsl:for-each>
+    </xsl:variable>
+-->
     <xsl:template match="/">
         <xsl:result-document href="{$output}">
             <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:sets" xmlns:field="urn:int:nato:mtf:app-11(c):goe:elementals"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:mtf:app-11(c):goe:sets" xml:lang="en-GB"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:elementals" schemaLocation="natomtf_goe_fields.xsd"/>
-                <xsd:complexType name="SetBaseType">
-                    <xsd:sequence>
-                        <xsd:element name="Amplification" type="AmplificationType" minOccurs="0" maxOccurs="1"/>
-                        <xsd:element name="Narrative" type="NarrativeType" minOccurs="0" maxOccurs="1"/>
-                    </xsd:sequence>
-                </xsd:complexType>
-                <xsl:for-each select="$complex_types/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="." copy-namespaces="no"/>
-                </xsl:for-each>
-                <xsl:for-each select="$global_elements/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="not(preceding-sibling::*[@name = $n])">
-                        <xsl:copy-of select="." copy-namespaces="no"/>
-                    </xsl:if>
-                </xsl:for-each>
+                <xsl:copy-of select="$all_sets"/>
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
@@ -128,6 +138,9 @@
     </xsl:template>
 
     <xsl:template match="xsd:element[not(@nillable)][not(@name = 'GroupOfFields')]">
+        <xsl:variable name="n">
+            <xsl:value-of select="@name"/>
+        </xsl:variable>
         <xsl:variable name="b">
             <xsl:value-of select="xsd:complexType/*/xsd:extension/@base"/>
         </xsl:variable>
@@ -141,7 +154,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="basel" select="substring(@basetype, 0, string-length(@basetype) - 3)"/>
+        <xsl:variable name="basel" select="substring($basetype, 0, string-length($basetype) - 3)"/>
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
                 <xsl:when test="@name = 'RoutingIndicator'">
@@ -162,9 +175,18 @@
                     </xsl:attribute>
                     <xsl:apply-templates select="xsd:annotation"/>
                 </xsl:when>
-                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
+                <xsl:when test="$n=$basel and $goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
                     <xsl:attribute name="ref">
                         <xsl:value-of select="concat('field:', $basel)"/>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                </xsl:when>
+                <xsl:when test="$n!=$basel and $goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
+                    <xsl:attribute name="name">
+                        <xsl:value-of select="$n"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="concat('field:',$basetype)"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="xsd:annotation"/>
                 </xsl:when>

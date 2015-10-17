@@ -76,6 +76,9 @@
                         <xsl:when test="ends-with(./xsd:restriction/xsd:pattern/@value,'}')">
                             <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
                         </xsl:when>
+                        <xsl:when test="ends-with(./xsd:restriction/xsd:pattern/@value,'*')">
+                            <xsd:pattern value="{./xsd:restriction/xsd:pattern/@value}"/>
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsd:pattern value="{concat(./xsd:restriction/xsd:pattern/@value,'+')}"/>
                         </xsl:otherwise>
@@ -151,6 +154,9 @@
             <xsl:attribute name="value">
                 <xsl:choose>
                     <xsl:when test="ends-with($val,'}')">
+                        <xsl:value-of select="$val"/>
+                    </xsl:when>
+                    <xsl:when test="ends-with($val,'*')">
                         <xsl:value-of select="$val"/>
                     </xsl:when>
                     <xsl:otherwise>
