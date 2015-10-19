@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
+    version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
     <!--  This XSLT refactors baseline NATO MTF "fields" XML Schema by replacing annotation elements
@@ -32,16 +32,13 @@
     <xsl:variable name="string_fields_xsd" select="document('../../XSD/Normalized/Strings.xsd')"/>
     <xsl:variable name="integer_fields_xsd" select="document('../../XSD/Normalized/Integers.xsd')"/>
     <xsl:variable name="decimal_fields_xsd" select="document('../../XSD/Normalized/Decimals.xsd')"/>
-    <xsl:variable name="enumerated_fields_xsd"
-        select="document('../../XSD/Normalized/Enumerations.xsd')"/>
+    <xsl:variable name="enumerated_fields_xsd" select="document('../../XSD/Normalized/Enumerations.xsd')"/>
     <!--Composite Fields Baseline XML Schema document-->
     <xsl:variable name="composites_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/composites.xsd')"/>
     <xsl:variable name="fields_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')"/>
     <xsl:variable name="sets_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/sets.xsd')"/>
-    
     <!--Normalized xsd:simpleTypes-->
-    <xsl:variable name="normalizedsimpletypes"
-        select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
+    <xsl:variable name="normalizedsimpletypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
 
     <!--Output Document-->
     <xsl:variable name="output_fields_xsd" select="'../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd'"/>
@@ -51,40 +48,40 @@
         <xsl:text>&#10;</xsl:text>
         <xsl:comment> ************** STRING FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$string_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
+        <xsl:for-each select="$string_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>************** INTEGER FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$integer_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
+        <xsl:for-each select="$integer_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <!--Special case .. This is the only Integer complexType used -->
         <xsd:complexType name="_4WGridRowType">
-            <xsd:annotation> 
-                <xsd:appinfo>             
+            <xsd:annotation>
+                <xsd:appinfo>
                     <Field xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" name="4W GRID ROW"/>
                 </xsd:appinfo>
             </xsd:annotation>
-                <xsd:simpleContent>
-                    <xsd:restriction base="FieldIntegerBaseType">
-                        <xsd:minInclusive value="1"/>
-                        <xsd:maxInclusive value="24"/>
-                        <xsd:pattern value="[\-0-9]{2}"/>
-                    </xsd:restriction>
-                </xsd:simpleContent>
+            <xsd:simpleContent>
+                <xsd:restriction base="FieldIntegerBaseType">
+                    <xsd:minInclusive value="1"/>
+                    <xsd:maxInclusive value="24"/>
+                    <xsd:pattern value="[\-0-9]{2}"/>
+                </xsd:restriction>
+            </xsd:simpleContent>
         </xsd:complexType>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>*************** DECIMAL FIELDS **************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$decimal_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
+        <xsl:for-each select="$decimal_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <xsl:text>&#10;</xsl:text>
         <xsl:comment>************* ENUMERATED FIELDS *************</xsl:comment>
         <xsl:text>&#10;</xsl:text>
-        <xsl:for-each select="$enumerated_fields_xsd/xsd:schema/*[not(name()='xsd:import')]">
+        <xsl:for-each select="$enumerated_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -101,11 +98,8 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$output_fields_xsd}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals"
-                xml:lang="en-GB"
-                elementFormDefault="unqualified"
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
                 <xsl:copy-of select="$refactor_fields_xsd"/>
                 <xsl:text>&#10;</xsl:text>
@@ -134,7 +128,7 @@
             <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
-    
+
     <!--Create global xsd:element nodes for xsd:complexTypes -->
     <xsl:template match="xsd:complexType" mode="el">
         <xsd:element>
@@ -146,16 +140,16 @@
             </xsl:attribute>
         </xsd:element>
     </xsl:template>
-    
+
     <!-- ******************** NAME CONFLICTS BETWEEN FIELDS AND COMPOSITES ******************** -->
-    <xsl:template match="xsd:complexType[@name='DutyOtherType']">
+    <xsl:template match="xsd:complexType[@name = 'DutyOtherType']">
         <xsd:complexType name="DutyOtherCodeType">
-            <xsl:apply-templates select="@*[not(name()='name')]"/>
+            <xsl:apply-templates select="@*[not(name() = 'name')]"/>
             <xsl:apply-templates select="*"/>
         </xsd:complexType>
     </xsl:template>
-    
-    <xsl:template match="xsd:complexType[@name='DutyOtherType'][xsd:sequence]" mode="el">
+
+    <xsl:template match="xsd:complexType[@name = 'DutyOtherType'][xsd:sequence]" mode="el">
         <xsd:element>
             <xsl:attribute name="name">
                 <xsl:text>DutyOtherCode</xsl:text>
@@ -165,15 +159,15 @@
             </xsl:attribute>
         </xsd:element>
     </xsl:template>
-    
-    <xsl:template match="xsd:complexType[@name='QRoutePointDesignatorType']">
+
+    <xsl:template match="xsd:complexType[@name = 'QRoutePointDesignatorType']">
         <xsd:complexType name="QRoutePointCodeType">
-            <xsl:apply-templates select="@*[not(name()='name')]"/>
+            <xsl:apply-templates select="@*[not(name() = 'name')]"/>
             <xsl:apply-templates select="*"/>
         </xsd:complexType>
     </xsl:template>
-    
-    <xsl:template match="xsd:complexType[@name='QRoutePointDesignatorType'][xsd:sequence]" mode="el">
+
+    <xsl:template match="xsd:complexType[@name = 'QRoutePointDesignatorType'][xsd:sequence]" mode="el">
         <xsd:element>
             <xsl:attribute name="name">
                 <xsl:text>QRoutePointCode</xsl:text>
@@ -183,7 +177,7 @@
             </xsl:attribute>
         </xsd:element>
     </xsl:template>
-    
+
     <!-- ************************************************************************************** -->
 
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->
@@ -204,23 +198,16 @@
         <!--Use Regex from baseline fields without min max qalifiers to match with normalized types-->
         <xsl:variable name="typepattern">
             <xsl:call-template name="patternValue">
-                <xsl:with-param name="pattern"
-                    select="$fields_xsd/xsd:simpleType[@name = $nm]/xsd:restriction/xsd:pattern/@value"
-                />
+                <xsl:with-param name="pattern" select="$fields_xsd/xsd:simpleType[@name = $nm]/xsd:restriction/xsd:pattern/@value"/>
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="type">
             <xsl:choose>
-                <xsl:when
-                    test="$normalizedsimpletypes//xsd:simpleType/xsd:restriction/xsd:pattern/@value = $typepattern">
-                    <xsl:value-of
-                        select="$normalizedsimpletypes//xsd:simpleType[xsd:restriction/xsd:pattern/@value = $typepattern]/@name"
-                    />
+                <xsl:when test="$normalizedsimpletypes//xsd:simpleType/xsd:restriction/xsd:pattern/@value = $typepattern">
+                    <xsl:value-of select="$normalizedsimpletypes//xsd:simpleType[xsd:restriction/xsd:pattern/@value = $typepattern]/@name"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of
-                        select="concat(substring($typename, 0, string-length($typename) - 3), 'SimpleType')"
-                    />
+                    <xsl:value-of select="concat(substring($typename, 0, string-length($typename) - 3), 'SimpleType')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -264,8 +251,7 @@
                     </xsl:attribute>
                 </xsl:element>
             </xsl:when>
-            <xsl:when
-                test="exists($fields_xsd/*[@name = $type]/xsd:restriction[@base = 'xsd:string']/xsd:pattern)">
+            <xsl:when test="exists($fields_xsd/*[@name = $type]/xsd:restriction[@base = 'xsd:string']/xsd:pattern)">
                 <xsl:apply-templates select="$fields_xsd/*[@name = $type]" mode="el"/>
             </xsl:when>
             <!--Use type complex name or simple type name from matching normalized simple type-->
@@ -277,18 +263,14 @@
                             <xsl:when test="$composites_xsd//xsd:complexType/@name = $typename">
                                 <xsl:value-of select="$typename"/>
                             </xsl:when>
-                            <xsl:when
-                                test="$refactor_fields_xsd/xsd:complexType/@name = $typename">
+                            <xsl:when test="$refactor_fields_xsd/xsd:complexType/@name = $typename">
                                 <xsl:value-of select="$typename"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:variable name="elname">
-                                    <xsl:value-of
-                                        select="substring($typename, 0, string-length($typename) - 3)"
-                                    />
+                                    <xsl:value-of select="substring($typename, 0, string-length($typename) - 3)"/>
                                 </xsl:variable>
-                                <xsl:value-of select="$refactor_fields_xsd/*[@name = $elname]/@type"
-                                />
+                                <xsl:value-of select="$refactor_fields_xsd/*[@name = $elname]/@type"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
@@ -316,30 +298,24 @@
         <!--TEST FOR MIN MAX IN REGEX-->
         <xsl:choose>
             <!--If Ends with max min strip off-->
-            <xsl:when
-                test="$normalizedsimpletypes/xsd:schema/xsd:simpleType/xsd:restriction/xsd:pattern/@value = $pattern">
+            <xsl:when test="$normalizedsimpletypes/xsd:schema/xsd:simpleType/xsd:restriction/xsd:pattern/@value = $pattern">
                 <xsl:value-of select="$pattern"/>
             </xsl:when>
             <xsl:when test="ends-with($pattern, '}')">
                 <xsl:choose>
-                    <xsl:when
-                        test="starts-with(substring($pattern, string-length($pattern) - 6), '{')">
+                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 6), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 6)"/>
                     </xsl:when>
-                    <xsl:when
-                        test="starts-with(substring($pattern, string-length($pattern) - 5), '{')">
+                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 5), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 5)"/>
                     </xsl:when>
-                    <xsl:when
-                        test="starts-with(substring($pattern, string-length($pattern) - 4), '{')">
+                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 4), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 4)"/>
                     </xsl:when>
-                    <xsl:when
-                        test="starts-with(substring($pattern, string-length($pattern) - 3), '{')">
+                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 3), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 3)"/>
                     </xsl:when>
-                    <xsl:when
-                        test="starts-with(substring($pattern, string-length($pattern) - 2), '{')">
+                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 2), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 2)"/>
                     </xsl:when>
                 </xsl:choose>
@@ -386,8 +362,7 @@
         <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
                 <xsl:apply-templates select="@*"/>
-                <xsl:if
-                    test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
+                <xsl:if test="exists(xsd:appinfo/*:FudExplanation/text()) and not(xsd:documentation/text())">
                     <xsl:element name="xsd:documentation">
                         <xsl:apply-templates select="xsd:appinfo[1]/*:FudExplanation[1]/text()"/>
                     </xsl:element>
@@ -448,15 +423,30 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    
+    <xsl:template match="*:FudExplanation" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="explanation">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
 
+    <xsl:template match="*:VersionIndicator" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="version">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+ 
     <!-- ******************** FILTERS ******************** -->
     <xsl:template match="xsd:element/xsd:annotation"/>
-    <xsl:template match="*:FudExplanation" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
-    <xsl:template match="*:VersionIndicator" mode="attr"/>
     <xsl:template match="*:FudRelatedDocument" mode="attr"/>
     <!-- _______________________________________________________ -->
-    
 
 </xsl:stylesheet>

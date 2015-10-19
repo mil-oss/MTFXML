@@ -103,12 +103,9 @@
 
     <xsl:template match="/">
         <xsl:result-document href="{$output}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:field="urn:mtf:mil:6040b:goe:fields" 
-                xmlns:ism="urn:us:gov:ic:ism:v2" 
-                targetNamespace="urn:mtf:mil:6040b:goe:sets"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields"
+                xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US" elementFormDefault="unqualified"
+                attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="SetBaseType">
@@ -158,7 +155,7 @@
             <xsl:with-param name="max" select="@maxOccurs"/>
         </xsl:apply-templates>
     </xsl:template>
-  
+
     <xsl:template match="xsd:element[@nillable]">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
@@ -205,18 +202,18 @@
                     </xsl:attribute>
                     <xsl:apply-templates select="xsd:annotation"/>
                 </xsl:when>
-                <xsl:when test="$n=$basel and $goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
+                <xsl:when test="$n = $basel and $goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
                     <xsl:attribute name="ref">
                         <xsl:value-of select="concat('field:', $basel)"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="xsd:annotation"/>
                 </xsl:when>
-                <xsl:when test="$n!=$basel and $goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
+                <xsl:when test="$n != $basel and $goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
                     <xsl:attribute name="name">
                         <xsl:value-of select="$n"/>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:value-of select="concat('field:',$basetype)"/>
+                        <xsl:value-of select="concat('field:', $basetype)"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="xsd:annotation"/>
                 </xsl:when>
@@ -257,7 +254,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="basel" select="substring($basetype,0,string-length($basetype)-3)"/>
+        <xsl:variable name="basel" select="substring($basetype, 0, string-length($basetype) - 3)"/>
         <xsl:choose>
             <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
                 <xsd:extension base="{concat('field:',$basetype)}"/>
@@ -280,7 +277,7 @@
     <xsl:template match="xsd:sequence" mode="group">
         <xsl:param name="min"/>
         <xsl:param name="max"/>
-        <xsd:sequence minOccurs='{$min}' maxOccurs='{$max}'>
+        <xsd:sequence minOccurs="{$min}" maxOccurs="{$max}">
             <xsl:apply-templates select="*"/>
         </xsd:sequence>
     </xsl:template>
@@ -334,7 +331,7 @@
         </xsl:variable>
         <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
-                <xsl:if test="not(xsd:documentation and string-length($doc)&gt;0)">
+                <xsl:if test="not(xsd:documentation and string-length($doc) > 0)">
                     <xsd:documentation>
                         <xsl:value-of select="$doc"/>
                     </xsd:documentation>

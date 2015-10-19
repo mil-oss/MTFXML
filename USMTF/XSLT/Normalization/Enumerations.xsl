@@ -26,24 +26,13 @@
     <xsl:variable name="normalized_fields_xsd" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
     
     <!--Baseline Fields XML Schema document-->
-    <xsl:variable name="strings_xsd"
-        select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
-    <xsl:variable name="integers_xsd"
-        select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:integer']]"/>
-    <xsl:variable name="decimals_xsd"
-        select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:decimal']]"/>
     <xsl:variable name="enumerations_xsd"
         select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]"/>
     
     <!--Output-->
-    <xsl:variable name="string_outputdoc" select="'../../XSD/Normalized/Strings.xsd'"/>
-    <xsl:variable name="integersoutputdoc" select="'../../XSD/Normalized/Integers.xsd'"/>
-    <xsl:variable name="decimalsoutputdoc" select="'../../XSD/Normalized/Decimals.xsd'"/>
     <xsl:variable name="enumerationsoutdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
     
     <!--A normalized list of xsd:string types with common REGEX patterns without length qualifiers for re-use globally-->
-    <xsl:variable name="normalizedstrtypes"
-        select="$normalized_fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
     <xsl:variable name="normenumerationtypes"
         select="$normalized_fields_xsd/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
 
@@ -212,6 +201,15 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
+    
+    <xsl:template match="xsd:enumeration/xsd:annotation/xsd:appinfo">
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Enum" namespace="urn:mtf:mil:6040b:goe:fields">
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*" mode="attr"/>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
 
     <!--Convert elements in xsd:appinfo to attributes-->
     <xsl:template match="*" mode="attr">
@@ -231,15 +229,17 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    
+    <xsl:template match="*:DataCode" mode="attr"/>
 
-    <xsl:template match="*:DataCode" mode="attr">
+<!--    <xsl:template match="*:DataCode" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="dataCode">
                 <xsl:value-of select="normalize-space(text())"/>
             </xsl:attribute>
         </xsl:if>
-    </xsl:template>
+    </xsl:template>-->
 
     <xsl:template match="*:DataItem" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>

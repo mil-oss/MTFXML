@@ -195,6 +195,15 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
+    
+    <xsl:template match="xsd:enumeration/xsd:annotation/xsd:appinfo">
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Enum" namespace="urn:int:nato:mtf:app-11(c):goe:elementals">
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*" mode="attr"/>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
 
     <!--Convert elements in xsd:appinfo to attributes-->
     <xsl:template match="*" mode="attr">
@@ -214,15 +223,26 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    
+    <xsl:template match="*:FudExplanation" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="explanation">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
 
-    <xsl:template match="*:DataCode" mode="attr">
+    <xsl:template match="*:DataCode" mode="attr"/>
+    
+    <!--<xsl:template match="*:DataCode" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="dataCode">
                 <xsl:value-of select="normalize-space(text())"/>
             </xsl:attribute>
         </xsl:if>
-    </xsl:template>
+    </xsl:template>-->
 
     <xsl:template match="*:DataItem" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>

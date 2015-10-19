@@ -19,7 +19,6 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
-
     <xsl:output method="xml" indent="yes"/>
     <xsl:variable name="mtfmsgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
     <xsl:variable name="mtfsets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
@@ -72,9 +71,10 @@
     </xsl:template>
     <xsl:template match="xsd:schema/xsd:element/xsd:annotation/xsd:appinfo" mode="el">
         <xsl:copy copy-namespaces="no">
-            <MsgInfo>
+            <Msg>
                 <xsl:apply-templates select="*[not(name() = 'MtfStructuralRelationship')]" mode="attr"/>
-            </MsgInfo>
+                <xsl:apply-templates select="*:MtfRelatedDocument" mode="doc"/>
+            </Msg>
             <xsl:apply-templates select="*[name() = 'MtfStructuralRelationship']" mode="attr"/>
         </xsl:copy>
     </xsl:template>
@@ -93,7 +93,7 @@
             <xsl:when test="starts-with(*:MtfStructuralRelationshipExplanation/text(), 'Field 1 in HEADING')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipExplanation/text(), 'Field 1 of HEADING')"/>
             <xsl:otherwise>
-                <xsl:element name="{name()}">
+                <xsl:element name="Structure">
                     <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
                 </xsl:element>
             </xsl:otherwise>
@@ -102,7 +102,7 @@
     <xsl:template match="*" mode="trimattr">
         <xsl:variable name="apos">&#39;</xsl:variable>
         <xsl:variable name="quot">&#34;</xsl:variable>
-        <xsl:variable name="nm" select="substring-after(name(), 'MtfStructuralRelationship')"/>
+        <xsl:variable name="nm" select="lower-case(substring-after(name(), 'MtfStructuralRelationship'))"/>
         <xsl:attribute name="{$nm}">
             <xsl:value-of select="normalize-space(replace(., $quot, $apos))" disable-output-escaping="yes"/>
         </xsl:attribute>
@@ -367,13 +367,7 @@
             <xsl:apply-templates select="text()" mode="ctype"/>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="xsd:complexType/xsd:sequence/xsd:choice/xsd:annotation/xsd:appinfo" mode="ctype">
-        <xsl:copy copy-namespaces="no">
-            <AltInfo>
-                <xsl:apply-templates select="*" mode="attr"/>
-            </AltInfo>
-        </xsl:copy>
-    </xsl:template>
+    <xsl:template match="xsd:complexType/xsd:sequence/xsd:choice/xsd:annotation/xsd:appinfo" mode="ctype"/>
     <xsl:template match="xsd:appinfo" mode="ctype">
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
@@ -389,9 +383,6 @@
                 </xsl:when>
             </xsl:choose>
         </xsl:copy>
-    </xsl:template>
-    <xsl:template match="text()" mode="ctype">
-        <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
     <xsl:template match="@*" mode="ctype">
         <xsl:copy-of select="."/>
@@ -441,33 +432,92 @@
     <xsl:template match="*:SetFormatPositionUseDescription" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="usage">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:SetFormatPositionName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="positionName">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:SetFormatPositionNumber" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="position">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:SetFormatPositionConcept" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="concept">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    <xsl:template match="*:MtfName" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="name">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:MtfIdentifier" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="identifier">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:MtfSponsor" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="sponsor">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:MtfPurpose" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="purpose">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:VersionIndicator" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="version">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:MtfNote" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="note">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:MtfRelatedDocument" mode="doc">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
+            <xsl:if test="not(preceding-sibling::*:MtfRelatedDocument)">
+                <xsl:element name="Document" namespace="urn:mtf:mil:6040b:goe:mtf">
+                    <xsl:apply-templates select="text()"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:MtfRelatedDocument">
+                    <xsl:element name="Document" namespace="urn:mtf:mil:6040b:goe:mtf">
+                        <xsl:apply-templates select="text()"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+   
+    <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
+    <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
 
     <!--*************** Message Identifier Fixed Values **********************-->
 
@@ -531,5 +581,7 @@
         <xsd:element name="Standard" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
             fixed="MIL-STD-6040(SERIES)"/>
     </xsl:template>
-
+    <xsl:template match="text()" mode="ctype">
+        <xsl:value-of select="translate(normalize-space(.), '&#34;', '')"/>
+    </xsl:template>
 </xsl:stylesheet>

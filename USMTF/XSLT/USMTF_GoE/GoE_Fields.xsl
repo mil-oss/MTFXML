@@ -34,17 +34,14 @@
     <xsl:variable name="decimal_fields_xsd" select="document('../../XSD/Normalized/Decimals.xsd')"/>
     <xsl:variable name="enumerated_fields_xsd"
         select="document('../../XSD/Normalized/Enumerations.xsd')"/>
-
-    <!--Normalized xsd:simpleTypes-->
-    <xsl:variable name="normalizedsimpletypes"
-        select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
-
-    <!--Simple Fields Baseline XML Schema document-->
-    <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
-
     <!--Composite Fields Baseline XML Schema document-->
     <xsl:variable name="composites_xsd"
         select="document('../../XSD/Baseline_Schema/composites.xsd')"/>
+    <!--Simple Fields Baseline XML Schema document-->
+    <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
+    <!--Normalized xsd:simpleTypes-->
+    <xsl:variable name="normalizedsimpletypes"
+        select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
 
     <!--Output Document-->
     <xsl:variable name="output_fields_xsd" select="'../../XSD/GoE_Schema/GoE_fields.xsd'"/>
@@ -77,6 +74,7 @@
         </xsl:for-each>
     </xsl:variable>
 
+    <!-- **************-->
     <!--Build re-factored xsd:complexTypes using GoE schema design and references-->
     <xsl:variable name="complex_types_xsd">
         <xsl:apply-templates select="$composites_xsd/xsd:schema/xsd:complexType"/>
@@ -100,11 +98,17 @@
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** COMPOSITE TYPES **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
-                <xsl:copy-of select="$complex_types_xsd"/>
+                <xsl:for-each select="$complex_types_xsd/*">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** COMPOSITE ELEMENTS **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
-                <xsl:copy-of select="$complex_elements"/>
+                <xsl:for-each select="$complex_elements/*">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
@@ -412,6 +416,7 @@
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
     <xsl:template match="*:FudRelatedDocument" mode="attr"/>
+
     <!-- _______________________________________________________ -->
 
 </xsl:stylesheet>

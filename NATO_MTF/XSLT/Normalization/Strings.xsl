@@ -37,7 +37,6 @@
     <xsl:variable name="normalizedstrtypes"
         select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
 
-
     <xsl:variable name="str_types">
         <xsl:for-each select="$mtf_str">
             <xsl:variable name="pattern" select="xsd:restriction/xsd:pattern/@value"/>
@@ -91,7 +90,6 @@
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
-
 
     <!-- Contains a list of xsd:elements with normalized xsd:simpleTypes and 
         including xsd:maxLength and xsd:minLength extensions for xsd:simpleTypes 
@@ -356,6 +354,42 @@
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
     <!-- _______________________________________________________ -->
+    
+    <xsl:template match="*:FudName" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="name">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:FudSponsor" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="sponsor">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:FudExplanation" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="explanation">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:VersionIndicator" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="version">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
 
     <!-- ******************** FILTERS ******************** -->
     <xsl:template match="*[@name = 'FreeTextType']"/>
@@ -377,7 +411,6 @@
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
-    <xsl:template match="*:VersionIndicator" mode="attr"/>
     <xsl:template match="*:MinimumLength" mode="attr"/>
     <xsl:template match="*:MaximumLength" mode="attr"/>
     <xsl:template match="*:LengthLimitation" mode="attr"/>
