@@ -74,33 +74,217 @@
 <node TEXT="Alteration or further re-factoring of the provided XML Schema must implement new namespace assignments." ID="ID_1920187984" CREATED="1444857468671" MODIFIED="1444857550443" VSHIFT="10"/>
 <node TEXT="Because US and NATO specifications are closely aligned, all products are very similar and can often be re-used interchangeably.  Minor differences will occur, so For purposes of clarity and distribution they are provided separately with each standard." ID="ID_597604512" CREATED="1444857598111" MODIFIED="1445283723238" VSHIFT="-40"/>
 </node>
-<node TEXT="USMTF" POSITION="right" ID="ID_1967102135" CREATED="1444842276503" MODIFIED="1445036965396" VSHIFT="50">
+<node TEXT="USMTF" POSITION="right" ID="ID_1967102135" CREATED="1444842276503" MODIFIED="1445375951948" VSHIFT="50">
 <edge COLOR="#ff0000"/>
-<node TEXT="XML Schema Design" ID="ID_810225239" CREATED="1445035293775" MODIFIED="1445284521965" VSHIFT="-160">
-<node TEXT="Adjustments are made to the format of all XML Schemas in order to reduce size, and eliminate redundant or unnecessary information." ID="ID_1480971800" CREATED="1445035365647" MODIFIED="1445284316480" VSHIFT="60"/>
-<node TEXT="Annotations" ID="ID_1750708290" CREATED="1445035672879" MODIFIED="1445284521964" VSHIFT="60">
+<node TEXT="XML Schema Design" ID="ID_810225239" CREATED="1445035293775" MODIFIED="1445370827892" VSHIFT="-160">
+<node TEXT="Adjustments are made to the format of all XML Schemas in order to reduce size, and eliminate redundant or unnecessary information." ID="ID_1480971800" CREATED="1445035365647" MODIFIED="1445370511189" VSHIFT="-10"/>
+<node TEXT="Annotations" ID="ID_1750708290" CREATED="1445035672879" MODIFIED="1445370827892" VSHIFT="10">
 <node TEXT="Content of xsd:annotations is converted from elements to attributes in order to reduce size caused by closing tags.  Names are changed to plain language terms instead of database field names.  Elements are used for multiple items." ID="ID_1323541666" CREATED="1445035684847" MODIFIED="1445284310321" HGAP="30" VSHIFT="80"/>
 <node TEXT="When xsd:documentation and asd:appinfo items are duplicative, the information is retained in the xsd:documentation node and removed from the xsd;appinfo node." ID="ID_686135295" CREATED="1445037472232" MODIFIED="1445284397448" HGAP="30" VSHIFT="30"/>
 <node TEXT="The names of the items in xsd:appinfo nodes are changed as follows:" ID="ID_1166810592" CREATED="1445035779520" MODIFIED="1445284403200" HGAP="30" VSHIFT="-70">
-<node TEXT="Fields" ID="ID_1193573017" CREATED="1445035842367" MODIFIED="1445284621146" VSHIFT="60">
-<node TEXT="Changed" ID="ID_1404203008" CREATED="1445037164613" MODIFIED="1445284384266" VSHIFT="-10">
-<node TEXT="FudExplanation = @explanation" ID="ID_233814453" CREATED="1445037052389" MODIFIED="1445284384265" VSHIFT="30"/>
-<node TEXT="VersionIndicator=@version" ID="ID_1730215180" CREATED="1445037055656" MODIFIED="1445283871308"/>
-<node TEXT="FudRelatedDocument = &lt;Document/&gt;" ID="ID_697421810" CREATED="1445037137190" MODIFIED="1445283843481" VSHIFT="-30"/>
+<node TEXT="Fields" ID="ID_100473284" CREATED="1445370612088" MODIFIED="1445370688955">
+<node TEXT="Baseline" ID="ID_34265425" CREATED="1445370612089" MODIFIED="1445370643587">
+<node TEXT="&lt;FudName/&gt;" ID="ID_909463173" CREATED="1445370612089" MODIFIED="1445370612089"/>
+<node TEXT="&lt;FudExplanation/&gt;" ID="ID_1405532511" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;FieldFormatIndexReferenceNumber/&gt;" ID="ID_1348676922" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;FudNumber/&gt;" ID="ID_1159183985" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;VersionIndicator/&gt;" ID="ID_1226458599" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;MinimumLength/&gt;" ID="ID_356371889" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;MaximumLength/&gt;" ID="ID_438776037" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;LengthLimitation/&gt;" ID="ID_920385990" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;UnitOfMeasure/&gt;" ID="ID_236333864" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;Type/&gt;" ID="ID_151867158" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;FudSponsor/&gt;" ID="ID_762539737" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;FudRelatedDocument/&gt;" ID="ID_1031334117" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;EntryType/&gt;" ID="ID_1177096757" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;DataType/&gt;" ID="ID_682534319" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;Explanation/&gt;" ID="ID_1992920320" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;MtfRegularExpression/&gt;" ID="ID_927907341" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;MinimumInclusiveValue/&gt;" ID="ID_397058136" CREATED="1445370612090" MODIFIED="1445370612090"/>
+<node TEXT="&lt;MaximumInclusiveValue/&gt;" ID="ID_1217968447" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;LengthVariable/&gt;" ID="ID_1303897518" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;DataCode/&gt;" ID="ID_429643928" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;DataItem/&gt;" ID="ID_63027644" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;DataItemSequenceNumber/&gt;" ID="ID_1564552499" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;DataItemSponsor/&gt;" ID="ID_747216300" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MinimumDecimalPlaces/&gt;" ID="ID_1181725721" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MaximumDecimalPlaces/&gt;" ID="ID_4993624" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;ElementalFfirnFudnSequence/&gt;" ID="ID_191571258" CREATED="1445370612091" MODIFIED="1445370612091"/>
 </node>
-<node TEXT="Removed" ID="ID_486648130" CREATED="1445037168788" MODIFIED="1445284630536" VSHIFT="20">
-<node TEXT="FieldFormatIndexReferenceNumber" ID="ID_1733493911" CREATED="1445037065257" MODIFIED="1445284630536" VSHIFT="-10"/>
-<node TEXT="FudNumber" ID="ID_1930719625" CREATED="1445037098579" MODIFIED="1445284624689"/>
+<node TEXT="Refactor" ID="ID_556967687" CREATED="1445370612091" MODIFIED="1445370649822">
+<node TEXT="&lt;Field name=&quot;FudName&quot; explanation=&quot;FudExplanation or Explanation&quot; version=&quot;VersionIndicator&quot; sponsor=&quot;FudSponsor&quot;&gt;" ID="ID_360379861" CREATED="1445370612091" MODIFIED="1445370612091">
+<node TEXT="&lt;Document&gt;FudRelatedDocument1&lt;/Document&gt;" ID="ID_456292364" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Document&gt;FudRelatedDocument2&lt;/Document&gt;" ID="ID_69990456" CREATED="1445370612091" MODIFIED="1445370612091"/>
+</node>
+<node TEXT="&lt;/Field&gt;" ID="ID_831035542" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Enum dataItem=&quot;DataItem&quot;/&gt;" ID="ID_1569228776" CREATED="1445370612091" MODIFIED="1445370612091"/>
+</node>
+<node TEXT="Removed" ID="ID_1864136806" CREATED="1445370612091" MODIFIED="1445370658693">
+<node TEXT="&lt;FieldFormatIndexReferenceNumber/&gt;" ID="ID_1888193502" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FudNumber/&gt;" ID="ID_912654653" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MinimumLength/&gt;" ID="ID_584313651" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MaximumLength/&gt;" ID="ID_1031775589" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;LengthLimitation/&gt;" ID="ID_344683434" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;UnitOfMeasure/&gt;" ID="ID_1156036719" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Type/&gt;" ID="ID_768232846" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;EntryType/&gt;" ID="ID_1346890980" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;DataType/&gt;" ID="ID_354105568" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MtfRegularExpression/&gt;" ID="ID_936130868" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MinimumInclusiveValue/&gt;" ID="ID_1604458006" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MaximumInclusiveValue/&gt;" ID="ID_911630308" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;LengthVariable/&gt;" ID="ID_629636488" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;DataItem/&gt;" ID="ID_415255446" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;DataItemSequenceNumber/&gt;" ID="ID_808075469" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;DataItemSponsor/&gt;" ID="ID_349324922" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MinimumDecimalPlaces/&gt;" ID="ID_430763356" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;MaximumDecimalPlaces/&gt;" ID="ID_112052193" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;ElementalFfirnFudnSequence/&gt;" ID="ID_1566187675" CREATED="1445370612091" MODIFIED="1445370612091"/>
 </node>
 </node>
-<node TEXT="Sets" ID="ID_1619470227" CREATED="1445035889168" MODIFIED="1445035910552"/>
-<node TEXT="Segments" ID="ID_198106096" CREATED="1445035912432" MODIFIED="1445035915036"/>
-<node TEXT="Messages" ID="ID_1821425080" CREATED="1445035915696" MODIFIED="1445284335255" VSHIFT="-70"/>
+<node TEXT="Sets" ID="ID_1229427480" CREATED="1445370612091" MODIFIED="1445370697369">
+<node TEXT="Baseline" ID="ID_1980521781" CREATED="1445370612091" MODIFIED="1445370734179">
+<node TEXT="&lt;SetFormatName/&gt;" ID="ID_1584373509" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;SetFormatIdentifier/&gt;" ID="ID_1227917816" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;ColumnarIndicator/&gt;" ID="ID_412781752" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;GroupOfFieldsIndicator/&gt;" ID="ID_653259486" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;RepeatabilityForGroupOfFields/&gt;" ID="ID_572973586" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;SetFormatNote/&gt;" ID="ID_568891183" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;SetFormatExample/&gt;" ID="ID_1069482152" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;SetFormatRemark/&gt;" ID="ID_1290948" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;SetFormatSponsor/&gt;" ID="ID_889000451" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;SetFormatRelatedDocuments/&gt;" ID="ID_268356142" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;VersionIndicator/&gt;" ID="ID_225940216" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatPositionName/&gt;" ID="ID_1837699254" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatPositionNumber/&gt;" ID="ID_1407047314" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;OccurrenceCategory/&gt;" ID="ID_1033662588" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatPositionConcept/&gt;" ID="ID_935130810" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;ColumnHeader/&gt;" ID="ID_1025563123" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;AlphabeticIdentifier/&gt;" ID="ID_1922240351" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Justification/&gt;" ID="ID_341309563" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldDescriptor/&gt;" ID="ID_300107549" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;AssignedFfirnFudUseDescription/&gt;" ID="ID_756802562" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatIndexReferenceNumber/&gt;" ID="ID_759472798" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatName/&gt;" ID="ID_133658205" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatStructure/&gt;" ID="ID_826932045" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatDefinition/&gt;" ID="ID_86018735" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatRemark/&gt;" ID="ID_263786983" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatRelatedDocument/&gt;" ID="ID_1211072466" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatSponsor/&gt;" ID="ID_1591321152" CREATED="1445370612091" MODIFIED="1445370612091"/>
+</node>
+<node TEXT="ReFactor" ID="ID_1056498762" CREATED="1445370612091" MODIFIED="1445370739066">
+<node TEXT="&lt;Set name=&quot;SetFormatName&quot; id=&quot;SetFormatIdentifier&quot; column=&quot;ColumnarIndicator&quot; note=&quot;SetFormatNote&quot; remark=&quot;SetFormatRemark&quot;" ID="ID_1411938039" CREATED="1445370612091" MODIFIED="1445370612091">
+<node TEXT="sponsor=&quot;SetFormatSponsor&quot; version=&quot;VersionIndicator&quot;&gt;" ID="ID_1638006702" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Example&gt;SetFormatExample1&lt;/Example&gt;" ID="ID_1116997235" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Example&gt;SetFormatExample2&lt;/Example&gt;" ID="ID_1656180319" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Document&gt;SetFormatRelatedDocuments1&lt;/Document&gt;" ID="ID_119057802" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Document&gt;SetFormatRelatedDocuments2&lt;/Document&gt;" ID="ID_663118267" CREATED="1445370612091" MODIFIED="1445370612091"/>
+</node>
+<node TEXT="&lt;/Set&gt;" ID="ID_355512775" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Field name=&quot;FieldFormatName or FieldDescriptor&quot; positionName=&quot;FieldFormatPositionName&quot; position=&quot;FieldFormatPositionNumber&quot;" ID="ID_226458098" CREATED="1445370612091" MODIFIED="1445370612091">
+<node TEXT="concept=&quot;FieldFormatPositionConcept&quot; columnHeader=&quot;ColumnHeader&quot; identifier=&quot;AlphabeticIdentifier&quot; alignment=&quot;Justification&quot;" ID="ID_613455754" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="usage=&quot;AssignedFfirnFudUseDescription&quot; remark=&quot;FieldFormatRemark&quot; sponsor=&quot;FieldFormatSponsor&quot;&gt;" ID="ID_689801351" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Example&gt;SetFormatExample1&lt;/Example&gt;" ID="ID_543344469" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Example&gt;SetFormatExample2&lt;/Example&gt;" ID="ID_1901475036" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Document&gt;FieldFormatRelatedDocument1&lt;/Document&gt;" ID="ID_952716650" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;Document&gt;FieldFormatRelatedDocument2&lt;/Document&gt;" ID="ID_1301755104" CREATED="1445370612091" MODIFIED="1445370612091"/>
+</node>
+<node TEXT="&lt;/Field&gt;" ID="ID_555195968" CREATED="1445370612091" MODIFIED="1445370612091"/>
+</node>
+<node TEXT="Removed" ID="ID_740758700" CREATED="1445370612091" MODIFIED="1445370742153">
+<node TEXT="&lt;GroupOfFieldsIndicator/&gt;" ID="ID_1150967729" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;RepeatabilityForGroupOfFields/&gt;" ID="ID_1490337520" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;OccurrenceCategory/&gt;" ID="ID_1781133936" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatIndexReferenceNumber/&gt;" ID="ID_1003046229" CREATED="1445370612091" MODIFIED="1445370612091"/>
+<node TEXT="&lt;FieldFormatStructure/&gt;" ID="ID_321485345" CREATED="1445370612091" MODIFIED="1445370612091"/>
+</node>
+</node>
+<node TEXT="Messages" ID="ID_924279169" CREATED="1445370612092" MODIFIED="1445370707236">
+<node TEXT="Baseline" ID="ID_1059614298" CREATED="1445370612092" MODIFIED="1445370745850">
+<node TEXT="&lt;MtfName/&gt;" ID="ID_134112095" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfIdentifier/&gt;" ID="ID_1075711266" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfIndexReferenceNumber/&gt;" ID="ID_1818646788" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfSponsor/&gt;" ID="ID_1835510634" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfPurpose/&gt;" ID="ID_440113662" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfRelatedDocument/&gt;" ID="ID_629427204" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfRemark/&gt;" ID="ID_800595375" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfNote/&gt;" ID="ID_1932610136" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfStructuralRelationship/&gt;" ID="ID_1178294804" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;VersionIndicator/&gt;" ID="ID_1490431402" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;AlternativeType/&gt;" ID="ID_1104580885" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;SetFormatPositionName/&gt;" ID="ID_1496618422" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;SetFormatPositionNumber/&gt;" ID="ID_786145073" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;SetFormatPositionConcept/&gt;" ID="ID_871677190" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;SetFormatPositionUseDescription/&gt;" ID="ID_850414699" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;OccurrenceCategory/&gt;" ID="ID_1492398300" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;Repeatability/&gt;" ID="ID_931269542" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;SegmentStructureName/&gt;" ID="ID_4471593" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;SegmentStructureConcept/&gt;" ID="ID_1082573961" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;SegmentStructureUseDescription/&gt;" ID="ID_1167931590" CREATED="1445370612092" MODIFIED="1445370612092"/>
+</node>
+<node TEXT="Refactor" ID="ID_1739811853" CREATED="1445370612092" MODIFIED="1445370749173">
+<node TEXT="&lt;Msg name=&quot;MtfName&quot; identifier=&quot;MtfIdentifier&quot; sponsor=&quot;MtfSponsor&quot; purpose=&quot;MtfPurpose&quot; remark=&quot;MtfRemark&quot; note=&quot;MtfNote&quot;" ID="ID_1392072844" CREATED="1445370612092" MODIFIED="1445370612092">
+<node TEXT="version=&quot;VersionIndicator&quot;&gt;" ID="ID_427210143" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;Document&gt;MtfRelatedDocument1&lt;/Document&gt;" ID="ID_1237791685" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;Document&gt;MtfRelatedDocument2&lt;/Document&gt;" ID="ID_1111594398" CREATED="1445370612092" MODIFIED="1445370612092"/>
+</node>
+<node TEXT="&lt;/Msg&gt;" ID="ID_1544776570" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;Segment name=&quot;SegmentStructureName&quot; concept=&quot;SegmentStructureConcept&quot; usage=&quot;SegmentStructureUseDescription&quot;/&gt;" ID="ID_1445204610" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;Set positionName=&quot;SetFormatPositionName&quot; position=&quot;SetFormatPositionNumber&quot; concept=&quot;SetFormatPositionConcept&quot;" ID="ID_315437279" CREATED="1445370612092" MODIFIED="1445370612092">
+<node TEXT="usage=&quot;SetFormatPositionUseDescription&quot;/&gt;" ID="ID_225769550" CREATED="1445370612092" MODIFIED="1445370612092"/>
+</node>
+</node>
+<node TEXT="Removed" ID="ID_90330812" CREATED="1445370612092" MODIFIED="1445370751916">
+<node TEXT="&lt;MtfIndexReferenceNumber/&gt;" ID="ID_1234125811" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;MtfStructuralRelationship/&gt;" ID="ID_1102108697" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;AlternativeType/&gt;" ID="ID_727966983" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;OccurrenceCategory/&gt;" ID="ID_215549737" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;Repeatability/&gt;" ID="ID_782649451" CREATED="1445370612092" MODIFIED="1445370612092"/>
+<node TEXT="&lt;InitialSetFormatPosition/&gt;" ID="ID_1429337226" CREATED="1445370612092" MODIFIED="1445370612092"/>
 </node>
 </node>
 </node>
-<node TEXT="XML Schema Re-Factor Process" ID="ID_393949117" CREATED="1444857194575" MODIFIED="1445268993111">
-<node TEXT="This process is retained for purposes of verification, testing and maintenance.  It is not necessary for implementers to repeat this effort." ID="ID_375994573" CREATED="1445034474254" MODIFIED="1445268993107" HGAP="60" VSHIFT="-30"/>
+</node>
+<node TEXT="Field Base Types" ID="ID_392965696" CREATED="1445370811628" MODIFIED="1445375733842">
+<node TEXT="The requirement to apply security markings to every field is currently accomplished by extending xsd:simpleType fields at the Set level to add the ICM attribute group.  This reduces the ability to reference fields at the Set level and causes unnecessary repetition in the XML Schema design." ID="ID_719629895" CREATED="1445370877548" MODIFIED="1445375733837" VSHIFT="-20"/>
+<node TEXT="The Re-Factor approach is to create FieldBaseTypes which carry the ICM attribute group and can be used to add other field level extensions.  All fields are provided as xsd:complexTypes which extend the base types.  This typing methodology separates FIelds into data categories that have respectively uniform processing requirements and can be extended or restricted accordingly." ID="ID_1668263500" CREATED="1445371057357" MODIFIED="1445371737730">
+<node TEXT="FieldStringBaseType" ID="ID_1633830116" CREATED="1445371373153" MODIFIED="1445375711106" VSHIFT="10">
+<node TEXT="&lt;xsd:complexType name=&quot;FieldStringBaseType&quot;&gt;&#xa;      &lt;xsd:simpleContent&gt;&#xa;         &lt;xsd:extension base=&quot;xsd:string&quot;&gt;&#xa;            &lt;xsd:attributeGroup ref=&quot;ism:SecurityAttributesOptionGroup&quot;/&gt;&#xa;         &lt;/xsd:extension&gt;&#xa;      &lt;/xsd:simpleContent&gt;&#xa;   &lt;/xsd:complexType&gt;" ID="ID_154209698" CREATED="1445371205645" MODIFIED="1445375470478" HGAP="30" VSHIFT="-10"/>
+</node>
+<node TEXT="FieldEnumeratedBaseType" ID="ID_1795967299" CREATED="1445371373153" MODIFIED="1445373558687" VSHIFT="30">
+<node TEXT="&lt;xsd:complexType name=&quot;FieldEnumeratedBaseType&quot;&gt;&#xa;      &lt;xsd:simpleContent&gt;&#xa;         &lt;xsd:extension base=&quot;xsd:string&quot;&gt;&#xa;            &lt;xsd:attributeGroup ref=&quot;ism:SecurityAttributesOptionGroup&quot;/&gt;&#xa;         &lt;/xsd:extension&gt;&#xa; &lt;/xsd:simpleContent&gt;" ID="ID_1653855346" CREATED="1445371205645" MODIFIED="1445375014840" VSHIFT="-20"/>
+</node>
+<node TEXT="FieldIntegerBaseType" ID="ID_175990284" CREATED="1445371373153" MODIFIED="1445371431140" VSHIFT="30">
+<node TEXT="&lt;xsd:complexType name=&quot;FieldIntegerBaseType&quot;&gt;&#xa;      &lt;xsd:simpleContent&gt;&#xa;         &lt;xsd:extension base=&quot;xsd:integer&quot;&gt;&#xa;            &lt;xsd:attributeGroup ref=&quot;ism:SecurityAttributesOptionGroup&quot;/&gt;&#xa;         &lt;/xsd:extension&gt;&#xa;      &lt;/xsd:simpleContent&gt;&#xa;   &lt;/xsd:complexType&gt;" ID="ID_1397746145" CREATED="1445371205645" MODIFIED="1445371478791"/>
+</node>
+<node TEXT="FieldDecimalBaseType" ID="ID_865962864" CREATED="1445371373153" MODIFIED="1445371489941" VSHIFT="30">
+<node TEXT="&lt;xsd:complexType name=&quot;FieldIntegerBaseType&quot;&gt;&#xa;      &lt;xsd:simpleContent&gt;&#xa;         &lt;xsd:extension base=&quot;xsd:integer&quot;&gt;&#xa;            &lt;xsd:attributeGroup ref=&quot;ism:SecurityAttributesOptionGroup&quot;/&gt;&#xa;         &lt;/xsd:extension&gt;&#xa;      &lt;/xsd:simpleContent&gt;&#xa;   &lt;/xsd:complexType&gt;" ID="ID_512605430" CREATED="1445371205645" MODIFIED="1445371478791"/>
+</node>
+</node>
+</node>
+<node TEXT="Field Refactor" ID="ID_367208974" CREATED="1445375606297" MODIFIED="1445375690556">
+<node TEXT="By comparing Regular Expressions the number of types extended by FieldStringBase Type was greatly reduced.  One factor was the removal of types which included length and value restrictions in the REGEX.  String types have been defined using xsd:pattern for content, and XML Schema nodes to specify lengths at the element level.  While a single iteration may seem more verbose, the AlphaNumericBlankSpecialTextType is re-used 877 times, thereby eliminating and re-using this duplicative definition." ID="ID_673543804" CREATED="1445371789869" MODIFIED="1445373473845" HGAP="30" VSHIFT="-20"/>
+<node TEXT="Strings" ID="ID_588492347" CREATED="1445375806285" MODIFIED="1445375870828">
+<node TEXT="Baseline String Field" ID="ID_1057235228" CREATED="1445372043183" MODIFIED="1445375851488" HGAP="50" VSHIFT="50">
+<node TEXT="&lt;simpleType name=&quot;MissionNumberType&quot;&gt;&#xa;       &lt;annotation/&gt;&#xa;              &lt;restriction base=&quot;string&quot;&gt;&#xa;                      &lt;annotation/&gt;&#xa;                          &lt;minLength value=&quot;1&quot;/&gt;&#xa;                          &lt;maxLength value=&quot;8&quot;/&gt;&#xa;                          &lt;pattern value=&quot;[\-\.,\(\)\?A-Z0-9&amp;#x20;]{1,8}&quot;/&gt;&#xa;                  &lt;/restriction&gt;&#xa;&lt;/simpleType&gt;&#xa;&lt;element name=&quot;MissionNumber&quot; type=&quot;MissionNumberType&quot;/&gt;" ID="ID_554398573" CREATED="1445372934071" MODIFIED="1445372973890"/>
+</node>
+<node TEXT="Refactor String Field" ID="ID_1916378606" CREATED="1445372043183" MODIFIED="1445375870828" HGAP="50" VSHIFT="-50">
+<node TEXT="&lt;complexType name=&quot;AlphaNumericBlankSpecialTextType&quot;&gt;&#xa;         &lt;simpleContent&gt;&#xa;                 &lt;restriction base=&quot;FieldStringBaseType&quot;&gt;&#xa;                        &lt;pattern value=&quot;[\-\.,\(\)\?A-Z0-9 ]+&quot;/&gt;&#xa;                 &lt;/restriction&gt;&#xa;         &lt;/simpleContent&gt;&#xa;&lt;/complexType&gt;&#xa;&lt;element name=&quot;MissionNumber&quot;&gt;&#xa;       &lt;annotation/&gt;&#xa;       &lt;complexType&gt;&#xa;                &lt;simpleContent&gt;&#xa;                         &lt;restriction base=&quot;AlphaNumericBlankSpecialTextType&quot;&gt;&#xa;                                &lt;minLength value=&quot;1&quot;/&gt;&#xa;                                &lt;maxLength value=&quot;8&quot;/&gt;&#xa;                        &lt;/restriction&gt;&#xa;                &lt;/simpleContent&gt;&#xa;       &lt;/complexType&gt;&#xa;&lt;/element&gt;" ID="ID_787853920" CREATED="1445372934071" MODIFIED="1445373102791"/>
+</node>
+</node>
+<node TEXT="Enumerations" ID="ID_1437957964" CREATED="1445375811577" MODIFIED="1445375867234">
+<node TEXT="Baseline Enumeration Field" ID="ID_1407073886" CREATED="1445374989529" MODIFIED="1445375867233" HGAP="40" VSHIFT="30">
+<node TEXT=" &lt;simpleType name=&quot;PersistentIndicatorType&quot;&gt;&#xa;          &lt;annotation/&gt;&#xa;            &lt;restriction base=&quot;string&quot;&gt;&#xa;                    &lt;enumeration value=&quot;YES&quot;&gt;&#xa;                            &lt;annotation&gt;&#xa;                    &lt;/enumeration&gt;&#xa;                    &lt;enumeration value=&quot;NO&quot;&gt;&#xa;                            &lt;annotation/&gt;&#xa;                     &lt;/enumeration&gt;&#xa;           &lt;/restriction&gt;&#xa;&lt;/simpleType&gt; &#xa;&lt;element name=&quot;PersistentIndicator&quot; type=&quot;YesNoType&quot;/&gt;" ID="ID_173667910" CREATED="1445375113832" MODIFIED="1445375434121"/>
+</node>
+<node TEXT="Refactor Enumeration Field" ID="ID_791867798" CREATED="1445374999192" MODIFIED="1445375858177" HGAP="50" VSHIFT="-30">
+<node TEXT=" complexType name=&quot;YesNoType&quot;&gt;&#xa;         &lt;simpleContent&gt;&#xa;                   &lt;restriction base=&quot;FieldEnumeratedBaseType&quot;&gt;&#xa;                            &lt;enumeration value=&quot;YES&quot;&gt;&#xa;                                &lt;annotation&gt;&#xa;                                    &lt;appinfo&gt;&#xa;                                        &lt;Enum dataItem=&quot;AFFIRMATIVE INDICATOR&quot;/&gt;&#xa;                                    &lt;/appinfo&gt;&#xa;                                &lt;/annotation&gt;&#xa;                            &lt;/enumeration&gt;&#xa;                            &lt;enumeration value=&quot;NO&quot;&gt;&#xa;                                &lt;annotation&gt;&#xa;                                    &lt;appinfo&gt;&#xa;                                        &lt;Enum dataItem=&quot;NEGATIVE INDICATOR&quot;/&gt;&#xa;                                    &lt;/appinfo&gt;&#xa;                                &lt;/annotation&gt;&#xa;                            &lt;/enumeration&gt;&#xa;                     &lt;/restriction&gt;&#xa;           &lt;/simpleContent&gt;&#xa;&lt;/complexType&gt;&#xa;&lt;element name=&quot;PersistentIndicator&quot; type=&quot;YesNoType&quot;&gt;&#xa;      &lt;annotation/&gt;&#xa;&lt;/element&gt;" ID="ID_19077431" CREATED="1445375019992" MODIFIED="1445375111944"/>
+</node>
+</node>
+<node TEXT="Integers" ID="ID_380764250" CREATED="1445375815209" MODIFIED="1445375817766"/>
+<node TEXT="Decimals" ID="ID_1282382012" CREATED="1445375818233" MODIFIED="1445375822025"/>
+</node>
+</node>
+<node TEXT="XML Schema Re-Factor Process" ID="ID_393949117" CREATED="1444857194575" MODIFIED="1445375898495">
+<node TEXT="This process is retained for purposes of verification, testing and maintenance.  It is not necessary for implementers to repeat this effort." ID="ID_375994573" CREATED="1445034474254" MODIFIED="1445375898492" HGAP="32" VSHIFT="-30"/>
 <node TEXT="FIELDS" ID="ID_1043767447" CREATED="1445035203262" MODIFIED="1445036417207">
 <node TEXT="Normalization" ID="ID_520682973" CREATED="1445034575308" MODIFIED="1445036417206" VSHIFT="-10">
 <node TEXT="Rationale" ID="ID_1934291471" CREATED="1445036249106" MODIFIED="1445036302068" VSHIFT="70">
@@ -160,8 +344,8 @@
 </node>
 </node>
 </node>
-<node TEXT="Testing" ID="ID_1095016314" CREATED="1444857200719" MODIFIED="1444857207213"/>
-<node TEXT="Reference Implementations" ID="ID_1169000317" CREATED="1444857207646" MODIFIED="1444857584344"/>
+<node TEXT="Testing" ID="ID_1095016314" CREATED="1444857200719" MODIFIED="1445375951947" HGAP="70" VSHIFT="-20"/>
+<node TEXT="Reference Implementations" ID="ID_1169000317" CREATED="1444857207646" MODIFIED="1445375948370" HGAP="70"/>
 </node>
 <node TEXT="NATO MTF" POSITION="right" ID="ID_1396388343" CREATED="1444842280471" MODIFIED="1444842297977" VSHIFT="40">
 <edge COLOR="#0000ff"/>
