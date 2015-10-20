@@ -1,0 +1,22 @@
+<details class="set">
+    <summary class="name">{{val._SetFormatPositionNumber}}. {{val._SetFormatPositionName}}</summary>
+    <div data-ng-if="val._SetFormatPositionConcept">
+        <div class="txt"><b>Description: </b>{{val._SetFormatPositionConcept}}</div>
+    </div>
+    <div class="usage">
+        <div class="occur"><b>Occurrence: </b>{{val._OccurrenceCategory}}</div>
+        <div class="repeat"><b>Repeatability: </b>{{val._Repeatability}}</div>
+    </div>
+    <div data-ng-If="mtfctl.selectedStd==='US'">
+        <div
+            data-ng-repeat="(key,val) in mtfctl.ussets[key].sequence  | orderBy:'_FieldFormatPositionNumber'">
+            <div ng-include="mtfctl.fieldview"></div>
+        </div>
+    </div>
+    <div data-ng-If="mtfctl.selectedStd==='NATO'">
+        <div
+            data-ng-repeat="(key,val) in mtfctl.natosets[key].sequence | orderBy:'_FieldFormatPositionNumber'">
+            <div ng-include="mtfctl.fieldview"></div>
+        </div>
+    </div>
+</details>

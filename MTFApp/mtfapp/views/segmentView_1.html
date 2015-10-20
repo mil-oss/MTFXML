@@ -1,0 +1,41 @@
+<details class="segment">
+    <summary class="name">{{val._SegmentStructureName}}</summary>
+    <div class="desc">
+        <div class="txt">
+            <b>Description: </b>{{val._SegmentStructureUseDescription}} </div>
+    </div>
+    <div class="usage">
+        <div class="occur">
+            <b>Occurrence: </b>{{val._OccurrenceCategory}} </div>
+        <div class="repeat">
+            <b>Repeatability: </b>{{val._Repeatability}} </div>
+    </div>
+    <div data-ng-If="mtfctl.selectedStd==='US'">
+        <div
+            data-ng-repeat="(key,val) in mtfctl.ussegments[key].sequence | orderBy:mtfctl.pos('_SetFormatPositionNumber', '_InitialSetFormatPosition')">
+            <div data-ng-If="key === 'choice'">
+                <div ng-include="mtfctl.choiceview"/>
+            </div>
+            <div data-ng-If="val._SetFormatPositionNumber">
+                <div ng-include="mtfctl.setview"/>
+            </div>
+            <div data-ng-If="val._InitialSetFormatPosition">
+                <div ng-include="mtfctl.segmentview"/>
+            </div>
+        </div>
+    </div>
+    <div data-ng-If="mtfctl.selectedStd==='NATO'">
+        <div
+            data-ng-repeat="(key,val) in val.sequence | orderBy:mtfctl.pos('_SetFormatPositionNumber', '_InitialSetFormatPosition')">
+            <div data-ng-If="key === 'choice'">
+                <div ng-include="mtfctl.choiceview"/>
+            </div>
+            <div data-ng-If="val._SetFormatPositionNumber">
+                <div ng-include="mtfctl.setview"/>
+            </div>
+            <div data-ng-If="key.substring(key.length-7)==='Segment'">
+                <div ng-include="mtfctl.segmentview"/>
+            </div>
+        </div>
+    </div>
+</details>

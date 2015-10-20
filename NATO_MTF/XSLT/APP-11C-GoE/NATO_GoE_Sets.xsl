@@ -535,6 +535,41 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
+    <xsl:template match="*:SetFormatExample" mode="examples">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
+                <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                    <xsl:value-of select="normalize-space(text())"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:SetFormatExample">
+                    <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SetFormatSponsor" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="sponsor">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>   
+    <xsl:template match="*:SetFormatNote" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="note">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>    
+    <xsl:template match="*:SetFormatRemark" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="remark">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>    
     <xsl:template match="*:SetFormatRelatedDocument" mode="docs">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:SetFormatRelatedDocument)">
@@ -549,24 +584,10 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
-    <xsl:template match="*:SetFormatExample" mode="examples">
-        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
-            <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
-                <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
-                    <xsl:apply-templates select="text()"/>
-                </xsl:element>
-                <xsl:for-each select="following-sibling::*:SetFormatExample">
-                    <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
-                        <xsl:apply-templates select="text()"/>
-                    </xsl:element>
-                </xsl:for-each>
-            </xsl:if>
-        </xsl:if>
-    </xsl:template>
     <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:SetFormatExample" mode="attr"/>
-    <xsl:template match="*:SetFormatRelatedDocuments" mode="attr"/>
+    <xsl:template match="*:SetFormatRelatedDocument" mode="attr"/>
     <xsl:template match="*:RepeatabilityForGroupOfFields" mode="attr"/>
     <xsl:template match="*:SetFormatDescription" mode="attr"/>
     <xsl:template match="*:FieldFormatRelatedDocuments" mode="attr"/>

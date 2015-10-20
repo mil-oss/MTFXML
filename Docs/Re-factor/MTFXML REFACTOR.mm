@@ -1,6 +1,6 @@
 <map version="freeplane 1.3.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
-<node TEXT="MTFXML REFACTOR" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1444928140481"><hook NAME="MapStyle">
+<node TEXT="MTFXML REFACTOR" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1445284475804"><hook NAME="MapStyle">
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node">
@@ -50,57 +50,57 @@
 </map_styles>
 </hook>
 <hook NAME="AutomaticEdgeColor" COUNTER="7"/>
-<node TEXT="Background" POSITION="right" ID="ID_396111513" CREATED="1444853751150" MODIFIED="1444928136842" VSHIFT="30">
+<node TEXT="Background" POSITION="right" ID="ID_396111513" CREATED="1444853751150" MODIFIED="1445284456812">
 <edge COLOR="#ff00ff"/>
-<node TEXT="The current XML Schema for US and NATO MTF are designed for piecemeal implementation of messages based on commonly defined XML nodes which are maintained in relational databases.  This makes normalization, re-use, and configuration management difficult." ID="ID_199156720" CREATED="1444853786014" MODIFIED="1444855645114" HGAP="10" VSHIFT="-10"/>
+<node TEXT="The current XML Schema for US and NATO MTF are designed for piecemeal implementation of messages based on commonly defined XML nodes which are maintained in relational databases.  This makes normalization, re-use, and configuration management difficult." ID="ID_199156720" CREATED="1444853786014" MODIFIED="1445284302206" VSHIFT="-10"/>
 <node TEXT="Because the current XML Schema design does not support implementation of the entire standard, there are persistent mismatches of messages implemented and versions across systems." ID="ID_1369603701" CREATED="1444854247374" MODIFIED="1444855622928" VSHIFT="-20"/>
 <node TEXT="The re-factor of these standards to a Garden of Eden XML Schema Design model allows provisioning of consolidated XML Schema files with a manageable sizes to allow complete implementation of every message using a uniform and re-usable methodology." ID="ID_1109438859" CREATED="1444854148350" MODIFIED="1444856917664" VSHIFT="-10"/>
 <node TEXT="Alignment with the US National Information Exchange Model (NIEM) methodology will allow the development and re-use of stndardized Information Exchange Product Documentation (IEPD) resources which will support valid implementations and promote interoperability with external specifications." ID="ID_1320508699" CREATED="1444854467693" MODIFIED="1444855633989" VSHIFT="10"/>
 </node>
-<node TEXT="Goals" POSITION="right" ID="ID_1741486495" CREATED="1444855666639" MODIFIED="1444857233729" VSHIFT="-10">
+<node TEXT="Goals" POSITION="right" ID="ID_1741486495" CREATED="1444855666639" MODIFIED="1445284465810" HGAP="50" VSHIFT="20">
 <edge COLOR="#00ffff"/>
-<node TEXT="This project will use the Extensible Stylesheet Language for Transformation (XSLT) to convert existing XML Schema products to Garden of Eden design pattern, and will reduce file sizes by normalizing Types, using attributes in annotation elements, and applying fixed values where appropriate to reduce ambiguity and eliminate rules which specify required content." ID="ID_274447430" CREATED="1444855680286" MODIFIED="1444855954389"/>
-<node TEXT="The resulting XML Schema products will support all requirements for the text based slash delimited MTF format, and will avoid alteration of XML element names except where absolutely necessary for naming deconfliction of global nodes.  Except for a few cases, XML instances from the current standard will validate against the re-factored XML Schemas if common namespaces are assigned." ID="ID_64571144" CREATED="1444855955886" MODIFIED="1444856261655" HGAP="30" VSHIFT="10"/>
-<node TEXT="This project is intended to support holistic implementation of the standards in order to facilitate use in web services, allow conversion between US and NATO specification, conversion between message versions, and interoperability with other standard formats." ID="ID_589380055" CREATED="1444856263166" MODIFIED="1444856474104" VSHIFT="10"/>
+<node TEXT="This project will use the Extensible Stylesheet Language for Transformation (XSLT) to convert existing XML Schema products to Garden of Eden design pattern, and will reduce file sizes by normalizing Types, using attributes in annotation elements, and applying fixed values where appropriate to reduce ambiguity and eliminate rules which specify required content." ID="ID_274447430" CREATED="1444855680286" MODIFIED="1445284452340" VSHIFT="-20"/>
+<node TEXT="The resulting XML Schema products will support all requirements for the text based slash delimited MTF format, and will avoid alteration of XML element names except where absolutely necessary for naming deconfliction of global nodes.  Except for a few cases, XML instances from the current standard will validate against the re-factored XML Schemas if common namespaces are assigned." ID="ID_64571144" CREATED="1444855955886" MODIFIED="1445284450554" HGAP="30" VSHIFT="-10"/>
+<node TEXT="This project is intended to support holistic implementation of the standards in order to facilitate use in web services, allow conversion between US and NATO specification, conversion between message versions, and interoperability with other standard formats." ID="ID_589380055" CREATED="1444856263166" MODIFIED="1445284448672" VSHIFT="-10"/>
 </node>
-<node TEXT="Usage" POSITION="right" ID="ID_1638087420" CREATED="1444856923121" MODIFIED="1444928140479" VSHIFT="-10">
+<node TEXT="Usage" POSITION="right" ID="ID_1638087420" CREATED="1444856923121" MODIFIED="1445284470353" HGAP="40" VSHIFT="30">
 <edge COLOR="#ffff00"/>
 <node TEXT="The process for converting from current standard formats is provided for purposes of integrity, testing and verification.  For most use cases, the generated XML Schemas can be used without repeating this conversion." ID="ID_226841617" CREATED="1444856932239" MODIFIED="1444857188442" VSHIFT="-20"/>
 <node TEXT="Reference implementation products are intended for re-use and distribution in order to promote interoperability and uniformity in implementations.  These products should load the provided re-factored XML Schemas and provide intended MTF messaging functionality for every message and message component." ID="ID_1184157034" CREATED="1444857042207" MODIFIED="1444857227178"/>
 </node>
-<node TEXT="Caveats" POSITION="right" ID="ID_98871154" CREATED="1444857235839" MODIFIED="1444928138529" VSHIFT="-70">
+<node TEXT="Caveats" POSITION="right" ID="ID_98871154" CREATED="1444857235839" MODIFIED="1445284475803" HGAP="30" VSHIFT="40">
 <edge COLOR="#7c0000"/>
-<node TEXT="All data resources are restricted for distribution.  This requires complete separation of presentation and data.  No implementations may retain data from the XML Schema resources in code." ID="ID_996714687" CREATED="1444857241999" MODIFIED="1444857458193"/>
+<node TEXT="All data resources are restricted for distribution.  This requires complete separation of presentation and data.  No implementations may retain data from the XML Schema resources in code." ID="ID_996714687" CREATED="1444857241999" MODIFIED="1445283802071" VSHIFT="20"/>
 <node TEXT="Alteration or further re-factoring of the provided XML Schema must implement new namespace assignments." ID="ID_1920187984" CREATED="1444857468671" MODIFIED="1444857550443" VSHIFT="10"/>
-<node TEXT="Because US and NATO specifications are closely aligned, all products are very similar and can often be re-used interchangeably.  Minor differences will occur, so For purposes of clarity and distribution they are provided separately with each standard." ID="ID_597604512" CREATED="1444857598111" MODIFIED="1444857749449" VSHIFT="10"/>
+<node TEXT="Because US and NATO specifications are closely aligned, all products are very similar and can often be re-used interchangeably.  Minor differences will occur, so For purposes of clarity and distribution they are provided separately with each standard." ID="ID_597604512" CREATED="1444857598111" MODIFIED="1445283723238" VSHIFT="-40"/>
 </node>
 <node TEXT="USMTF" POSITION="right" ID="ID_1967102135" CREATED="1444842276503" MODIFIED="1445036965396" VSHIFT="50">
 <edge COLOR="#ff0000"/>
-<node TEXT="XML Schema Design" ID="ID_810225239" CREATED="1445035293775" MODIFIED="1445036965395" VSHIFT="-160">
-<node TEXT="Adjustments are made to the format of all XML Schemas in order to reduce size, and eliminate redundant or unnecessary information." ID="ID_1480971800" CREATED="1445035365647" MODIFIED="1445035671487" VSHIFT="-130"/>
-<node TEXT="Annotations" ID="ID_1750708290" CREATED="1445035672879" MODIFIED="1445037477407">
-<node TEXT="Content of xsd:annotations is converted from elements to attributes in order to reduce size caused by closing tags.  Names are changed to plain language terms instead of database field names.  Elements are used for multiple items." ID="ID_1323541666" CREATED="1445035684847" MODIFIED="1445037470693" HGAP="30" VSHIFT="-10"/>
-<node TEXT="When xsd:documentation and asd:appinfo items are duplicative, the information is retained in the xsd:documentation node and removed from the xsd;appinfo node." ID="ID_686135295" CREATED="1445037472232" MODIFIED="1445037478164" HGAP="30"/>
-<node TEXT="The names of the items in xsd:appinfo nodes are changed as follows:" ID="ID_1166810592" CREATED="1445035779520" MODIFIED="1445037062132" HGAP="30" VSHIFT="10">
-<node TEXT="Fields" ID="ID_1193573017" CREATED="1445035842367" MODIFIED="1445037202261" VSHIFT="-20">
-<node TEXT="Changed" ID="ID_1404203008" CREATED="1445037164613" MODIFIED="1445037873446">
-<node TEXT="FudExplanation = @explanation" ID="ID_233814453" CREATED="1445037052389" MODIFIED="1445037871918"/>
-<node TEXT="VersionIndicator=@version" ID="ID_1730215180" CREATED="1445037055656" MODIFIED="1445037873446" VSHIFT="10"/>
-<node TEXT="FudRelatedDocument = &lt;Document/&gt;" ID="ID_697421810" CREATED="1445037137190" MODIFIED="1445037228476" VSHIFT="10"/>
+<node TEXT="XML Schema Design" ID="ID_810225239" CREATED="1445035293775" MODIFIED="1445284521965" VSHIFT="-160">
+<node TEXT="Adjustments are made to the format of all XML Schemas in order to reduce size, and eliminate redundant or unnecessary information." ID="ID_1480971800" CREATED="1445035365647" MODIFIED="1445284316480" VSHIFT="60"/>
+<node TEXT="Annotations" ID="ID_1750708290" CREATED="1445035672879" MODIFIED="1445284521964" VSHIFT="60">
+<node TEXT="Content of xsd:annotations is converted from elements to attributes in order to reduce size caused by closing tags.  Names are changed to plain language terms instead of database field names.  Elements are used for multiple items." ID="ID_1323541666" CREATED="1445035684847" MODIFIED="1445284310321" HGAP="30" VSHIFT="80"/>
+<node TEXT="When xsd:documentation and asd:appinfo items are duplicative, the information is retained in the xsd:documentation node and removed from the xsd;appinfo node." ID="ID_686135295" CREATED="1445037472232" MODIFIED="1445284397448" HGAP="30" VSHIFT="30"/>
+<node TEXT="The names of the items in xsd:appinfo nodes are changed as follows:" ID="ID_1166810592" CREATED="1445035779520" MODIFIED="1445284403200" HGAP="30" VSHIFT="-70">
+<node TEXT="Fields" ID="ID_1193573017" CREATED="1445035842367" MODIFIED="1445284621146" VSHIFT="60">
+<node TEXT="Changed" ID="ID_1404203008" CREATED="1445037164613" MODIFIED="1445284384266" VSHIFT="-10">
+<node TEXT="FudExplanation = @explanation" ID="ID_233814453" CREATED="1445037052389" MODIFIED="1445284384265" VSHIFT="30"/>
+<node TEXT="VersionIndicator=@version" ID="ID_1730215180" CREATED="1445037055656" MODIFIED="1445283871308"/>
+<node TEXT="FudRelatedDocument = &lt;Document/&gt;" ID="ID_697421810" CREATED="1445037137190" MODIFIED="1445283843481" VSHIFT="-30"/>
 </node>
-<node TEXT="Removed" ID="ID_486648130" CREATED="1445037168788" MODIFIED="1445037202260" VSHIFT="30">
-<node TEXT="FieldFormatIndexReferenceNumber" ID="ID_1733493911" CREATED="1445037065257" MODIFIED="1445037162307"/>
-<node TEXT="FudNumber" ID="ID_1930719625" CREATED="1445037098579" MODIFIED="1445037115425"/>
+<node TEXT="Removed" ID="ID_486648130" CREATED="1445037168788" MODIFIED="1445284630536" VSHIFT="20">
+<node TEXT="FieldFormatIndexReferenceNumber" ID="ID_1733493911" CREATED="1445037065257" MODIFIED="1445284630536" VSHIFT="-10"/>
+<node TEXT="FudNumber" ID="ID_1930719625" CREATED="1445037098579" MODIFIED="1445284624689"/>
 </node>
 </node>
 <node TEXT="Sets" ID="ID_1619470227" CREATED="1445035889168" MODIFIED="1445035910552"/>
 <node TEXT="Segments" ID="ID_198106096" CREATED="1445035912432" MODIFIED="1445035915036"/>
-<node TEXT="Messages" ID="ID_1821425080" CREATED="1445035915696" MODIFIED="1445035919392"/>
+<node TEXT="Messages" ID="ID_1821425080" CREATED="1445035915696" MODIFIED="1445284335255" VSHIFT="-70"/>
 </node>
 </node>
 </node>
-<node TEXT="XML Schema Re-Factor Process" ID="ID_393949117" CREATED="1444857194575" MODIFIED="1445036958997">
-<node TEXT="This process is retained for purposes of verification, testing and maintenance.  It is not necessary for implementers to repeat this effort." ID="ID_375994573" CREATED="1445034474254" MODIFIED="1445036958995" HGAP="90" VSHIFT="100"/>
+<node TEXT="XML Schema Re-Factor Process" ID="ID_393949117" CREATED="1444857194575" MODIFIED="1445268993111">
+<node TEXT="This process is retained for purposes of verification, testing and maintenance.  It is not necessary for implementers to repeat this effort." ID="ID_375994573" CREATED="1445034474254" MODIFIED="1445268993107" HGAP="60" VSHIFT="-30"/>
 <node TEXT="FIELDS" ID="ID_1043767447" CREATED="1445035203262" MODIFIED="1445036417207">
 <node TEXT="Normalization" ID="ID_520682973" CREATED="1445034575308" MODIFIED="1445036417206" VSHIFT="-10">
 <node TEXT="Rationale" ID="ID_1934291471" CREATED="1445036249106" MODIFIED="1445036302068" VSHIFT="70">

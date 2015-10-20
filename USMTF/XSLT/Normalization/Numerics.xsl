@@ -82,7 +82,7 @@
                     </xsl:attribute>
                     <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
                     <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
-                    <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
+                    <!--<xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>-->
                 </xsl:element>
                 </xsd:simpleContent>
             </xsd:complexType>
@@ -172,7 +172,7 @@
                             <xsl:value-of select="number($maxlen) - 1"/>
                         </xsl:attribute>
                     </xsl:element>
-                    <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
+                   <!-- <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>-->
                 </xsl:element>
                 </xsd:simpleContent>
             </xsd:complexType>

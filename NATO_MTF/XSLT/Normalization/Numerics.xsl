@@ -72,7 +72,7 @@
                         </xsl:attribute>
                         <xsl:copy-of select="xsd:restriction/xsd:minInclusive" copy-namespaces="no"/>
                         <xsl:copy-of select="xsd:restriction/xsd:maxInclusive" copy-namespaces="no"/>
-                        <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
+                       <!-- <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>-->
                     </xsl:element>
                 </xsd:simpleContent>
             </xsd:complexType>
@@ -132,7 +132,6 @@
                         <xsl:copy-of select="." copy-namespaces="no"/>
                     </xsl:for-each>
                 </xsl:with-param>
-
             </xsl:call-template>
         </xsl:variable>
         <xsl:variable name="totalDigitCount">
@@ -168,7 +167,7 @@
                                 <xsl:value-of select="number($maxlen) - 1"/>
                             </xsl:attribute>
                         </xsl:element>
-                        <xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>
+                        <!--<xsl:copy-of select="xsd:restriction/xsd:pattern" copy-namespaces="no"/>-->
                     </xsl:element>
                 </xsd:simpleContent>
             </xsd:complexType>

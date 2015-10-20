@@ -146,7 +146,7 @@
 
     <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()">
-        <xsl:value-of select="normalize-space(.)"/>
+        <xsl:value-of select="normalize-space(translate(.,'&#34;',''))"/>
     </xsl:template>
 
     <xsl:template match="xsd:element[@name = 'GroupOfFields']">
@@ -446,21 +446,42 @@
     <xsl:template match="*:SetFormatName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="name">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:SetFormatIdentifier" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="id">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    <xsl:template match="*:SetFormatSponsor" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="sponsor">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SetFormatNote" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="note">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SetFormatRemark" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="remark">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>   
     <xsl:template match="*:VersionIndicator" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="version">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -468,21 +489,21 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not($doc = normalize-space(text()))">
             <xsl:attribute name="concept">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:SetFormatPositionName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="positionName">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:FieldFormatPositionName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="positionName">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -490,14 +511,14 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="concept">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:FieldFormatName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="name">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -505,7 +526,7 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="definition">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -513,7 +534,7 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="identifier">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
@@ -521,21 +542,21 @@
         <xsl:param name="doc"/>
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = $doc)">
             <xsl:attribute name="name">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:FieldFormatRemark" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="remark">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
     <xsl:template match="*:ColumnName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="column">
-                <xsl:value-of select="normalize-space(text())"/>
+                <xsl:apply-templates select="text()"/>
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
