@@ -3,31 +3,31 @@
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <xsl:variable name="USMTF_SETS" select="document('../xsd/USMTF/GoE_sets.xsd')"/>
-    <xsl:variable name="NATO_SETS" select="document('../xsd/NATOMTF/natomtf_goe_sets.xsd')"/>
-    <xsl:variable name="usmtf_sets_out" select="'../../json/usmtf_sets_ui.xml'"/>
-    <xsl:variable name="nato_sets_out" select="'../../json/nato_sets_ui.xml'"/>
+    <xsl:variable name="USMTF_MESSAGES" select="document('../xsd/USMTF/GoE_messages.xsd')"/>
+    <xsl:variable name="NATO_MESSAGES" select="document('../xsd/NATOMTF/natomtf_goe_messages.xsd')"/>
+    <xsl:variable name="usmtf_messages_out" select="'../../json/usmtf_messages_ui.xml'"/>
+    <xsl:variable name="nato_messages_out" select="'../../json/nato_messages_ui.xml'"/>
 
-    <xsl:variable name="usmtf_sets">
-        <xsl:apply-templates select="$USMTF_SETS/xsd:schema/xsd:element"/>
+    <xsl:variable name="usmtf_messages">
+        <xsl:apply-templates select="$USMTF_MESSAGES/xsd:schema/xsd:element"/>
     </xsl:variable>
 
-    <xsl:variable name="nato_sets">
-        <xsl:apply-templates select="$NATO_SETS/xsd:schema/xsd:element"/>
+    <xsl:variable name="nato_messages">
+        <xsl:apply-templates select="$NATO_MESSAGES/xsd:schema/xsd:element"/>
     </xsl:variable>
 
     <xsl:template match="/">
-        <xsl:result-document href="{$usmtf_sets_out}">
-            <xsl:element name="USMTF_Sets">
-                <xsl:for-each select="$usmtf_sets/*">
+        <xsl:result-document href="{$usmtf_messages_out}">
+            <xsl:element name="USMTF_Messages">
+                <xsl:for-each select="$usmtf_messages/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
             </xsl:element>
         </xsl:result-document>
-        <xsl:result-document href="{$nato_sets_out}">
-            <xsl:element name="NATO_Sets">
-                <xsl:for-each select="$nato_sets/*">
+        <xsl:result-document href="{$nato_messages_out}">
+            <xsl:element name="NATO_Messages">
+                <xsl:for-each select="$nato_messages/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
@@ -39,7 +39,7 @@
         <xsl:variable name="t">
             <xsl:value-of select="@type"/>
         </xsl:variable>
-        <xsl:element name="Set">
+        <xsl:element name="Message">
             <xsl:attribute name="tag">
                 <xsl:value-of select="@name"/>
             </xsl:attribute>
@@ -50,40 +50,34 @@
         </xsl:element>
     </xsl:template>
     
-    <xsl:template match="xsd:schema/xsd:complexType[starts-with(@name, 'Amplification')]">
-        <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
-        <xsl:apply-templates select="*"/>
+    
+    <xsl:template match="xsd:schema/xsd:complexType">
+        <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Msg" mode="info"/>
+        <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Structure" mode="info"/>
+        <xsl:apply-templates select="xsd:sequence"/>
     </xsl:template>
     
-    <xsl:template match="xsd:schema/xsd:complexType[starts-with(@name, 'Narrative')]">
-        <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
-        <xsl:apply-templates select="*"/>
-    </xsl:template>
-    
-    <xsl:template match="xsd:schema/xsd:complexType[not(starts-with(@name, 'Amplification'))][not(starts-with(@name, 'Narrative'))]">
-        <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="attr"/>
-        <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
-        <Set ref="{//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[1]/@name}"/>
-        <Set ref="{//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[2]/@name}"/>
-        <xsl:apply-templates select="xsd:complexContent/xsd:extension/*"/>
-    </xsl:template>
-    
-    <xsl:template match="xsd:documentation" mode="attr">
-        <xsl:if test="text()">
-            <xsl:attribute name="doc">
-                <xsl:value-of select="text()"/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>
-    
-    <xsl:template match="*:Set" mode="info">
+    <xsl:template match="*:Msg" mode="info">
         <xsl:element name="Info">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="*" mode="copy"/>
         </xsl:element>
     </xsl:template>
     
-    <xsl:template match="*:Field" mode="info">
+    <xsl:template match="*:Structure" mode="info">
+        <xsl:element name="Structure">
+<!--            <xsl:apply-templates select="@*" mode="copy"/>-->
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="*:Segment" mode="info">
+        <xsl:element name="Info">
+            <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:apply-templates select="*" mode="copy"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="*:Set" mode="info">
         <xsl:element name="Info">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="*" mode="copy"/>
@@ -104,7 +98,7 @@
         </xsl:element>
     </xsl:template>
     
-    <xsl:template match="xsd:sequence/xsd:element[@name][@type][not(starts-with(@type,'field:'))]">
+    <xsl:template match="xsd:sequence/xsd:element[@name][xsd:annotation/xsd:appinfo/*:Set]">
         <xsl:element name="Set">
             <xsl:attribute name="tag">
                 <xsl:value-of select="@name"/>
@@ -112,7 +106,6 @@
             <xsl:attribute name="type">
                 <xsl:value-of select="@type"/>
             </xsl:attribute>
-            <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="attr"/>
             <xsl:apply-templates select="@*[not(name()='name')][not(name()='type')]" mode="copy"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
             <xsl:apply-templates select="*"/>
@@ -124,32 +117,45 @@
             <xsl:attribute name="tag" select="@name"/>
             <xsl:apply-templates select="@*[not(name()='name')]" mode="copy"/>
             <xsl:apply-templates select=".//@base[1]" mode="copy"/>
-            <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="attr"/>
             <xsl:apply-templates select=".//xsd:restriction[1]/*" mode="attr"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Field" mode="info"/>
             <xsl:apply-templates select="*"/>
         </xsl:element>
     </xsl:template>
     
-    <xsl:template match="xsd:element[@ref][starts-with(@ref,'field:')]">
-        <xsl:element name="Field">
+    <xsl:template match="xsd:element[@ref][starts-with(@ref,'set:')]">
+        <xsl:element name="Set">
             <xsl:apply-templates select="@*" mode="copy"/>
-            <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Field" mode="info"/>
+            <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
             <xsl:apply-templates select="*"/>
         </xsl:element>
     </xsl:template>
+    
+    <xsl:template match="xsd:element[@ref][not(contains(@ref,':'))]">
+        <xsl:element name="Segment">
+            <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Segment" mode="info"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="xsd:element[@name][starts-with(@type,'field:')]">
+        <xsl:element name="Field">
+            <xsl:attribute name="tag">
+                <xsl:value-of select="@name"/>
+            </xsl:attribute>
+            <xsl:apply-templates select="@*" mode="copy"/>
+        </xsl:element>
+    </xsl:template>
+    
       
     <xsl:template match="xsd:minLength | xsd:maxLength | xsd:length | xsd:minInclusive | xsd:maxInclusive" mode="attr">
         <xsl:attribute name="{substring-after(name(),'xsd:')}">
             <xsl:value-of select="@value"/>
         </xsl:attribute>
     </xsl:template>
-    
+
     <xsl:template match="*:Document">
-        <xsl:apply-templates select="." mode="copy"/>
-    </xsl:template>
-    
-    <xsl:template match="*:Example">
         <xsl:apply-templates select="." mode="copy"/>
     </xsl:template>
     

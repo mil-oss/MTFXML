@@ -98,7 +98,7 @@
                 </xsl:element>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>   
+    </xsl:template>
     <xsl:template match="*" mode="trimattr">
         <xsl:variable name="apos">&#39;</xsl:variable>
         <xsl:variable name="quot">&#34;</xsl:variable>
@@ -106,7 +106,7 @@
         <xsl:attribute name="{$nm}">
             <xsl:value-of select="normalize-space(replace(., $quot, $apos))" disable-output-escaping="yes"/>
         </xsl:attribute>
-    </xsl:template>   
+    </xsl:template>
     <xsl:template match="xsd:schema/xsd:element" mode="ctype">
         <xsd:complexType name="{concat(@name,'Type')}">
             <xsl:apply-templates select="@*" mode="ctype"/>
@@ -513,7 +513,7 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
-   
+
     <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
@@ -574,12 +574,33 @@
     <xsl:template match="*[@name = 'VersionOfMessageTextFormat']" mode="msgid">
         <xsl:param name="msgid"/>
         <xsd:element name="MessageTextFormatIdentifier" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" maxOccurs="1" nillable="true"
-            fixed="{$msgid}"/>
-        <xsd:element name="Version" type="field:VersionOfMessageTextFormatType" minOccurs="1" maxOccurs="1" nillable="true" fixed="B.1.01.12"/>
+            fixed="{$msgid}">
+            <xsd:annotation>
+                <xsd:appinfo>
+                    <Set name="MESSAGE TEXT FORMAT IDENTIFIER" position="1" identifier="A" concept="The identifier of a message or report."/>
+                </xsd:appinfo>
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="Version" type="field:VersionOfMessageTextFormatType" minOccurs="1" maxOccurs="1" nillable="true" fixed="B.1.01.12">
+            <xsd:annotation>
+                <xsd:appinfo>
+                    <Set name="VERSION OF MESSAGE TEXT FORMAT" position="2" identifier="A"
+                        concept="The version of the message text format. The message version consists of four parts: Part 1 is the edition letter                 of MIL-STD-6040(SERIES), e.g., A, B, C through Z, Part 2 is the change number of the edition (0-5), Part 3 is the major change for the                 message, e.g., 01-99, and Part 4 is the minor change for the message, e.g., 00-99."
+                    />
+                </xsd:appinfo>
+            </xsd:annotation>
+        </xsd:element>
     </xsl:template>
     <xsl:template match="*[@name = 'StandardOfMessageTextFormat']" mode="msgid">
         <xsd:element name="Standard" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
-            fixed="MIL-STD-6040(SERIES)"/>
+            fixed="MIL-STD-6040(SERIES)">
+            <xsd:annotation>
+                <xsd:appinfo>
+                    <Set name="STANDARD OF MESSAGE TEXT FORMAT" position="3" identifier="A"
+                        definition="The military standard that contains the message format rules."/>
+                </xsd:appinfo>
+            </xsd:annotation>
+        </xsd:element>
     </xsl:template>
     <xsl:template match="text()" mode="ctype">
         <xsl:value-of select="translate(normalize-space(.), '&#34;', '')"/>

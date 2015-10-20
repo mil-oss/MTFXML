@@ -86,7 +86,7 @@
                 </xsl:element>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>   
+    </xsl:template>
     <xsl:template match="*" mode="trimattr">
         <xsl:variable name="apos">&#39;</xsl:variable>
         <xsl:variable name="quot">&#34;</xsl:variable>
@@ -315,11 +315,11 @@
     <xsl:template match="*:MtfRelatedDocument" mode="doc">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:MtfRelatedDocument)">
-                <xsl:element name="Document" namespace="urn:mtf:mil:6040b:goe:mtf">
+                <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:MtfRelatedDocument">
-                    <xsl:element name="Document" namespace="urn:mtf:mil:6040b:goe:mtf">
+                    <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
@@ -345,6 +345,11 @@
             </xsd:complexType>
         </xsd:element>
     </xsl:template>
+    <xsl:template match="@base[. = 'SetBaseType']" mode="msgid">
+        <xsl:attribute name="base">
+            <xsl:text>set:SetBaseType</xsl:text>
+        </xsl:attribute>
+    </xsl:template>
     <xsl:template match="*" mode="msgid">
         <xsl:param name="msgid"/>
         <xsl:variable name="nm" select="@name"/>
@@ -357,22 +362,17 @@
     </xsl:template>
     <xsl:template match="*:Example" mode="msgid"/>
     <xsl:template match="*:Set" mode="msgid">
-        <xsl:element name="Set" namespace="urn:mtf:mil:6040b:goe:mtf">
+        <xsl:element name="Set" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
             <xsl:apply-templates select="@*" mode="msgid"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="*:Field" mode="msgid">
-        <xsl:element name="Set" namespace="urn:mtf:mil:6040b:goe:mtf">
+        <xsl:element name="Set" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
             <xsl:apply-templates select="@*" mode="msgid"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="@*" mode="msgid">
         <xsl:copy-of select="."/>
-    </xsl:template>
-    <xsl:template match="@base[. = 'SetBaseType']" mode="msgid">
-        <xsl:attribute name="base">
-            <xsl:text>set:SetBaseType</xsl:text>
-        </xsl:attribute>
     </xsl:template>
     <xsl:template match="text()" mode="msgid">
         <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
@@ -380,14 +380,36 @@
     <xsl:template match="*[@name = 'MessageTextFormatIdentifier']" mode="msgid">
         <xsl:param name="msgid"/>
         <xsd:element name="MessageTextFormatIdentifier" type="field:MessageTextFormatIdentifierType" minOccurs="1" maxOccurs="1" nillable="true"
-            fixed="{$msgid}"/>
+            fixed="{$msgid}">
+            <xsd:annotation>
+                <xsd:appinfo>
+                    <Set positionName="MESSAGE TEXT FORMAT IDENTIFIER" position="1"
+                        usage="Enter the message text format identifier, for example: SITREP"/>
+                </xsd:appinfo>
+            </xsd:annotation>
+        </xsd:element>
     </xsl:template>
     <xsl:template match="*[@name = 'Standard']" mode="msgid">
         <xsd:element name="Standard" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
-            fixed="APP-11(C)"/>
+            fixed="APP-11(C)">
+            <xsd:annotation>
+                <xsd:appinfo>
+                    <Set name="STANDARD" position="2" identifier="A"
+                        definition="Enter the publication that includes the formatted message specification, for example: APP-11(C)" version="1.0"/>
+                </xsd:appinfo>
+            </xsd:annotation>
+        </xsd:element>
     </xsl:template>
     <xsl:template match="*[@name = 'Version']" mode="msgid">
         <xsd:element name="Version" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
-            fixed="CHANGE01"/>
+            fixed="CHANGE01">
+            <xsd:annotation>
+                <xsd:appinfo>
+                    <Set positionName="VERSION" position="3" identifier="A"
+                        definition="Enter the change state of the publication that includes the formatted message specification, for example: CHANGE01"
+                    />
+                </xsd:appinfo>
+            </xsd:annotation>
+        </xsd:element>
     </xsl:template>
 </xsl:stylesheet>
