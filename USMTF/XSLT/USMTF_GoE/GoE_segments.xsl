@@ -245,6 +245,29 @@
                     <xsl:copy-of select="xsd:annotation"/>
                 </xsl:element>
             </xsl:when>
+            <xsl:when test="xsd:complexType/xsd:complexContent/xsd:extension[@base] and count(xsd:complexType/xsd:complexContent/xsd:extension[@base]/*)&lt;2">
+                <xsl:variable name="b" select="xsd:complexType/xsd:complexContent/xsd:extension/@base"/>
+                <xsl:variable name="t">
+                    <xsl:choose>
+                        <xsl:when test="starts-with($b,'s:')">
+                            <xsl:value-of select="concat('set:',substring-after($b,'s:'))"/>
+                        </xsl:when>
+                        <xsl:when test="starts-with($b,'f:')">
+                            <xsl:value-of select="concat('field:',substring-after($b,'f:'))"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$b"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <xsl:element name="xsd:element">
+                    <xsl:apply-templates select="@*"/>
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="$t"/>
+                    </xsl:attribute>
+                    <xsl:copy-of select="xsd:annotation"/>
+                </xsl:element>
+            </xsl:when>
             <xsl:otherwise>
                 <xsl:copy copy-namespaces="no">
                     <xsl:apply-templates select="@*" mode="global"/>
@@ -671,6 +694,7 @@
     </xsl:template>
     <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
     <xsl:template match="*:AlternativeType" mode="attr"/>
+    <xsl:template match="*:AlternativeType" mode="global"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:SetFormatExample" mode="attr"/>
     <xsl:template match="*:SetFormatRelatedDocuments" mode="attr"/>
