@@ -5,8 +5,8 @@
 
     <xsl:variable name="USMTF_SEGMENTS" select="document('../xsd/USMTF/GoE_segments.xsd')"/>
     <xsl:variable name="NATO_SEGMENTS" select="document('../xsd/NATOMTF/natomtf_goe_segments.xsd')"/>
-    <xsl:variable name="usmtf_segments_out" select="'../../json/usmtf_segments_ui.xml'"/>
-    <xsl:variable name="nato_segments_out" select="'../../json/nato_segments_ui.xml'"/>
+    <xsl:variable name="usmtf_segments_out" select="'../../JSON/usmtf_segments_ui.xml'"/>
+    <xsl:variable name="nato_segments_out" select="'../../JSON/nato_segments_ui.xml'"/>
 
     <xsl:variable name="usmtf_segments">
         <xsl:apply-templates select="$USMTF_SEGMENTS/xsd:schema/xsd:element"/>

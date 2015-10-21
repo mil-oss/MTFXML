@@ -5,8 +5,8 @@
 
     <xsl:variable name="USMTF_MESSAGES" select="document('../xsd/USMTF/GoE_messages.xsd')"/>
     <xsl:variable name="NATO_MESSAGES" select="document('../xsd/NATOMTF/natomtf_goe_messages.xsd')"/>
-    <xsl:variable name="usmtf_messages_out" select="'../../json/usmtf_messages_ui.xml'"/>
-    <xsl:variable name="nato_messages_out" select="'../../json/nato_messages_ui.xml'"/>
+    <xsl:variable name="usmtf_messages_out" select="'../../JSON/usmtf_messages_ui.xml'"/>
+    <xsl:variable name="nato_messages_out" select="'../../JSON/nato_messages_ui.xml'"/>
 
     <xsl:variable name="usmtf_messages">
         <xsl:apply-templates select="$USMTF_MESSAGES/xsd:schema/xsd:element"/>
