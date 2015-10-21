@@ -158,7 +158,7 @@
         </Messages>
     </annotation-appinfo>
     <Fields>
-        <FieldStringBaseType>
+        <Strings>
             <Baseline>
                 <simpleType name="MissionNumberType">
                     <annotation/>
@@ -191,8 +191,8 @@
                     </complexType>
                 </element>
             </Refactor>
-        </FieldStringBaseType>
-        <FieldEnumerationType>
+        </Strings>
+        <Enumerations>
             <Baseline>
                 <simpleType name="PersistentIndicatorType">
                     <annotation/>
@@ -204,7 +204,7 @@
                             <annotation/>
                         </enumeration>
                     </restriction>
-                </simpleType>  
+                </simpleType>
                 <element name="PersistentIndicator" type="YesNoType"/>
             </Baseline>
             <Refactor>
@@ -230,27 +230,238 @@
                 </complexType>
                 <element name="PersistentIndicator" type="YesNoType"/>
             </Refactor>
-        </FieldEnumerationType>
-        
-        <FieldStringIntegerType>
-            <simpleType name="TotalTurnTime1To30MinType">
-                <annotation/>
-                <restriction base="integer">
-                    <annotation>
-                        <documentation> </documentation>
-                        <appinfo>
-                            <DataType>Integer</DataType>
-                            <Explanation> </Explanation>
-                            <MinimumInclusiveValue>1</MinimumInclusiveValue>
-                            <MaximumInclusiveValue>30</MaximumInclusiveValue>
-                            <LengthVariable/>
-                        </appinfo>
-                    </annotation>
-                    <minInclusive value="1"/>
-                    <maxInclusive value="30"/>
-                    <pattern value="[0-9]{1,2}"/>
-                </restriction>
-            </simpleType>
-        </FieldStringIntegerType>
+        </Enumerations>
+        <Integers>
+            <Baseline>
+                <simpleType name="ElevationMslType">
+                    <restriction base="xsd:integer">
+                        <minInclusive value="-9999"/>
+                        <maxInclusive value="99999"/>
+                        <pattern value="[\-0-9]{5}"/>
+                    </restriction>
+                </simpleType>
+                <element name="ElevationMsl" type="ElevationMslType"/>
+            </Baseline>
+            <Refactor>
+                <element name="ElevationMsl">
+                    <complexType>
+                        <simpleContent>
+                            <restriction base="FieldIntegerBaseType">
+                                <minInclusive value="-9999"/>
+                                <maxInclusive value="99999"/>
+                            </restriction>
+                        </simpleContent>
+                    </complexType>
+                </element>
+            </Refactor>
+        </Integers>
+        <Decimals>
+            <Baseline>
+                <simpleType name="FlightTimeInHoursAndTenthsType">
+                    <restriction base="xsd:decimal">
+                        <minInclusive value="0.1"/>
+                        <xmaxInclusive value="24"/>
+                        <pattern value="[\-0-9]{2}\.[0-9]{1}"/>
+                    </restriction>
+                </simpleType>
+                <element name="FlightTimeInHoursAndTenths" type="FlightTimeInHoursAndTenthsType"/>
+            </Baseline>
+            <Refactor>
+                <element name="FlightTimeInHoursAndTenths">
+                    <complexType>
+                        <simpleContent>
+                            <restriction base="FieldDecimalBaseType">
+                                <minInclusive value="0.1"/>
+                                <maxInclusive value="24"/>
+                                <fractionDigits value="1"/>
+                                <totalDigits value="3"/>
+                            </restriction>
+                        </simpleContent>
+                    </complexType>
+                </element>
+            </Refactor>
+        </Decimals>
     </Fields>
+    <Sets>
+        <Baseline>
+            <complexType name="EventIdentificationType">
+                <complexContent>
+                    <extension base="SetBaseType">
+                        <sequence>
+                            <element name="EventKey" minOccurs="1" maxOccurs="1" nillable="true">
+                                <complexType>
+                                    <complexContent>
+                                        <extension base="c:EventKeyType">
+                                            <attribute name="ffSeq" type="unsignedShort" fixed="1"/>
+                                            <attribute name="ffirnFudn" type="string" fixed="FF2444-1"/>
+                                        </extension>
+                                    </complexContent>
+                                </complexType>
+                            </element>
+                            <element name="EventName" minOccurs="1" maxOccurs="1" nillable="true">
+                                <complexType>
+                                    <simpleContent>
+                                        <extension base="f:EventNameType">
+                                            <attribute name="ffSeq" type="unsignedShort" fixed="2"/>
+                                            <attribute name="ffirnFudn" type="string" fixed="FF1022-254"/>
+                                        </extension>
+                                    </simpleContent>
+                                </complexType>
+                            </element>
+                            <element name="Remarks" minOccurs="0" maxOccurs="1">
+                                <complexType>
+                                    <simpleContent>
+                                        <extension base="f:RemarksType">
+                                            <attribute name="ffSeq" type="unsignedShort" fixed="3"/>
+                                            <attribute name="ffirnFudn" type="string" fixed="FF1357-28"/>
+                                        </extension>
+                                    </simpleContent>
+                                </complexType>
+                            </element>
+                        </sequence>
+                        <attribute name="setid" type="string" fixed="EVENTID"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+        </Baseline>
+        <ReFactor>
+            <complexType name="EventIdentificationType">
+                <annotation>
+                    <appinfo>
+                        <Set name="EVENT IDENTIFICATION" id="EVENTID" version="1.0">
+                            <Example>EVENTID/E-2001-GE22-00001/EXERCISE DRAGON HEAD/REMARKS(LITERAL)//</Example>
+                        </Set>
+                    </appinfo>
+                </annotation>
+                <complexContent>
+                    <extension base="SetBaseType">
+                        <sequence>
+                            <element name="EventKey" minOccurs="1" maxOccurs="1" nillable="true">
+                                <annotation>
+                                    <appinfo>
+                                        <Field positionName="EVENT KEY" identifier="A" alignment="Left"
+                                            usage="ENTER THE UNIQUE IDENTIFICATION FOR EACH SINGLE EVENT CLASSIFICATION, FOR EXAMPLE: E-2001-GE22-00001."
+                                            name="EVENT KEY" definition="A UNIQUE IDENTIFICATION OF A SPECIFIC EVENT ROOT RECORD." version="1.0"/>
+                                    </appinfo>
+                                </annotation>
+                                <complexType>
+                                    <complexContent>
+                                        <extension base="field:EventKeyType">
+                                            <annotation>
+                                                <documentation>A UNIQUE IDENTIFICATION OF A SPECIFIC EVENT ROOT RECORD.</documentation>
+                                                <appinfo>
+                                                    <Field name="EVENT KEY" definition="A UNIQUE IDENTIFICATION OF A SPECIFIC EVENT ROOT RECORD."
+                                                        version="1.0">
+                                                        <Document>AINTP-3</Document>
+                                                        <Document>STANAG 2441</Document>
+                                                    </Field>
+                                                </appinfo>
+                                            </annotation>
+                                        </extension>
+                                    </complexContent>
+                                </complexType>
+                            </element>
+                            <element name="EventName" minOccurs="1" maxOccurs="1" nillable="true">
+                                <annotation>
+                                    <appinfo>
+                                        <Field positionName="EVENT NAME" identifier="A" alignment="Left"
+                                            usage="ENTER THE AGREED NAME OF AN EVENT, FOR EXAMPLE: EXERCISE DRAGON HEAD." name="NAME"
+                                            definition="AN IDENTIFIER WHICH IS COMMONLY CONSIDERED TO BE A NAME OF AN ENTITY." version="2.0"/>
+                                    </appinfo>
+                                </annotation>
+                                <complexType>
+                                    <simpleContent>
+                                        <restriction base="field:AlphaNumericBlankSpecialInitDataLoadIDType">
+                                            <minLength value="1"/>
+                                            <maxLength value="54"/>
+                                        </restriction>
+                                    </simpleContent>
+                                </complexType>
+                            </element>
+                            <element ref="field:Remarks">
+                                <annotation>
+                                    <appinfo>
+                                        <Field positionName="REMARKS" identifier="A" alignment="Left"
+                                            usage="ENTER ANY OTHER DATA (LITERAL UP TO 68 CHARACTERS) WHICH IS NOT ALREADY COVERED IN THE SPECIFIC FIELDS."
+                                            name="COMMENTS" definition="A BRIEF NOTE OR TEXTUAL."
+                                            remark="COMMENTS LONGER THAN CAN BE ACCOMMODATED BY THIS FIELD FORMAT SHOULD BE ADDRESSED IN AN 'AMPN' SET."
+                                            version="2.0"/>
+                                    </appinfo>
+                                </annotation>
+                            </element>
+                        </sequence>
+                        <attribute name="setid" type="string" fixed="EVENTID"/>
+                    </extension>
+                </complexContent>
+            </complexType>
+        </ReFactor>
+    </Sets>
+    <Segments>
+        <Baseline>
+            <element name="ReportedUnitLocationSegment" minOccurs="0" maxOccurs="unbounded">
+                <complexType>
+                    <sequence>
+                        <element name="OrderLocationType" minOccurs="1" maxOccurs="1">
+                            <complexType>
+                                <complexContent>
+                                    <extension base="s:OrderLocationTypeType">
+                                        <attribute name="setSeq" type="unsignedShort" fixed="51"/>
+                                    </extension>
+                                </complexContent>
+                            </complexType>
+                        </element>
+                        <element name="Area" minOccurs="0" maxOccurs="1">
+                            <complexType>
+                                <complexContent>
+                                    <extension base="s:AreaType">
+                                        <attribute name="setSeq" type="unsignedShort" fixed="52"/>
+                                    </extension>
+                                </complexContent>
+                            </complexType>
+                        </element>
+                        <element name="GridLocation" minOccurs="0" maxOccurs="1">
+                            <complexType>
+                                <complexContent>
+                                    <extension base="s:GridLocationType">
+                                        <attribute name="setSeq" type="unsignedShort" fixed="53"/>
+                                    </extension>
+                                </complexContent>
+                            </complexType>
+                        </element>
+                        <element name="Line" minOccurs="0" maxOccurs="1">
+                            <complexType>
+                                <complexContent>
+                                    <extension base="s:LineType">
+                                        <attribute name="setSeq" type="unsignedShort" fixed="54"/>
+                                    </extension>
+                                </complexContent>
+                            </complexType>
+                        </element>
+                        <element name="TimeOfReportedUnitLocation" minOccurs="0" maxOccurs="1">
+                            <complexType>
+                                <complexContent>
+                                    <extension base="s:TimeType">
+                                        <attribute name="setSeq" type="unsignedShort" fixed="55"/>
+                                    </extension>
+                                </complexContent>
+                            </complexType>
+                        </element>
+                    </sequence>
+                    <attribute name="segSeq" type="unsignedShort" fixed="51"/>
+                </complexType>
+            </element>
+        </Baseline>
+        <Refactor>
+            <complexType name="ReportedUnitLocationSegmentType">
+                <sequence>
+                    <element ref="set:OrderLocationType"/>
+                    <element ref="set:Area"/>
+                    <element ref="set:GridLocation"/>
+                    <element ref="set:Line"/>
+                    <element name="TimeOfReportedUnitLocation" minOccurs="0" maxOccurs="1" type="set:TimeType"/>
+                </sequence>
+            </complexType>
+        </Refactor>
+    </Segments>
+    <Messages> </Messages>
 </USMTF_Refactor>

@@ -74,9 +74,9 @@
 <node TEXT="Alteration or further re-factoring of the provided XML Schema must implement new namespace assignments." ID="ID_1920187984" CREATED="1444857468671" MODIFIED="1444857550443" VSHIFT="10"/>
 <node TEXT="Because US and NATO specifications are closely aligned, all products are very similar and can often be re-used interchangeably.  Minor differences will occur, so For purposes of clarity and distribution they are provided separately with each standard." ID="ID_597604512" CREATED="1444857598111" MODIFIED="1445283723238" VSHIFT="-40"/>
 </node>
-<node TEXT="USMTF" POSITION="right" ID="ID_1967102135" CREATED="1444842276503" MODIFIED="1445375951948" VSHIFT="50">
+<node TEXT="USMTF" POSITION="right" ID="ID_1967102135" CREATED="1444842276503" MODIFIED="1445401116681" VSHIFT="50">
 <edge COLOR="#ff0000"/>
-<node TEXT="XML Schema Design" ID="ID_810225239" CREATED="1445035293775" MODIFIED="1445370827892" VSHIFT="-160">
+<node TEXT="XML Schema Design" ID="ID_810225239" CREATED="1445035293775" MODIFIED="1445401147287" HGAP="60" VSHIFT="-30">
 <node TEXT="Adjustments are made to the format of all XML Schemas in order to reduce size, and eliminate redundant or unnecessary information." ID="ID_1480971800" CREATED="1445035365647" MODIFIED="1445370511189" VSHIFT="-10"/>
 <node TEXT="Annotations" ID="ID_1750708290" CREATED="1445035672879" MODIFIED="1445370827892" VSHIFT="10">
 <node TEXT="Content of xsd:annotations is converted from elements to attributes in order to reduce size caused by closing tags.  Names are changed to plain language terms instead of database field names.  Elements are used for multiple items." ID="ID_1323541666" CREATED="1445035684847" MODIFIED="1445284310321" HGAP="30" VSHIFT="80"/>
@@ -261,35 +261,64 @@
 </node>
 </node>
 </node>
-<node TEXT="Field Refactor" ID="ID_367208974" CREATED="1445375606297" MODIFIED="1445375690556">
-<node TEXT="By comparing Regular Expressions the number of types extended by FieldStringBase Type was greatly reduced.  One factor was the removal of types which included length and value restrictions in the REGEX.  String types have been defined using xsd:pattern for content, and XML Schema nodes to specify lengths at the element level.  While a single iteration may seem more verbose, the AlphaNumericBlankSpecialTextType is re-used 877 times, thereby eliminating and re-using this duplicative definition." ID="ID_673543804" CREATED="1445371789869" MODIFIED="1445373473845" HGAP="30" VSHIFT="-20"/>
-<node TEXT="Strings" ID="ID_588492347" CREATED="1445375806285" MODIFIED="1445375870828">
-<node TEXT="Baseline String Field" ID="ID_1057235228" CREATED="1445372043183" MODIFIED="1445375851488" HGAP="50" VSHIFT="50">
+<node TEXT="Fields Refactor" ID="ID_367208974" CREATED="1445375606297" MODIFIED="1445401138456">
+<node TEXT="Strings" ID="ID_588492347" CREATED="1445375806285" MODIFIED="1445401124454" HGAP="30" VSHIFT="-40">
+<node TEXT="By comparing Regular Expressions the number of types extended by FieldStringBase Type is  reduced.  Types which include length and value restrictions in the Regular Expression are removed.  String types are defined using xsd:pattern for content, and XML Schema nodes to specify lengths at the element level.  For example, the field:AlphaNumericBlankSpecialTextType is re-used 877 times, thereby eliminating and re-using this duplicative definition." ID="ID_673543804" CREATED="1445371789869" MODIFIED="1445400947925" HGAP="30" VSHIFT="20"/>
+<node TEXT="Baseline" ID="ID_1057235228" CREATED="1445372043183" MODIFIED="1445400527277" HGAP="40" VSHIFT="10">
 <node TEXT="&lt;simpleType name=&quot;MissionNumberType&quot;&gt;&#xa;       &lt;annotation/&gt;&#xa;              &lt;restriction base=&quot;string&quot;&gt;&#xa;                      &lt;annotation/&gt;&#xa;                          &lt;minLength value=&quot;1&quot;/&gt;&#xa;                          &lt;maxLength value=&quot;8&quot;/&gt;&#xa;                          &lt;pattern value=&quot;[\-\.,\(\)\?A-Z0-9&amp;#x20;]{1,8}&quot;/&gt;&#xa;                  &lt;/restriction&gt;&#xa;&lt;/simpleType&gt;&#xa;&lt;element name=&quot;MissionNumber&quot; type=&quot;MissionNumberType&quot;/&gt;" ID="ID_554398573" CREATED="1445372934071" MODIFIED="1445372973890"/>
 </node>
-<node TEXT="Refactor String Field" ID="ID_1916378606" CREATED="1445372043183" MODIFIED="1445375870828" HGAP="50" VSHIFT="-50">
+<node TEXT="Refactor" ID="ID_1916378606" CREATED="1445372043183" MODIFIED="1445401124454" HGAP="40" VSHIFT="-70">
 <node TEXT="&lt;complexType name=&quot;AlphaNumericBlankSpecialTextType&quot;&gt;&#xa;         &lt;simpleContent&gt;&#xa;                 &lt;restriction base=&quot;FieldStringBaseType&quot;&gt;&#xa;                        &lt;pattern value=&quot;[\-\.,\(\)\?A-Z0-9 ]+&quot;/&gt;&#xa;                 &lt;/restriction&gt;&#xa;         &lt;/simpleContent&gt;&#xa;&lt;/complexType&gt;&#xa;&lt;element name=&quot;MissionNumber&quot;&gt;&#xa;       &lt;annotation/&gt;&#xa;       &lt;complexType&gt;&#xa;                &lt;simpleContent&gt;&#xa;                         &lt;restriction base=&quot;AlphaNumericBlankSpecialTextType&quot;&gt;&#xa;                                &lt;minLength value=&quot;1&quot;/&gt;&#xa;                                &lt;maxLength value=&quot;8&quot;/&gt;&#xa;                        &lt;/restriction&gt;&#xa;                &lt;/simpleContent&gt;&#xa;       &lt;/complexType&gt;&#xa;&lt;/element&gt;" ID="ID_787853920" CREATED="1445372934071" MODIFIED="1445373102791"/>
 </node>
 </node>
-<node TEXT="Enumerations" ID="ID_1437957964" CREATED="1445375811577" MODIFIED="1445375867234">
-<node TEXT="Baseline Enumeration Field" ID="ID_1407073886" CREATED="1445374989529" MODIFIED="1445375867233" HGAP="40" VSHIFT="30">
-<node TEXT=" &lt;simpleType name=&quot;PersistentIndicatorType&quot;&gt;&#xa;          &lt;annotation/&gt;&#xa;            &lt;restriction base=&quot;string&quot;&gt;&#xa;                    &lt;enumeration value=&quot;YES&quot;&gt;&#xa;                            &lt;annotation&gt;&#xa;                    &lt;/enumeration&gt;&#xa;                    &lt;enumeration value=&quot;NO&quot;&gt;&#xa;                            &lt;annotation/&gt;&#xa;                     &lt;/enumeration&gt;&#xa;           &lt;/restriction&gt;&#xa;&lt;/simpleType&gt; &#xa;&lt;element name=&quot;PersistentIndicator&quot; type=&quot;YesNoType&quot;/&gt;" ID="ID_173667910" CREATED="1445375113832" MODIFIED="1445375434121"/>
+<node TEXT="Enumerations" ID="ID_1437957964" CREATED="1445375811577" MODIFIED="1445400793603" HGAP="30" VSHIFT="-40">
+<node TEXT="Enumerations are normalized using common code lists." ID="ID_1946417745" CREATED="1445400471167" MODIFIED="1445400793603" HGAP="30" VSHIFT="50"/>
+<node TEXT="Baseline" ID="ID_1407073886" CREATED="1445374989529" MODIFIED="1445400565167" HGAP="40" VSHIFT="10">
+<node TEXT="&lt;simpleType name=&quot;PersistentIndicatorType&quot;&gt;&#xa;          &lt;annotation/&gt;&#xa;            &lt;restriction base=&quot;string&quot;&gt;&#xa;                    &lt;enumeration value=&quot;YES&quot;&gt;&#xa;                            &lt;annotation&gt;&#xa;                    &lt;/enumeration&gt;&#xa;                    &lt;enumeration value=&quot;NO&quot;&gt;&#xa;                            &lt;annotation/&gt;&#xa;                     &lt;/enumeration&gt;&#xa;           &lt;/restriction&gt;&#xa;&lt;/simpleType&gt; &#xa;&lt;element name=&quot;PersistentIndicator&quot; type=&quot;YesNoType&quot;/&gt;" ID="ID_173667910" CREATED="1445375113832" MODIFIED="1445400816159"/>
 </node>
-<node TEXT="Refactor Enumeration Field" ID="ID_791867798" CREATED="1445374999192" MODIFIED="1445375858177" HGAP="50" VSHIFT="-30">
+<node TEXT="Refactor" ID="ID_791867798" CREATED="1445374999192" MODIFIED="1445400567635" HGAP="40" VSHIFT="-50">
 <node TEXT=" complexType name=&quot;YesNoType&quot;&gt;&#xa;         &lt;simpleContent&gt;&#xa;                   &lt;restriction base=&quot;FieldEnumeratedBaseType&quot;&gt;&#xa;                            &lt;enumeration value=&quot;YES&quot;&gt;&#xa;                                &lt;annotation&gt;&#xa;                                    &lt;appinfo&gt;&#xa;                                        &lt;Enum dataItem=&quot;AFFIRMATIVE INDICATOR&quot;/&gt;&#xa;                                    &lt;/appinfo&gt;&#xa;                                &lt;/annotation&gt;&#xa;                            &lt;/enumeration&gt;&#xa;                            &lt;enumeration value=&quot;NO&quot;&gt;&#xa;                                &lt;annotation&gt;&#xa;                                    &lt;appinfo&gt;&#xa;                                        &lt;Enum dataItem=&quot;NEGATIVE INDICATOR&quot;/&gt;&#xa;                                    &lt;/appinfo&gt;&#xa;                                &lt;/annotation&gt;&#xa;                            &lt;/enumeration&gt;&#xa;                     &lt;/restriction&gt;&#xa;           &lt;/simpleContent&gt;&#xa;&lt;/complexType&gt;&#xa;&lt;element name=&quot;PersistentIndicator&quot; type=&quot;YesNoType&quot;&gt;&#xa;      &lt;annotation/&gt;&#xa;&lt;/element&gt;" ID="ID_19077431" CREATED="1445375019992" MODIFIED="1445375111944"/>
 </node>
 </node>
-<node TEXT="Integers" ID="ID_380764250" CREATED="1445375815209" MODIFIED="1445375817766"/>
-<node TEXT="Decimals" ID="ID_1282382012" CREATED="1445375818233" MODIFIED="1445375822025"/>
+<node TEXT="Integers" ID="ID_380764250" CREATED="1445375815209" MODIFIED="1445400731706">
+<node TEXT="Integers do not require Regular Expressions or types.  the XML Schema xsd:integer is extended by FieldIntegerBaseType to include security markings, and each Integer field restricts FieldIntegerBaseType to add value restrictions." ID="ID_1162327646" CREATED="1445400582145" MODIFIED="1445400731705"/>
+<node TEXT="Baseline" ID="ID_1643941188" CREATED="1445398645407" MODIFIED="1445400548054" VSHIFT="-10">
+<node TEXT=" &lt;simpleType name=&quot;ElevationMslType&quot;&gt;&#xa;         &lt;restriction base=&quot;xsd:integer&quot;&gt;&#xa;                &lt;minInclusive value=&quot;-9999&quot;/&gt;&#xa;                &lt;maxInclusive value=&quot;99999&quot;/&gt;&#xa;                &lt;pattern value=&quot;[\-0-9]{5}&quot;/&gt;&#xa;         &lt;/restriction&gt;&#xa;&lt;/simpleType&gt;&#xa;&lt;element name=&quot;ElevationMsl&quot; type=&quot;ElevationMslType&quot;/&gt;" ID="ID_1350965157" CREATED="1445398675281" MODIFIED="1445400534451"/>
+</node>
+<node TEXT="Refactor" ID="ID_626603743" CREATED="1445398655783" MODIFIED="1445398658715">
+<node TEXT="&lt;element name=&quot;ElevationMsl&quot;&gt;&#xa;        &lt;complexType&gt;&#xa;               &lt;simpleContent&gt;&#xa;                     &lt;restriction base=&quot;FieldIntegerBaseType&quot;&gt;&#xa;                           &lt;minInclusive value=&quot;-9999&quot;/&gt;&#xa;                           &lt;maxInclusive value=&quot;99999&quot;/&gt;&#xa;                            &lt;/restriction&gt;&#xa;               &lt;/simpleContent&gt;&#xa;        &lt;/complexType&gt;&#xa;&lt;/element&gt;" ID="ID_1807186710" CREATED="1445399959789" MODIFIED="1445400061656"/>
 </node>
 </node>
-<node TEXT="XML Schema Re-Factor Process" ID="ID_393949117" CREATED="1444857194575" MODIFIED="1445375898495">
+<node TEXT="Decimals" ID="ID_1282382012" CREATED="1445375818233" MODIFIED="1445400786383" VSHIFT="20">
+<node TEXT="Decimals do not require Regular Expressions or types.  the XML Schema xsd:decimal is extended by FieldIntegerBaseType to include security markings, and each Decimal field restricts FieldDecimalBaseType to add value restrictions." ID="ID_1762581199" CREATED="1445400740103" MODIFIED="1445400786382" VSHIFT="-10"/>
+<node TEXT="Baseline" ID="ID_1944114724" CREATED="1445398645407" MODIFIED="1445400545232" VSHIFT="-10">
+<node TEXT=" &lt;simpleType name=&quot;FlightTimeType&quot;&gt;&#xa;        &lt;restriction base=&quot;xsd:decimal&quot;&gt;&#xa;               &lt;minInclusive value=&quot;0.1&quot;/&gt;&#xa;               &lt;xmaxInclusive value=&quot;24&quot;/&gt;&#xa;                    &lt;pattern value=&quot;[\-0-9]{2}\.[0-9]{1}&quot;/&gt;&#xa;        &lt;/restriction&gt;&#xa;&lt;/simpleType&gt;&#xa;&lt;element name=&quot;FlightTime&quot; type=&quot;FlightTimeType&quot;/&gt;" ID="ID_990425849" CREATED="1445399035388" MODIFIED="1445400421896" VSHIFT="-30"/>
+</node>
+<node TEXT="Refactor" ID="ID_282252011" CREATED="1445398655783" MODIFIED="1445399563264">
+<node TEXT="&lt;element name=&quot;FlightTime&quot;&gt;&#xa;         &lt;complexType&gt;&#xa;                &lt;simpleContent&gt;&#xa;                       &lt;restriction base=&quot;FieldDecimalBaseType&quot;&gt;&#xa;                             &lt;minInclusive value=&quot;0.1&quot;/&gt;&#xa;                             &lt;maxInclusive value=&quot;24&quot;/&gt;&#xa;                              &lt;fractionDigits value=&quot;1&quot;/&gt;&#xa;                              &lt;totalDigits value=&quot;3&quot;/&gt;&#xa;                       &lt;/restriction&gt;&#xa;                &lt;/simpleContent&gt;&#xa;        &lt;/complexType&gt;&#xa;&lt;/element&gt;" ID="ID_1466464292" CREATED="1445399421252" MODIFIED="1445400429797" HGAP="30" VSHIFT="10"/>
+</node>
+</node>
+</node>
+<node TEXT="Sets Refactor" ID="ID_841286324" CREATED="1445401131593" MODIFIED="1445401147287" VSHIFT="30">
+<node TEXT="Sets extend the BaseSetType in order to add the security attribute group at the set level.  Because fields types are now also extended, they do not need to be extended in the Sets Schema, but can be directly referenced or typed.   Because nillable elements cannot be referenced, they are extended." ID="ID_349069168" CREATED="1445407983540" MODIFIED="1445408170390"/>
+<node TEXT="Baseline" ID="ID_1663600022" CREATED="1445407590560" MODIFIED="1445407748969">
+<node TEXT="" ID="ID_872418860" CREATED="1445407754196" MODIFIED="1445407754196"/>
+</node>
+<node TEXT="Refactor" ID="ID_580006522" CREATED="1445407594605" MODIFIED="1445407605703">
+<node TEXT="" ID="ID_1233803645" CREATED="1445407613557" MODIFIED="1445407613557"/>
+</node>
+</node>
+</node>
+<node TEXT="XML Schema Re-Factor Process" ID="ID_393949117" CREATED="1444857194575" MODIFIED="1445401116681" HGAP="80" VSHIFT="220">
 <node TEXT="This process is retained for purposes of verification, testing and maintenance.  It is not necessary for implementers to repeat this effort." ID="ID_375994573" CREATED="1445034474254" MODIFIED="1445375898492" HGAP="32" VSHIFT="-30"/>
-<node TEXT="FIELDS" ID="ID_1043767447" CREATED="1445035203262" MODIFIED="1445036417207">
-<node TEXT="Normalization" ID="ID_520682973" CREATED="1445034575308" MODIFIED="1445036417206" VSHIFT="-10">
+<node TEXT="FIELDS" ID="ID_1043767447" CREATED="1445035203262" MODIFIED="1445401096941">
+<node TEXT="Normalization" ID="ID_520682973" CREATED="1445034575308" MODIFIED="1445401096940" VSHIFT="20">
 <node TEXT="Rationale" ID="ID_1934291471" CREATED="1445036249106" MODIFIED="1445036302068" VSHIFT="70">
 <node TEXT="The creation of a &quot;Type&quot; for every field in MTF simply by adding &quot;Type&quot; or &quot;SimpleType&quot; to each field name does not leverage the concept of Typing appropriately.  Many fields have identical content restrictions." ID="ID_1984290996" CREATED="1445035980975" MODIFIED="1445036293806" VSHIFT="-20"/>
 <node TEXT="By comparing regular expressions, numerical content, and enumerations the number of xsd:simpleTypes are significantly reduced and the XML implementation of the MIL STDs employs reuse, extension and restriction effectively." ID="ID_1350623549" CREATED="1445036280658" MODIFIED="1445036281810"/>
+<node TEXT="BaseTypes are implemented at the field level to serve the requirement to be able to add security markings at the field level.  The Baseline XML Schema accomplish this at the Set level which requires extension for every field each time it is used." ID="ID_919087704" CREATED="1445036420100" MODIFIED="1445036871924" VSHIFT="-26"/>
+<node TEXT="The implementation of FieldStringBaseType, Field EnumerationBaseType, FieldIntegerBaseType, and FieldIntegerBaseType allow fields to be re-used by referencing instead of extension except where they have the nillable attribute.  This significantly reduces the size of the XML Schema files." ID="ID_236763277" CREATED="1445036563314" MODIFIED="1445036867436"/>
+<node TEXT="BaseTypes also provide the opportunity for additional extensions which can be applied at the field level when they are re-used externally or when the MIL STD requirements dictates such an adjustment." ID="ID_1104095164" CREATED="1445036735475" MODIFIED="1445036869173" VSHIFT="20"/>
 </node>
 <node TEXT="Strings" ID="ID_344351083" CREATED="1445035980978" MODIFIED="1445036212794">
 <node TEXT="Regular Expression Comparison" ID="ID_1934849309" CREATED="1445035980985" MODIFIED="1445036124979" VSHIFT="-50">
@@ -306,14 +335,8 @@
 </node>
 </node>
 <node TEXT="Enumerations" ID="ID_1068069523" CREATED="1445035980985" MODIFIED="1445036218462">
-<node TEXT="Single Enumerations." ID="ID_566778365" CREATED="1445035980987" MODIFIED="1445036135002">
-<node TEXT="The use of a simple type with a restriction and a single enumeration is a result of vapid adherence to a &quot;best practice&quot; which advises avoidance of fixed and default values.  Creation of &quot;Types&quot; for elements which will only ever contain one value and will never be extended or restricted is pointless." ID="ID_579384915" CREATED="1445035980987" MODIFIED="1445036152236"/>
-<node TEXT="The Enumerations.xsl converts xsd:simpleTypes with single enumerations to elements with fixed values so that they can be directly referenced from complexTypes as global elements from fields.xsd." ID="ID_1440878303" CREATED="1445035980987" MODIFIED="1445036157226"/>
-</node>
-<node TEXT="Common Enumerations." ID="ID_1408636520" CREATED="1445035980987" MODIFIED="1445036137233">
-<node TEXT="Elements with identical Enumerations can be typed using a common xsd:simpleType definition." ID="ID_71424025" CREATED="1445035980987" MODIFIED="1445036164347"/>
+<node TEXT="Common Enumerations." ID="ID_1408636520" CREATED="1445035980987" MODIFIED="1445036137233"/>
 <node TEXT="The NormlizedSimpleTypes.xsd has been created based on analysis to determine reusable enumeration sets.  The Enumerations.xsl applies these types to elements when content is equivalent, and include annotations at the element level." ID="ID_1679572618" CREATED="1445035980987" MODIFIED="1445036160297"/>
-</node>
 </node>
 <node TEXT="Numerics" ID="ID_1333327536" CREATED="1445035980987" MODIFIED="1445036224010">
 <node TEXT="Integers" ID="ID_985868689" CREATED="1445035980988" MODIFIED="1445036168792">
@@ -330,11 +353,6 @@
 <node TEXT="Enumeration normalization reduces the number of enumerated xsd:simpleTypes from 1766 to 1473 without impacting message content." ID="ID_1405688239" CREATED="1445035980988" MODIFIED="1445036195985"/>
 <node TEXT="Numeric normalization eliminates 1337 integer xsd:simpleTypes and 245 decimal xsd:simpleTypes." ID="ID_522866828" CREATED="1445035980988" MODIFIED="1445036197665"/>
 </node>
-</node>
-<node TEXT="XML Schema Design" ID="ID_1070499464" CREATED="1445036387503" MODIFIED="1445036871930">
-<node TEXT="BaseTypes are implemented at the field level to serve the requirement to be able to add security markings at the field level.  The Baseline XML Schema accomplish this at the Set level which requires extension for every field each time it is used." ID="ID_919087704" CREATED="1445036420100" MODIFIED="1445036871924" VSHIFT="-26"/>
-<node TEXT="The implementation of FieldStringBaseType, Field EnumerationBaseType, FieldIntegerBaseType, and FieldIntegerBaseType allow fields to be re-used by referencing instead of extension except where they have the nillable attribute.  This significantly reduces the size of the XML Schema files." ID="ID_236763277" CREATED="1445036563314" MODIFIED="1445036867436"/>
-<node TEXT="BaseTypes also provide the opportunity for additional extensions which can be applied at the field level when they are re-used externally or when the MIL STD requirements dictates such an adjustment." ID="ID_1104095164" CREATED="1445036735475" MODIFIED="1445036869173" VSHIFT="20"/>
 </node>
 <node TEXT="Process" ID="ID_137274626" CREATED="1445035252766" MODIFIED="1445035290626" VSHIFT="10">
 <node TEXT="The NormalizedSimpleTypes.xd file was created using a variety of methods which analyse and compare Regular Expressions.  This required subjective decisions which may be adjusted.  The XSLT scripts to accomplish this are in the USMTF/XSLT/Normalization/work directory." ID="ID_1804333818" CREATED="1445034597811" MODIFIED="1445035234191"/>
