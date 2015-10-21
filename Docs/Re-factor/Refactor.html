@@ -1,0 +1,327 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">
+         <!--
+                  body {
+                        width : 8in;
+                        margin-left : auto;
+                        margin-right : auto;
+                        font:courier-new; 
+                        font-size:12px;
+                    }
+                    div {
+                        padding-bottom : 10px;
+                    }
+                    .tab {
+                        padding-right : .2in;
+                    }
+                    .lvl2 {
+                        display : inline;
+                    }
+                    .lvl3 {
+                        display : inline;
+                        padding-left : .3in;
+                    }
+                    .lvl4 {
+                        display : inline;
+                        padding-left : .6in;
+                    }
+                    .lvl5 {
+                        display : inline;
+                        padding-left : 1in;
+                    }
+                    .lvl6 {
+                        display : inline;
+                        padding-left : 1.4in;
+                    }
+                     .lvl7 {
+                        display : inline;
+                        padding-left : 1.8in;
+                    }
+                      .lvl8 {
+                        display : inline;
+                        padding-left : 2.2in;
+                    }
+                    .uline {
+                        text-decoration : underline;
+                    }
+                    .ctr_title {
+                        text-align : center;
+                    }
+                    .center
+                    {
+                        margin-left : auto;
+                        margin-right : auto;
+                        width : 100%;
+                    }
+                      P.pagebreak
+                      {
+                        page-break-before: always
+                      }
+                    --></style></head>
+   <body>
+      
+      
+      <p style="text-align:center">Information Paper</p>
+      <p style="text-align:right">06 OCT 2014</p>
+      <p><span class="tab">Subj:</span><span>MESSSAGE TEXT FORMAT XML SCHEMA REFACTORING PROJECT</span></p>
+      <div>
+         <div>
+            <p class="lvl2 tab">1.</p><span>Background</span></div>
+         <div class="center"></div>
+         <div>
+            <p class="lvl3 tab">a.</p><span>The current XML Schema for US and NATO MTF are designed for piecemeal implementation
+               of messages based on commonly defined XML nodes which are maintained in relational
+               databases.  This makes normalization, re-use, and configuration management difficult.</span></div>
+         <div>
+            <p class="lvl3 tab">b.</p><span>Because the current XML Schema design does not support implementation of the entire
+               standard, there are persistent mismatches of messages implemented and versions across
+               systems.</span></div>
+         <div>
+            <p class="lvl3 tab">c.</p><span>The re-factor of these standards to a Garden of Eden XML Schema Design model allows
+               provisioning of consolidated XML Schema files with a manageable sizes to allow complete
+               implementation of every message using a uniform and re-usable methodology.</span></div>
+         <div>
+            <p class="lvl3 tab">d.</p><span>Alignment with the US National Information Exchange Model (NIEM) methodology will
+               allow the development and re-use of stndardized Information Exchange Product Documentation
+               (IEPD) resources which will support valid implementations and promote interoperability
+               with external specifications.</span></div>
+         <div>
+            <p class="lvl2 tab">2.</p><span>Goals</span></div>
+         <div class="center"></div>
+         <div>
+            <p class="lvl3 tab">a.</p><span>This project will use the Extensible Stylesheet Language for Transformation (XSLT)
+               to convert existing XML Schema products to Garden of Eden design pattern, and will
+               reduce file sizes by normalizing Types, using attributes in annotation elements, and
+               applying fixed values where appropriate to reduce ambiguity and eliminate rules which
+               specify required content.</span></div>
+         <div>
+            <p class="lvl3 tab">b.</p><span>The resulting XML Schema products will support all requirements for the text based
+               slash delimited MTF format, and will avoid alteration of XML element names except
+               where absolutely necessary for naming deconfliction of global nodes.  Except for a
+               few cases, XML instances from the current standard will validate against the re-factored
+               XML Schemas if common namespaces are assigned.</span></div>
+         <div>
+            <p class="lvl3 tab">c.</p><span>This project is intended to support holistic implementation of the standards in order
+               to facilitate use in web services, allow conversion between US and NATO specification,
+               conversion between message versions, and interoperability with other standard formats.</span></div>
+         <div>
+            <p class="lvl2 tab">3.</p><span>Usage</span></div>
+         <div class="center"></div>
+         <div>
+            <p class="lvl3 tab">a.</p><span>The process for converting from current standard formats is provided for purposes
+               of integrity, testing and verification.  For most use cases, the generated XML Schemas
+               can be used without repeating this conversion.</span></div>
+         <div>
+            <p class="lvl3 tab">b.</p><span>Reference implementation products are intended for re-use and distribution in order
+               to promote interoperability and uniformity in implementations.  These products should
+               load the provided re-factored XML Schemas and provide intended MTF messaging functionality
+               for every message and message component.</span></div>
+         <div>
+            <p class="lvl2 tab">4.</p><span>Caveats</span></div>
+         <div class="center"></div>
+         <div>
+            <p class="lvl3 tab">a.</p><span>All data resources are restricted for distribution.  This requires complete separation
+               of presentation and data.  No implementations may retain data from the XML Schema
+               resources in code.</span></div>
+         <div>
+            <p class="lvl3 tab">b.</p><span>Alteration or further re-factoring of the provided XML Schema must implement new namespace
+               assignments.</span></div>
+         <div>
+            <p class="lvl3 tab">c.</p><span>Because US and NATO specifications are closely aligned, all products are very similar
+               and can often be re-used interchangeably.  Minor differences will occur, so For purposes
+               of clarity and distribution they are provided separately with each standard.</span></div>
+         <div>
+            <p class="lvl2 tab">5.</p><span>USMTF</span></div>
+         <div class="center"></div>
+         <div>
+            <p class="lvl3 tab">a.</p><span>XML Schema Design</span></div>
+         <div>
+            <p class="lvl4 tab">(1)</p><span>Adjustments are made to the format of all XML Schemas in order to reduce size, and
+               eliminate redundant or unnecessary information.</span></div>
+         <div>
+            <p class="lvl4 tab">(2)</p><span>Annotations</span></div>
+         <div>
+            <p class="lvl5 tab">(a)</p><span>Content of xsd:annotations is converted from elements to attributes in order to reduce
+               size caused by closing tags.  Names are changed to plain language terms instead of
+               database field names.  Elements are used for multiple items.</span></div>
+         <div>
+            <p class="lvl5 tab">(b)</p><span>When xsd:documentation and asd:appinfo items are duplicative, the information is retained
+               in the xsd:documentation node and removed from the xsd;appinfo node.</span></div>
+         <div>
+            <p class="lvl5 tab">(c)</p><span>The names of the items in xsd:appinfo nodes are changed as follows:</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span>Fields</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">2</span>.
+            </p><span>Sets</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">3</span>.
+            </p><span>Messages</span></div>
+         <div>
+            <p class="lvl4 tab">(3)</p><span>Field Base Types</span></div>
+         <div>
+            <p class="lvl5 tab">(a)</p><span>The requirement to apply security markings to every field is currently accomplished
+               by extending xsd:simpleType fields at the Set level to add the ICM attribute group.
+               This reduces the ability to reference fields at the Set level and causes unnecessary
+               repetition in the XML Schema design.</span></div>
+         <div>
+            <p class="lvl5 tab">(b)</p><span>The Re-Factor approach is to create FieldBaseTypes which carry the ICM attribute group
+               and can be used to add other field level extensions.  All fields are provided as xsd:complexTypes
+               which extend the base types.  This typing methodology separates FIelds into data categories
+               that have respectively uniform processing requirements and can be extended or restricted
+               accordingly.</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span>FieldStringBaseType</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">2</span>.
+            </p><span>FieldEnumeratedBaseType</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">3</span>.
+            </p><span>FieldIntegerBaseType</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">4</span>.
+            </p><span>FieldDecimalBaseType</span></div>
+         <div>
+            <p class="lvl4 tab">(4)</p><span>Fields Refactor</span></div>
+         <div>
+            <p class="lvl5 tab">(a)</p><span>Strings</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span>By comparing Regular Expressions the number of types extended by FieldStringBase Type
+               is  reduced.  Types which include length and value restrictions in the Regular Expression
+               are removed.  String types are defined using xsd:pattern for content, and XML Schema
+               nodes to specify lengths at the element level.  For example, the field:AlphaNumericBlankSpecialTextType
+               is re-used 877 times, thereby eliminating and re-using this duplicative definition.</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">2</span>.
+            </p><span>Baseline</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">3</span>.
+            </p><span>Refactor</span></div>
+         <div>
+            <p class="lvl5 tab">(b)</p><span>Enumerations</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span>Enumerations are normalized using common code lists.</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">2</span>.
+            </p><span>Baseline</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">3</span>.
+            </p><span>Refactor</span></div>
+         <div>
+            <p class="lvl5 tab">(c)</p><span>Integers</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span>Integers do not require Regular Expressions or types.  the XML Schema xsd:integer
+               is extended by FieldIntegerBaseType to include security markings, and each Integer
+               field restricts FieldIntegerBaseType to add value restrictions.</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">2</span>.
+            </p><span>Baseline</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">3</span>.
+            </p><span>Refactor</span></div>
+         <div>
+            <p class="lvl5 tab">(d)</p><span>Decimals</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span>Decimals do not require Regular Expressions or types.  the XML Schema xsd:decimal
+               is extended by FieldIntegerBaseType to include security markings, and each Decimal
+               field restricts FieldDecimalBaseType to add value restrictions.</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">2</span>.
+            </p><span>Baseline</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">3</span>.
+            </p><span>Refactor</span></div>
+         <div>
+            <p class="lvl4 tab">(5)</p><span>Sets Refactor</span></div>
+         <div>
+            <p class="lvl5 tab">(a)</p><span>Sets extend the BaseSetType in order to add the security attribute group at the set
+               level.  Because fields types are now also extended, they do not need to be extended
+               in the Sets Schema, but can be directly referenced or typed.   Because nillable elements
+               cannot be referenced, they are extended.</span></div>
+         <div>
+            <p class="lvl5 tab">(b)</p><span>Baseline</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span></span></div>
+         <div>
+            <p class="lvl5 tab">(c)</p><span>Refactor</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span></span></div>
+         <div>
+            <p class="lvl3 tab">b.</p><span>XML Schema Re-Factor Process</span></div>
+         <div>
+            <p class="lvl4 tab">(1)</p><span>This process is retained for purposes of verification, testing and maintenance.  It
+               is not necessary for implementers to repeat this effort.</span></div>
+         <div>
+            <p class="lvl4 tab">(2)</p><span>FIELDS</span></div>
+         <div>
+            <p class="lvl5 tab">(a)</p><span>Normalization</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span>Rationale</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">2</span>.
+            </p><span>Strings</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">3</span>.
+            </p><span>Enumerations</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">4</span>.
+            </p><span>Numerics</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">5</span>.
+            </p><span>Summary.</span></div>
+         <div>
+            <p class="lvl5 tab">(b)</p><span>Process</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">1</span>.
+            </p><span>The NormalizedSimpleTypes.xd file was created using a variety of methods which analyse
+               and compare Regular Expressions.  This required subjective decisions which may be
+               adjusted.  The XSLT scripts to accomplish this are in the USMTF/XSLT/Normalization/work
+               directory.</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">2</span>.
+            </p><span>The XSLT scripts to generate the normalized xsd:simpleTypes are located in the USMTF/XSLT/Normalization
+               directory.  Data products are located in the USMTF/XSD/Normlaized/work directory.</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">3</span>.
+            </p><span>The Strings.xsl, Numerics.xsl, and Enumerations.xsl scripts can be executed in any
+               order.  Results are written to the USMTF/XSD/Normlaized directory.</span></div>
+         <div>
+            <p class="lvl6 tab"><span class="uline">4</span>.
+            </p><span>The GoE_Fields.xsl script consolidates the Strings.xsd, Integers.xsd, Decimals.xsd
+               and Enumerations.xsd files into the GoE_field.xsd document which is stored in the
+               USMTF/XSD/GoE_Schema directory.</span></div>
+         <div>
+            <p class="lvl3 tab">c.</p><span>Testing</span></div>
+         <div>
+            <p class="lvl3 tab">d.</p><span>Reference Implementations</span></div>
+         <div>
+            <p class="lvl2 tab">6.</p><span>NATO MTF</span></div>
+         <div class="center"></div>
+         <div>
+            <p class="lvl3 tab">a.</p><span>Element Name Changes</span></div>
+         <div>
+            <p class="lvl4 tab">(1)</p><span>composite: DutyOther</span></div>
+         <div>
+            <p class="lvl5 tab">(a)</p><span>name='DutyOtherCode'</span></div>
+         <div>
+            <p class="lvl5 tab">(b)</p><span>type='DutyOtherCodeType'</span></div>
+         <div>
+            <p class="lvl4 tab">(2)</p><span>composite: QRoutePointDesignatorType</span></div>
+         <div>
+            <p class="lvl5 tab">(a)</p><span>name='DQRoutePointCode'</span></div>
+         <div>
+            <p class="lvl5 tab">(b)</p><span>type='QRoutePointCodeType'</span></div>
+      </div>
+      
+   </body>
+</html>
