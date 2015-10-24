@@ -23,9 +23,7 @@
     exclude-result-prefixes="xsd" version="2.0">
     <xsl:output encoding="UTF-8" method="xml" indent="yes"/>
 
-    <!--This Transform produces a "Garden of Eden" style global elements XML Schema for Segments in the USMTF Military Message Standard.-->
-    <!--The Resulting Global Elements will be included in the "usmtf_fields" XML Schema per proposed changes of September 2014-->
-    <!--Duplicate Segment Names are deconflicted using an XML document containing affected messages, elements and approved changes-->
+    <!--This Transform produces a "Garden of Eden" style global elements XML Schema for Segments in the NATO Military Message Standard.-->
 
     <xsl:variable name="baseline_msgs" select="document('../../XSD/APP-11C-ch1/Consolidated/messages.xsd')"/>
     <xsl:variable name="goe_sets_xsd" select="document('../../XSD/APP-11C-GoE/natomtf_goe_sets.xsd')"/>
@@ -35,7 +33,6 @@
     <!--<xsl:variable name="new_set_names"
         select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')"/>-->
     <xsl:variable name="outputdoc" select="'../../XSD/APP-11C-GoE/natomtf_goe_segments.xsd'"/>
-
     <!-- ***********************  Segment Elements  ************************-->
     <!-- Extract all Segments from Baseline XML Schema for messages-->
     <!-- Copy every Segment Element and make global.  Populates segment_elements variable which includes duplicates -->
@@ -73,23 +70,19 @@
             </xsl:copy>
         </xsl:for-each>
     </xsl:variable>
-
     <xsl:template match="*">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="@*">
         <xsl:copy-of select="." copy-namespaces="no"/>
     </xsl:template>
-
     <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()">
         <xsl:value-of select="normalize-space(translate(.,'&#34;',''))"/>
     </xsl:template>
-
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Segment')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
@@ -99,7 +92,6 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
@@ -109,7 +101,6 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:param name="doc"/>
         <xsl:copy copy-namespaces="no">
@@ -119,8 +110,7 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
-
-    <!--Convert elements in xsd:appinfo to attributes-->
+   <!--Convert elements in xsd:appinfo to attributes-->
     <xsl:template match="*" mode="attr">
         <xsl:variable name="nm" select="name()"/>
         <xsl:variable name="txt" select="normalize-space(text())"/>
@@ -138,9 +128,7 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-
     <!-- ***********************  Global Types  ************************-->
-
     <xsl:variable name="global_types">
         <xsl:for-each select="$segment_elements/*">
             <xsl:variable name="nm" select="@name"/>
@@ -149,7 +137,6 @@
             </xsl:if>
         </xsl:for-each>
     </xsl:variable>
-
     <xsl:template match="xsd:element" mode="globaltype">
         <xsl:variable name="segmentName">
             <xsl:value-of select="@name"/>
@@ -159,26 +146,26 @@
                 <xsl:value-of select="concat($segmentName, 'Type')"/>
             </xsl:attribute>
             <xsl:apply-templates select="xsd:annotation" mode="global"/>
+            <xsd:complexContent>
+                <xsd:extension base="SegmentBaseType">
             <xsl:apply-templates select="xsd:complexType/xsd:sequence" mode="global"/>
+                </xsd:extension>
+            </xsd:complexContent>
         </xsd:complexType>
     </xsl:template>
-
     <xsl:template match="*" mode="global">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="global"/>
             <xsl:apply-templates select="*" mode="global"/>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="@*" mode="global">
         <xsl:copy-of select="." copy-namespaces="no"/>
     </xsl:template>
-
     <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()" mode="global">
         <xsl:value-of select="normalize-space(translate(.,'&#34;',''))"/>
     </xsl:template>
-
     <xsl:template match="xsd:element[not(starts-with(@name, 'GeneralText'))]" mode="global">
         <xsl:variable name="elname">
             <xsl:choose>
@@ -244,7 +231,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
     <xsl:template match="xsd:element[starts-with(@name, 'GeneralText')]" mode="global">
         <xsl:variable name="per">&#46;</xsl:variable>
         <xsl:variable name="apos">&#34;</xsl:variable>
@@ -286,7 +272,6 @@
             </xsd:complexType>
         </xsl:copy>
     </xsl:template>
-    
     <xsl:template match="xsd:extension[@base]" mode="global">
         <!--Create complex or simple type reference to match with global type in GoE fields-->
         <!--Because types have been normalized, it is necessary use element name to match-->
@@ -326,9 +311,7 @@
             <xsl:apply-templates select="*" mode="global"/>
         </xsl:copy>
     </xsl:template>
-
     <!-- ********************  Global Elements  *********************-->
-
     <xsl:variable name="global_elements">
         <xsl:for-each select="$global_types/*">
             <xsl:variable name="nm" select="@name"/>
@@ -342,9 +325,7 @@
             </xsl:element>
         </xsl:for-each>
     </xsl:variable>
-
     <!-- ************************************************************-->
-
     <!--Build XML Schema and add Global Elements and Complex Types -->
     <xsl:template match="/">
         <xsl:result-document href="{$outputdoc}">
@@ -355,14 +336,17 @@
                 targetNamespace="urn:int:nato:mtf:app-11(c):goe:segments">
                 <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:elementals" schemaLocation="natomtf_goe_fields.xsd"/>
                 <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:sets" schemaLocation="natomtf_goe_sets.xsd"/>
+                <xsd:complexType name="SegmentBaseType">
+                    <xsd:annotation>
+                    <xsd:documentation>For use to extend XML Schema at the Segment level</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:complexType>
                 <xsl:copy-of select="$global_types"/>
                 <xsl:copy-of select="$global_elements"/>
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
-
     <!-- **************************************-->
-    
     <xsl:template name="matchChange">
         <xsl:param name="matchEl"/>
         <xsl:variable name="match">
@@ -390,7 +374,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
     <xsl:template name="CamelCase">
         <xsl:param name="text"/>
         <xsl:choose>
@@ -410,7 +393,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
     <xsl:template name="CamelCaseWord">
         <xsl:param name="text"/>
         <xsl:value-of
@@ -419,7 +401,20 @@
             select="translate(substring($text, 2, string-length($text) - 1), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"
         />
     </xsl:template>
-
+    <xsl:template match="xsd:documentation" mode="global">
+        <xsl:if test="string-length(normalize-space(text())) > 0">
+            <xsl:copy copy-namespaces="no">
+                <xsl:apply-templates select="text()"/>
+            </xsl:copy>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="xsd:documentation">
+        <xsl:if test="string-length(normalize-space(text())) > 0">
+            <xsl:copy copy-namespaces="no">
+                <xsl:apply-templates select="text()"/>
+            </xsl:copy>
+        </xsl:if>
+    </xsl:template>
     <xsl:template match="xsd:appinfo" mode="ref">
         <xsl:param name="fldinfo"/>
         <xsl:copy copy-namespaces="no">
@@ -444,10 +439,9 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
-
     <!--Convert appinfo items-->
     <!--InitialSetFormatPosition only applies in context of containing message-->
-    <!--<xsl:template match="*:InitialSetFormatPosition" mode="attr"/>-->
+    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
     <!--Use Position relative to segment vice position relative to containing message-->
     <xsl:template match="*:SegmentStructureName" mode="attr">
         <xsl:if
@@ -484,7 +478,6 @@
             <xsl:value-of select="number($pos) - $initpos + 1"/>
         </xsl:attribute>
     </xsl:template>
-    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
     <xsl:template match="*:SegmentStructureConcept" mode="attr">
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">

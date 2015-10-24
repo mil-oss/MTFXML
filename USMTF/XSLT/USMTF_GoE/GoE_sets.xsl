@@ -331,11 +331,6 @@
         </xsl:variable>
         <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
-                <xsl:if test="not(xsd:documentation and string-length($doc) > 0)">
-                    <xsd:documentation>
-                        <xsl:value-of select="$doc"/>
-                    </xsd:documentation>
-                </xsl:if>
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*">
                     <xsl:with-param name="doc" select="$doc"/>
@@ -347,11 +342,18 @@
     <!--Copy documentation only if it has text content-->
     <xsl:template match="xsd:documentation">
         <xsl:param name="doc"/>
-        <xsl:if test="string-length($doc) > 0">
-            <xsl:copy copy-namespaces="no">
-                <xsl:value-of select="$doc"/>
-            </xsl:copy>
-        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="string-length(normalize-space($doc))&gt;0">
+                <xsl:copy copy-namespaces="no">
+                    <xsl:value-of select="$doc"/>
+                </xsl:copy>
+            </xsl:when>
+            <xsl:when test="string-length(normalize-space(text()))&gt;0">
+                <xsl:copy copy-namespaces="no">
+                <xsl:apply-templates select="text()"/>
+                </xsl:copy>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <!--Copy element and use template mode to convert elements to attributes in SET element-->
