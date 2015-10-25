@@ -20,14 +20,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
-
     <!--  This XSLT refactors baseline NATO MTF "fields" XML Schema by replacing annotation elements
     with attributes, removing unused elements and other adjustments-->
-
     <!--Fields from the baseline Composites XML Schema are also included as ComplexTypes in accordance with the intent to 
     consolidate fields and composites as global elements in the "Fields" XML Schema for the GoE refactor.
     type references are converted to local.-->
-
     <!--Normalized Fields XML Schema documents-->
     <xsl:variable name="string_fields_xsd" select="document('../../XSD/Normalized/Strings.xsd')"/>
     <xsl:variable name="integer_fields_xsd" select="document('../../XSD/Normalized/Integers.xsd')"/>
@@ -39,10 +36,8 @@
     <xsl:variable name="sets_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/sets.xsd')"/>
     <!--Normalized xsd:simpleTypes-->
     <xsl:variable name="normalizedsimpletypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
-
     <!--Output Document-->
     <xsl:variable name="output_fields_xsd" select="'../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd'"/>
-
     <!--Consolidated xsd:simpleTypes and xsd:elements for local referenece by xsd:complexTypes-->
     <xsl:variable name="refactor_fields_xsd">
         <xsl:text>&#10;</xsl:text>
@@ -85,18 +80,16 @@
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
-
     <!-- **************-->
     <!--Build re-factored xsd:complexTypes using GoE schema design and references-->
     <xsl:variable name="complex_types_xsd">
         <xsl:apply-templates select="$composites_xsd/xsd:schema/xsd:complexType"/>
     </xsl:variable>
-
     <xsl:variable name="complex_elements">
         <xsl:apply-templates select="$complex_types_xsd/*" mode="el"/>
     </xsl:variable>
-
-    <xsl:template match="/">
+    <!--*****************************************************-->
+    <xsl:template name="MAIN">
         <xsl:result-document href="{$output_fields_xsd}">
             <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB" elementFormDefault="unqualified"
@@ -119,7 +112,7 @@
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
-
+    <!--*****************************************************-->
     <!-- ******************** COMPLEX TYPES ******************** -->
     <!--Copy root level complexTypes-->
     <xsl:template match="xsd:complexType">
@@ -128,7 +121,6 @@
             <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
-
     <!--Create global xsd:element nodes for xsd:complexTypes -->
     <xsl:template match="xsd:complexType" mode="el">
         <xsd:element>
@@ -140,7 +132,6 @@
             </xsl:attribute>
         </xsd:element>
     </xsl:template>
-
     <!-- ******************** NAME CONFLICTS BETWEEN FIELDS AND COMPOSITES ******************** -->
     <xsl:template match="xsd:complexType[@name = 'DutyOtherType']">
         <xsd:complexType name="DutyOtherCodeType">
@@ -148,7 +139,6 @@
             <xsl:apply-templates select="*"/>
         </xsd:complexType>
     </xsl:template>
-
     <xsl:template match="xsd:complexType[@name = 'DutyOtherType'][xsd:sequence]" mode="el">
         <xsd:element>
             <xsl:attribute name="name">
@@ -159,14 +149,12 @@
             </xsl:attribute>
         </xsd:element>
     </xsl:template>
-
     <xsl:template match="xsd:complexType[@name = 'QRoutePointDesignatorType']">
         <xsd:complexType name="QRoutePointCodeType">
             <xsl:apply-templates select="@*[not(name() = 'name')]"/>
             <xsl:apply-templates select="*"/>
         </xsd:complexType>
     </xsl:template>
-
     <xsl:template match="xsd:complexType[@name = 'QRoutePointDesignatorType'][xsd:sequence]" mode="el">
         <xsd:element>
             <xsl:attribute name="name">
@@ -177,9 +165,7 @@
             </xsl:attribute>
         </xsd:element>
     </xsl:template>
-
     <!-- ************************************************************************************** -->
-
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->
     <xsl:template match="xsd:element[@type]">
         <xsl:variable name="nm">
@@ -225,21 +211,18 @@
                     <xsl:apply-templates select="*"/>
                 </xsl:copy>
             </xsl:when>
-
             <!--Create reference when modifed name matches global type-->
             <xsl:when test="exists($refactor_fields_xsd/*[@name = $refName])">
                 <xsd:element ref="{$refName}">
                     <xsl:apply-templates select="xsd:annotation"/>
                 </xsd:element>
             </xsl:when>
-
             <!--Eliminate BlankSpaceCharacter type name variants-->
             <xsl:when test="starts-with(@name, 'BlankSpaceCharacter')">
                 <xsd:element ref="BlankSpaceCharacter">
                     <xsl:apply-templates select="xsd:annotation"/>
                 </xsd:element>
             </xsl:when>
-
             <!--Include element name variants with normalized type-->
             <xsl:when test="starts-with($nm, 'BlankSpace')">
                 <xsl:element name="xsd:element">
@@ -279,7 +262,6 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
     <!--Call patternValue template to remove min and max length qualifiers in RegEx
     for matching and output-->
     <xsl:template match="xsd:pattern">
@@ -291,7 +273,6 @@
             </xsl:attribute>
         </xsl:copy>
     </xsl:template>
-
     <!--Remove min and max length qualifiers in RegEx for matching with normaized types-->
     <xsl:template name="patternValue">
         <xsl:param name="pattern"/>
@@ -326,7 +307,6 @@
         </xsl:choose>
     </xsl:template>
     <!-- _______________________________________________________ -->
-
     <!-- ******************** FORMATTING ******************** -->
     <xsl:template match="*">
         <xsl:copy copy-namespaces="no">
@@ -334,28 +314,23 @@
             <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="@*">
         <xsl:copy copy-namespaces="no">
             <xsl:value-of select="replace(., '&#34;', '')"/>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="el"/>
             <xsl:apply-templates select="*" mode="el"/>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="@*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:value-of select="replace(., '&#34;', '')"/>
         </xsl:copy>
     </xsl:template>
-
     <xsl:template match="xsd:annotation" mode="el"/>
-
     <!--Copy annotation only it has descendents with text content-->
     <!--Add xsd:documentation using FudExplanation if it exists-->
     <xsl:template match="xsd:annotation">
@@ -371,7 +346,6 @@
             </xsl:copy>
         </xsl:if>
     </xsl:template>
-
     <!--Copy documentation only it has text content-->
     <xsl:template match="xsd:documentation">
         <xsl:if test="text()">
@@ -380,7 +354,6 @@
             </xsl:copy>
         </xsl:if>
     </xsl:template>
-
     <!--Copy element and use template mode to convert elements to attributes-->
     <xsl:template match="xsd:appinfo">
         <xsl:if test="not(preceding-sibling::xsd:appinfo)">
@@ -398,7 +371,6 @@
             </xsl:copy>
         </xsl:if>
     </xsl:template>
-
     <!--Convert elements in xsd:appinfo to attributes-->
     <xsl:template match="*" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
@@ -408,13 +380,11 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
     <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()">
         <xsl:value-of select="replace(normalize-space(.), '&#34;', '')"/>
     </xsl:template>
     <!-- _______________________________________________________ -->
-
     <xsl:template match="*:FudName" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
@@ -423,7 +393,6 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-    
     <xsl:template match="*:FudExplanation" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
@@ -432,7 +401,6 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
     <xsl:template match="*:VersionIndicator" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
@@ -441,12 +409,10 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
- 
     <!-- ******************** FILTERS ******************** -->
     <xsl:template match="xsd:element/xsd:annotation"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
     <xsl:template match="*:FudRelatedDocument" mode="attr"/>
     <!-- _______________________________________________________ -->
-
 </xsl:stylesheet>

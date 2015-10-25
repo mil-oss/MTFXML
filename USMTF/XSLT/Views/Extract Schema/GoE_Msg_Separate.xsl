@@ -2,12 +2,12 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="Msgs" select="document('../../XSD/GoE_Schema/GoE_messages.xsd')"/>
-    <xsl:variable name="Segments" select="document('../../XSD/GoE_Schema/GoE_segments.xsd')"/>
-    <xsl:variable name="Sets" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
-    <xsl:variable name="Fields" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
+    <xsl:variable name="Msgs" select="document('../../../XSD/GoE_Schema/GoE_messages.xsd')"/>
+    <xsl:variable name="Segments" select="document('../../../XSD/GoE_Schema/GoE_segments.xsd')"/>
+    <xsl:variable name="Sets" select="document('../../../XSD/GoE_Schema/GoE_sets.xsd')"/>
+    <xsl:variable name="Fields" select="document('../../../XSD/GoE_Schema/GoE_fields.xsd')"/>
     <xsl:variable name="MsgId" select="'ACSAMSTAT'"/>
-    <xsl:variable name="OutDir" select="'../../XSD/GoE_Schema/SeparateMessages/'"/>
+    <xsl:variable name="OutDir" select="'../../../XSD/GoE_Schema/SeparateMessages/'"/>
     <xsl:template name="ExtractAllMessageSchema">
         <xsl:param name="outdir" select="$OutDir"/>
         <xsl:for-each select="$Msgs/xsd:schema/xsd:complexType[xsd:annotation/xsd:appinfo/*:Msg/@identifier]">
@@ -17,6 +17,7 @@
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
+    <!--*****************************************************-->
     <xsl:template name="ExtractMessageSchema">
         <xsl:param name="msgident" select="$MsgId"/>
         <xsl:param name="outdir" select="$OutDir"/>
@@ -170,6 +171,7 @@
             </xsl:result-document>
         </xsl:for-each>
     </xsl:template>
+    <!--*****************************************************-->
     <!--Return Global Segment name and any locally referenced segments-->
     <xsl:template name="getSegments">
         <xsl:param name="segName"/>

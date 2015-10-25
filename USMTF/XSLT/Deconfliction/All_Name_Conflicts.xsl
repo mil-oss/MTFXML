@@ -2,15 +2,15 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="Msgs" select="document('../../../XSD/GoE_Schema/GoE_messages.xsd')"/>
-    <xsl:variable name="Segments" select="document('../../../XSD/GoE_Schema/GoE_segments.xsd')"/>
-    <xsl:variable name="Sets" select="document('../../../XSD/GoE_Schema/GoE_sets.xsd')"/>
-    <xsl:variable name="Fields" select="document('../../../XSD/GoE_Schema/GoE_fields.xsd')"/>
+    <xsl:variable name="Msgs" select="document('../../XSD/GoE_Schema/GoE_messages.xsd')"/>
+    <xsl:variable name="Segments" select="document('../../XSD/GoE_Schema/GoE_segments.xsd')"/>
+    <xsl:variable name="Sets" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
+    <xsl:variable name="Fields" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
     <xsl:variable name="conflicts">
         <xsl:apply-templates select="$Fields/xsd:schema/*[@name]" mode="field"/>
     </xsl:variable>
-    <xsl:template name="main">
-        <xsl:result-document href="../../../XSD/GoE_Schema/name_conflicts.xml">
+    <xsl:template name="MAIN">
+        <xsl:result-document href="../../XSD/Deconflicted/name_conflicts.xml">
             <Name_Conflicts>
                 <xsl:for-each select="$conflicts/*[@segment | @set]">
                     <xsl:copy-of select="."/>

@@ -378,7 +378,7 @@
     </xsl:variable>
     <!-- ************************************************************-->
     <!--Build XML Schema and add Global Elements and Complex Types -->
-    <xsl:template match="/">
+    <xsl:template name="MAIN">
         <xsl:result-document href="../../XSD/GoE_Schema/GoE_segments.xsd">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:segments" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields"
                 xmlns:set="urn:mtf:mil:6040b:goe:sets" xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:segments">

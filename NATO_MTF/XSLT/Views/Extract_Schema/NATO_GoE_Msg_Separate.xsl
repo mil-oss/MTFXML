@@ -19,7 +19,6 @@
             </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
-    
     <xsl:template name="ExtractMessageSchema">
         <xsl:param name="msgident" select="$MsgId"/>
         <xsl:param name="outdir" select="$OutDir"/>
@@ -147,9 +146,7 @@
         <xsl:choose>
             <xsl:when test="$consolidate = 'yes'">
                 <xsl:result-document href="{$outdir}/{$mid}/{concat($mid,'.xsd')}">
-                    <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:mtf" 
-                        xml:lang="en-GB" 
-                        targetNamespace="urn:int:nato:mtf:app-11(c):goe:mtf"
+                    <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:mtf" xml:lang="en-GB" targetNamespace="urn:int:nato:mtf:app-11(c):goe:mtf"
                         attributeFormDefault="unqualified">
                         <xsl:apply-templates select="@*" mode="copy"/>
                         <!-- <xsl:apply-templates select="xsd:import" mode="copy">

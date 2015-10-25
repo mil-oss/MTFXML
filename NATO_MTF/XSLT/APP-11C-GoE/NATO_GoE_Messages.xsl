@@ -31,7 +31,8 @@
     <xsl:variable name="ctypes">
         <xsl:apply-templates select="$mtfmsgs/xsd:schema/xsd:element" mode="ctype"/>
     </xsl:variable>
-    <xsl:template match="/">
+    <!--*****************************************************-->
+    <xsl:template name="MAIN">
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xml:lang="en-US" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:int:nato:mtf:app-11(c):goe:mtf"
                 targetNamespace="urn:int:nato:mtf:app-11(c):goe:mtf" xmlns:field="urn:int:nato:mtf:app-11(c):goe:elementals"
@@ -44,6 +45,7 @@
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
+    <!--*****************************************************-->
     <xsl:template match="xsd:schema/xsd:element" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:attribute name="name">
@@ -326,14 +328,11 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
-
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
-
     <!--*************** Message Identifier Fixed Values **********************-->
-
     <xsl:template match="xsd:element[@name = 'MessageIdentifier']" mode="ctype">
         <xsd:element name="MessageIdentifier">
             <xsl:apply-templates select="@*" mode="msgid"/>
