@@ -17,9 +17,7 @@
 /* global __dirname */
 
 var express = require('express');
-var compression = require('compression');
 var url = require('url');
-var request = require('request');
 var fs = require('fs');
 var xml2js = require('xml2js');
 var http = require('http');
@@ -32,7 +30,6 @@ app.use(bodyParser.urlencoded({
     limit: '100mb', extended: true
 }));
 app.use(express.static(__dirname + '/'));
-app.use(compression());
 app.get('/*', function (req, res) {
     res.sendFile(__dirname + '/app/' + req.url);
 });
@@ -83,14 +80,14 @@ server.listen(8383, "0.0.0.0", function () {
 });
 
 var res = [
-    {'xml': '/xml/schema/USMTF/GoE_messages.xsd', 'json': '/json/GoE_messages.json'},
-    {'xml': '/xml/schema/USMTF/GoE_segments.xsd', 'json': '/json/GoE_segments.json'},
-    {'xml': '/xml/schema/USMTF/GoE_sets.xsd', 'json': '/json/GoE_sets.json'},
-    {'xml': '/xml/schema/USMTF/GoE_fields.xsd', 'json': '/json/GoE_fields.json'},
-    {'xml': '/xml/schema/NATOMTF/natomtf_goe_messages.xsd', 'json': '/json/natomtf_goe_messages.json'},
-    {'xml': '/xml/schema/NATOMTF/natomtf_goe_segments.xsd', 'json': '/json/natomtf_goe_segments.json'},
-    {'xml': '/xml/schema/NATOMTF/natomtf_goe_sets.xsd', 'json': '/json/natomtf_goe_sets.json'},
-    {'xml': '/xml/schema/NATOMTF/natomtf_goe_fields.xsd', 'json': '/json/natomtf_goe_fields.json'}
+    {'xml': '/xml/xsd/USMTF/GoE_messages.xsd', 'json': '/JSON/GoE_messages.json'},
+    {'xml': '/xml/xsd/USMTF/GoE_segments.xsd', 'json': '/JSON/GoE_segments.json'},
+    {'xml': '/xml/xsd/USMTF/GoE_sets.xsd', 'json': '/JSON/GoE_sets.json'},
+    {'xml': '/xml/xsd/USMTF/GoE_fields.xsd', 'json': '/JSON/GoE_fields.json'},
+    {'xml': '/xml/xsd/NATOMTF/natomtf_goe_messages.xsd', 'json': '/JSON/natomtf_goe_messages.json'},
+    {'xml': '/xml/xsd/NATOMTF/natomtf_goe_segments.xsd', 'json': '/JSON/natomtf_goe_segments.json'},
+    {'xml': '/xml/xsd/NATOMTF/natomtf_goe_sets.xsd', 'json': '/JSON/natomtf_goe_sets.json'},
+    {'xml': '/xml/xsd/NATOMTF/natomtf_goe_fields.xsd', 'json': '/JSON/natomtf_goe_fields.json'}
 ];
 
 var loadData = function () {

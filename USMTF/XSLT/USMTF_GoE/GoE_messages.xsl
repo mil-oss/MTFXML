@@ -35,7 +35,7 @@
         <xsl:apply-templates select="$mtfmsgs/xsd:schema/xsd:element" mode="ctype"/>
     </xsl:variable>
     <!--*****************************************************-->
-    <xsl:template name="MAIN">
+    <xsl:template name="main">
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xml:lang="en-US" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:mtf:mil:6040b:goe:mtf"
                 targetNamespace="urn:mtf:mil:6040b:goe:mtf" xmlns:field="urn:mtf:mil:6040b:goe:fields" xmlns:set="urn:mtf:mil:6040b:goe:sets"
@@ -95,7 +95,7 @@
             <xsl:when test="starts-with(*:MtfStructuralRelationshipExplanation/text(), 'Field 1 in HEADING')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipExplanation/text(), 'Field 1 of HEADING')"/>
             <xsl:otherwise>
-                <xsl:element name="Structure">
+                <xsl:element name="Rule">
                     <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
                 </xsl:element>
             </xsl:otherwise>
@@ -105,9 +105,18 @@
         <xsl:variable name="apos">&#39;</xsl:variable>
         <xsl:variable name="quot">&#34;</xsl:variable>
         <xsl:variable name="nm" select="lower-case(substring-after(name(), 'MtfStructuralRelationship'))"/>
-        <xsl:attribute name="{$nm}">
-            <xsl:value-of select="normalize-space(replace(., $quot, $apos))" disable-output-escaping="yes"/>
-        </xsl:attribute>
+        <xsl:choose>
+            <xsl:when test="$nm='rule'">
+                <xsl:attribute name="structure">
+                    <xsl:value-of select="normalize-space(translate(replace(., $quot, $apos),'&#xA;',''))" disable-output-escaping="yes"/>
+                </xsl:attribute>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:attribute name="{$nm}">
+                    <xsl:value-of select="normalize-space(translate(replace(., $quot, $apos),'&#xA;',''))" disable-output-escaping="yes"/> 
+                </xsl:attribute>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <xsl:template match="xsd:schema/xsd:element" mode="ctype">
         <xsd:complexType name="{concat(@name,'Type')}">
@@ -386,9 +395,6 @@
             </xsl:choose>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="@*" mode="ctype">
-        <xsl:copy-of select="."/>
-    </xsl:template>
     <xsl:template match="@base" mode="ctype">
         <xsl:attribute name="base">
             <xsl:value-of select="replace(., 's:', 'set:')"/>
@@ -558,16 +564,10 @@
             <xsl:apply-templates select="@*" mode="msgid"/>
         </xsl:element>
     </xsl:template>
-    <xsl:template match="@*" mode="msgid">
-        <xsl:copy-of select="."/>
-    </xsl:template>
     <xsl:template match="@base[. = 'SetBaseType']" mode="msgid">
         <xsl:attribute name="base">
             <xsl:text>set:SetBaseType</xsl:text>
         </xsl:attribute>
-    </xsl:template>
-    <xsl:template match="text()" mode="msgid">
-        <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
     </xsl:template>
     <xsl:template match="*[@name = 'MessageTextFormatIdentifierType']" mode="msgid"/>
     <xsl:template match="*[@name = 'VersionOfMessageTextFormat']" mode="msgid">
@@ -601,7 +601,19 @@
             </xsd:annotation>
         </xsd:element>
     </xsl:template>
+    <xsl:template match="@*" mode="ctype">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="@*" mode="msgid">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="text()">
+        <xsl:value-of select="normalize-space(translate(., '&#34;&#xA;', ''))"/>
+    </xsl:template>
+    <xsl:template match="text()" mode="msgid">
+        <xsl:value-of select="normalize-space(translate(., '&#34;&#xA;', ''))"/>
+    </xsl:template>
     <xsl:template match="text()" mode="ctype">
-        <xsl:value-of select="translate(normalize-space(.), '&#34;', '')"/>
+        <xsl:value-of select="translate(normalize-space(.), '&#34;&#xA;', '')"/>
     </xsl:template>
 </xsl:stylesheet>

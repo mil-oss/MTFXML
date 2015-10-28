@@ -1,0 +1,2770 @@
+<?xml version="1.0" encoding="UTF-8"?><Package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="b239f455-9c8d-4829-aa5d-d37457e29b1c" BusinessID="000030" Path="/Package/Product/Launch_Entity" OrigType="Mobile_Offer_Template">
+   <Name>Mobile Offer</Name>
+   <Description>Mobile Offer</Description>
+   <Category_ID Product_Line_ID="11">11</Category_ID>
+   <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+   <Available_Start_Date>2014-09-21</Available_Start_Date>
+   <Element_Guid>b239f455-9c8d-4829-aa5d-d37457e29b1c</Element_Guid>
+   <Element_Type_Guid>7a577973-ba33-48cd-9c1a-cec733893db2</Element_Type_Guid>
+   <Business_ID>000030</Business_ID>
+   <MappingRues ID="0fe9cc98-1f44-49a3-b8f0-c4df1fcf1f1f" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Data RFS features WHEN International Roaming Data exists</Name>
+      <Conditions ID="150b5e72-ca30-4ab6-98c4-6bd2eba4bc12" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>if "Mobile Offer" contains "International Roaming Data"</Name>
+         <Exists ID="1c6de4f6-fa0c-426e-b561-4d8833f08892" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000047,000048</Entity>
+         </Exists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="1111e973-4a6b-45b3-8090-853cbb9d8751" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Roaming Enabled for Subscriber</Name>
+         <Sequence>1</Sequence>
+         <Target ID="e76ed7dd-3c61-43dd-a12d-c7db7285a7a7" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>694997e4-b35c-4312-9807-019d287d70f7</EntityPath>
+               <ElementPath>Technical_SpecCharUse/24e03ebd-5309-4c7a-87a3-2ae547920cbf/Characteristic_CharValue/38d7bbf8-1ab0-4606-9cc6-8a7a169abaf7</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="e4fbae10-ae71-4a41-a8da-814a5c206c6f" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Data RFS features WHEN NO International Roaming Data</Name>
+      <Conditions ID="bf155ea6-bccb-4e95-980f-a4e4fd1e3d56" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>if "Mobile Offer" DOES NOT contain "International Roaming Data"</Name>
+         <NotExists ID="58a51365-8b28-4510-8325-22fbbce232a0" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000047,000048</Entity>
+         </NotExists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="c5c088bc-e19d-41b3-849d-255985ef071a" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Roaming Disabled for Subscriber</Name>
+         <Sequence>1</Sequence>
+         <Target ID="ce945b49-3c23-4a52-a2be-07ee8f5cdd9b" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>694997e4-b35c-4312-9807-019d287d70f7</EntityPath>
+               <ElementPath>Technical_SpecCharUse/24e03ebd-5309-4c7a-87a3-2ae547920cbf/Characteristic_CharValue/60803a3f-342d-4673-a2b5-25e74f897a25</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="15f1cb51-4794-4c31-acf9-0887d5a6351c" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Messaging RFS features WHEN International Messaging CFS.MMS = Enabled</Name>
+      <Conditions ID="d6a90ce8-ba41-4e02-9035-65087ee8f455" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>International Messaging CFS.MMS = Enabled</Name>
+         <ExistsValue ID="0eabc331-766a-4c28-a5b5-730811c694d2" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>b239f455-9c8d-4829-aa5d-d37457e29b1c,36cb0bf2-b654-45b8-9e88-098c803c3633,13875159-4c95-4325-aed1-94ffad32b2db,8e6e5697-5be2-42b3-9535-079c4877fd59,babf35f2-559d-4291-b75f-3e0ab3f992e1</EntityPath>
+               <ElementPath>Commercial_SpecCharUse/b56d82ac-ca02-4ca9-8782-ecf423ef88ca/Characteristic_CharValue/e7cacc14-4833-4514-9418-4c310f4931f4</ElementPath>
+            </EntityValue>
+         </ExistsValue>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="2ab5cc2f-1467-4bba-8175-035aee1418fa" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.Allow MMS Abroad = True</Name>
+         <Sequence>1</Sequence>
+         <Target ID="ab9044c6-5685-4a07-aa50-e3022ecfab49" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/aa68d2dc-d72e-4e1a-b649-be1682041b65/Characteristic_CharValue/103d490b-84ce-4d32-bf2d-570ee56b223f</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="6c6a7584-f97d-431d-8e35-8135ed37c7e2" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.MMS Roaming = True</Name>
+         <Sequence>2</Sequence>
+         <Target ID="11f7f87f-9c46-4222-9db3-a2511cd0787d" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/16042038-b681-43f1-a7c8-cc2d77b08859/Characteristic_CharValue/3536b49b-ea76-4d35-a811-51640798b4f6</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="426ad796-f651-4fde-8c1e-76a870e63f34" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Messaging RFS features WHEN International Messaging CFS.MMS = Disabled</Name>
+      <Conditions ID="f5d0fa54-08b6-42b0-ae0e-26f20451c6dc" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>International Messaging CFS.MMS = Disabled</Name>
+         <ExistsValue ID="47f3cfba-1b43-4e0c-b00b-f5956a021b7f" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>b239f455-9c8d-4829-aa5d-d37457e29b1c,36cb0bf2-b654-45b8-9e88-098c803c3633,13875159-4c95-4325-aed1-94ffad32b2db,8e6e5697-5be2-42b3-9535-079c4877fd59,babf35f2-559d-4291-b75f-3e0ab3f992e1</EntityPath>
+               <ElementPath>Commercial_SpecCharUse/b56d82ac-ca02-4ca9-8782-ecf423ef88ca/Characteristic_CharValue/aad3ec30-44a4-4f66-92d1-9a8fadae265c</ElementPath>
+            </EntityValue>
+         </ExistsValue>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="41fbd5a4-a340-4400-b765-e6d65f75346f" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.Allow MMS Abroad = False</Name>
+         <Sequence>1</Sequence>
+         <Target ID="4b919d59-b838-4609-9af2-94d968900f8b" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/aa68d2dc-d72e-4e1a-b649-be1682041b65/Characteristic_CharValue/9e62dbdf-58a1-48d0-beb1-9082845cf526</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="8dfaf6ec-83bd-4159-a7c2-fc4cce9bf159" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.MMS Roaming = False</Name>
+         <Sequence>2</Sequence>
+         <Target ID="fdae1c44-e1a2-40f4-b5c8-ec7af84e3972" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/16042038-b681-43f1-a7c8-cc2d77b08859/Characteristic_CharValue/59247fa6-9887-4093-84e3-ecfa4c8ab0f7</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="a3f38cbc-d60f-41aa-80e8-4d1b177e8ef7" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Messaging RFS features WHEN NO International Messaging PS</Name>
+      <Conditions ID="0a012fdd-5be7-4382-bc82-9d61ae78e519" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>International Roaming Messaging PS exists</Name>
+         <NotExists ID="b86e94a3-7436-432e-8d2d-896680f6a595" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000044,000046</Entity>
+         </NotExists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="d6f3a549-3ffd-4370-a945-e18c8767ce95" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.Roaming Allow Outgoing SMS = TRUE</Name>
+         <Sequence>1</Sequence>
+         <Target ID="c45179bd-0dc4-40f2-86e3-6b38c27fca15" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/64854f86-6e7a-40e6-9705-c27d3b90f165/Characteristic_CharValue/cb5116f9-6ec8-40cf-8f39-b9fff76c7856</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="e29b82b2-3305-4189-a6c6-e9314388166b" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Messaging RFS features WHEN NO International Roaming Messaging PS</Name>
+      <Conditions ID="c60cdf31-1a1f-4c6b-b690-c239df4f5205" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>No International Roaming Messaging PS</Name>
+         <Exists ID="37fe8a22-dc61-4830-bfc0-b93c3c0be520" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000047,000049</Entity>
+         </Exists>
+         <NotExists ID="e76508ad-acb8-41ff-8ffe-9981d4620e0a" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000047,000049</Entity>
+         </NotExists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="c96d7d86-f48f-43e1-aae2-9e40a7cc1062" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.Roaming Allow Outgoing SMS = FALSE</Name>
+         <Sequence>1</Sequence>
+         <Target ID="f5989aa9-a9c5-4613-a879-a0cc5eb5c7db" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/86dfacec-0d6f-4981-b223-7fba5b31bdd5/Characteristic_CharValue/52be0ea7-1084-4b6f-91ac-320d8f87b618</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="efad3217-f8fe-449f-af36-249b42f1cd84" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.Roaming Allow Incoming SMS = FALSE</Name>
+         <Sequence>2</Sequence>
+         <Target ID="567e667c-6c7f-4ca1-bbc1-d9367f402de5" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/4b0178fd-b192-441c-985a-9498c5baa78f/Characteristic_CharValue/05cada23-5a36-4a7a-b27d-c1f190838399</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="70de2ef1-4280-40b9-8602-2bf8d3a75e7d" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Messaging RFS features WHEN International Roaming Messaging PS exists</Name>
+      <Conditions ID="bb7995f1-c0e7-47ae-8d21-fce2c137f893" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>International Roaming Messaging PS exists</Name>
+         <Exists ID="c041d7a6-cd02-41c3-9d3c-2870397ad062" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000047,000049</Entity>
+         </Exists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="39594fa5-bad6-4b01-ab1b-fc3f7085e4e7" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.Roaming Allow Outgoing SMS = TRUE</Name>
+         <Sequence>1</Sequence>
+         <Target ID="a05e35fb-8b26-4f38-86ba-886d8f69216f" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/86dfacec-0d6f-4981-b223-7fba5b31bdd5/Characteristic_CharValue/79f1aa22-dabe-4a5f-9eb8-3851341cd171</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="99e0b2a5-e9d7-4a08-8f19-054ddf4cf989" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.Roaming Allow Incoming SMS = TRUE</Name>
+         <Sequence>2</Sequence>
+         <Target ID="4abf3fed-fde8-4edd-a99c-c4c469fda427" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/4b0178fd-b192-441c-985a-9498c5baa78f/Characteristic_CharValue/c627e305-4f92-4ee3-9ee7-52a3577cf9aa</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="99c974ce-03ff-4fbd-aacb-69f30ec75c0a" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Messaging RFS features WHEN International Messaging PS exists</Name>
+      <Conditions ID="c6343852-c724-405a-83f0-e6fb1cd07e65" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>International Roaming exists</Name>
+         <Exists ID="c565a08d-24a4-4873-ba39-bbd3218a9f3f" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000044,000046</Entity>
+         </Exists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="fc9c72f1-7834-43a6-b792-b7d45734bc90" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Messaging RFS.Roaming Allow Outgoing SMS = TRUE</Name>
+         <Sequence>1</Sequence>
+         <Target ID="66a645c7-a9ef-465a-aa88-400d5f19fff4" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>409d8cd4-1c3c-4ad3-b3a0-08387b25d450</EntityPath>
+               <ElementPath>Technical_SpecCharUse/64854f86-6e7a-40e6-9705-c27d3b90f165/Characteristic_CharValue/0d92d48b-586b-49ba-b923-ee5c34eafd8e</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="218d7736-1863-4c49-b765-da61e8ee19fe" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Telephony RFS features WHEN NO International Roaming exists</Name>
+      <Conditions ID="edf569e7-8b97-49ab-86d5-fa49b1f5d380" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>NO International Roaming exists</Name>
+         <NotExists ID="c4e17ccb-111c-4556-bdd9-54299e35f2d5" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000047</Entity>
+         </NotExists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="5e38cec5-c18f-4e2b-9400-4811bb11fd01" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Telephony RFS.Roaming Allow outgoing calls to other countries = FALSE</Name>
+         <Sequence>1</Sequence>
+         <Target ID="7c7a9c23-3ccd-4288-ac5d-ac84160efec4" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>e3129ce1-af0f-41e4-9e38-146641ef4e31</EntityPath>
+               <ElementPath>Technical_SpecCharUse/e4ce26cd-f7fe-462f-a0e8-282f39c08ac7/Characteristic_CharValue/3ec1ef91-36ba-49a2-88d5-bbe6b06652f9</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="3a841e80-fd2a-4ff0-8d6f-60c9d67e78fe" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Telephony RFS.Roaming Allow Incoming Calls = FALSE</Name>
+         <Sequence>2</Sequence>
+         <Target ID="402e360e-943f-406f-a33e-5c636d19ddd2" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>e3129ce1-af0f-41e4-9e38-146641ef4e31</EntityPath>
+               <ElementPath>Technical_SpecCharUse/0026cdaf-f85f-445d-b2a9-3b66c5b529ed/Characteristic_CharValue/89432b49-cb75-4048-9f7b-b9daa97a447a</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="e3a0f0cc-d735-4011-8813-4c49864c119d" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Telephony RFS.Roaming Allow outgoing calls = FALSE</Name>
+         <Sequence>3</Sequence>
+         <Target ID="020ed497-54b8-437c-aaad-197689147bb7" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>e3129ce1-af0f-41e4-9e38-146641ef4e31</EntityPath>
+               <ElementPath>Technical_SpecCharUse/0e90e863-7ae6-4f8e-806f-d4c0d0f909f9/Characteristic_CharValue/805762fb-88a7-46fd-9c55-d4c456f77344</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="b5c4825b-dc1e-4bc4-9a08-58ddb66d6a39" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>Set Mobile Telephony RFS features WHEN International Roaming exists</Name>
+      <Conditions ID="d0dce32a-e0b3-4859-8826-e2bdbd5b0ff2" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>International Roaming exists</Name>
+         <Exists ID="06548e33-7b1f-4f59-8c1d-62c3bbef6ed2" OrigType="SigmaRuleEntity">
+            <Entity>000030,000031,000047</Entity>
+         </Exists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>1</Sequence>
+      <Actions_SMap_SetConfigValue ID="597eb20a-04a1-4ac8-a5d1-fadd20f8adb9" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Telephony RFS.Roaming Allow outgoing calls to other countries = TRUE</Name>
+         <Sequence>1</Sequence>
+         <Target ID="fce78016-4cde-4a9e-a43c-74919027e293" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>e3129ce1-af0f-41e4-9e38-146641ef4e31</EntityPath>
+               <ElementPath>Technical_SpecCharUse/e4ce26cd-f7fe-462f-a0e8-282f39c08ac7/Characteristic_CharValue/bd9d769d-08eb-4be9-9aca-0e3a0d05f73d</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="3f08e206-1aca-4356-8be2-1a3011ed7f75" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Telephony RFS.Roaming Allow Incoming Calls = TRUE</Name>
+         <Sequence>2</Sequence>
+         <Target ID="509031c0-35c4-4821-8c8c-4f54baf7475b" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>e3129ce1-af0f-41e4-9e38-146641ef4e31</EntityPath>
+               <ElementPath>Technical_SpecCharUse/0026cdaf-f85f-445d-b2a9-3b66c5b529ed/Characteristic_CharValue/d7d8876f-426c-403c-98e9-d903aacf6a73</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="a332824b-db99-4802-a1bd-672919b8da65" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Mobile Telephony RFS.Roaming Allow outgoing calls = TRUE</Name>
+         <Sequence>3</Sequence>
+         <Target ID="3be425e0-7184-4656-8fd0-7c3827fd0884" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>e3129ce1-af0f-41e4-9e38-146641ef4e31</EntityPath>
+               <ElementPath>Technical_SpecCharUse/0e90e863-7ae6-4f8e-806f-d4c0d0f909f9/Characteristic_CharValue/ee41fa79-1bd8-47fa-9365-d538d7dcd8da</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="659cfd2b-1eee-480c-92f2-07552811e2be" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>If Plan 500 set handset shipping</Name>
+      <Conditions ID="8d320a97-1d52-4249-a009-2ee943023361" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>Plan 500 EXISTS</Name>
+         <Exists ID="cc99756f-5c4b-4cc1-b00b-cb97056046f2" OrigType="SigmaRuleEntity">
+            <Entity>000030,000080,000106</Entity>
+         </Exists>
+      </Conditions>
+      <TriggerEvents ID="a20d9f45-0b23-4512-8e24-7d423cc40b8f" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>COMMERCIAL_DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>10</Sequence>
+      <Actions_SMap_SetConfigValue ID="6dd1c23b-059e-4a6e-b0f8-9803be1e7247" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Set Shipping on blackberry handset</Name>
+         <Sequence>1</Sequence>
+         <Target ID="c7df1b51-7bee-495b-8e4e-36b1045769af" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>b239f455-9c8d-4829-aa5d-d37457e29b1c,69179d71-46f5-4ba4-8bd9-ec33e9096d3a,820e6af4-6d79-4528-94cc-719fd8408203</EntityPath>
+               <ElementPath>Commercial_SpecCharUse/0ba1c72d-5f8c-4a66-a06c-8c154569c21c/Characteristic_CharValue/18ba33a3-4b33-412a-a5fd-8e2c84361e46</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="208bfc74-9df8-408d-8639-258d4c8fc47e" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Set Shipping on Nokia Handset</Name>
+         <Sequence>2</Sequence>
+         <Target ID="0c0ab0c1-e57d-43dc-80d8-58d7d000a058" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>b239f455-9c8d-4829-aa5d-d37457e29b1c,69179d71-46f5-4ba4-8bd9-ec33e9096d3a,9728d27e-f508-4367-8135-d49f8b819a02</EntityPath>
+               <ElementPath>Commercial_SpecCharUse/6f9a5174-31c2-4c8a-b5dd-d11f7efe3971/Characteristic_CharValue/18ba33a3-4b33-412a-a5fd-8e2c84361e46</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="1bc38598-cb5f-461d-9187-0ac7a77b488c" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>If Plan 300 set handset shipping</Name>
+      <Conditions ID="e9153be6-0426-49a1-8100-f4c6a1ca220e" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>Plan 300 EXISTS</Name>
+         <Exists ID="54c9beea-84f1-4a1d-9e25-cb72bf926a7d" OrigType="SigmaRuleEntity">
+            <Entity>000030,000080,000105</Entity>
+         </Exists>
+      </Conditions>
+      <TriggerEvents ID="a20d9f45-0b23-4512-8e24-7d423cc40b8f" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>COMMERCIAL_DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>10</Sequence>
+      <Actions_SMap_SetConfigValue ID="5c89bf3c-092e-4328-b314-e9ccce0c72c1" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Set Shipping on blackberry handset</Name>
+         <Sequence>1</Sequence>
+         <Target ID="b3cafb76-e3b1-402b-87b1-14577e9f336a" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>b239f455-9c8d-4829-aa5d-d37457e29b1c,69179d71-46f5-4ba4-8bd9-ec33e9096d3a,820e6af4-6d79-4528-94cc-719fd8408203</EntityPath>
+               <ElementPath>Commercial_SpecCharUse/0ba1c72d-5f8c-4a66-a06c-8c154569c21c/Characteristic_CharValue/18ba33a3-4b33-412a-a5fd-8e2c84361e46</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="869ba77a-7ba3-4d54-9c2e-6f14b96a0177" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Set Shipping on Nokia Handset</Name>
+         <Sequence>2</Sequence>
+         <Target ID="cb661578-2cca-45f4-ad09-aa2b9923f757" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>b239f455-9c8d-4829-aa5d-d37457e29b1c,69179d71-46f5-4ba4-8bd9-ec33e9096d3a,9728d27e-f508-4367-8135-d49f8b819a02</EntityPath>
+               <ElementPath>Commercial_SpecCharUse/6f9a5174-31c2-4c8a-b5dd-d11f7efe3971/Characteristic_CharValue/18ba33a3-4b33-412a-a5fd-8e2c84361e46</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="42dc45f3-30a7-4f78-97be-e090b874fdba" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>If Plan 100 set handset shipping</Name>
+      <Conditions ID="57790215-6385-4995-b23f-18e00eb690f0" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>Plan 500 EXISTS</Name>
+         <Exists ID="71541964-9fcf-42c0-a851-94bd6d411dde" OrigType="SigmaRuleEntity">
+            <Entity>000030,000080,000106</Entity>
+         </Exists>
+      </Conditions>
+      <TriggerEvents ID="a20d9f45-0b23-4512-8e24-7d423cc40b8f" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>COMMERCIAL_DECOMPOSE</Name>
+      </TriggerEvents>
+      <Sequence>10</Sequence>
+      <Actions_SMap_SetConfigValue ID="a1689417-cc9b-4022-8afd-20de846f77b6" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Set Shipping on blackberry handset</Name>
+         <Sequence>1</Sequence>
+         <Target ID="17316f87-a418-422d-bcde-47e5654f4720" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>b239f455-9c8d-4829-aa5d-d37457e29b1c,69179d71-46f5-4ba4-8bd9-ec33e9096d3a,820e6af4-6d79-4528-94cc-719fd8408203</EntityPath>
+               <ElementPath>Commercial_SpecCharUse/0ba1c72d-5f8c-4a66-a06c-8c154569c21c/Characteristic_CharValue/25f59ac9-012b-41f9-977c-5c6c95c5879c</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+      <Actions_SMap_SetConfigValue ID="6249e3ac-5d90-4266-92c1-ab194fa71523" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Set Shipping on Nokia Handset</Name>
+         <Sequence>2</Sequence>
+         <Target ID="043f4097-d616-4ba9-83d5-da8cba7d817a" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>b239f455-9c8d-4829-aa5d-d37457e29b1c,69179d71-46f5-4ba4-8bd9-ec33e9096d3a,9728d27e-f508-4367-8135-d49f8b819a02</EntityPath>
+               <ElementPath>Commercial_SpecCharUse/6f9a5174-31c2-4c8a-b5dd-d11f7efe3971/Characteristic_CharValue/25f59ac9-012b-41f9-977c-5c6c95c5879c</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>true</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="b86c5f10-75ac-4ec5-86a5-76812fd67e51" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>SET Mobile Telephony Features RFS features WHEN NO Calling Line Identity Restriction (CLIR) CFS </Name>
+      <Conditions ID="087a9b87-c4dc-4e7f-ad1f-00014935b320" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>NO Calling Line Identity Restriction (CLIR) CFS </Name>
+         <NotExists ID="05599094-d08f-42ef-aa83-46199d792f16" OrigType="SigmaRuleEntity">
+            <Entity>000079,000075</Entity>
+         </NotExists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Description>SET Mobile Telephony Features RFS features WHEN NO Calling Line Identity Restriction (CLIR) CFS EXISTS</Description>
+      <Sequence>13</Sequence>
+      <Actions_SMap_SetConfigValue ID="0d6d1820-06e2-4b79-8477-2826ee315620" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Calling Line Identity Restriction (CLIR) = False</Name>
+         <Sequence>1</Sequence>
+         <Target ID="0aa5a34d-4c40-4621-a56f-20c71c8978a5" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>1af62c90-213c-4a89-8985-b2083cf692c1,a55d5d83-4254-42f2-bf7d-fbf1dd95b8c1</EntityPath>
+               <ElementPath>Technical_SpecCharUse/248e4f3d-fa56-4ba5-b3da-c23d849b2f81/Characteristic_CharValue/de2dbad7-03c3-401f-bfa9-c661eef4c213</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <MappingRues ID="82958c42-caa7-4fe0-9c8f-f330fb16a334" OrigType="SMapRule" Pattern="SMapRuleBase">
+      <Name>SET Mobile Telephony Features RFS features WHEN Calling Line Identity Restriction (CLIR) CFS EXISTS</Name>
+      <Conditions ID="0448a8c7-1654-4d2d-9e0a-561e81f54b7c" OrigType="SMapCondition" Pattern="SMapBase">
+         <Name>Calling Line Identity Restriction (CLIR) CFS EXISTS</Name>
+         <Exists ID="4cf48695-268c-4e90-80b1-c0734478180f" OrigType="SigmaRuleEntity">
+            <Entity>000079,000075</Entity>
+         </Exists>
+      </Conditions>
+      <TriggerEvents ID="5d070dca-ac17-4d6c-b007-346576c65719" OrigType="SMapTriggerEvent" Pattern="SMapBase">
+         <Name>DECOMPOSE</Name>
+      </TriggerEvents>
+      <Description>SET Mobile Telephony Features RFS features WHEN Calling Line Identity Restriction (CLIR) CFS EXISTS</Description>
+      <Sequence>12</Sequence>
+      <Actions_SMap_SetConfigValue ID="7f6374d5-7bd7-45ad-8ed4-12ee80278bff" OrigType="SMap_SetConfigValue" Pattern="SMap_Value">
+         <Name>Calling Line Identity Restriction (CLIR) = True</Name>
+         <Sequence>1</Sequence>
+         <Target ID="d52b1f46-4847-417c-88e4-6560b088f4ef" OrigType="SigmaRuleEntityValue">
+            <EntityValue>
+               <EntityPath>1af62c90-213c-4a89-8985-b2083cf692c1,a55d5d83-4254-42f2-bf7d-fbf1dd95b8c1</EntityPath>
+               <ElementPath>Technical_SpecCharUse/248e4f3d-fa56-4ba5-b3da-c23d849b2f81/Characteristic_CharValue/c89adf95-6629-4b7e-bfea-4320ff055c0b</ElementPath>
+            </EntityValue>
+         </Target>
+         <Replace>false</Replace>
+      </Actions_SMap_SetConfigValue>
+   </MappingRues>
+   <Product_Name>Mobile Offer</Product_Name>
+   <Product_Description>Mobile Offer</Product_Description>
+   <Product_To_Product ID="97af0930-48fa-4721-85ad-6feeabced950" OrigType="Product_Relation" Pattern="Relation_Entity">
+      <Association_Start_Date>2014-09-22</Association_Start_Date>
+      <Max_Occurs>1</Max_Occurs>
+      <Min_Occurs>0</Min_Occurs>
+      <Product ID="69179d71-46f5-4ba4-8bd9-ec33e9096d3a" BusinessID="000025" Path="/Product_Specification_Component_Group/Product_ComponentGroup/Component_Group/Product/Launch_Entity" OrigType="Generic_Product_Spec_Component_Group">
+         <Name>Handset Choice</Name>
+         
+         <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+         <Available_Start_Date>2014-09-01</Available_Start_Date>
+         
+         
+         
+         
+         <Product_To_Product ID="af503310-cbcb-4510-ad50-8f513e824a88" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-09-01</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>0</Min_Occurs>
+            <Product ID="9728d27e-f508-4367-8135-d49f8b819a02" BusinessID="000024" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+               <Name>Nokia Lumia 630 PS</Name>
+               
+               <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+               <Available_Start_Date>2014-09-01</Available_Start_Date>
+               
+               
+               
+               
+               
+               
+               <Product_To_Product ID="4df1f05c-4af8-4d12-ab8b-7d3d82daf9aa" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-01</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="bbca8cde-9c43-4aa5-a89c-1bc0c33e723a" BusinessID="000021" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Starter Kit SIM PS</Name>
+                     
+                     <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-01</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="6268b77a-73a6-4f64-9a57-17eb55ed1de2" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-01</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="9d8eabcf-5d47-4863-a764-97648fbe3cf4" BusinessID="000022" Path="/Physical_Resource_Component/Resource_Component/Component/Product/Launch_Entity" OrigType="Generic_Physical_Resource_Template">
+                           <Name>Mobile SIM Card RS</Name>
+                           
+                           <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-01</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Charge ID="59716280-c039-4798-8849-5e74e58017f7" OrigType="Charge_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-18</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Charge ID="d8219582-6a93-4ae2-8f1a-bd4a3a94f98a" BusinessID="000026" Path="/Non_Recurring_Charge/Charge/Launch_Entity" OrigType="Generic_NRC_Template" Excluded="true">
+                           <Name>SIM Outright Purchase Charge</Name>
+                           
+                           <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-01</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                        </Charge>
+                     </Product_To_Charge>
+                     
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="7967822a-c9b0-4258-9f2b-2037f7ddf2b8" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-01</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="a27fc40b-2fd4-46b5-b08b-e70b1f57b903" BusinessID="000023" Path="/Physical_Resource_Component/Resource_Component/Component/Product/Launch_Entity" OrigType="Mobile_Handset_Resource_Template">
+                     <Name>Nokia Lumia 630 RS</Name>
+                     
+                     <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-01</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Charge ID="9cdb4eba-c116-4a38-a072-5cbc8173ef3a" OrigType="Charge_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-01</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Charge ID="763bb19f-c441-4d2a-9dd0-338b60adf761" BusinessID="000019" Path="/Non_Recurring_Charge/Charge/Launch_Entity" OrigType="Generic_NRC_Template" Excluded="false">
+                     <Name>Mobile Handset Outright Purchase Charge</Name>
+                     
+                     <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-01</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                  </Charge>
+               </Product_To_Charge>
+               
+               
+               
+            </Product>
+         </Product_To_Product>
+         <Product_To_Product ID="84e71cb1-a0f8-481d-b111-afb1cd257332" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-09-01</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>0</Min_Occurs>
+            <Product ID="820e6af4-6d79-4528-94cc-719fd8408203" BusinessID="000020" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+               <Name>Blackberry X10 PS</Name>
+               
+               <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+               <Available_Start_Date>2014-09-01</Available_Start_Date>
+               
+               
+               
+               
+               
+               <Product_To_Product ID="5d9a8684-5553-44b9-9d4f-16eec260227f" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-01</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="27542328-9304-4587-9097-8a47066245be" BusinessID="000017" Path="/Physical_Resource_Component/Resource_Component/Component/Product/Launch_Entity" OrigType="Mobile_Handset_Resource_Template">
+                     <Name>Blackberry X10 RS</Name>
+                     
+                     <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-01</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="a193b418-37db-4bcd-8fdf-b38d28bd966e" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-01</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="bbca8cde-9c43-4aa5-a89c-1bc0c33e723a" BusinessID="000021" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Starter Kit SIM PS</Name>
+                     
+                     <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-01</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="6268b77a-73a6-4f64-9a57-17eb55ed1de2" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-01</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="9d8eabcf-5d47-4863-a764-97648fbe3cf4" BusinessID="000022" Path="/Physical_Resource_Component/Resource_Component/Component/Product/Launch_Entity" OrigType="Generic_Physical_Resource_Template">
+                           <Name>Mobile SIM Card RS</Name>
+                           
+                           <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-01</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Charge ID="59716280-c039-4798-8849-5e74e58017f7" OrigType="Charge_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-18</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Charge ID="d8219582-6a93-4ae2-8f1a-bd4a3a94f98a" BusinessID="000026" Path="/Non_Recurring_Charge/Charge/Launch_Entity" OrigType="Generic_NRC_Template" Excluded="true">
+                           <Name>SIM Outright Purchase Charge</Name>
+                           
+                           <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-01</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                        </Charge>
+                     </Product_To_Charge>
+                     
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Charge ID="8a09f552-f4d0-4eca-b023-8c2b153600b0" OrigType="Charge_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-01</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Charge ID="763bb19f-c441-4d2a-9dd0-338b60adf761" BusinessID="000019" Path="/Non_Recurring_Charge/Charge/Launch_Entity" OrigType="Generic_NRC_Template" Excluded="false">
+                     <Name>Mobile Handset Outright Purchase Charge</Name>
+                     
+                     <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-01</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                  </Charge>
+               </Product_To_Charge>
+               
+               
+               
+            </Product>
+         </Product_To_Product>
+         <TChild_Group_Cardinality_Rule ID="86f7710c-079e-4bdc-8f42-60c47832f570" OrigType="Cardinality_Rule" Pattern="TCardinality_Group_Base">
+            <Minimum_Child_Elements>1</Minimum_Child_Elements>
+            <Maximum_Child_Elements>1</Maximum_Child_Elements>
+            <Rule_Description>Only One Handset can be selected out of the available option(s)</Rule_Description>
+         </TChild_Group_Cardinality_Rule>
+      </Product>
+   </Product_To_Product>
+   <Product_To_Product ID="1675078c-5e2a-4a4c-bbba-6df3c8acefdf" OrigType="Product_Relation" Pattern="Relation_Entity">
+      <Association_Start_Date>2014-09-22</Association_Start_Date>
+      <Max_Occurs>1</Max_Occurs>
+      <Min_Occurs>0</Min_Occurs>
+      <Product ID="bbca8cde-9c43-4aa5-a89c-1bc0c33e723a" BusinessID="000021" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+         <Name>Starter Kit SIM PS</Name>
+         
+         <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+         <Available_Start_Date>2014-09-01</Available_Start_Date>
+         
+         
+         
+         
+         <Product_To_Product ID="6268b77a-73a6-4f64-9a57-17eb55ed1de2" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-09-01</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>1</Min_Occurs>
+            <Product ID="9d8eabcf-5d47-4863-a764-97648fbe3cf4" BusinessID="000022" Path="/Physical_Resource_Component/Resource_Component/Component/Product/Launch_Entity" OrigType="Generic_Physical_Resource_Template">
+               <Name>Mobile SIM Card RS</Name>
+               
+               <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+               <Available_Start_Date>2014-09-01</Available_Start_Date>
+               
+               
+               
+               
+               
+               
+               
+               
+               
+            </Product>
+         </Product_To_Product>
+         <Product_To_Charge ID="59716280-c039-4798-8849-5e74e58017f7" OrigType="Charge_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-09-18</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>1</Min_Occurs>
+            <Charge ID="d8219582-6a93-4ae2-8f1a-bd4a3a94f98a" BusinessID="000026" Path="/Non_Recurring_Charge/Charge/Launch_Entity" OrigType="Generic_NRC_Template" Excluded="false">
+               <Name>SIM Outright Purchase Charge</Name>
+               
+               <Effective_Start_Date>2014-09-01</Effective_Start_Date>
+               <Available_Start_Date>2014-09-01</Available_Start_Date>
+               
+               
+               
+               
+               
+            </Charge>
+         </Product_To_Charge>
+         
+      </Product>
+   </Product_To_Product>
+   <Product_To_Product ID="be83c796-95df-4186-ac6f-bce64e33fd57" OrigType="Product_Relation" Pattern="Relation_Entity">
+      <Association_Start_Date>2014-09-22</Association_Start_Date>
+      <Max_Occurs>1</Max_Occurs>
+      <Min_Occurs>0</Min_Occurs>
+      <Product ID="36cb0bf2-b654-45b8-9e88-098c803c3633" BusinessID="000031" Path="/Product_Specification_Component_Group/Product_ComponentGroup/Component_Group/Product/Launch_Entity" OrigType="Generic_Product_Spec_Component_Group">
+         <Name>Extras</Name>
+         
+         <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+         <Available_Start_Date>2014-09-21</Available_Start_Date>
+         
+         
+         
+         
+         <Product_To_Product ID="8212b8e3-c248-4279-ba55-6cc6eff63d7e" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-09-21</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>0</Min_Occurs>
+            <Product ID="13875159-4c95-4325-aed1-94ffad32b2db" BusinessID="000044" Path="/Product_Specification_Component_Group/Product_ComponentGroup/Component_Group/Product/Launch_Entity" OrigType="Generic_Product_Spec_Component_Group">
+               <Name>International Calling and Messaging</Name>
+               
+               
+               <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+               <Available_Start_Date>2014-09-21</Available_Start_Date>
+               
+               
+               
+               
+               
+               <Product_To_Product ID="106b2355-c9fa-4ee1-af27-15eed56abca0" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="8e6e5697-5be2-42b3-9535-079c4877fd59" BusinessID="000046" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>International Messaging</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="073b833a-ed6d-4678-859c-d78422f0dfd5" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="babf35f2-559d-4291-b75f-3e0ab3f992e1" BusinessID="000041" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>International Messaging CFS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="52af190d-a22c-4768-ad9c-aeaece97e30b" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="2c456e56-8cd3-4c6f-ac26-e7d12d092191" BusinessID="000045" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>International Calling</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="b0bb376d-0147-4b8e-8987-9d8e06c01c73" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="dc1027d6-4f29-4f6c-bddc-4b545c591255" BusinessID="000040" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>International Calling CFS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+            </Product>
+         </Product_To_Product>
+         <Product_To_Product ID="066c739e-78d5-4364-a25d-8012fbbd120d" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-09-21</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>0</Min_Occurs>
+            <Product ID="a17515ec-467e-4fc9-a50b-9a699ce0fee5" BusinessID="000047" Path="/Product_Specification_Component_Group/Product_ComponentGroup/Component_Group/Product/Launch_Entity" OrigType="Generic_Product_Spec_Component_Group">
+               <Name>International Roaming</Name>
+               
+               
+               <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+               <Available_Start_Date>2014-09-21</Available_Start_Date>
+               
+               
+               
+               
+               
+               <Product_To_Product ID="36da7ad8-77c3-480d-9e87-f5441e0309a0" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="3a1e5b0d-1baf-4bfb-b939-4d6061e2e2e2" BusinessID="000049" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>International Roaming Messaging</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="736f7d87-7849-4c9e-bbb3-ed21946291cd" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="cc87c143-1285-465f-a591-ed16fccd96b8" BusinessID="000043" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>International Roaming Messaging CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="a6a3e48a-1418-4ad0-a63c-0ea02d774002" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="4f29e158-2c4b-4867-a4af-83aa7d6e0c53" BusinessID="000048" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>International Roaming Data</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="b93941f2-9aa3-4e42-ace1-19ee9871d91e" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="905497c2-700a-416b-9f0d-d4f393c49373" BusinessID="000042" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>International Roaming Data CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+            </Product>
+         </Product_To_Product>
+         <Product_To_Product ID="112f782a-4220-4c78-8f1a-1a93c00e4066" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-09-21</Association_Start_Date>
+            <Max_Occurs>0</Max_Occurs>
+            <Min_Occurs>1</Min_Occurs>
+            <Product ID="d818f3b9-a350-459d-adc0-03362e90a905" BusinessID="000104" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Insurance_Specification_Template">
+               <Name>Handset Insurance</Name>
+               
+               <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+               <Available_Start_Date>2014-09-21</Available_Start_Date>
+               
+               
+               
+               
+               <Product_To_Product ID="9d664cca-64d8-4e8f-bb24-9087fef09467" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="b6de7a68-7f47-4135-9152-393a62defcd3" BusinessID="000032" Path="/Product_Specification_Component_Group/Product_ComponentGroup/Component_Group/Product/Launch_Entity" OrigType="Generic_Product_Spec_Component_Group">
+                     <Name>Handset Insurance Choice</Name>
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="1f7f1789-ca9c-4df1-b22c-2073409dc77e" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="a84f9af1-01a2-45b8-bac0-6caa4aa9a33f" BusinessID="000033" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Insurance - Theft</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="1e9a6287-528d-4ec7-a706-0c93b253ec63" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="1d87d86b-26fb-415f-b549-c2cdc0b1d212" BusinessID="000034" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Insurance - Theft CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="873ecce8-2f81-4bca-a690-b062e4ebd24a" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="7b60ced3-e026-4a86-a26d-720697e8cc99" BusinessID="000035" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Insurance - Damage</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="b9b83dac-3ee2-4e55-9daa-2a82eb968a08" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="499fa54d-c27a-4f04-8a89-440460e076d8" BusinessID="000036" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Insurance - Damage CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="caa1f4fc-ae35-42b4-9a14-c66e75ee870d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="11f7a884-d4b6-4bea-ab32-72c593768582" BusinessID="000039" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Insurance - Loss</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="3028dc93-9008-4add-8a46-6a76981817a5" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="3e969449-fba4-421c-9ed4-f1458eae67b2" BusinessID="000038" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Insurance - Loss CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <TChild_Group_Cardinality_Rule ID="ecdcf34b-ab53-463a-b1be-de6db737a06f" OrigType="Cardinality_Rule" Pattern="TCardinality_Group_Base">
+                        <Minimum_Child_Elements>1</Minimum_Child_Elements>
+                        <Maximum_Child_Elements>3</Maximum_Child_Elements>
+                        <Rule_Description>Handset Insurance can have following childrens (Min/Max): 1/3</Rule_Description>
+                     </TChild_Group_Cardinality_Rule>
+                  </Product>
+               </Product_To_Product>
+               
+            </Product>
+         </Product_To_Product>
+         <TChild_Group_Cardinality_Rule ID="bbceb70d-b05f-4ff6-969d-4e0125c99f9d" OrigType="Cardinality_Rule" Pattern="TCardinality_Group_Base">
+            <Minimum_Child_Elements>0</Minimum_Child_Elements>
+            <Maximum_Child_Elements>3</Maximum_Child_Elements>
+            <Rule_Description>Extra should have following number of children (Min/Max): 0/1</Rule_Description>
+         </TChild_Group_Cardinality_Rule>
+      </Product>
+   </Product_To_Product>
+   <Product_To_Product ID="7ee5eba3-6296-4175-a181-74975e6ab15e" OrigType="Product_Relation" Pattern="Relation_Entity">
+      <Association_Start_Date>2014-09-22</Association_Start_Date>
+      <Max_Occurs>1</Max_Occurs>
+      <Min_Occurs>1</Min_Occurs>
+      <Product ID="8df1ed81-d62c-4486-8bf2-a286e1ad48b0" BusinessID="000080" Path="/Customer_Facing_Service_Component_Group/Service_Component_Group/Component_Group/Product/Launch_Entity" OrigType="Generic_CFSS_Component_Group">
+         <Name>Mobile Plan Choice</Name>
+         
+         <Effective_Start_Date>2014-09-22</Effective_Start_Date>
+         <Available_Start_Date>2014-09-22</Available_Start_Date>
+         
+         
+         
+         
+         <Product_To_Product ID="5ca0bac1-d0ea-405f-972b-ce41047669f1" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-10-01</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>0</Min_Occurs>
+            <Product ID="7374302e-a4ad-4c37-a0c8-5b0f6c3a4548" BusinessID="000065" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+               <Name>Plan 100 Postpaid</Name>
+               
+               
+               <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+               <Available_Start_Date>2014-09-21</Available_Start_Date>
+               
+               
+               
+               
+               
+               <Product_To_Product ID="3a673e5d-1787-4056-9730-1ad07cc9e58a" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="e283c744-2629-43cb-82d4-a9f0be21f597" BusinessID="000060" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Messaging</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="63428c04-dff1-4b44-aa0e-0d992463db12" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="347247f9-d125-4a87-a5b0-d3ad2a8e8a4d" BusinessID="000058" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Messaging  CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="55d3c36b-13e1-4048-98cf-19ac7cfdd0c0" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="409d8cd4-1c3c-4ad3-b3a0-08387b25d450" BusinessID="000057" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Messaging RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="4635196d-b5b0-4eb6-b841-75570a51ba7d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="da492a51-bf92-4348-be0f-450d8b86fa3d" BusinessID="000055" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Data</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="f332bb3a-5710-4ce3-bc54-a3b68593490b" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="bc4a5a8d-7c52-4369-a576-7bd3e2f01d0f" BusinessID="000054" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Data CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="9c7c9b6e-63ec-494a-92ba-6f2f7c4d01df" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="694997e4-b35c-4312-9807-019d287d70f7" BusinessID="000051" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="74cda2b8-ac0f-4532-8739-32b10df5067d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="5d467868-59b3-4ce1-b43d-5393038db039" BusinessID="000052" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data 3G RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="48ed926f-aba8-4f6c-9768-ad8541938ef5" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>0</Min_Occurs>
+                              <Product ID="e19f699f-13ae-4591-ad58-0e9ebab30f7a" BusinessID="000053" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data Blackberry RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                        </Product>
+                     </Product_To_Product>
+                     
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="f10f3fe0-fa2d-4908-a6c8-55f46bc5745d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="69f3e992-2c2e-47ea-b431-b7529f39566e" BusinessID="000066" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Voice PS</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="012427c6-646c-4fd1-843e-997aa1176762" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="1af62c90-213c-4a89-8985-b2083cf692c1" BusinessID="000064" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Voice CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="59416056-008d-4d1e-aa4f-c02b51e2c776" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="e3129ce1-af0f-41e4-9e38-146641ef4e31" BusinessID="000061" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Telephony RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="a8225b19-a8ca-4b75-b790-e9ded37da315" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="a55d5d83-4254-42f2-bf7d-fbf1dd95b8c1" BusinessID="000062" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Telephony Features RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="4530a2c2-1f46-4df8-b44e-74e689703f61" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="3ea24006-0832-4b15-8213-3ac0c2aa0b78" BusinessID="000063" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Voice Identity RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="acf839d4-aefc-46a7-a181-4233da210cb3" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="4dc44af4-5ef3-442f-be1c-36452406eabc" BusinessID="000079" Path="/Customer_Facing_Service_Component_Group/Service_Component_Group/Component_Group/Product/Launch_Entity" OrigType="Generic_CFSS_Component_Group">
+                     <Name>Voice Features Group-100</Name>
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="2fad93ca-a4b0-4577-a813-3631a02de59f" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="33e56c79-866a-488f-9e89-1a60c2378435" BusinessID="000073" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Forwarding Unconditional</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="49d52c9b-58d8-4a5c-8324-c96b5473465a" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="9bd89eb7-212b-48b3-a7c1-c0ef10be6c52" BusinessID="000067" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Forwarding Unconditional CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="d40a4b51-e840-4b5c-b988-a7fb1d221da4" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="24475c19-3c9f-44c3-b900-496902ad4bec" BusinessID="000074" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Three way calling</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="0cfd2f35-7fb3-4c52-8d95-58b8a467cf3f" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="93696e57-47b3-426c-b269-81b60254c336" BusinessID="000068" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Three way calling CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="1aff4c6f-e60f-48b0-958f-aaab85af4839" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="9d0e5893-14fa-4bc5-bde6-0f1b2314b76e" BusinessID="000075" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Calling Line Identity Restriction (CLIR)</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="c0e06feb-6d96-469c-826b-d12891673583" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="0431dea9-f061-4046-b3f9-e5989f53673f" BusinessID="000069" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Calling Line Identity Restriction (CLIR) CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="9169e4ff-6e8d-40b6-ac74-b0b7b6acea5c" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="7903a934-a99f-485b-9683-f388cc709563" BusinessID="000076" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Calling Line Identity Presentation (CLIP)</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="9b11b5d3-9c4c-460a-84a1-795c7cc43b8e" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="04cfcb89-5c56-43c3-af82-e1dc79e13558" BusinessID="000070" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Calling Line Identity Presentation (CLIP) CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="2b482650-e82d-473e-849b-ffb3b9dc375d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="d397fdf1-b6e0-4f57-9723-161d6cd74183" BusinessID="000077" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Hold</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="99357418-99b2-49fd-a831-801d593a20e1" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="d97375bd-2b8b-48e1-8530-5f0ae8412edf" BusinessID="000071" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Hold CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="c6b759a9-49a8-4fdb-b1d4-954275d25e10" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="83293d4f-327c-4965-bfe9-fafc2ed97aca" BusinessID="000078" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Waiting</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="34b49336-2cfc-44d1-bfa8-2553fcec1862" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="9370abfb-69f0-408f-bff3-8d970ababfd8" BusinessID="000072" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Waiting CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <TChild_Group_Cardinality_Rule ID="e3c82f21-6096-4ad6-8220-ec5f5e4b3af4" OrigType="Cardinality_Rule" Pattern="TCardinality_Group_Base">
+                        <Minimum_Child_Elements>1</Minimum_Child_Elements>
+                        <Maximum_Child_Elements>2</Maximum_Child_Elements>
+                        <Rule_Description>At least one child</Rule_Description>
+                     </TChild_Group_Cardinality_Rule>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Charge ID="4339585d-32af-445d-9b1f-57401d37d4dd" OrigType="Charge_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-10-20</Association_Start_Date>
+                  <Association_End_Date>2019-12-31</Association_End_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Charge ID="19590be1-d195-4d64-8606-f6a34c793045" BusinessID="000107" Path="/Recurring_Charge/Charge/Launch_Entity" OrigType="Generic_RC_Template" Excluded="false">
+                     <Name>Mobile Plan Recurring Charge</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-10-20</Effective_Start_Date>
+                     <Available_Start_Date>2014-10-20</Available_Start_Date>
+                     <Effective_End_Date>2019-12-31</Effective_End_Date>
+                     <Available_End_Date>2019-12-31</Available_End_Date>
+                     
+                     
+                     
+                     
+                     
+                     
+                  </Charge>
+               </Product_To_Charge>
+            </Product>
+         </Product_To_Product>
+         <Product_To_Product ID="2cfcda64-8eac-448c-a9fd-9c09120f6d19" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-10-01</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>0</Min_Occurs>
+            <Product ID="b53a715a-ceee-46c5-8f45-f013d5c8da2d" BusinessID="000105" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+               <Name>Plan 300 Postpaid</Name>
+               
+               
+               <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+               <Available_Start_Date>2014-09-21</Available_Start_Date>
+               
+               
+               
+               
+               
+               <Product_To_Product ID="dd4c3d22-e1d1-4177-8a92-79da37fdd5a0" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="e283c744-2629-43cb-82d4-a9f0be21f597" BusinessID="000060" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Messaging</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="63428c04-dff1-4b44-aa0e-0d992463db12" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="347247f9-d125-4a87-a5b0-d3ad2a8e8a4d" BusinessID="000058" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Messaging  CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="55d3c36b-13e1-4048-98cf-19ac7cfdd0c0" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="409d8cd4-1c3c-4ad3-b3a0-08387b25d450" BusinessID="000057" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Messaging RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="b1a6631a-54b4-4191-9d59-cd4734f1e525" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="da492a51-bf92-4348-be0f-450d8b86fa3d" BusinessID="000055" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Data</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="f332bb3a-5710-4ce3-bc54-a3b68593490b" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="bc4a5a8d-7c52-4369-a576-7bd3e2f01d0f" BusinessID="000054" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Data CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="9c7c9b6e-63ec-494a-92ba-6f2f7c4d01df" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="694997e4-b35c-4312-9807-019d287d70f7" BusinessID="000051" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="74cda2b8-ac0f-4532-8739-32b10df5067d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="5d467868-59b3-4ce1-b43d-5393038db039" BusinessID="000052" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data 3G RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="48ed926f-aba8-4f6c-9768-ad8541938ef5" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>0</Min_Occurs>
+                              <Product ID="e19f699f-13ae-4591-ad58-0e9ebab30f7a" BusinessID="000053" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data Blackberry RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                        </Product>
+                     </Product_To_Product>
+                     
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="85543c6f-4d76-4b93-bedc-5a2dbc88eedc" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="69f3e992-2c2e-47ea-b431-b7529f39566e" BusinessID="000066" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Voice PS</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="012427c6-646c-4fd1-843e-997aa1176762" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="1af62c90-213c-4a89-8985-b2083cf692c1" BusinessID="000064" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Voice CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="59416056-008d-4d1e-aa4f-c02b51e2c776" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="e3129ce1-af0f-41e4-9e38-146641ef4e31" BusinessID="000061" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Telephony RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="a8225b19-a8ca-4b75-b790-e9ded37da315" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="a55d5d83-4254-42f2-bf7d-fbf1dd95b8c1" BusinessID="000062" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Telephony Features RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="4530a2c2-1f46-4df8-b44e-74e689703f61" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="3ea24006-0832-4b15-8213-3ac0c2aa0b78" BusinessID="000063" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Voice Identity RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="4aac9337-ae7a-48ba-b569-f36a358eb638" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="4dc44af4-5ef3-442f-be1c-36452406eabc" BusinessID="000079" Path="/Customer_Facing_Service_Component_Group/Service_Component_Group/Component_Group/Product/Launch_Entity" OrigType="Generic_CFSS_Component_Group">
+                     <Name>Voice Features Group-100</Name>
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="2fad93ca-a4b0-4577-a813-3631a02de59f" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="33e56c79-866a-488f-9e89-1a60c2378435" BusinessID="000073" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Forwarding Unconditional</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="49d52c9b-58d8-4a5c-8324-c96b5473465a" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="9bd89eb7-212b-48b3-a7c1-c0ef10be6c52" BusinessID="000067" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Forwarding Unconditional CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="d40a4b51-e840-4b5c-b988-a7fb1d221da4" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="24475c19-3c9f-44c3-b900-496902ad4bec" BusinessID="000074" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Three way calling</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="0cfd2f35-7fb3-4c52-8d95-58b8a467cf3f" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="93696e57-47b3-426c-b269-81b60254c336" BusinessID="000068" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Three way calling CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="1aff4c6f-e60f-48b0-958f-aaab85af4839" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="9d0e5893-14fa-4bc5-bde6-0f1b2314b76e" BusinessID="000075" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Calling Line Identity Restriction (CLIR)</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="c0e06feb-6d96-469c-826b-d12891673583" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="0431dea9-f061-4046-b3f9-e5989f53673f" BusinessID="000069" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Calling Line Identity Restriction (CLIR) CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="9169e4ff-6e8d-40b6-ac74-b0b7b6acea5c" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="7903a934-a99f-485b-9683-f388cc709563" BusinessID="000076" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Calling Line Identity Presentation (CLIP)</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="9b11b5d3-9c4c-460a-84a1-795c7cc43b8e" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="04cfcb89-5c56-43c3-af82-e1dc79e13558" BusinessID="000070" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Calling Line Identity Presentation (CLIP) CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="2b482650-e82d-473e-849b-ffb3b9dc375d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="d397fdf1-b6e0-4f57-9723-161d6cd74183" BusinessID="000077" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Hold</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="99357418-99b2-49fd-a831-801d593a20e1" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="d97375bd-2b8b-48e1-8530-5f0ae8412edf" BusinessID="000071" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Hold CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="c6b759a9-49a8-4fdb-b1d4-954275d25e10" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="83293d4f-327c-4965-bfe9-fafc2ed97aca" BusinessID="000078" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Waiting</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="34b49336-2cfc-44d1-bfa8-2553fcec1862" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="9370abfb-69f0-408f-bff3-8d970ababfd8" BusinessID="000072" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Waiting CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <TChild_Group_Cardinality_Rule ID="e3c82f21-6096-4ad6-8220-ec5f5e4b3af4" OrigType="Cardinality_Rule" Pattern="TCardinality_Group_Base">
+                        <Minimum_Child_Elements>1</Minimum_Child_Elements>
+                        <Maximum_Child_Elements>2</Maximum_Child_Elements>
+                        <Rule_Description>At least one child</Rule_Description>
+                     </TChild_Group_Cardinality_Rule>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Charge ID="9eca0d50-6695-4156-bf1c-e2e5089013a9" OrigType="Charge_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-10-20</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Charge ID="19590be1-d195-4d64-8606-f6a34c793045" BusinessID="000107" Path="/Recurring_Charge/Charge/Launch_Entity" OrigType="Generic_RC_Template" Excluded="false">
+                     <Name>Mobile Plan Recurring Charge</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-10-20</Effective_Start_Date>
+                     <Available_Start_Date>2014-10-20</Available_Start_Date>
+                     <Effective_End_Date>2019-12-31</Effective_End_Date>
+                     <Available_End_Date>2019-12-31</Available_End_Date>
+                     
+                     
+                     
+                     
+                     
+                     
+                  </Charge>
+               </Product_To_Charge>
+            </Product>
+         </Product_To_Product>
+         <Product_To_Product ID="90918fc2-13b5-47d8-86b8-e82e31219ff8" OrigType="Product_Relation" Pattern="Relation_Entity">
+            <Association_Start_Date>2014-10-01</Association_Start_Date>
+            <Max_Occurs>1</Max_Occurs>
+            <Min_Occurs>0</Min_Occurs>
+            <Product ID="1f1487b9-d6ce-4847-b6c2-f63fad83ca2c" BusinessID="000106" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+               <Name>Plan 500 Postpaid</Name>
+               
+               
+               <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+               <Available_Start_Date>2014-09-21</Available_Start_Date>
+               
+               
+               
+               
+               
+               <Product_To_Product ID="7a201582-22d2-4e35-b0b0-e572ba467118" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="e283c744-2629-43cb-82d4-a9f0be21f597" BusinessID="000060" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Messaging</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="63428c04-dff1-4b44-aa0e-0d992463db12" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="347247f9-d125-4a87-a5b0-d3ad2a8e8a4d" BusinessID="000058" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Messaging  CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="55d3c36b-13e1-4048-98cf-19ac7cfdd0c0" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="409d8cd4-1c3c-4ad3-b3a0-08387b25d450" BusinessID="000057" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Messaging RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="70b2448e-d046-4827-8796-2f9f52febfa4" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="da492a51-bf92-4348-be0f-450d8b86fa3d" BusinessID="000055" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Data</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="f332bb3a-5710-4ce3-bc54-a3b68593490b" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="bc4a5a8d-7c52-4369-a576-7bd3e2f01d0f" BusinessID="000054" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Data CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="9c7c9b6e-63ec-494a-92ba-6f2f7c4d01df" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="694997e4-b35c-4312-9807-019d287d70f7" BusinessID="000051" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="74cda2b8-ac0f-4532-8739-32b10df5067d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="5d467868-59b3-4ce1-b43d-5393038db039" BusinessID="000052" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data 3G RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="48ed926f-aba8-4f6c-9768-ad8541938ef5" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>0</Min_Occurs>
+                              <Product ID="e19f699f-13ae-4591-ad58-0e9ebab30f7a" BusinessID="000053" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Data Blackberry RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                        </Product>
+                     </Product_To_Product>
+                     
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="78edef15-2bdb-4813-ae7d-bc3785ffa960" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="69f3e992-2c2e-47ea-b431-b7529f39566e" BusinessID="000066" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                     <Name>Mobile Voice PS</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="012427c6-646c-4fd1-843e-997aa1176762" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="1af62c90-213c-4a89-8985-b2083cf692c1" BusinessID="000064" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                           <Name>Mobile Voice CFSS</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="59416056-008d-4d1e-aa4f-c02b51e2c776" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="e3129ce1-af0f-41e4-9e38-146641ef4e31" BusinessID="000061" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Telephony RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="a8225b19-a8ca-4b75-b790-e9ded37da315" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="a55d5d83-4254-42f2-bf7d-fbf1dd95b8c1" BusinessID="000062" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Telephony Features RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           <Product_To_Product ID="4530a2c2-1f46-4df8-b44e-74e689703f61" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="3ea24006-0832-4b15-8213-3ac0c2aa0b78" BusinessID="000063" Path="/Resource_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_RFSS_Template">
+                                 <Name>Mobile Voice Identity RFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                           
+                           
+                           
+                           
+                           
+                        </Product>
+                     </Product_To_Product>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Product ID="6d5debd2-bf53-47b6-89be-1459d864a87e" OrigType="Product_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-09-21</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Product ID="4dc44af4-5ef3-442f-be1c-36452406eabc" BusinessID="000079" Path="/Customer_Facing_Service_Component_Group/Service_Component_Group/Component_Group/Product/Launch_Entity" OrigType="Generic_CFSS_Component_Group">
+                     <Name>Voice Features Group-100</Name>
+                     
+                     <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                     <Available_Start_Date>2014-09-21</Available_Start_Date>
+                     
+                     
+                     
+                     
+                     <Product_To_Product ID="2fad93ca-a4b0-4577-a813-3631a02de59f" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="33e56c79-866a-488f-9e89-1a60c2378435" BusinessID="000073" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Forwarding Unconditional</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="49d52c9b-58d8-4a5c-8324-c96b5473465a" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="9bd89eb7-212b-48b3-a7c1-c0ef10be6c52" BusinessID="000067" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Forwarding Unconditional CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="d40a4b51-e840-4b5c-b988-a7fb1d221da4" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="24475c19-3c9f-44c3-b900-496902ad4bec" BusinessID="000074" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Three way calling</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="0cfd2f35-7fb3-4c52-8d95-58b8a467cf3f" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="93696e57-47b3-426c-b269-81b60254c336" BusinessID="000068" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Three way calling CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="1aff4c6f-e60f-48b0-958f-aaab85af4839" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="9d0e5893-14fa-4bc5-bde6-0f1b2314b76e" BusinessID="000075" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Calling Line Identity Restriction (CLIR)</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="c0e06feb-6d96-469c-826b-d12891673583" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="0431dea9-f061-4046-b3f9-e5989f53673f" BusinessID="000069" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Calling Line Identity Restriction (CLIR) CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="9169e4ff-6e8d-40b6-ac74-b0b7b6acea5c" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>1</Min_Occurs>
+                        <Product ID="7903a934-a99f-485b-9683-f388cc709563" BusinessID="000076" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Calling Line Identity Presentation (CLIP)</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="9b11b5d3-9c4c-460a-84a1-795c7cc43b8e" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="04cfcb89-5c56-43c3-af82-e1dc79e13558" BusinessID="000070" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Calling Line Identity Presentation (CLIP) CFS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="2b482650-e82d-473e-849b-ffb3b9dc375d" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="d397fdf1-b6e0-4f57-9723-161d6cd74183" BusinessID="000077" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Hold</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="99357418-99b2-49fd-a831-801d593a20e1" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="d97375bd-2b8b-48e1-8530-5f0ae8412edf" BusinessID="000071" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Hold CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <Product_To_Product ID="c6b759a9-49a8-4fdb-b1d4-954275d25e10" OrigType="Product_Relation" Pattern="Relation_Entity">
+                        <Association_Start_Date>2014-09-21</Association_Start_Date>
+                        <Max_Occurs>1</Max_Occurs>
+                        <Min_Occurs>0</Min_Occurs>
+                        <Product ID="83293d4f-327c-4965-bfe9-fafc2ed97aca" BusinessID="000078" Path="/Product_Specification/Product_Component/Component/Product/Launch_Entity" OrigType="Mobile_Product_Specification_Template">
+                           <Name>Call Waiting</Name>
+                           
+                           
+                           <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                           <Available_Start_Date>2014-09-21</Available_Start_Date>
+                           
+                           
+                           
+                           
+                           
+                           <Product_To_Product ID="34b49336-2cfc-44d1-bfa8-2553fcec1862" OrigType="Product_Relation" Pattern="Relation_Entity">
+                              <Association_Start_Date>2014-09-21</Association_Start_Date>
+                              <Max_Occurs>1</Max_Occurs>
+                              <Min_Occurs>1</Min_Occurs>
+                              <Product ID="9370abfb-69f0-408f-bff3-8d970ababfd8" BusinessID="000072" Path="/Customer_Facing_Service_Component/Service_Component/Component/Product/Launch_Entity" OrigType="Mobile_CFSS_Template">
+                                 <Name>Call Waiting CFSS</Name>
+                                 
+                                 
+                                 <Effective_Start_Date>2014-09-21</Effective_Start_Date>
+                                 <Available_Start_Date>2014-09-21</Available_Start_Date>
+                                 
+                                 
+                                 
+                                 
+                                 
+                              </Product>
+                           </Product_To_Product>
+                        </Product>
+                     </Product_To_Product>
+                     <TChild_Group_Cardinality_Rule ID="e3c82f21-6096-4ad6-8220-ec5f5e4b3af4" OrigType="Cardinality_Rule" Pattern="TCardinality_Group_Base">
+                        <Minimum_Child_Elements>1</Minimum_Child_Elements>
+                        <Maximum_Child_Elements>2</Maximum_Child_Elements>
+                        <Rule_Description>At least one child</Rule_Description>
+                     </TChild_Group_Cardinality_Rule>
+                  </Product>
+               </Product_To_Product>
+               <Product_To_Charge ID="989d9b7d-387c-4194-949a-c55e0dcc7b5c" OrigType="Charge_Relation" Pattern="Relation_Entity">
+                  <Association_Start_Date>2014-10-20</Association_Start_Date>
+                  <Max_Occurs>1</Max_Occurs>
+                  <Min_Occurs>1</Min_Occurs>
+                  <Charge ID="19590be1-d195-4d64-8606-f6a34c793045" BusinessID="000107" Path="/Recurring_Charge/Charge/Launch_Entity" OrigType="Generic_RC_Template" Excluded="false">
+                     <Name>Mobile Plan Recurring Charge</Name>
+                     
+                     
+                     <Effective_Start_Date>2014-10-20</Effective_Start_Date>
+                     <Available_Start_Date>2014-10-20</Available_Start_Date>
+                     <Effective_End_Date>2019-12-31</Effective_End_Date>
+                     <Available_End_Date>2019-12-31</Available_End_Date>
+                     
+                     
+                     
+                     
+                     
+                     
+                  </Charge>
+               </Product_To_Charge>
+            </Product>
+         </Product_To_Product>
+         <TChild_Group_Cardinality_Rule ID="b67c83d6-f003-41b6-a254-e029f874c5c8" OrigType="Cardinality_Rule" Pattern="TCardinality_Group_Base">
+            <Minimum_Child_Elements>1</Minimum_Child_Elements>
+            <Maximum_Child_Elements>1</Maximum_Child_Elements>
+            <Rule_Description>Required</Rule_Description>
+         </TChild_Group_Cardinality_Rule>
+      </Product>
+   </Product_To_Product>
+   <TGeographicLimit ID="e3c9b1e3-48df-4f2c-b685-8ff38730051d" OrigType="TGeographicLimit" Pattern="TTree_Leaf_Limit">
+      <Name>Washington</Name>
+      <Parent ID="31717084-939f-4a5f-82f0-b33863bf62ea" OrigType="TGeographic_Region_Branch" Pattern="TTree_Branch">
+         <Description>USA</Description>
+         <Sort>1</Sort>
+         <UID>991</UID>
+         <Name>USA</Name>
+      </Parent>
+   </TGeographicLimit>
+   <TGeographicLimit ID="2261ffd6-4218-45c6-92d8-7ee8c35317fd" OrigType="TGeographicLimit" Pattern="TTree_Leaf_Limit">
+      <Name>Colorado</Name>
+      <Parent ID="31717084-939f-4a5f-82f0-b33863bf62ea" OrigType="TGeographic_Region_Branch" Pattern="TTree_Branch">
+         <Description>USA</Description>
+         <Sort>1</Sort>
+         <UID>991</UID>
+         <Name>USA</Name>
+      </Parent>
+   </TGeographicLimit>
+   <TGeographicLimit ID="51ef7f38-1762-417d-ada0-e03d1fc4b91c" OrigType="TGeographicLimit" Pattern="TTree_Leaf_Limit">
+      <Name>Germany</Name>
+      <Parent ID="1ded6a11-cd3d-a51c-06b8-fe4a51d1eb29" OrigType="TGeographic_Region_Branch" Pattern="TTree_Branch">
+         <Description>Europe</Description>
+         <Sort>1</Sort>
+         <UID>999</UID>
+         <Name>Europe</Name>
+      </Parent>
+   </TGeographicLimit>
+   <TGeographicLimit ID="db2fb14a-dddd-4656-93b6-732093960ec0" OrigType="TGeographicLimit" Pattern="TTree_Leaf_Limit">
+      <Name>UK</Name>
+      <Parent ID="1ded6a11-cd3d-a51c-06b8-fe4a51d1eb29" OrigType="TGeographic_Region_Branch" Pattern="TTree_Branch">
+         <Description>Europe</Description>
+         <Sort>1</Sort>
+         <UID>999</UID>
+         <Name>Europe</Name>
+      </Parent>
+   </TGeographicLimit>
+   <TGeographicLimit ID="1ded6a11-cd3d-a51c-06b8-fe4a51d1eb29" OrigType="TGeographic_Region_Branch" Pattern="TTree_Branch">
+      <Description>Europe</Description>
+      <Sort>1</Sort>
+      <UID>999</UID>
+      <Name>Europe</Name>
+   </TGeographicLimit>
+   <TGeographicLimit ID="31717084-939f-4a5f-82f0-b33863bf62ea" OrigType="TGeographic_Region_Branch" Pattern="TTree_Branch">
+      <Description>USA</Description>
+      <Sort>1</Sort>
+      <UID>991</UID>
+      <Name>USA</Name>
+   </TGeographicLimit>
+</Package>
