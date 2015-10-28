@@ -19,7 +19,7 @@
 var express = require('express');
 var url = require('url');
 var fs = require('fs');
-var xml2js = require('xml2js');
+var lzstring = require('lz-string');
 var http = require('http');
 var app = express();
 var bodyParser = require('body-parser');
@@ -31,18 +31,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(__dirname + '/'));
 app.get('/*', function (req, res) {
-    res.sendFile(__dirname + '/app/' + req.url);
+    res.sendFile(__dirname + '/mtfapp/' + req.url);
 });
-app.get('/json/*', function (req, res) {
-    fs.stat(path, function (err, stats) {
-        if (err === null) {
-            res.sendFile(__dirname + '/' + req.url);
-        } else {
-            req.url
-            xmlToJSon();
-        }
-    });
-});
+
 app.get('/xml/*', function (req, res) {
     res.sendFile(__dirname + '/' + req.url);
 });
@@ -76,58 +67,57 @@ app.put('/xmltojson/*', function (req, res) {
 var server = http.createServer(app);
 server.listen(8383, "0.0.0.0", function () {
     console.log('listening on 8383');
-    loadData();
+    syncData();
 });
 
 var res = [
-    {'xml': '/xml/xsd/USMTF/GoE_messages.xsd', 'json': '/JSON/GoE_messages.json'},
-    {'xml': '/xml/xsd/USMTF/GoE_segments.xsd', 'json': '/JSON/GoE_segments.json'},
-    {'xml': '/xml/xsd/USMTF/GoE_sets.xsd', 'json': '/JSON/GoE_sets.json'},
-    {'xml': '/xml/xsd/USMTF/GoE_fields.xsd', 'json': '/JSON/GoE_fields.json'},
-    {'xml': '/xml/xsd/NATOMTF/natomtf_goe_messages.xsd', 'json': '/JSON/natomtf_goe_messages.json'},
-    {'xml': '/xml/xsd/NATOMTF/natomtf_goe_segments.xsd', 'json': '/JSON/natomtf_goe_segments.json'},
-    {'xml': '/xml/xsd/NATOMTF/natomtf_goe_sets.xsd', 'json': '/JSON/natomtf_goe_sets.json'},
-    {'xml': '/xml/xsd/NATOMTF/natomtf_goe_fields.xsd', 'json': '/JSON/natomtf_goe_fields.json'}
+    {'xml': '/JSON/xml/usmtf_messages_ui.xml', 'lz': '/JSON/lz/usmtf_messages_ui.xml.lz'},
+    {'xml': '/JSON/xml/usmtf_segments_ui.xml', 'lz': '/JSON/lz/usmtf_segments_ui.xml.lz'},
+    {'xml': '/JSON/xml/nato_sets_ui.xml', 'lz': '/JSON/lz/usmtf_sets_ui.xml.lz'},
+    {'xml': '/JSON/xml/usmtf_fields_ui.xml', 'lz': '/JSON/lz/usmtf_fields_ui.xml.lz'},
+    {'xml': '/JSON/xml/nato_messages_ui.xml', 'lz': '/JSON/lz/nato_messages_ui.xml.lz'},
+    {'xml': '/JSON/xml/nato_segments_ui.xml', 'lz': '/JSON/lz/nato_segments_ui.xml.lz'},
+    {'xml': '/JSON/xml/nato_sets_ui.xml', 'lz': '/JSON/lz/nato_sets_ui.xml.lz'},
+    {'xml': '/JSON/xml/nato_fields_ui.xml', 'lz': '/JSON/lz/nato_fields_ui.xml.lz'}
 ];
 
-var loadData = function () {
+var syncData = function () {
     console.log('syncData');
     for (i = 0; i < res.length; i++) {
-        syncJsonFile(__dirname + res[i].xml, __dirname + res[i].json);
+        syncLZFile(__dirname + res[i].xml, __dirname + res[i].lz);
     }
 };
 
-var syncJsonFile = function (xmlpath, jsonpath) {
+var syncLZFile = function (xmlpath, lzpath) {
     fs.stat(xmlpath, function (xerr, xstats) {
         if (xerr === null) {
             var xd = new Date(xstats.mtime).getMilliseconds();
-            fs.stat(jsonpath, function (jerr, jstats) {
+            fs.stat(lzpath, function (jerr, jstats) {
                 if (jerr === null) {
                     var jd = new Date(jstats.mtime).getMilliseconds();
                     if (xd > jd) {
-                        console.log("Update: " + jsonpath);
-                        xmlToJSon(xmlpath, jsonpath);
+                        console.log("Update: " + lzpath);
+                        compressXML(xmlpath, lzpath);
                     }
-                } else if (jerr.code == 'ENOENT') {
-                    console.log("Add: " + jsonpath);
-                    xmlToJSon(xmlpath, jsonpath);
+                } else if (jerr.code === 'ENOENT') {
+                    console.log("Add: " + lzpath);
+                    compressXML(xmlpath, lzpath);
                 }
             });
-        } else if (xerr.code == 'ENOENT') {
+        } else if (xerr.code === 'ENOENT') {
             console.log(xmlpath + " not found.");
         }
     });
 };
 
-var xmlToJSon = function (path, jsonpath, res) {
-    var parser = new xml2js.Parser();
-    fs.readFile(path, function (err, data) {
-        parser.parseString(data, function (err, result) {
-            fs.writeFile(jsonpath, JSON.stringify(result), function () {
-                if (res) {
-                    res.sendFile(jsonpath);
-                }
-            });
-        });
+var compressXML = function (path, lzpath) {
+    fs.readFile(path, "utf-8",function (err, data) {
+        if(err){
+            console.log("Error reading "+path);
+        }else{
+            var str=data;
+            var compressed = lzstring.compressToUTF16(str);
+            fs.writeFile(lzpath, compressed);
+        }
     });
 };

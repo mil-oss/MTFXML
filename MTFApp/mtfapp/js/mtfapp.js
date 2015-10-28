@@ -20,36 +20,35 @@ var storestructure = [
     ['Resources', 'name', false, [['url', 'url', true], ['lastmod', 'lastmod', false], ['data', 'data', false]]],
     ['MTF', 'name', false, [['data', 'data', false]]]
 ];
-var resources = [
-    'json/GoE_messages.json',
-    'json/GoE_segments.json',
-    'json/GoE_sets.json',
-    'json/GoE_fields.json',
-    'json/natomtf_goe_messages.json',
-    'json/natomtf_goe_segments.json',
-    'json/natomtf_goe_sets.json',
-    'json/natomtf_goe_fields.json'
-];
+var resources = [{name: 'usmtf_msgs', url: '/JSON/lz/usmtf_messages_ui.xml.lz'},
+    {name: 'usmtf_segs', url: '/JSON/lz/usmtf_segments_ui.xml.lz'},
+    {name: 'usmtf_sets', url: '/JSON/lz/usmtf_sets_ui.xml.lz'},
+    {name: 'usmtf_flds', url: '/JSON/lz/usmtf_fields_ui.xml.lz'},
+    {name: 'nato_msgs', url: '/JSON/lz/nato_messages_ui.xml.lz'},
+    {name: 'nato_segs', url: '/JSON/lz/nato_segments_ui.xml.lz'},
+    {name: 'nato_sets', url: '/JSON/lz/nato_sets_ui.xml.lz'},
+    {name: 'nato_flds', url: '/JSON/lz/nato_fields_ui.xml.lz'}];
+
 var compression = false;
 var xj = new X2JS();
 var mtfApp = angular.module('mtfApp', ['indexedDB']);
-mtfApp.config(['$indexedDBProvider',function ($indexedDBProvider) {
-    $indexedDBProvider.connection(databasename).upgradeDatabase(1, function (event, db, tx) {
-        console.log("initDb");
-        for (i = 0; i < storestructure.length; i++) {
-            //console.log("add store " + storestructure[i][0] + " key:" + storestructure[i][1] + " autoinc:" + storestructure[i][2]);
-            var objectStore = db.createObjectStore(storestructure[i][0], {
-                keyPath: storestructure[i][1], autoIncrement: storestructure[i][2]
-            });
-            var indices = storestructure[i][3];
-            for (j = 0; j < indices.length; j++) {
-                //console.log("add index " + indices[j][0] + " ref:" + indices[j][1] + " unique:" + indices[j][2]);
-                objectStore.createIndex(indices[j][0], indices[j][1], {
-                    unique: indices[j][2]
+mtfApp.config(['$indexedDBProvider', function ($indexedDBProvider) {
+        $indexedDBProvider.connection(databasename).upgradeDatabase(1, function (event, db, tx) {
+            console.log("initDb");
+            for (i = 0; i < storestructure.length; i++) {
+                //console.log("add store " + storestructure[i][0] + " key:" + storestructure[i][1] + " autoinc:" + storestructure[i][2]);
+                var objectStore = db.createObjectStore(storestructure[i][0], {
+                    keyPath: storestructure[i][1], autoIncrement: storestructure[i][2]
                 });
+                var indices = storestructure[i][3];
+                for (j = 0; j < indices.length; j++) {
+                    //console.log("add index " + indices[j][0] + " ref:" + indices[j][1] + " unique:" + indices[j][2]);
+                    objectStore.createIndex(indices[j][0], indices[j][1], {
+                        unique: indices[j][2]
+                    });
+                }
             }
-        }
-    });
-}],['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/index'});
-}]);
+        });
+    }], ['$routeProvider', function ($routeProvider) {
+        $routeProvider.otherwise({redirectTo: '/index'});
+    }]);

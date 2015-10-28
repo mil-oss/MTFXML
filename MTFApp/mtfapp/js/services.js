@@ -5,47 +5,51 @@ mtfApp.factory('dbService', function ($http, $indexedDB, $q) {
     dbsvc.xj = new X2JS();
     ;
     dbsvc.dB = $indexedDB;
-    dbsvc.syncResource = function (mtfctl, url) {
-        console.log('syncResource ' + url);
-        var filename = url.substring(url.lastIndexOf('/') + 1);
-        var jsonname = filename.substring(0, filename.lastIndexOf('.')) + '.json';
-        var jsonurl = "/json/" + jsonname;
-        console.log(jsonname);
-        var xjson = null;
+    dbsvc.syncResource = function (mtfctl, res) {
+        console.log('syncResource ' + res.url);
+        var xname = res.name;
+        var xurl = res.url;
+        var jsonname = xname + '.json';
+        console.log(name + ", " + jsonname);
         dbsvc.dB.openStore('Resources', function (store) {
             store.getAllKeys().then(function (keys) {
                 if (keys.indexOf(jsonname) === -1) {
-                    console.log("No Local Store .. Add: " + jsonname);
-                    $http.get(url).success(function (resdata, status, headers) {
+                    console.log("No Local Store .. Add: " + res.url);
+                    $http.get(xurl).success(function (resdata, status, headers) {
                         var mod = headers()['last-modified'];
                         dbsvc.dB.openStore('Resources', function (store) {
-                            store.upsert({name: jsonname, url: jsonurl, lastmod: mod, data: resdata});
-                            dbsvc.setVal(mtfctl,jsonname, resdata);
+                            //console.log(resdata);
+                            var dstr = LZString.decompressFromUTF16(resdata);
+                            var xjson = dbsvc.xj.xml_str2json(dstr)
+                            store.upsert({name: xname, url: xurl, lastmod: mod, data: xjson});
+                            dbsvc.setVal(mtfctl, xname, xjson);
                         });
                     }).error(function () {
-                        console.log('Error getting resource ' + filename);
+                        console.log('Error getting resource ' + xname);
                     });
                 } else {
-                    store.find(jsonname).then(function (dbrec) {
-                        $http.head(url).success(function (resdata, status, headers) {
+                    store.find(xname).then(function (dbrec) {
+                        $http.head(xurl).success(function (resdata, status, headers) {
                             var mod = headers()['last-modified'];
                             console.log(mod);
                             if (dbrec.lastmod !== mod) {
-                                console.log(filename + "Modified ..Update");
-                                $http.get(url).success(function (resdata, status, headers) {
+                                console.log(xname + "Modified ..Update");
+                                $http.get(xurl).success(function (resdata, status, headers) {
                                     dbsvc.dB.openStore('Resources', function (store) {
-                                        store.upsert({name: jsonname, url: jsonurl, lastmod: mod, data: resdata});
+                                        var dstr = LZString.decompressFromUTF16(resdata);
+                                        var xjson = dbsvc.xj.xml_str2json(dstr)
+                                        store.upsert({name: xname, url: xurl, lastmod: mod, data: xjson});
                                     }).then(function () {
-                                        dbsvc.setVal(mtfctl,jsonname, resdata);
+                                        dbsvc.setVal(mtfctl, xname, xjson);
                                     });
                                 }).error(function () {
-                                    console.log('Error getting resource ' + filename);
+                                    console.log('Error getting resource ' + xname);
                                 });
                             } else {
-                                dbsvc.setVal(mtfctl,jsonname, dbrec.data);
+                                dbsvc.setVal(mtfctl, xname, dbrec.data);
                             }
                         }).error(function () {
-                            console.log('Error getting headers for ' + filename);
+                            console.log('Error getting headers for ' + xname);
                         });
                         ;
                     });
@@ -53,27 +57,26 @@ mtfApp.factory('dbService', function ($http, $indexedDB, $q) {
             });
         });
     };
-    dbsvc.setVal = function (mtfctl,fname, data) {
+    dbsvc.setVal = function (mtfctl, fname, data) {
         //console.log('setVal: ' + fname);
-        if (fname === 'GoE_messages.json') {
+        if (fname === 'usmtf_msgs') {
             mtfctl.usmsgs = data;
-            console.log(mtfctl.usmsgs);
-        } else if (fname === 'GoE_segments.json') {
+        } else if (fname === 'usmtf_segs') {
             mtfctl.ussegments = data;
-        } else if (fname === 'GoE_sets_ui.json') {
+        } else if (fname === 'usmtf_sets') {
             mtfctl.ussets = data;
-        } else if (fname === 'GoE_fields_ui.json') {
+        } else if (fname === 'usmtf_flds') {
             mtfctl.usfields = data;
-        } else if (fname === 'natomtf_messages.json') {
+        } else if (fname === 'nato_msgs') {
             mtfctl.natomsgs = data;
-        } else if (fname === 'natomtf_sets.json') {
+        } else if (fname === 'nato_segs') {
             mtfctl.natosets = data;
-        } else if (fname === 'natomtf_fields.json') {
+        } else if (fname === 'nato_sets') {
             mtfctl.natofields = data;
-        } else if (fname === 'natomtf_segments.json') {
+        } else if (fname === 'nato_flds') {
             mtfctl.natosegments = data;
         }
-    }
+    };
     return dbsvc;
 });
 

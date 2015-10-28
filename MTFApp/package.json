@@ -11,7 +11,8 @@
         "angular-loader": "1.4.x",
         "angular-mocks": "1.4.x",
         "xml2js": "0.4.x",
-        "saxon-xslt": "0.0.x"
+        "saxon-xslt": "0.0.x",
+        "lz-string":"1.4.x"
     },
     "author": "Jmaes Neushul",
     "readmeFilename": "README.md"
