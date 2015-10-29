@@ -13,7 +13,7 @@ mtfApp.factory('dbService', function ($http, $indexedDB, $q) {
         console.log(name + ", " + jsonname);
         dbsvc.dB.openStore('Resources', function (store) {
             store.getAllKeys().then(function (keys) {
-                if (keys.indexOf(jsonname) === -1) {
+                if (keys.indexOf(xname) === -1) {
                     console.log("No Local Store .. Add: " + res.url);
                     $http.get(xurl).success(function (resdata, status, headers) {
                         var mod = headers()['last-modified'];
@@ -37,9 +37,9 @@ mtfApp.factory('dbService', function ($http, $indexedDB, $q) {
                                 $http.get(xurl).success(function (resdata, status, headers) {
                                     dbsvc.dB.openStore('Resources', function (store) {
                                         var dstr = LZString.decompressFromUTF16(resdata);
-                                        var xjson = dbsvc.xj.xml_str2json(dstr)
+                                        var xjson = dbsvc.xj.xml_str2json(dstr);
                                         store.upsert({name: xname, url: xurl, lastmod: mod, data: xjson});
-                                    }).then(function () {
+                                    }).then(function (xjson) {
                                         dbsvc.setVal(mtfctl, xname, xjson);
                                     });
                                 }).error(function () {
@@ -60,21 +60,21 @@ mtfApp.factory('dbService', function ($http, $indexedDB, $q) {
     dbsvc.setVal = function (mtfctl, fname, data) {
         //console.log('setVal: ' + fname);
         if (fname === 'usmtf_msgs') {
-            mtfctl.usmsgs = data;
+            mtfctl.usmsgs = data.USMTF_Messages;
         } else if (fname === 'usmtf_segs') {
-            mtfctl.ussegments = data;
+            mtfctl.ussegments = data.USMTF_Segments;
         } else if (fname === 'usmtf_sets') {
-            mtfctl.ussets = data;
+            mtfctl.ussets = data.USMTF_Sets;
         } else if (fname === 'usmtf_flds') {
-            mtfctl.usfields = data;
+            mtfctl.usfields = data.USMTF_Fields;
         } else if (fname === 'nato_msgs') {
-            mtfctl.natomsgs = data;
+            mtfctl.natomsgs = data.NATO_Messages;
         } else if (fname === 'nato_segs') {
-            mtfctl.natosets = data;
+            mtfctl.natosegments = data.NATO_Segments;
         } else if (fname === 'nato_sets') {
-            mtfctl.natofields = data;
+            mtfctl.natosets = data.NATO_Sets;
         } else if (fname === 'nato_flds') {
-            mtfctl.natosegments = data;
+            mtfctl.natofields = data.NATO_Fields;
         }
     };
     return dbsvc;

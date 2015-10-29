@@ -4,8 +4,8 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:variable name="USMTF_SETS" select="document('../xsd/USMTF/GoE_sets.xsd')"/>
     <xsl:variable name="NATO_SETS" select="document('../xsd/NATOMTF/natomtf_goe_sets.xsd')"/>
-    <xsl:variable name="usmtf_sets_out" select="'../../JSON/usmtf_sets_ui.xml'"/>
-    <xsl:variable name="nato_sets_out" select="'../../JSON/nato_sets_ui.xml'"/>
+    <xsl:variable name="usmtf_sets_out" select="'../../JSON/xml/usmtf_sets_ui.xml'"/>
+    <xsl:variable name="nato_sets_out" select="'../../JSON/xml/nato_sets_ui.xml'"/>
     <xsl:variable name="usmtf_sets">
         <xsl:apply-templates select="$USMTF_SETS/xsd:schema/xsd:element"/>
     </xsl:variable>

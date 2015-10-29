@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
-    version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:variable name="USMTF_MESSAGES" select="document('../xsd/USMTF/GoE_messages.xsd')"/>
     <xsl:variable name="NATO_MESSAGES" select="document('../xsd/NATOMTF/natomtf_goe_messages.xsd')"/>
-    <xsl:variable name="usmtf_messages_out" select="'../../JSON/usmtf_messages_ui.xml'"/>
-    <xsl:variable name="nato_messages_out" select="'../../JSON/nato_messages_ui.xml'"/>
+    <xsl:variable name="usmtf_messages_out" select="'../../JSON/xml/usmtf_messages_ui.xml'"/>
+    <xsl:variable name="nato_messages_out" select="'../../JSON/xml/nato_messages_ui.xml'"/>
     <xsl:variable name="usmtf_messages">
         <xsl:apply-templates select="$USMTF_MESSAGES/xsd:schema/xsd:element"/>
     </xsl:variable>
@@ -114,7 +113,7 @@
             <xsl:apply-templates select="*"/>
         </xsl:element>
     </xsl:template>
-    <xsl:template match="xsd:element[@ref][not(contains(@ref, ':'))]">
+    <xsl:template match="xsd:element[@ref][not(contains(@ref, ':'))][xsd:annotation/xsd:appinfo/*:Segment]">
         <xsl:element name="Segment">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Segment" mode="info"/>

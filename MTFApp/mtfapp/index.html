@@ -45,8 +45,8 @@
                                 <div class="accordion__tab-content" data-ng-show="isOpenTab('usmtfmsgs')">
                                     <div class="accordion__tab">
                                         <div class="msglist">
-                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.usmsgs['xsd:schema']['xsd:complexType'], usmtftxtsearch, 'name')">
-                                                <div class="msglisting" data-ng-click="mtfctl.selectMsg('US', mtfctl.usmsgs[k], k)"
+                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.usmsgs.Message, usmtftxtsearch, '_name')">
+                                                <div class="msglisting" data-ng-click="mtfctl.selectMsg('US', mtfctl.usmsgs.Message[k], k)"
                                                      data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
@@ -58,8 +58,8 @@
                                 <div class="accordion__tab-content" data-ng-show="isOpenTab('usmtfsegments')">
                                     <div class="accordion__tab">
                                         <div class="msglist">
-                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.ussegments, usmtftxtsearch, '_SegmentStructureName')">
-                                                <div class="msglisting" data-ng-click="mtfctl.selectSegment('US', mtfctl.ussegments[k], k)"
+                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.ussegments.Segment, usmtftxtsearch, '_name')">
+                                                <div class="msglisting" data-ng-click="mtfctl.selectSegment('US', mtfctl.ussegments.Segment[k], k)"
                                                      data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
@@ -71,8 +71,8 @@
                                 <div class="accordion__tab-content" data-ng-show="isOpenTab('usmtfsets')">
                                     <div class="accordion__tab">
                                         <div class="msglist">
-                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.ussets, usmtftxtsearch, '_SetFormatName')">
-                                                <div class="msglisting" data-ng-click="mtfctl.selectSet('US', mtfctl.ussets[k], k)"
+                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.ussets.Set, usmtftxtsearch, '_name')">
+                                                <div class="msglisting" data-ng-click="mtfctl.selectSet('US', mtfctl.ussets.Set[k], k)"
                                                      data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
@@ -84,8 +84,8 @@
                                 <div class="accordion__tab-content" data-ng-show="isOpenTab('usmtffields')">
                                     <div class="accordion__tab">
                                         <div class="msglist">
-                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.usfields, usmtftxtsearch, '_FudName')">
-                                                <div class="msglisting" data-ng-click="mtfctl.selectField('US', mtfctl.usfields[k], k)"
+                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.usfields.Field, usmtftxtsearch, '_name')">
+                                                <div class="msglisting" data-ng-click="mtfctl.selectField('US', mtfctl.usfields.Field[k], k)"
                                                      data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
@@ -108,8 +108,21 @@
                                 <div class="accordion__tab-content" data-ng-show="isOpenTab('natomsgs')">
                                     <div class="accordion__tab">
                                         <div class="msglist">
-                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.natomsgs, natomtftxtsearch, '_MtfName')">
-                                                <div class="msglisting" data-ng-click="mtfctl.selectMsg('NATO', mtfctl.natomsgs[k], k)"
+                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.natomsgs.Message, natomtftxtsearch, '_name')">
+                                                <div class="msglisting" data-ng-click="mtfctl.selectMsg('NATO', mtfctl.natomsgs.Message[k], k)"
+                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion__tab">
+                                <div class="accordion__tab-title_sm" data-ng-click="openTab('natosegments')">Segments</div>
+                                <div class="accordion__tab-content" data-ng-show="isOpenTab('natosegments')">
+                                    <div class="accordion__tab">
+                                        <div class="msglist">
+                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.natosegments.Segment, natomtftxtsearch, '_name')">
+                                                <div class="msglisting" data-ng-click="mtfctl.selectSet('NATO', mtfctl.natosegments.Segment[k], k)"
                                                      data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
@@ -121,21 +134,8 @@
                                 <div class="accordion__tab-content" data-ng-show="isOpenTab('natosets')">
                                     <div class="accordion__tab">
                                         <div class="msglist">
-                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.natosets, natomtftxtsearch, '_SetFormatName')">
-                                                <div class="msglisting" data-ng-click="mtfctl.selectSet('NATO', mtfctl.natosets[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion__tab">
-                                <div class="accordion__tab-title_sm" data-ng-click="openTab('natocomposites')">Composites</div>
-                                <div class="accordion__tab-content" data-ng-show="isOpenTab('natocomposites')">
-                                    <div class="accordion__tab">
-                                        <div class="msglist">
-                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.natocomposites, natomtftxtsearch, '_FudName')">
-                                                <div class="msglisting" data-ng-click="mtfctl.selectField('NATO', mtfctl.natocomposites[k], k)"
+                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.natosets.Set, natomtftxtsearch, '_name')">
+                                                <div class="msglisting" data-ng-click="mtfctl.selectSet('NATO', mtfctl.natosets.Set[k], k)"
                                                      data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
@@ -147,8 +147,8 @@
                                 <div class="accordion__tab-content" data-ng-show="isOpenTab('natofields')">
                                     <div class="accordion__tab">
                                         <div class="msglist">
-                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.natofields, natomtftxtsearch, '_FudName')">
-                                                <div class="msglisting" data-ng-click="mtfctl.selectField('NATO', mtfctl.natofields[k], k)"
+                                            <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.natofields.Field, natomtftxtsearch, '_name')">
+                                                <div class="msglisting" data-ng-click="mtfctl.selectField('NATO', mtfctl.natofields.Field[k], k)"
                                                      data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>

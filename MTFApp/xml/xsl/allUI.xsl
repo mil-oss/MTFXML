@@ -4,10 +4,10 @@
     exclude-result-prefixes="xs"
     version="2.0">
     
-    <xsl:import href="messagesUI.xsl"/>
-    <xsl:import href="setsUI.xsl"/>
-    <xsl:import href="segmentsUI.xsl"/>
-    <xsl:import href="fieldsUI.xsl"/>
+    <xsl:include href="messagesUI.xsl"/>
+    <xsl:include href="setsUI.xsl"/>
+    <xsl:include href="segmentsUI.xsl"/>
+    <xsl:include href="fieldsUI.xsl"/>
     
     <xsl:template name="AllUI">
         <xsl:call-template name="messagesUI"/>

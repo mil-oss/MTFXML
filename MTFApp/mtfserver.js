@@ -73,7 +73,7 @@ server.listen(8383, "0.0.0.0", function () {
 var res = [
     {'xml': '/JSON/xml/usmtf_messages_ui.xml', 'lz': '/JSON/lz/usmtf_messages_ui.xml.lz'},
     {'xml': '/JSON/xml/usmtf_segments_ui.xml', 'lz': '/JSON/lz/usmtf_segments_ui.xml.lz'},
-    {'xml': '/JSON/xml/nato_sets_ui.xml', 'lz': '/JSON/lz/usmtf_sets_ui.xml.lz'},
+    {'xml': '/JSON/xml/usmtf_sets_ui.xml', 'lz': '/JSON/lz/usmtf_sets_ui.xml.lz'},
     {'xml': '/JSON/xml/usmtf_fields_ui.xml', 'lz': '/JSON/lz/usmtf_fields_ui.xml.lz'},
     {'xml': '/JSON/xml/nato_messages_ui.xml', 'lz': '/JSON/lz/nato_messages_ui.xml.lz'},
     {'xml': '/JSON/xml/nato_segments_ui.xml', 'lz': '/JSON/lz/nato_segments_ui.xml.lz'},

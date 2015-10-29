@@ -3,43 +3,43 @@
         <div class="desc">
             <div>
                 <div class="title">
-                    <b>{{mtfctl.selectedMsg._MtfName}}</b>
+                    <b>{{mtfctl.selectedMsg.Info._name}}</b>
                 </div>
                 <div class="txt">
                     <b>Identifier: </b>
-                    <span>{{mtfctl.selectedMsg._MtfIdentifier}}</span>
+                    <span>{{mtfctl.selectedMsg.Info._identifier}}</span>
                 </div>
                 <div class="txt">
                     <b>Description: </b>
-                    <span>{{mtfctl.selectedMsg._doc}}{{mtfctl.selectedMsg._MtfPurpose}}</span>
+                    <span>{{mtfctl.selectedMsg.Info._doc}}{{mtfctl.selectedMsg.Info._purpose}}</span>
                 </div>
-                <div class="txt" data-ng-show="mtfctl.selectedMsg._MtfNote">
+                <div class="txt" data-ng-show="mtfctl.selectedMsg.Info._note">
                     <b>Note: </b>
-                    <span>{{mtfctl.selectedMsg._MtfNote}}</span>
+                    <span>{{mtfctl.selectedMsg.Info._note}}</span>
                 </div>
             </div>
         </div>
         <div class="info">
-            <div class="txt">
+            <div class="txt" data-ng-show="mtfctl.selectedMsg.Info.Document">
                 <b>Related Documents:</b>
-                <span>{{mtfctl.selectedMsg._MtfRelatedDocument}}</span>
+                <span>{{mtfctl.selectedMsg.Info.Document}}</span>
             </div>
             <div class="txt">
                 <b>Sponsor:</b>
-                <span>{{mtfctl.selectedMsg._MtfSponsor}}</span>
+                <span>{{mtfctl.selectedMsg.Info._sponsor}}</span>
             </div>
         </div>
     </div>
     <div class="msgseq">
         <div
-            data-ng-repeat="(key,val) in mtfctl.selectedMsg.sequence | orderBy:_SetFormatPositionNumber">
-            <div data-ng-if="key.substring(0,6) === 'choice'">
+            data-ng-repeat="(key,val) in mtfctl.selectedMsg.sequence | orderBy:_position">
+            <div data-ng-if="key.substring(0, 6) === 'choice'">
                 <div ng-include="mtfctl.choiceview"/>
             </div>
-            <div data-ng-if="key.substring(key.length-7)==='Segment'">
+            <div data-ng-if="key.substring(key.length - 7) === 'Segment'">
                 <div ng-include="mtfctl.segmentview"/>
             </div>
-            <div data-ng-if="val._ref.substring(0,3)==='set' || val._SetFormatPositionNumber">
+            <div data-ng-if="val._ref.substring(0, 3) === 'set' || val._position">
                 <div ng-include="mtfctl.setview"/>
             </div>
         </div>

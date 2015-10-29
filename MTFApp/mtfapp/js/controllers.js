@@ -1,4 +1,4 @@
-mtfApp.controller('mtfCtl', function ($scope,DlgBx,dbService) {
+mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
     var mtfctl = this;
     mtfctl.usmsgs = [];
     mtfctl.ussets = [];
@@ -23,17 +23,19 @@ mtfApp.controller('mtfCtl', function ($scope,DlgBx,dbService) {
     mtfctl.selectedStd = "US";
     //
     for (i = 0; i < resources.length; i++) {
-        dbService.syncResource(mtfctl,resources[i]);
+        dbService.syncResource(mtfctl, resources[i]);
     }
     mtfctl.valuefilter = function (mlist, txt, field) {
         var result = {
         };
         angular.forEach(mlist, function (value, key) {
-            if (typeof txt === "undefined") {
-                result[key] = value[field];
-            } else if (typeof value[field] !== "undefined") {
-                if (value[field].toLowerCase().indexOf(txt.toLowerCase()) > -1) {
-                    result[key] = value[field];
+            if (typeof value.Info !== "undefined") {
+                if (typeof txt === "undefined") {
+                    result[key] = value.Info[field];
+                } else if (typeof value.Info[field] !== "undefined") {
+                    if (value.Info[field].toLowerCase().indexOf(txt.toLowerCase()) > -1) {
+                        result[key] = value.Info[field];
+                    }
                 }
             }
         });
@@ -56,7 +58,7 @@ mtfApp.controller('mtfCtl', function ($scope,DlgBx,dbService) {
         mtfctl.fieldview = "views/fieldView.html";
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
-        mtfctl.selectedSegment=seg;
+        mtfctl.selectedSegment = seg;
     };
     mtfctl.selectSet = function (std, set, k) {
         mtfctl.setview = "views/setView.html";
@@ -64,13 +66,13 @@ mtfApp.controller('mtfCtl', function ($scope,DlgBx,dbService) {
         mtfctl.fieldview = "views/fieldView.html";
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
-        mtfctl.selectedSet=set;
+        mtfctl.selectedSet = set;
     };
     mtfctl.selectField = function (std, field, k) {
         mtfctl.fieldview = "views/fieldView.html";
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
-        mtfctl.selectedField=field;
+        mtfctl.selectedField = field;
     };
     mtfctl.pos = function (f1, f2, f3) {
         return parseInt(f1) + parseInt(f2) + parseInt(f3);
