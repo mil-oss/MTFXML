@@ -1,18 +1,16 @@
-<details class="segment">
-    <summary class="name">{{val._name}}</summary>
+<div class="segment">
+    <div class="name"><b>Segment: </b>{{mtfctl.selectedSegment.Info._name}}</div>
     <div class="desc">
         <div class="txt">
-            <b>Description: </b>{{val._description}} </div>
+            <b>Concept: </b>{{mtfctl.selectedSegment.Info._concept}} </div>
     </div>
     <div class="usage">
         <div class="occur">
-            <b>Occurrence: </b>{{val._OccurrenceCategory}} </div>
-        <div class="repeat">
-            <b>Repeatability: </b>{{val._Repeatability}} </div>
+            <b>Usage: </b>{{mtfctl.selectedSegment.Info._usage}} </div>
     </div>
-    <div data-ng-If="mtfctl.selectedStd==='US'">
+<!--    <div data-ng-If="mtfctl.selectedStd==='US'">
         <div
-            data-ng-repeat="(key,val) in mtfctl.ussegments[key].sequence | orderBy:mtfctl.pos('_SetFormatPositionNumber', '_InitialSetFormatPosition')">
+            data-ng-repeat="(key,val) in mtfctl.selectedSegment.Sequence | orderBy:mtfctl.selectedSegment.Info._position">
             <div data-ng-If="val._ref.substring(0,3)==='set' || val._SetFormatPositionNumber!==null">
                 <div ng-include="mtfctl.setview"/>
             </div>
@@ -26,7 +24,7 @@
     </div>
     <div data-ng-If="mtfctl.selectedStd==='NATO'">
         <div
-            data-ng-repeat="(key,val) in mtfctl.ussegments[key].sequence | orderBy:mtfctl.pos('_SetFormatPositionNumber', '_InitialSetFormatPosition')">
+            data-ng-repeat="(key,val) in mtfctl.selectedSegment.Sequence  | orderBy:mtfctl.selectedSegment.Info._position">
             <div data-ng-If="val._ref.substring(0,3)==='set' || val._SetFormatPositionNumber!==null">
                 <div ng-include="mtfctl.setview"/>
             </div>
@@ -37,5 +35,5 @@
                 <div ng-include="mtfctl.choiceview"/>
             </div>
         </div>
-    </div>
-</details>
+    </div>-->
+</div>

@@ -40,6 +40,7 @@ body{
     left:224px; 
     top:0;
     height:100%;
+    width:600px;
 }
 #msgview{
     position:absolute;
@@ -80,13 +81,13 @@ body{
     padding-top:8px;
 }
 .noselect{
--webkit-touch-callout: none;
--webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
--o-user-select: none;
-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
 .input-group-addon{

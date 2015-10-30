@@ -1,13 +1,12 @@
-<details class="set">
-    <summary class="name">{{val._SetFormatPositionNumber}}. {{val._SetFormatPositionName}}</summary>
-    <div data-ng-if="val._SetFormatPositionConcept">
-        <div class="txt"><b>Description: </b>{{val._SetFormatPositionConcept}}</div>
+<div class="set">
+    <div class="name"><b>Set: </b>{{mtfctl.selectedSet.Info._name}}</div>
+    <div class="name"><b>Id: </b>{{mtfctl.selectedSet.Info._id}}</div>
+    <div class="name"><b>Version: </b>{{mtfctl.selectedSet.Info._version}}</div>
+    <div
+        data-ng-repeat="e in mtfctl.Example  | orderBy:$index">
+        <div>{{e}}</div>
     </div>
-    <div class="usage">
-        <div class="occur"><b>Occurrence: </b>{{val._OccurrenceCategory}}</div>
-        <div class="repeat"><b>Repeatability: </b>{{val._Repeatability}}</div>
-    </div>
-    <div data-ng-If="mtfctl.selectedStd==='US'">
+<!--    <div data-ng-If="mtfctl.selectedStd==='US'">
         <div
             data-ng-repeat="(key,val) in mtfctl.ussets[key].sequence  | orderBy:'_FieldFormatPositionNumber'">
             <div ng-include="mtfctl.fieldview"></div>
@@ -18,5 +17,5 @@
             data-ng-repeat="(key,val) in mtfctl.natosets[key].sequence | orderBy:'_FieldFormatPositionNumber'">
             <div ng-include="mtfctl.fieldview"></div>
         </div>
-    </div>
-</details>
+    </div>-->
+</div>

@@ -21,6 +21,7 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
     mtfctl.selectedSet = [];
     mtfctl.selectedField = [];
     mtfctl.selectedStd = "US";
+    mtfctl.view = "";
     //
     for (i = 0; i < resources.length; i++) {
         dbService.syncResource(mtfctl, resources[i]);
@@ -42,40 +43,29 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
         return result;
     };
     mtfctl.selectMsg = function (std, msg, k) {
-        mtfctl.msgview = "views/msgView.html";
-        mtfctl.choiceview = "views/choiceView.html";
-        mtfctl.segmentview = "views/segmentView.html";
-        mtfctl.setview = "views/setView.html";
-        mtfctl.fieldview = "views/fieldView.html";
+        mtfctl.view = "views/msgView.html";
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
         mtfctl.selectedMsg = msg;
     };
     mtfctl.selectSegment = function (std, seg, k) {
-        mtfctl.segmentview = "views/segmentView.html";
-        mtfctl.choiceview = "views/choiceView.html";
-        mtfctl.setview = "views/setView.html";
-        mtfctl.fieldview = "views/fieldView.html";
+        console.log("selectSegment");
+        mtfctl.view = "views/segmentView.html";
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
         mtfctl.selectedSegment = seg;
     };
     mtfctl.selectSet = function (std, set, k) {
-        mtfctl.setview = "views/setView.html";
-        mtfctl.choiceview = "views/choiceView.html";
-        mtfctl.fieldview = "views/fieldView.html";
+       mtfctl.view = "views/setView.html";
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
         mtfctl.selectedSet = set;
     };
     mtfctl.selectField = function (std, field, k) {
-        mtfctl.fieldview = "views/fieldView.html";
+        mtfctl.view = "views/fieldView.html";
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
         mtfctl.selectedField = field;
-    };
-    mtfctl.pos = function (f1, f2, f3) {
-        return parseInt(f1) + parseInt(f2) + parseInt(f3);
     };
     mtfctl.isSelected = function (k) {
         return mtfctl.selected === k;
