@@ -51,12 +51,13 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
+            <xsl:variable name="SegChange" select="$new_segment_names/USMTF_Segments/Segment[@MTF_NAME = $mtfid and @SegmentElement = $baseline_name]"/>
             <xsl:copy copy-namespaces="no">
                 <xsl:attribute name="name">
                     <xsl:choose>
-                        <xsl:when test="$new_segment_names/USMTF_Segments/Segment[@MtfId = $mtfid and @ElementName = $baseline_name]">
+                        <xsl:when test="$new_segment_names/USMTF_Segments/Segment[@MSG_ID = $mtfid and @SegmentElement = $baseline_name]">
                             <xsl:value-of
-                                select="$new_segment_names/USMTF_Segments/Segment[@MtfId = $mtfid and @ElementName = $baseline_name]/@NewElementName"
+                                select="$new_segment_names/USMTF_Segments/Segment[@MSG_ID = $mtfid and @SegmentElement = $baseline_name]/@ProposedSegmentElement"
                             />
                         </xsl:when>
                         <xsl:otherwise>
@@ -69,14 +70,19 @@
                     <xsl:text>.</xsl:text>
                     <xsl:value-of select="@name"/>
                 </xsl:attribute>
-                <xsl:apply-templates select="*"/>
+                <xsl:apply-templates select="*">
+                    <xsl:with-param name="SegChange" select="$SegChange"/>
+                </xsl:apply-templates>
             </xsl:copy>
         </xsl:for-each>
     </xsl:variable>
     <xsl:template match="*">
+        <xsl:param name="SegChange"/>
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
-            <xsl:apply-templates select="*"/>
+            <xsl:apply-templates select="*">
+                <xsl:with-param name="SegChange" select="$SegChange"/>
+            </xsl:apply-templates>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="@*">
@@ -88,11 +94,18 @@
     </xsl:template>
     <!--Copy documentation only it has text content-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Segment')]]">
-        <xsl:param name="doc"/>
+        <xsl:param name="SegChange"/>
         <xsl:copy copy-namespaces="no">
             <xsl:element name="Segment" xmlns="urn:mtf:mil:6040b:goe:segments">
                 <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*" mode="attr"/>
+                <xsl:apply-templates select="*" mode="attr">
+                    <xsl:with-param name="SegChange" select="$SegChange"/>
+                </xsl:apply-templates>
+                <xsl:if test="$SegChange/@PROPOSED_SEGMENT_TYPE_DESCRIPTION">
+                    <xsl:attribute name="description">
+                        <xsl:value-of select="$SegChange/@PROPOSED_SEGMENT_TYPE_DESCRIPTION"/>
+                    </xsl:attribute>
+                </xsl:if>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
@@ -378,7 +391,7 @@
     </xsl:variable>
     <!-- ************************************************************-->
     <!--Build XML Schema and add Global Elements and Complex Types -->
-    <xsl:template name="MAIN">
+    <xsl:template name="main">
         <xsl:result-document href="../../XSD/GoE_Schema/GoE_segments.xsd">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:segments" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields"
                 xmlns:set="urn:mtf:mil:6040b:goe:sets" xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:segments">
@@ -388,6 +401,7 @@
                 <xsd:complexType name="SegmentBaseType">
                     <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                 </xsd:complexType>
+                <!--<xsl:copy-of select="$segment_elements"/>-->
                 <xsl:copy-of select="$global_types"/>
                 <xsl:copy-of select="$global_elements"/>
             </xsd:schema>
@@ -495,18 +509,58 @@
     <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
     <!--Use Position relative to segment vice position relative to containing message-->
     <xsl:template match="*:SegmentStructureName" mode="attr">
-        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
-            <xsl:attribute name="name">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
-            </xsl:attribute>
-        </xsl:if>
+        <xsl:param name="SegChange"/>
+        <xsl:choose>
+            <xsl:when test="$SegChange">
+                <xsl:choose>
+                    <xsl:when test="$SegChange/* and string-length($SegChange/@SEGMENT_NAME) > 0">
+                        <xsl:value-of select="$SegChange/@SEGMENT_NAME"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+                            <xsl:attribute name="name">
+                                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+                    <xsl:attribute name="name">
+                        <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                    </xsl:attribute>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <xsl:template match="*:SegmentStructureUseDescription" mode="attr">
-        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
-            <xsl:attribute name="usage">
-                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
-            </xsl:attribute>
-        </xsl:if>
+        <xsl:param name="SegChange"/>
+        <xsl:choose>
+            <xsl:when test="$SegChange">
+                <xsl:choose>
+                    <xsl:when test="$SegChange/@SEGMENT_CONCEPTUSE_DESCRIPTION">
+                        <xsl:attribute name="usage">
+                            <xsl:value-of select="$SegChange/@SEGMENT_CONCEPTUSE_DESCRIPTION"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+                            <xsl:attribute name="usage">
+                                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+                    <xsl:attribute name="usage">
+                        <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                    </xsl:attribute>
+                </xsl:if>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <xsl:template match="*:SetFormatPositionUseDescription" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">

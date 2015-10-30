@@ -227,8 +227,8 @@
         </xsl:variable>
         <xsl:variable name="newname">
             <xsl:choose>
-                <xsl:when test="exists($segment_Changes/Segment[@MtfId = $mtfid and @ElementName = $elname])">
-                    <xsl:value-of select="$segment_Changes/Segment[@MtfId = $mtfid and @ElementName = $elname]/@NewElementName"/>
+                <xsl:when test="exists($segment_Changes/Segment[@MTF_NAME = $mtfid and @SegmentElement = $elname])">
+                    <xsl:value-of select="$segment_Changes/Segment[@MTF_NAME = $mtfid and @SegmentElement = $elname]/@ProposedSegmentElement"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$elname"/>

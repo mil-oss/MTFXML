@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
+    version="2.0">
     <xsl:output method="xml" indent="yes"/>
-
     <!--This transform extracts usable XML from MS EXCEL documents saved as XML-->
-
     <xsl:variable name="msgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
-    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/Segment_DeconflictionEXCEL.xml')"/>
+    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/work/msgsegment_icp_27oct15_EXCEL.xml')"/>
     <xsl:variable name="outputDoc" select="'../../XSD/Deconflicted/Segment_Name_Changes.xml'"/>
-
     <!--Create Attributes from first row labels-->
-    <xsl:variable name="attributes">
-        <ATTS>
-            <xsl:for-each select="$sourceDoc//*:Table/*:Row[1]/*:Cell">
-                <xsl:if test="string-length(*:Data/text()) > 0">
-                    <xsl:attribute name="{replace(replace(*:Data/text(),' ','_'),':','')}"/>
-                </xsl:if>
-            </xsl:for-each>
-        </ATTS>
+    <xsl:variable name="colhdrs">
+        <xsl:for-each select="$sourceDoc//*:Table[1]/*:Row[1]/*:Cell">
+            <xsl:if test="string-length(*:Data/text()) > 0">
+                <xsl:element name="{translate(normalize-space(*:Data/text()),' /:','_')}"/>
+            </xsl:if>
+        </xsl:for-each>
     </xsl:variable>
-
     <!--Create list of all Segments from baseline XML Schemas-->
     <xsl:variable name="mtf_segment_elements">
         <SegmentElements>
@@ -27,20 +21,17 @@
                 <xsl:sort select="@name" data-type="text"/>
                 <xsl:element name="{@name}">
                     <xsl:attribute name="SegmentStructureName">
-                        <xsl:value-of select="*:annotation/*:appinfo/*:SegmentStructureName/text()"
-                        />
+                        <xsl:value-of select="*:annotation/*:appinfo/*:SegmentStructureName/text()"/>
                     </xsl:attribute>
                 </xsl:element>
             </xsl:for-each>
         </SegmentElements>
     </xsl:variable>
-
     <!--Create list of all Segments identified as having duplicate names in provided Spreadsheet-->
     <xsl:variable name="new_segment_elements">
-        <xsl:apply-templates select="$sourceDoc//*:Table"/>
+        <xsl:apply-templates select="$sourceDoc//*:Table[1]"/>
     </xsl:variable>
-
-    <xsl:template match="/">
+    <xsl:template name="main">
         <xsl:result-document href="{$outputDoc}">
             <USMTF_Segments>
                 <xsl:attribute name="count">
@@ -50,88 +41,62 @@
             </USMTF_Segments>
         </xsl:result-document>
     </xsl:template>
-
     <!-- Extract Segments from Spreadsheet XML with required changes identified-->
     <xsl:template match="*:Table">
-        <!--NO CHANGES FILTER-->
         <xsl:apply-templates select="*:Row[*:Cell/*:Data]"/>
     </xsl:template>
-
     <!-- Match Element names from Baseline XML Schema-->
     <xsl:template match="*:Row">
-        <xsl:variable name="segname">
-            <xsl:value-of select="*:Cell[4]/*:Data/text()"/>
-        </xsl:variable>
-        <xsl:variable name="newname">
-            <xsl:apply-templates select="*:Cell[7]/*:Data/text()"/>
-        </xsl:variable>
-        <xsl:variable name="Elname">
-            <xsl:value-of
-                select="substring-before($mtf_segment_elements/SegmentElements/*[@SegmentStructureName = $segname][1]/name(),'Segment')"
-            />
-        </xsl:variable>
-        <xsl:if test="string-length($Elname) > 0">
-            <xsl:variable name="ProposedElementName">
+        <xsl:variable name="R" select="."/>
+        <Segment>
+            <xsl:for-each select="$colhdrs/*">
+                <xsl:variable name="p" select="position()"/>
+                <xsl:attribute name="{name()}">
+                    <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                    <!--<xsl:value-of select="$p"/>-->
+                </xsl:attribute>
                 <xsl:choose>
-                    <xsl:when test="starts-with(*:Cell[7]/*:Data/text()[1], 'No changes required')">
-                        <xsl:value-of select="$Elname"/>
+                    <xsl:when test="name() = 'SEGMENTNAME'">
+                        <xsl:attribute name="SegmentElement">
+                            <xsl:call-template name="CamelCase">
+                                <xsl:with-param name="txt">
+                                    <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:attribute>
                     </xsl:when>
-                    <xsl:when test="starts-with(*:Cell[7]/*:Data/text()[1], 'Change')">
-                        <xsl:call-template name="CamelCase">
-                            <xsl:with-param name="txt"
-                                select="translate(normalize-space(substring-after($newname, ':')),',','')"/>
-                        </xsl:call-template>
+                    <xsl:when test="name() = 'SEGMENT_NAME'">
+                        <xsl:attribute name="SegmentElement">
+                            <xsl:call-template name="CamelCase">
+                                <xsl:with-param name="txt">
+                                    <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:attribute>
                     </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$Elname"/>
-                    </xsl:otherwise>
+                    <xsl:when test="name() = 'PROPOSED_COMPONENT_NAME'">
+                        <xsl:attribute name="ProposedSegmentElement">
+                            <xsl:call-template name="CamelCase">
+                                <xsl:with-param name="txt">
+                                    <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:when test="name() = 'PROPOSED_SEGMENT_TYPE_NAME'">
+                        <xsl:attribute name="ProposedSegmentType">
+                            <xsl:call-template name="CamelCase">
+                                <xsl:with-param name="txt">
+                                    <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                </xsl:with-param>
+                            </xsl:call-template>
+                        </xsl:attribute>
+                    </xsl:when>
                 </xsl:choose>
-            </xsl:variable>
-            <xsl:if test="not($ProposedElementName = $Elname)">
-                <xsl:element name="Segment">
-                    <xsl:attribute name="MtfId">
-                        <xsl:value-of select="*:Cell[2]/*:Data/text()"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="ElementName">
-                        <xsl:value-of select="concat($Elname, 'Segment')"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="NewFormatName">
-                        <xsl:value-of select="normalize-space(substring-after($newname,':'))"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="NewElementName">
-                        <xsl:choose>
-                            <xsl:when test="ends-with($ProposedElementName,'Segment')">
-                                <xsl:value-of select="$ProposedElementName"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="concat($ProposedElementName, 'Segment')"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:attribute>
-                </xsl:element>
-            </xsl:if>
-            <!--<xsl:apply-templates select="*:Cell"/>-->
-        </xsl:if>
+            </xsl:for-each>
+        </Segment>
     </xsl:template>
-
-    <xsl:template match="text()">
-        <xsl:value-of select="replace(normalize-space(.), '&#34;', '')"/>
-    </xsl:template>
-
     <!-- Add column date using header attribute names-->
-    <xsl:template match="*:Cell">
-        <xsl:variable name="pos" select="position()"/>
-        <xsl:variable name="datatext">
-            <xsl:value-of
-                select="normalize-space($sourceDoc//*:Table/*:Row[1]/*:Cell[$pos]/*:Data/text())"/>
-        </xsl:variable>
-        <xsl:if test="string-length(*:Data/text()[1]) > 0">
-            <xsl:attribute name="{replace(replace($datatext,' ','_'),':','')}">
-                <xsl:value-of select="replace(normalize-space(*:Data/text()[1]), '&#34;', '')"/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>
-
     <xsl:template name="CamelCase">
         <xsl:param name="txt"/>
         <xsl:variable name="FirstChar">
@@ -162,5 +127,7 @@
         </xsl:variable>
         <xsl:value-of select="concat($FirstChar, $Lcase)"/>
     </xsl:template>
-
+    <xsl:template match="text()">
+        <xsl:value-of select="translate(translate(normalize-space(.),'&#xA;,', ' '),'&#34;','')"/>
+    </xsl:template>
 </xsl:stylesheet>
