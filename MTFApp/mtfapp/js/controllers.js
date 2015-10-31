@@ -1,25 +1,29 @@
 mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
     var mtfctl = this;
-    mtfctl.usmsgs = [];
-    mtfctl.ussets = [];
-    mtfctl.ussegments = [];
-    mtfctl.usfields = [];
-    mtfctl.natomsgs = [];
-    mtfctl.natosets = [];
-    mtfctl.natosegments = [];
-    mtfctl.natofields = [];
+    mtfctl.msgview = "views/msgView.html";
+    mtfctl.segmentview = "views/segmentView.html";
+    mtfctl.setview = "views/setView.html";
+    mtfctl.fieldview = "views/fieldView.html";
+    mtfctl.usmsgs =[];
+    mtfctl.ussets =[];
+    mtfctl.ussegments =[];
+    mtfctl.usfields =[];
+    mtfctl.natomsgs =[];
+    mtfctl.natosets =[];
+    mtfctl.natosegments =[];
+    mtfctl.natofields =[];
     mtfctl.msgview = "";
     mtfctl.choiceview = "";
     mtfctl.segmentview = "";
     mtfctl.setview = "";
     mtfctl.fieldview = "";
-    mtfctl.selectedMsg = [];
-    mtfctl.selectedSegment = [];
-    mtfctl.selectedSet = [];
-    mtfctl.selectedField = [];
-    mtfctl.selectedSegment = [];
-    mtfctl.selectedSet = [];
-    mtfctl.selectedField = [];
+    mtfctl.selectedMsg =[];
+    mtfctl.selectedSegment =[];
+    mtfctl.selectedSet =[];
+    mtfctl.selectedField =[];
+    mtfctl.selectedSegment =[];
+    mtfctl.selectedSet =[];
+    mtfctl.selectedField =[];
     mtfctl.selectedStd = "US";
     mtfctl.view = "";
     //
@@ -47,6 +51,7 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
         mtfctl.selectedMsg = msg;
+        console.log(mtfctl.selectedMsg);
     };
     mtfctl.selectSegment = function (std, seg, k) {
         console.log("selectSegment");
@@ -56,7 +61,7 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
         mtfctl.selectedSegment = seg;
     };
     mtfctl.selectSet = function (std, set, k) {
-       mtfctl.view = "views/setView.html";
+        mtfctl.view = "views/setView.html";
         mtfctl.selected = k;
         mtfctl.selectedStd = std;
         mtfctl.selectedSet = set;
@@ -73,7 +78,7 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
 });
 mtfApp.controller('menuCtrl', function ($scope) {
     //initiate an array to hold all active tabs
-    $scope.activeTabs = [];
+    $scope.activeTabs =[];
     //check if the tab is active
     $scope.isOpenTab = function (tab) {
         //check if this tab is already in the activeTabs array
@@ -99,7 +104,7 @@ mtfApp.controller('menuCtrl', function ($scope) {
     //function to leave a tab open if open or open if not
     $scope.leaveOpenTab = function (tab) {
         //check if tab is already open
-        if (!$scope.isOpenTab(tab)) {
+        if (! $scope.isOpenTab(tab)) {
             //if it is not open, add to array
             $scope.activeTabs.push(tab);
         }

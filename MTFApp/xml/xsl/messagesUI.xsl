@@ -71,6 +71,12 @@
             <xsl:apply-templates select="*" mode="copy"/>
         </xsl:element>
     </xsl:template>
+    <xsl:template match="*:Field" mode="info">
+        <xsl:element name="Info">
+            <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:apply-templates select="*" mode="copy"/>
+        </xsl:element>
+    </xsl:template>
     <xsl:template match="xsd:sequence">
         <xsl:element name="Sequence">
             <xsl:apply-templates select="@*" mode="copy"/>
@@ -109,7 +115,15 @@
     <xsl:template match="xsd:element[@ref][starts-with(@ref, 'set:')]">
         <xsl:element name="Set">
             <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:apply-templates select="xsd:documentation" mode="doc"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="xsd:element[@ref][starts-with(@ref, 'seg:')]">
+        <xsl:element name="Segment">
+            <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Segment" mode="info"/>
             <xsl:apply-templates select="*"/>
         </xsl:element>
     </xsl:template>
@@ -131,6 +145,11 @@
     <xsl:template match="xsd:minLength | xsd:maxLength | xsd:length | xsd:minInclusive | xsd:maxInclusive" mode="attr">
         <xsl:attribute name="{substring-after(name(),'xsd:')}">
             <xsl:value-of select="@value"/>
+        </xsl:attribute>
+    </xsl:template>
+    <xsl:template match="xsd:documentation" mode="doc">
+        <xsl:attribute name="doc">
+            <xsl:value-of select="."/>
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="*:Document">

@@ -21,7 +21,7 @@
         </div>
         <div class="info">
             <div class="txt" data-ng-show="mtfctl.selectedMsg.Info.Document">
-                <b>Related Documents:</b>
+                <b>Related Document:</b>
                 <span>{{mtfctl.selectedMsg.Info.Document}}</span>
             </div>
             <div class="txt">
@@ -30,18 +30,23 @@
             </div>
         </div>
     </div>
-<!--    <div class="msgseq">
+    <div class="msgseq">
         <div
-            data-ng-repeat="(key,val) in mtfctl.selectedMsg.Sequence | orderBy:_position">
-            <div data-ng-if="key.substring(0, 6) === 'choice'">
+            data-ng-repeat="(key,val) in mtfctl.selectedMsg.Sequence">
+            <span>{{key}}</span>
+            <div ng-include="mtfctl.choiceview"/>
+            <div data-ng-if="key === Sequence">
+                <div ng-include="mtfctl.sequenceview"/>
+            </div>
+            <div data-ng-if="key === Choice">
                 <div ng-include="mtfctl.choiceview"/>
             </div>
-            <div data-ng-if="key.substring(key.length - 7) === 'Segment'">
+            <div data-ng-if="key === Segment">
                 <div ng-include="mtfctl.segmentview"/>
             </div>
-            <div data-ng-if="val._ref.substring(0, 3) === 'set' || val._position">
+            <div data-ng-if="key === Set">
                 <div ng-include="mtfctl.setview"/>
             </div>
         </div>
-    </div>-->
+    </div>
 </div>

@@ -1,59 +1,27 @@
-
-/* 
- * Copyright (C) 2015 Major James Neushul, USMC
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-
 body{
     font-family:monospace;
     font-size:small;
     /* width:100%; */ 
     /*overflow-y:hidden;*/
 }
-.title{
-    font-size: 14px; 
-}
+
 .message{
     float:left;
     height:90%;
+    width: 95%;
     padding: 5px;
     margin:5px;
 }
-.msgheader{
-    float: left;
-    max-height:40%;
-    overflow-y:auto;
-    overflow-x: hidden;
-    padding-top: 5px;
-    padding: 2px;
-    margin-top: 5px;
-    width: 100%;
-    border:thin solid black;
-}
-
 .msgseq{
+    height:90%;
     float: left;
-    max-height:60%;
     overflow-y:auto;
     overflow-x: hidden;
     padding-top: 5px;
     padding: 2px;
     margin-top: 5px;
     width: 100%;
-    border:thin solid black;
+    border: thin solid black;
 }
 .seq{
     float: left;
@@ -64,6 +32,7 @@ body{
     padding: 2px;
     width: 98%;
 }
+
 .set{
     height:auto;
     margin-top:5px;
@@ -75,17 +44,7 @@ body{
     /* margin: 5px; */
     width: 98%;
 }
-.segment{
-    height:auto;
-    margin-top:5px;
-    margin-left: 2px;
-    float:left;
-    border:solid thin blueviolet;
-    padding: 2px;
-    padding-top:5px;
-    /* margin: 5px; */
-    width: 98%;
-}
+
 .setdoc{
     float:left;
     width: 98%;
@@ -98,6 +57,7 @@ body{
     padding-left: 5px;
     padding-right: 5px;
 }
+
 .occur{
     float:left;
 }
@@ -112,13 +72,17 @@ body{
     width: 98%;
     margin: 2px;
 }
+
 /*************************/
+
 .field .doc{
-    width:98%;
+   width:98%;
 }
+
 .form .set{
     border: thin solid purple;
 }
+
 .field .form {
     padding-top: 5px; 
     padding-left: 5px; padding-bottom: 2px;
@@ -126,6 +90,7 @@ body{
     float: left;
     width: 98%;
 }
+
 .setform{
     float:left;
     width: 95%;
@@ -133,36 +98,45 @@ body{
 }
 .name{
     padding-bottom:5px;
-    margin-bottom:5px;
+    /* font-weight:bold; */
     width: 100%;
+}
+.name b{
+    margin-bottom:5px;
 }
 .no{
     float:left;
     padding-right:2px;
     /* height: 30px; */
 }
+
 .doc{
     padding-top:5px;
     padding-left: 2px;
     padding-bottom:2px;
     margin-bottom: 5px;
     float: left;
-}
+    }
 .doc .field{
     width:99%;
 }
+
 .doc .fieldseq{
     width:98%;
 }
+
 .set .fieldseq {
     width:98%;
 }
+
 .doc .field{
     width:98%;
 }
+
 .set .field {
     width:98%;
 }
+
 .form{
     padding-top:5px;
     padding-left:5px;
@@ -171,6 +145,7 @@ body{
     float: left;
     width: inherit;
 }
+
 .info{
     /* float: right; */
     padding-left:5px;
@@ -184,7 +159,11 @@ body{
     margin-right:5px;
     margin-bottom:5px;
 }
-
+.segment{
+    float:left;
+    padding:5px;
+    border:thin green solid;
+}
 .expandField{
     color:blue;
     float:right;
@@ -197,6 +176,12 @@ body{
 }
 .hdr .name{
     text-align:center;
+}
+.segment{
+    float:left;
+    padding-left:5px;
+    border:thin grey solid;
+    margin-bottom:10px;
 }
 .fieldseq{
     float:left;
@@ -215,19 +200,23 @@ body{
     border: thin purple solid;
     margin-bottom: 3px;
 }
+
 .fieldseq .set{
     width:inherit;
 }
+
 .set .frm .frmseq{
     height:98%;
     overflow-y:auto;
     border-bottom:thin black solid;
     float:left;
 }
+
 .sets .set .fieldseq .fieldlisting{
     border-right:thin grey solid;
     float:left;
 }
+
 .fields{
     margin: 0px;
     padding: 0px;
@@ -237,10 +226,8 @@ body{
     float:left;
     height:auto;
     width: 98%;
-    margin-left: 5px;
     margin-bottom: 5px;
-    padding:2px;
-    border: thin solid blue;
+    border: medium solid grey;
 }
 .fieldseq .field{
     float:left;
@@ -257,6 +244,7 @@ body{
     margin-top:5px;
     /* width:99%; */
 }
+
 .fieldlisting{
     padding-top:5px;
 }
@@ -265,9 +253,9 @@ body{
     width: 97%;
     /* border: thin solid black; */
 }
+
 .desc{
     float: left;
-    padding-left: 5px;
 }
 .enumregex{
     width:98%;
@@ -357,6 +345,7 @@ span.enumdesc{
     float:left;
     width: 99%;
 }
+
 .frmfld{
     float:left;
     position:relative;
@@ -364,7 +353,7 @@ span.enumdesc{
     padding-bottom:5px;
     height:auto;
     min-height:20px;
-    width: 200px;
+    width: 600px;
 }
 .frmfld .overlay{
     position:relative;
@@ -416,9 +405,11 @@ span.enumdesc{
     position:absolute;
     /* width: 100%; */
 }
+
 .frmseldiv{
     margin-bottom:5px;
 }
+
 .frmfld .selecttxt{
     font-style:italic;
     float:left;
@@ -452,9 +443,11 @@ span.enumdesc{
     word-wrap:break-word;
     overflow:hidden;
 }
+
 .form  .frmfld{
     width:98%;
 }
+
 .frmfld .freetext {
     overflow:auto;
     border:thin solid grey;
@@ -463,9 +456,11 @@ span.enumdesc{
     position:relative;
     width:98%;
 }
+
 textarea .freetext {
     width:98%;
 }
+
 .frmfld input{
     font-family:monospace;
     font-size:small;
@@ -483,14 +478,16 @@ textarea .freetext {
     width:300px;
     border:thin solid grey;
 }
+
 .ctr{
     text-align:center;
 }
 .txt{
-    margin-top: 2px;  
-    word-wrap:break-word;
-    /* padding-left: 5px; */
+  margin-top: 2px;  
+  word-wrap:break-word;
+  /* padding-left: 5px; */
 }
+
 .value{
 
 }
