@@ -117,7 +117,7 @@
     <xsl:template match="xsd:schema/xsd:element/xsd:annotation/xsd:appinfo" mode="ctype"/>
     <xsl:template match="xsd:element" mode="ctype">
         <xsl:variable name="elname">
-            <xsl:value-of select="@name"/>
+            <xsl:value-of select="concat(@name,'Set')"/>
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="exists($sets/xsd:schema/xsd:element[@name = $elname])">
@@ -130,12 +130,16 @@
                 </xsl:copy>
             </xsl:when>
             <xsl:when test="starts-with(./xsd:complexType/xsd:complexContent/xsd:extension/@base, 's:')">
+                <xsl:variable name="b" select="./xsd:complexType/xsd:complexContent/xsd:extension/@base"/>
+                <xsl:variable name="bsettype">
+                    <xsl:value-of select="concat(substring($b,0,string-length($b)-3),'SetType')"/>
+                </xsl:variable>
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="name">
                         <xsl:value-of select="$elname"/>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:value-of select="replace(xsd:complexType/xsd:complexContent/xsd:extension/@base, 's:', 'set:')"/>
+                        <xsl:value-of select="replace($bsettype, 's:', 'set:')"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')]" mode="ctype"/>
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>

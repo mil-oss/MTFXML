@@ -66,7 +66,7 @@
     </xsl:variable>
     <!--*****************************************************-->
     <!--Build XML Schema and add Global Elements and Complex Types -->
-    <xsl:template name="MAIN">
+    <xsl:template name="main">
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:segments" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:field="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:set="urn:int:nato:mtf:app-11(c):goe:sets"
@@ -194,10 +194,10 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = $elname">
+            <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = concat($elname,'Set')">
                 <xsl:element name="xsd:element">
                     <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('set:', $elname)"/>
+                        <xsl:value-of select="concat('set:', $elname,'Set')"/>
                     </xsl:attribute>
                     <xsl:copy-of select="xsd:annotation"/>
                 </xsl:element>
@@ -216,7 +216,7 @@
                 <xsl:variable name="t">
                     <xsl:choose>
                         <xsl:when test="starts-with($b, 's:')">
-                            <xsl:value-of select="concat('set:', substring-after($b, 's:'))"/>
+                            <xsl:value-of select="concat('set:', concat(substring-after(substring($b, 0, string-length($b) - 3), 's:'),'SetType'))"/>
                         </xsl:when>
                         <xsl:when test="starts-with($b, 'f:')">
                             <xsl:value-of select="concat('field:', substring-after($b, 'f:'))"/>
@@ -272,7 +272,7 @@
             <xsl:copy-of select="xsd:annotation"/>
             <xsd:complexType>
                 <xsd:complexContent>
-                    <xsd:extension base="set:GeneralTextType">
+                    <xsd:extension base="set:GeneralTextSetType">
                         <xsd:sequence>
                             <xsd:element name="GentextTextIndicator" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1"
                                 fixed="{replace($TextInd,$apos,'')}"/>

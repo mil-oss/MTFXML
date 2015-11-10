@@ -171,59 +171,69 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="basel" select="substring($basetype, 0, string-length($basetype) - 3)"/>
-        <xsl:copy copy-namespaces="no">
-            <xsl:choose>
-                <xsl:when test="@name = 'RoutingIndicator'">
-                    <xsl:attribute name="ref">
-                        <xsl:text>field:RoutingIndicator</xsl:text>
-                    </xsl:attribute>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                </xsl:when>
-                <xsl:when test="@name = 'Activity'">
-                    <xsl:attribute name="ref">
-                        <xsl:text>field:Activity</xsl:text>
-                    </xsl:attribute>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                </xsl:when>
-                <xsl:when test="@name = 'Event'">
-                    <xsl:attribute name="ref">
-                        <xsl:text>field:Event</xsl:text>
-                    </xsl:attribute>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                </xsl:when>
-                <xsl:when test="$n = $basel and $goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('field:', $basel)"/>
-                    </xsl:attribute>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                </xsl:when>
-                <xsl:when test="$n != $basel and $goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
-                    <xsl:attribute name="name">
-                        <xsl:value-of select="$n"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="concat('field:', $basetype)"/>
-                    </xsl:attribute>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                </xsl:when>
-                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction">
-                    <xsl:apply-templates select="@*"/>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="concat('field:', $goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction/@type)"/>
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]">
-                    <xsl:apply-templates select="@*"/>
-                    <xsl:attribute name="type">
-                        <xsl:value-of select="concat('field:', $basetype)"/>
-                    </xsl:attribute>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates select="@*"/>
+        <xsl:choose>
+            <xsl:when test="@name = 'Amplification'">
+                <xsd:element name="AmplificationSet">
+                    <xsl:apply-templates select="@*[not(name()='name')]"/>
                     <xsl:apply-templates select="*"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:copy>
+                </xsd:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy copy-namespaces="no">
+                    <xsl:choose>
+                        <xsl:when test="@name = 'RoutingIndicator'">
+                            <xsl:attribute name="ref">
+                                <xsl:text>field:RoutingIndicator</xsl:text>
+                            </xsl:attribute>
+                            <xsl:apply-templates select="xsd:annotation"/>
+                        </xsl:when>
+                        <xsl:when test="@name = 'Activity'">
+                            <xsl:attribute name="ref">
+                                <xsl:text>field:Activity</xsl:text>
+                            </xsl:attribute>
+                            <xsl:apply-templates select="xsd:annotation"/>
+                        </xsl:when>
+                        <xsl:when test="@name = 'Event'">
+                            <xsl:attribute name="ref">
+                                <xsl:text>field:Event</xsl:text>
+                            </xsl:attribute>
+                            <xsl:apply-templates select="xsd:annotation"/>
+                        </xsl:when>
+                        <xsl:when test="$n = $basel and $goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
+                            <xsl:attribute name="ref">
+                                <xsl:value-of select="concat('field:', $basel)"/>
+                            </xsl:attribute>
+                            <xsl:apply-templates select="xsd:annotation"/>
+                        </xsl:when>
+                        <xsl:when test="$n != $basel and $goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
+                            <xsl:attribute name="name">
+                                <xsl:value-of select="$n"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="type">
+                                <xsl:value-of select="concat('field:', $basetype)"/>
+                            </xsl:attribute>
+                            <xsl:apply-templates select="xsd:annotation"/>
+                        </xsl:when>
+                        <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction">
+                            <xsl:apply-templates select="@*"/>
+                            <xsl:attribute name="type">
+                                <xsl:value-of select="concat('field:', $goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]//xsd:restriction/@type)"/>
+                            </xsl:attribute>
+                        </xsl:when>
+                        <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basetype]">
+                            <xsl:apply-templates select="@*"/>
+                            <xsl:attribute name="type">
+                                <xsl:value-of select="concat('field:', $basetype)"/>
+                            </xsl:attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="@*"/>
+                            <xsl:apply-templates select="*"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:copy>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
     <xsl:template match="xsd:extension[@base = 'SetBaseType']">
         <xsd:extension base="SetBaseType">

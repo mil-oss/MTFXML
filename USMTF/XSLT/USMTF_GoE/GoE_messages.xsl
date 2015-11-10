@@ -148,18 +148,18 @@
         <xsl:variable name="newname">
             <xsl:choose>
                 <xsl:when test="$setid = '1APHIB'">
-                    <xsl:text>AmphibiousForceComposition</xsl:text>
+                    <xsl:text>AmphibiousForceCompositionSet</xsl:text>
                 </xsl:when>
                 <xsl:when test="$setid = 'MARACT'">
-                    <xsl:text>MaritimeActivity</xsl:text>
+                    <xsl:text>MaritimeActivitySet</xsl:text>
                 </xsl:when>
                 <xsl:when test="exists($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0])">
                     <xsl:value-of
-                        select="translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
+                        select="concat(translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', ''),'Set')"
                     />
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$elname"/>
+                    <xsl:value-of select="concat($elname,'Set')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -168,22 +168,22 @@
             <xsl:when test="$newname = 'ShipPositionAndMovement' and contains(xsd:annotation/xsd:documentation, '1SHIPARR')">
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="name">
-                        <xsl:text>ShipPositionAndMovementArrival</xsl:text>
+                        <xsl:text>ShipPositionAndMovementArrivalSet</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:text>set:ShipPositionAndMovementType</xsl:text>
+                        <xsl:text>set:ShipPositionAndMovementSetType</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')][not(name() = 'type')]" mode="ctype"/>
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
                 </xsl:copy>
             </xsl:when>
-            <xsl:when test="$newname = 'ShipPositionAndMovement' and contains(xsd:annotation/xsd:documentation, '1SHIPDEP')">
+            <xsl:when test="$newname = 'ShipPositionAndMovementSet' and contains(xsd:annotation/xsd:documentation, '1SHIPDEP')">
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="name">
-                        <xsl:text>ShipPositionAndMovementDeparture</xsl:text>
+                        <xsl:text>ShipPositionAndMovementDepartureSet</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:text>set:ShipPositionAndMovementType</xsl:text>
+                        <xsl:text>set:ShipPositionAndMovementSetType</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')][not(name() = 'type')]" mode="ctype"/>
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
@@ -199,12 +199,16 @@
                 </xsl:copy>
             </xsl:when>
             <xsl:when test="starts-with(./xsd:complexType/xsd:complexContent/xsd:extension/@base, 's:')">
+                <xsl:variable name="b" select="./xsd:complexType/xsd:complexContent/xsd:extension/@base"/>
+                <xsl:variable name="bsettype">
+                    <xsl:value-of select="concat(substring($b,0,string-length($b)-3),'SetType')"/>
+                </xsl:variable>
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="name">
                         <xsl:value-of select="$newname"/>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:value-of select="replace(xsd:complexType/xsd:complexContent/xsd:extension/@base, 's:', 'set:')"/>
+                        <xsl:value-of select="replace($bsettype, 's:', 'set:')"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')]" mode="ctype"/>
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
@@ -312,7 +316,7 @@
             </xsl:element>
             <xsd:complexType>
                 <xsd:complexContent>
-                    <xsd:extension base="set:GeneralTextType">
+                    <xsd:extension base="set:GeneralTextSetType">
                         <xsd:sequence>
                             <xsd:element name="GentextTextIndicator" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1"
                                 fixed="{translate(replace($TextInd,$apos,''),'”','')}"/>
@@ -352,7 +356,7 @@
             </xsl:element>
             <xsd:complexType>
                 <xsd:complexContent>
-                    <xsd:extension base="set:HeadingInformationType">
+                    <xsd:extension base="set:HeadingInformationSetType">
                         <xsd:sequence>
                             <xsd:element name="FieldAssignment" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1"
                                 fixed="{translate(replace($TextInd,$apos,''),'”','')}"/>
