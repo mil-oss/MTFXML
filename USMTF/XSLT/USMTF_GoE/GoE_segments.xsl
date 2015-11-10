@@ -35,16 +35,16 @@
     <!--This process preserves all structure and converts it to desired format with references which will be used in ComplexTypes-->
     <!-- Add id to match msdid and element name with proposed name change list -->
     <xsl:variable name="segment_elements">
-        <xsl:for-each select="$baseline_msgs/*//xsd:element[contains(@name, 'Segment')]">
+        <xsl:for-each select="$baseline_msgs/*//xsd:element[ends-with(@name, 'Segment') or contains(@name, 'Segment_')]">
             <xsl:sort select="@name" data-type="text"/>
             <xsl:variable name="mtfid" select="ancestor-or-self::xsd:element[parent::xsd:schema]/xsd:annotation/xsd:appinfo/*:MtfIdentifier"/>
             <xsl:variable name="baseline_name">
                 <xsl:choose>
-                    <xsl:when test="ends-with(@name, 'Segment')">
-                        <xsl:value-of select="@name"/>
-                    </xsl:when>
                     <xsl:when test="contains(@name, 'Segment_')">
                         <xsl:value-of select="substring-before(@name, '_')"/>
+                    </xsl:when>
+                    <xsl:when test="ends-with(@name, 'Segment')">
+                        <xsl:value-of select="@name"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="@name"/>

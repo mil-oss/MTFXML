@@ -9,7 +9,7 @@
     <xsl:variable name="conflicts">
         <xsl:apply-templates select="$Fields/xsd:schema/*[@name]" mode="field"/>
     </xsl:variable>
-    <xsl:template name="MAIN">
+    <xsl:template name="main">
         <xsl:result-document href="../../XSD/Deconflicted/name_conflicts.xml">
             <Name_Conflicts>
                 <xsl:for-each select="$conflicts/*[@segment | @set]">

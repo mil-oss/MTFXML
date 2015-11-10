@@ -35,7 +35,7 @@
     <xsl:variable name="complex_types">
         <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')]">
             <xsl:variable name="elname">
-                <xsl:value-of select="translate(substring(@name, 0, string-length(@name) - 3), '-', '')"/>
+                <xsl:value-of select="concat(translate(substring(@name, 0, string-length(@name) - 3), '-', ''),'Set')"/>
             </xsl:variable>
             <xsl:variable name="setid">
                 <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
@@ -43,14 +43,14 @@
             <xsl:variable name="newname">
                 <xsl:choose>
                     <xsl:when test="$setid = '1APHIB'">
-                        <xsl:text>AmphibiousForceComposition</xsl:text>
+                        <xsl:text>AmphibiousForceCompositionSet</xsl:text>
                     </xsl:when>
                     <xsl:when test="$setid = 'MARACT'">
-                        <xsl:text>MaritimeActivity</xsl:text>
+                        <xsl:text>MaritimeActivitySet</xsl:text>
                     </xsl:when>
                     <xsl:when test="exists($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0])">
                         <xsl:value-of
-                            select="translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
+                            select="concat(translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', ''),'Set')"
                         />
                     </xsl:when>
                     <xsl:otherwise>
@@ -76,7 +76,7 @@
                 <xsl:choose>
                     <xsl:when test="exists($set_Changes/*/*[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
                         <xsl:value-of
-                            select="translate($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', '')"
+                            select="concat(translate($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', ''),'Set')"
                         />
                     </xsl:when>
                     <xsl:otherwise>
@@ -95,7 +95,7 @@
         </xsl:for-each>
     </xsl:variable>
     <!--*****************************************************-->
-    <xsl:template name="MAIN">
+    <xsl:template name="main">
         <xsl:result-document href="{$output}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields"
                 xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US" elementFormDefault="unqualified"
@@ -104,8 +104,8 @@
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="SetBaseType">
                     <xsd:sequence>
-                        <xsd:element name="Amplification" type="AmplificationType" minOccurs="0" maxOccurs="1"/>
-                        <xsd:element name="NarrativeInformation" type="NarrativeInformationType" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element name="AmplificationSet" type="AmplificationSetType" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element name="NarrativeInformationSet" type="NarrativeInformationSetType" minOccurs="0" maxOccurs="1"/>
                     </xsd:sequence>
                     <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                 </xsd:complexType>
@@ -227,6 +227,11 @@
     </xsl:template>
     <xsl:template match="xsd:extension[@base = 'SetBaseType']">
         <xsd:extension base="SetBaseType">
+            <xsl:apply-templates select="*"/>
+        </xsd:extension>
+    </xsl:template>
+    <xsl:template match="xsd:extension[@base = 'AmplificationType']">
+        <xsd:extension base="AmplificationSetType">
             <xsl:apply-templates select="*"/>
         </xsd:extension>
     </xsl:template>
