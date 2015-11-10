@@ -89,7 +89,7 @@
         <xsl:apply-templates select="$complex_types_xsd/*" mode="el"/>
     </xsl:variable>
     <!--*****************************************************-->
-    <xsl:template name="MAIN">
+    <xsl:template name="main">
         <xsl:result-document href="{$output_fields_xsd}">
             <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB" elementFormDefault="unqualified"

@@ -185,31 +185,36 @@
         <xsl:copy-of select="." copy-namespaces="no"/>
     </xsl:template>
     <xsl:template match="*:Set" mode="copy">
-        <xsl:element name="Set" namespace="urn:mtf:mil:6040b:goe:mtf">
+        <xsl:element name="Set" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="*" mode="copy"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="*:Field" mode="copy">
-        <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:mtf">
+        <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="*" mode="copy"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="*:Segment" mode="copy">
-        <xsl:element name="Segment" namespace="urn:mtf:mil:6040b:goe:mtf">
+        <xsl:element name="Segment" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="*" mode="copy"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="*:Enum" mode="copy">
-        <xsl:element name="Enum" namespace="urn:mtf:mil:6040b:goe:mtf">
+        <xsl:element name="Enum" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="*" mode="copy"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="*:Example" mode="copy">
-        <xsl:element name="Example" namespace="urn:mtf:mil:6040b:goe:mtf">
+        <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
+            <xsl:apply-templates select="text()" mode="copy"/>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="*:Document" mode="copy">
+        <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:mtf">
             <xsl:apply-templates select="text()" mode="copy"/>
         </xsl:element>
     </xsl:template>
