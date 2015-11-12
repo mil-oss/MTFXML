@@ -4,32 +4,34 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
     mtfctl.segmentview = "views/segmentView.html";
     mtfctl.setview = "views/setView.html";
     mtfctl.fieldview = "views/fieldView.html";
-    mtfctl.usmsgs =[];
-    mtfctl.ussets =[];
-    mtfctl.ussegments =[];
-    mtfctl.usfields =[];
-    mtfctl.natomsgs =[];
-    mtfctl.natosets =[];
-    mtfctl.natosegments =[];
-    mtfctl.natofields =[];
     mtfctl.msgview = "";
     mtfctl.choiceview = "";
     mtfctl.segmentview = "";
     mtfctl.setview = "";
     mtfctl.fieldview = "";
-    mtfctl.selectedMsg =[];
-    mtfctl.selectedSegment =[];
-    mtfctl.selectedSet =[];
-    mtfctl.selectedField =[];
-    mtfctl.selectedSegment =[];
-    mtfctl.selectedSet =[];
-    mtfctl.selectedField =[];
+    mtfctl.selectedMsg = [];
+    mtfctl.selectedSegment = [];
+    mtfctl.selectedSet = [];
+    mtfctl.selectedField = [];
+    mtfctl.selectedSegment = [];
+    mtfctl.selectedSet = [];
+    mtfctl.selectedField = [];
     mtfctl.selectedStd = "US";
     mtfctl.view = "";
     //
-    for (i = 0; i < resources.length; i++) {
-        dbService.syncResource(mtfctl, resources[i]);
+    var k = Object.keys(resources, mtfctl);
+    for (i = 0; i < k.length; i++) {
+        dbService.syncResource(k[i]);
     }
+    mtfctl.usmsgs = dbService.getData('usmtf_msgs','USMTF_Messages');
+    mtfctl.nmsgs = dbService.getData('nato_msgs','NATO_Messages');
+    mtfctl.ussegments = dbService.getData('usmtf_segs','USMTF_Segments');
+    mtfctl.nsegments = dbService.getData('nato_segs','NATO_Segments');
+    mtfctl.ussets = dbService.getData('usmtf_sets','USMTF_Sets');
+    mtfctl.nsets = dbService.getData('nato_sets','NATO_Sets');
+    mtfctl.usfields = dbService.getData('usmtf_flds','USMTF_Fields');
+    mtfctl.nfields = dbService.getData('nato_flds','NATO_Fields');
+
     mtfctl.valuefilter = function (mlist, txt, field) {
         var result = {
         };
@@ -78,7 +80,7 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
 });
 mtfApp.controller('menuCtrl', function ($scope) {
     //initiate an array to hold all active tabs
-    $scope.activeTabs =[];
+    $scope.activeTabs = [];
     //check if the tab is active
     $scope.isOpenTab = function (tab) {
         //check if this tab is already in the activeTabs array
@@ -104,7 +106,7 @@ mtfApp.controller('menuCtrl', function ($scope) {
     //function to leave a tab open if open or open if not
     $scope.leaveOpenTab = function (tab) {
         //check if tab is already open
-        if (! $scope.isOpenTab(tab)) {
+        if (!$scope.isOpenTab(tab)) {
             //if it is not open, add to array
             $scope.activeTabs.push(tab);
         }

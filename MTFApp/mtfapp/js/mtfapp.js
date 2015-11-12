@@ -20,15 +20,14 @@ var storestructure = [
     ['Resources', 'name', false, [['url', 'url', true], ['lastmod', 'lastmod', false], ['data', 'data', false]]],
     ['MTF', 'name', false, [['data', 'data', false]]]
 ];
-var resources = [
-    {name: 'usmtf_msgs', url: '/JSON/lz/usmtf_messages_ui.xml.lz'},
-    {name: 'usmtf_segs', url: '/JSON/lz/usmtf_segments_ui.xml.lz'},
-    {name: 'usmtf_sets', url: '/JSON/lz/usmtf_sets_ui.xml.lz'},
-    {name: 'usmtf_flds', url: '/JSON/lz/usmtf_fields_ui.xml.lz'},
-    {name: 'nato_msgs', url: '/JSON/lz/nato_messages_ui.xml.lz'},
-    {name: 'nato_segs', url: '/JSON/lz/nato_segments_ui.xml.lz'},
-    {name: 'nato_sets', url: '/JSON/lz/nato_sets_ui.xml.lz'},
-    {name: 'nato_flds', url: '/JSON/lz/nato_fields_ui.xml.lz'}];
+var resources = {usmtf_msgs: '/JSON/lz/usmtf_messages_ui.xml.lz',
+    usmtf_segs: '/JSON/lz/usmtf_segments_ui.xml.lz',
+    usmtf_sets: '/JSON/lz/usmtf_sets_ui.xml.lz',
+    usmtf_flds: '/JSON/lz/usmtf_fields_ui.xml.lz',
+    nato_msgs: '/JSON/lz/nato_messages_ui.xml.lz',
+    nato_segs: '/JSON/lz/nato_segments_ui.xml.lz',
+    nato_sets: '/JSON/lz/nato_sets_ui.xml.lz',
+    nato_flds: '/JSON/lz/nato_fields_ui.xml.lz'};
 
 var compression = false;
 var xj = new X2JS();

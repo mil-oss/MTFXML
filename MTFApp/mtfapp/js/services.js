@@ -5,24 +5,23 @@ mtfApp.factory('dbService', function ($http, $indexedDB, $q) {
     dbsvc.xj = new X2JS();
     ;
     dbsvc.dB = $indexedDB;
-    dbsvc.syncResource = function (mtfctl, res) {
-        console.log('syncResource ' + res.url);
-        var xname = res.name;
-        var xurl = res.url;
+    dbsvc.syncResource = function (res) {
+        console.log('syncResource ' + res);
+        var xname = res;
+        var xurl = resources[res];
         var jsonname = xname + '.json';
-        console.log(name + ", " + jsonname);
+        //console.log(xname + ", " + jsonname);
         dbsvc.dB.openStore('Resources', function (store) {
             store.getAllKeys().then(function (keys) {
                 if (keys.indexOf(xname) === -1) {
-                    console.log("No Local Store .. Add: " + res.url);
+                    console.log("No Local Store .. Add: " + xurl);
                     $http.get(xurl).success(function (resdata, status, headers) {
                         var mod = headers()['last-modified'];
                         dbsvc.dB.openStore('Resources', function (store) {
-                            //console.log(resdata);
                             var dstr = LZString.decompressFromUTF16(resdata);
                             var xjson = dbsvc.xj.xml_str2json(dstr)
                             store.upsert({name: xname, url: xurl, lastmod: mod, data: xjson});
-                            dbsvc.setVal(mtfctl, xname, xjson);
+                            //dbsvc.setList(xname, xjson, mtfctl);
                         });
                     }).error(function () {
                         console.log('Error getting resource ' + xname);
@@ -39,14 +38,13 @@ mtfApp.factory('dbService', function ($http, $indexedDB, $q) {
                                         var dstr = LZString.decompressFromUTF16(resdata);
                                         var xjson = dbsvc.xj.xml_str2json(dstr);
                                         store.upsert({name: xname, url: xurl, lastmod: mod, data: xjson});
-                                    }).then(function (xjson) {
-                                        dbsvc.setVal(mtfctl, xname, xjson);
+                                        //dbsvc.setList(xname, xjson, mtfctl);
                                     });
                                 }).error(function () {
                                     console.log('Error getting resource ' + xname);
                                 });
                             } else {
-                                dbsvc.setVal(mtfctl, xname, dbrec.data);
+                                //dbsvc.setList(xname, dbrec.data, mtfctl);
                             }
                         }).error(function () {
                             console.log('Error getting headers for ' + xname);
@@ -57,25 +55,14 @@ mtfApp.factory('dbService', function ($http, $indexedDB, $q) {
             });
         });
     };
-    dbsvc.setVal = function (mtfctl, fname, data) {
-        //console.log('setVal: ' + fname);
-        if (fname === 'usmtf_msgs') {
-            mtfctl.usmsgs = data.USMTF_Messages;
-        } else if (fname === 'usmtf_segs') {
-            mtfctl.ussegments = data.USMTF_Segments;
-        } else if (fname === 'usmtf_sets') {
-            mtfctl.ussets = data.USMTF_Sets;
-        } else if (fname === 'usmtf_flds') {
-            mtfctl.usfields = data.USMTF_Fields;
-        } else if (fname === 'nato_msgs') {
-            mtfctl.natomsgs = data.NATO_Messages;
-        } else if (fname === 'nato_segs') {
-            mtfctl.natosegments = data.NATO_Segments;
-        } else if (fname === 'nato_sets') {
-            mtfctl.natosets = data.NATO_Sets;
-        } else if (fname === 'nato_flds') {
-            mtfctl.natofields = data.NATO_Fields;
-        }
+    dbsvc.getData = function (resname,rootnode) {
+        console.log('msgList ' + resname);
+        dbsvc.dB.openStore('Resources', function (store) {
+            store.find(resname).then(function (r) {
+                console.log(r.data[rootnode]);
+                return r.data[rootnode];
+            });
+        });
     };
     return dbsvc;
 });
