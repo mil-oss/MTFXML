@@ -210,6 +210,11 @@
             <xsl:apply-templates select="text()" mode="copy"/>
         </xsl:element>
     </xsl:template>
+    <xsl:template match="*:Document" mode="copy">
+        <xsl:element name="Document" namespace="urn:mtf:mil:6040b:goe:mtf">
+            <xsl:apply-templates select="text()" mode="copy"/>
+        </xsl:element>
+    </xsl:template>
     <xsl:template match="*" mode="copy">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="copy"/>
