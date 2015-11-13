@@ -20,6 +20,7 @@ var storestructure = [
     ['Resources', 'name', false, [['url', 'url', true], ['lastmod', 'lastmod', false], ['data', 'data', false]]],
     ['MTF', 'name', false, [['data', 'data', false]]]
 ];
+
 var resources = {usmtf_msgs: '/JSON/lz/usmtf_messages_ui.xml.lz',
     usmtf_segs: '/JSON/lz/usmtf_segments_ui.xml.lz',
     usmtf_sets: '/JSON/lz/usmtf_sets_ui.xml.lz',
