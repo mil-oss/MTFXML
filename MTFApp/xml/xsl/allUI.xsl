@@ -9,7 +9,7 @@
     <xsl:include href="segmentsUI.xsl"/>
     <xsl:include href="fieldsUI.xsl"/>
     
-    <xsl:template name="AllUI">
+    <xsl:template name="main">
         <xsl:call-template name="messagesUI"/>
         <xsl:call-template name="setsUI"/>
         <xsl:call-template name="segmentsUI"/>

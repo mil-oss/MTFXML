@@ -6,29 +6,40 @@
     <xsl:variable name="NATO_SEGMENTS" select="document('../xsd/NATOMTF/natomtf_goe_segments.xsd')"/>
     <xsl:variable name="usmtf_segments_out" select="'../../JSON/xml/usmtf_segments_ui.xml'"/>
     <xsl:variable name="nato_segments_out" select="'../../JSON/xml/nato_segments_ui.xml'"/>
-    <xsl:variable name="usmtf_segments">
-        <xsl:apply-templates select="$USMTF_SEGMENTS/xsd:schema/xsd:element"/>
-    </xsl:variable>
-    <xsl:variable name="nato_segments">
-        <xsl:apply-templates select="$NATO_SEGMENTS/xsd:schema/xsd:element"/>
-    </xsl:variable>
-    <xsl:template name="segmentsUI">
+    <xsl:template name="allsegmentsUI">
         <xsl:result-document href="{$usmtf_segments_out}">
-            <xsl:element name="USMTF_Segments">
-                <xsl:for-each select="$usmtf_segments/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsl:element>
+            <xsl:call-template name="segmentsUI">
+                <xsl:with-param name="mtf_segments" select="$USMTF_SEGMENTS"/>
+            </xsl:call-template>
         </xsl:result-document>
         <xsl:result-document href="{$nato_segments_out}">
-            <xsl:element name="NATO_Segments">
-                <xsl:for-each select="$nato_segments/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsl:element>
+            <xsl:call-template name="segmentsUI">
+                <xsl:with-param name="mtf_segments" select="$NATO_SEGMENTS"/>
+            </xsl:call-template>
         </xsl:result-document>
+    </xsl:template>
+    <xsl:template name="segmentsUI">
+        <xsl:param name="mtf_segments"/>
+        <xsl:variable name="segments">
+            <xsl:apply-templates select="$mtf_segments/xsd:schema/xsd:element"/>
+        </xsl:variable>
+        <xsl:element name="Segments">
+            <xsl:for-each select="$segments/*">
+                <xsl:sort select="@name"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="/">
+        <xsl:variable name="segments">
+            <xsl:apply-templates select="xsd:schema/xsd:element"/>
+        </xsl:variable>
+        <xsl:element name="Segments">
+            <xsl:for-each select="$segments/*">
+                <xsl:sort select="@name"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:schema/xsd:element">
         <xsl:variable name="t">

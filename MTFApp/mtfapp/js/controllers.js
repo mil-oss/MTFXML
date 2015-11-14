@@ -1,4 +1,4 @@
-mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
+mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService, xsltService) {
     var mtfctl = this;
     mtfctl.msgview = "views/msgView.html";
     mtfctl.segmentview = "views/segmentView.html";
@@ -19,18 +19,12 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService) {
     mtfctl.selectedStd = "US";
     mtfctl.view = "";
     //
-    var k = Object.keys(resources, mtfctl);
-    for (i = 0; i < k.length; i++) {
-        dbService.syncResource(k[i]);
-    }
-    mtfctl.usmsgs = dbService.getData('usmtf_msgs','USMTF_Messages');
-    mtfctl.nmsgs = dbService.getData('nato_msgs','NATO_Messages');
-    mtfctl.ussegments = dbService.getData('usmtf_segs','USMTF_Segments');
-    mtfctl.nsegments = dbService.getData('nato_segs','NATO_Segments');
-    mtfctl.ussets = dbService.getData('usmtf_sets','USMTF_Sets');
-    mtfctl.nsets = dbService.getData('nato_sets','NATO_Sets');
-    mtfctl.usfields = dbService.getData('usmtf_flds','USMTF_Fields');
-    mtfctl.nfields = dbService.getData('nato_flds','NATO_Fields');
+    
+    dbService.syncResources(resources,function(){
+        console.log("data loaded");
+        dbService.updateUIData(xsltService);
+    }); 
+    
 
     mtfctl.valuefilter = function (mlist, txt, field) {
         var result = {

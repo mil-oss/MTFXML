@@ -2,33 +2,44 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="USMTF_FIELDS" select="document('../xsd/USMTF/GoE_fields.xsd')"/>
-    <xsl:variable name="NATO_FIELDS" select="document('../xsd/NATOMTF/natomtf_goe_fields.xsd')"/>
+    <xsl:variable name="usmtf_flds" select="document('../xsd/USMTF/GoE_fields.xsd')"/>
+    <xsl:variable name="nato_flds" select="document('../xsd/NATOMTF/natomtf_goe_fields.xsd')"/>
     <xsl:variable name="usmtf_fields_out" select="'../../JSON/xml/usmtf_fields_ui.xml'"/>
     <xsl:variable name="nato_fields_out" select="'../../JSON/xml/nato_fields_ui.xml'"/>
-    <xsl:variable name="usmtf_fields">
-        <xsl:apply-templates select="$USMTF_FIELDS/xsd:schema/xsd:element"/>
-    </xsl:variable>
-    <xsl:variable name="nato_fields">
-        <xsl:apply-templates select="$NATO_FIELDS/xsd:schema/xsd:element"/>
-    </xsl:variable>
-    <xsl:template name="fieldsUI">
+    <xsl:template name="allfieldsUI">
         <xsl:result-document href="{$usmtf_fields_out}">
-            <xsl:element name="USMTF_Fields">
-                <xsl:for-each select="$usmtf_fields/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsl:element>
+            <xsl:call-template name="fieldsUI">
+                <xsl:with-param name="mtf_fields" select="$usmtf_flds"/>
+            </xsl:call-template>
         </xsl:result-document>
         <xsl:result-document href="{$nato_fields_out}">
-            <xsl:element name="NATO_Fields">
-                <xsl:for-each select="$nato_fields/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsl:element>
+            <xsl:call-template name="fieldsUI">
+                <xsl:with-param name="mtf_fields" select="$nato_flds"/>
+            </xsl:call-template>
         </xsl:result-document>
+    </xsl:template>
+    <xsl:template name="fieldsUI">
+        <xsl:param name="mtf_fields"/>
+        <xsl:variable name="fields">
+            <xsl:apply-templates select="$mtf_fields/xsd:schema/xsd:element"/>
+        </xsl:variable>
+        <xsl:element name="Fields">
+            <xsl:for-each select="$fields/*">
+                <xsl:sort select="@name"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="/">
+        <xsl:variable name="fields">
+            <xsl:apply-templates select="xsd:schema/xsd:element"/>
+        </xsl:variable>
+        <xsl:element name="Fields">
+            <xsl:for-each select="$fields/*">
+                <xsl:sort select="@name"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:element[not(@type)][not(@ref)]">
         <xsl:variable name="b">

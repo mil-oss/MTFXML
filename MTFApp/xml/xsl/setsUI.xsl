@@ -4,31 +4,42 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:variable name="USMTF_SETS" select="document('../xsd/USMTF/GoE_sets.xsd')"/>
     <xsl:variable name="NATO_SETS" select="document('../xsd/NATOMTF/natomtf_goe_sets.xsd')"/>
-    <xsl:variable name="usmtf_sets_out" select="'../../JSON/xml/usmtf_sets_ui.xml'"/>
-    <xsl:variable name="nato_sets_out" select="'../../JSON/xml/nato_sets_ui.xml'"/>
-    <xsl:variable name="usmtf_sets">
-        <xsl:apply-templates select="$USMTF_SETS/xsd:schema/xsd:element"/>
-    </xsl:variable>
-    <xsl:variable name="nato_sets">
-        <xsl:apply-templates select="$NATO_SETS/xsd:schema/xsd:element"/>
-    </xsl:variable>
-    <xsl:template name="setsUI">
+    <xsl:template name="allsetsUI">
+        <xsl:variable name="usmtf_sets_out" select="'../../JSON/xml/usmtf_sets_ui.xml'"/>
+        <xsl:variable name="nato_sets_out" select="'../../JSON/xml/nato_sets_ui.xml'"/>
         <xsl:result-document href="{$usmtf_sets_out}">
-            <xsl:element name="USMTF_Sets">
-                <xsl:for-each select="$usmtf_sets/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsl:element>
+           <xsl:call-template name="setsUI">
+               <xsl:with-param name="setsxsd" select="$USMTF_SETS"/>
+           </xsl:call-template>
         </xsl:result-document>
         <xsl:result-document href="{$nato_sets_out}">
-            <xsl:element name="NATO_Sets">
-                <xsl:for-each select="$nato_sets/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsl:element>
+            <xsl:call-template name="setsUI">
+                <xsl:with-param name="setsxsd" select="$NATO_SETS"/>
+            </xsl:call-template>
         </xsl:result-document>
+    </xsl:template>
+    <xsl:template name="setsUI">
+        <xsl:param name="setsxsd"/>
+        <xsl:variable name="sets">
+            <xsl:apply-templates select="$setsxsd/xsd:schema/xsd:element"/>
+        </xsl:variable>
+        <xsl:element name="Sets">
+            <xsl:for-each select="$sets/*">
+                <xsl:sort select="@name"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="/">
+        <xsl:variable name="sets">
+            <xsl:apply-templates select="xsd:schema/xsd:element"/>
+        </xsl:variable>
+        <xsl:element name="Sets">
+            <xsl:for-each select="$sets/*">
+                <xsl:sort select="@name"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:schema/xsd:element">
         <xsl:variable name="t">

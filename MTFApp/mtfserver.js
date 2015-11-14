@@ -71,14 +71,18 @@ server.listen(8383, "0.0.0.0", function () {
 });
 
 var res = [
-    {'xml': '/JSON/xml/usmtf_messages_ui.xml', 'lz': '/JSON/lz/usmtf_messages_ui.xml.lz'},
-    {'xml': '/JSON/xml/usmtf_segments_ui.xml', 'lz': '/JSON/lz/usmtf_segments_ui.xml.lz'},
-    {'xml': '/JSON/xml/usmtf_sets_ui.xml', 'lz': '/JSON/lz/usmtf_sets_ui.xml.lz'},
-    {'xml': '/JSON/xml/usmtf_fields_ui.xml', 'lz': '/JSON/lz/usmtf_fields_ui.xml.lz'},
-    {'xml': '/JSON/xml/nato_messages_ui.xml', 'lz': '/JSON/lz/nato_messages_ui.xml.lz'},
-    {'xml': '/JSON/xml/nato_segments_ui.xml', 'lz': '/JSON/lz/nato_segments_ui.xml.lz'},
-    {'xml': '/JSON/xml/nato_sets_ui.xml', 'lz': '/JSON/lz/nato_sets_ui.xml.lz'},
-    {'xml': '/JSON/xml/nato_fields_ui.xml', 'lz': '/JSON/lz/nato_fields_ui.xml.lz'}
+    {'xml': '/xml/xsd/USMTF/GoE_messages.xsd', 'lz': '/xml/lz/usmtf_messages.xsd.lz'},
+    {'xml': '/xml/xsd/USMTF/GoE_segments.xsd', 'lz': '/xml/lz/usmtf_segments.xsd.lz'},
+    {'xml': '/xml/xsd/USMTF/GoE_sets.xsd', 'lz': '/xml/lz/usmtf_sets.xsd.lz'},
+    {'xml': '/xml/xsd/USMTF/GoE_fields.xsd', 'lz': '/xml/lz/usmtf_fields.xsd.lz'},
+    {'xml': '/xml/xsd/USMTF/GoE_messages.xsd', 'lz': '/xml/lz/nato_messages.xsd.lz'},
+    {'xml': '/xml/xsd/USMTF/GoE_segments.xsd', 'lz': '/xml/lz/nato_segments.xsd.lz'},
+    {'xml': '/xml/xsd/USMTF/GoE_sets.xsd', 'lz': '/xml/lz/nato_sets.xsd.lz'},
+    {'xml': '/xml/xsd/USMTF/GoE_fields.xsd', 'lz': '/xml/lz/nato_fields.xsd.lz'},
+    {'xml': '/xml/xsl/messagesUI.xsl', 'lz': '/xml/lz/messagesUI.xsl.lz'},
+    {'xml': '/xml/xsl/segmentsUI.xsl', 'lz': '/xml/lz/segmentsUI.xsl.lz'},
+    {'xml': '/xml/xsl/setsUI.xsl', 'lz': '/xml/lz/setsUI.xsl.lz'},
+    {'xml': '/xml/xsl/fieldsUI.xsl', 'lz': '/xml/lz/fieldsUI.xsl.lz'}
 ];
 
 var syncData = function () {
@@ -111,11 +115,11 @@ var syncLZFile = function (xmlpath, lzpath) {
 };
 
 var compressXML = function (path, lzpath) {
-    fs.readFile(path, "utf-8",function (err, data) {
-        if(err){
-            console.log("Error reading "+path);
-        }else{
-            var str=data;
+    fs.readFile(path, "utf-8", function (err, data) {
+        if (err) {
+            console.log("Error reading " + path);
+        } else {
+            var str = data;
             var compressed = lzstring.compressToUTF16(str);
             fs.writeFile(lzpath, compressed);
         }

@@ -21,14 +21,20 @@ var storestructure = [
     ['MTF', 'name', false, [['data', 'data', false]]]
 ];
 
-var resources = {usmtf_msgs: '/JSON/lz/usmtf_messages_ui.xml.lz',
-    usmtf_segs: '/JSON/lz/usmtf_segments_ui.xml.lz',
-    usmtf_sets: '/JSON/lz/usmtf_sets_ui.xml.lz',
-    usmtf_flds: '/JSON/lz/usmtf_fields_ui.xml.lz',
-    nato_msgs: '/JSON/lz/nato_messages_ui.xml.lz',
-    nato_segs: '/JSON/lz/nato_segments_ui.xml.lz',
-    nato_sets: '/JSON/lz/nato_sets_ui.xml.lz',
-    nato_flds: '/JSON/lz/nato_fields_ui.xml.lz'};
+var resources = {
+    usmtf_msgs: '/xml/lz/usmtf_messages.xsd.lz',
+    usmtf_segs: '/xml/lz/usmtf_segments.xsd.lz',
+    usmtf_sets: '/xml/lz/usmtf_sets.xsd.lz',
+    usmtf_flds: '/xml/lz/usmtf_fields.xsd.lz',
+    nato_msgs: '/xml/lz/nato_messages.xsd.lz',
+    nato_segs: '/xml/lz/nato_segments.xsd.lz',
+    nato_sets: '/xml/lz/nato_sets.xsd.lz',
+    nato_flds: '/xml/lz/nato_fields.xsd.lz',
+    msgs_ui: '/xml/lz/messagesUI.xsl.lz',
+    sets_ui: '/xml/lz/setsUI.xsl.lz',
+    segments_ui: '/xml/lz/segmentsUI.xsl.lz',
+    fields_ui: '/xml/lz/fieldsUI.xsl.lz'
+};
 
 var compression = false;
 var xj = new X2JS();

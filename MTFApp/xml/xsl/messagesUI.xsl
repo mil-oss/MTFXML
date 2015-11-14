@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
+    version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:variable name="USMTF_MESSAGES" select="document('../xsd/USMTF/GoE_messages.xsd')"/>
     <xsl:variable name="NATO_MESSAGES" select="document('../xsd/NATOMTF/natomtf_goe_messages.xsd')"/>
     <xsl:variable name="usmtf_messages_out" select="'../../JSON/xml/usmtf_messages_ui.xml'"/>
     <xsl:variable name="nato_messages_out" select="'../../JSON/xml/nato_messages_ui.xml'"/>
-    <xsl:variable name="usmtf_messages">
-        <xsl:apply-templates select="$USMTF_MESSAGES/xsd:schema/xsd:element"/>
-    </xsl:variable>
-    <xsl:variable name="nato_messages">
-        <xsl:apply-templates select="$NATO_MESSAGES/xsd:schema/xsd:element"/>
-    </xsl:variable>
-    <xsl:template name="messagesUI">
+    <xsl:template name="allmessagesUI">
         <xsl:result-document href="{$usmtf_messages_out}">
-            <xsl:element name="USMTF_Messages">
-                <xsl:for-each select="$usmtf_messages/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsl:element>
+            <xsl:call-template name="messagesUI">
+                <xsl:with-param name="mtf_messages" select="$USMTF_MESSAGES"/>
+            </xsl:call-template>
         </xsl:result-document>
         <xsl:result-document href="{$nato_messages_out}">
-            <xsl:element name="NATO_Messages">
-                <xsl:for-each select="$nato_messages/*">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsl:element>
+            <xsl:call-template name="messagesUI">
+                <xsl:with-param name="mtf_messages" select="$NATO_MESSAGES"/>
+            </xsl:call-template>
         </xsl:result-document>
+    </xsl:template>
+    <xsl:template name="messagesUI">
+        <xsl:param name="mtf_messages"/>
+        <xsl:variable name="messages">
+            <xsl:apply-templates select="$mtf_messages/xsd:schema/xsd:element"/>
+        </xsl:variable>
+        <xsl:element name="Messages">
+            <xsl:for-each select="$messages/*">
+                <xsl:sort select="@name"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="/">
+        <xsl:variable name="messages">
+            <xsl:apply-templates select="xsd:schema/xsd:element"/>
+        </xsl:variable>
+        <xsl:element name="Messages">
+            <xsl:for-each select="$messages/*">
+                <xsl:sort select="@name"/>
+                <xsl:copy-of select="."/>
+            </xsl:for-each>
+        </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:schema/xsd:element">
         <xsl:variable name="t">
