@@ -73,7 +73,6 @@ var res = [
     {'xml': '/xml/xsd/USMTF/GoE_segments.xsd', 'lz': '/xml/lz/usmtf_segments.xsd.lz'},
     {'xml': '/xml/xsd/USMTF/GoE_sets.xsd', 'lz': '/xml/lz/usmtf_sets.xsd.lz'},
     {'xml': '/xml/xsd/USMTF/GoE_fields.xsd', 'lz': '/xml/lz/usmtf_fields.xsd.lz'},
-<<<<<<< HEAD
     {'xml': '/xml/xsd/NATOMTF/natomtf_goe_messages.xsd', 'lz': '/xml/lz/nato_messages.xsd.lz'},
     {'xml': '/xml/xsd/NATOMTF/natomtf_goe_segments.xsd', 'lz': '/xml/lz/nato_segments.xsd.lz'},
     {'xml': '/xml/xsd/NATOMTF/natomtf_goe_sets.xsd', 'lz': '/xml/lz/nato_sets.xsd.lz'},
@@ -82,16 +81,6 @@ var res = [
     {'xml': '/xsl/segmentsUI.xsl', 'lz': '/xml/lz/segmentsUI.xsl.lz'},
     {'xml': '/xsl/setsUI.xsl', 'lz': '/xml/lz/setsUI.xsl.lz'},
     {'xml': '/xsl/fieldsUI.xsl', 'lz': '/xml/lz/fieldsUI.xsl.lz'}
-=======
-    {'xml': '/xml/xsd/USMTF/GoE_messages.xsd', 'lz': '/xml/lz/nato_messages.xsd.lz'},
-    {'xml': '/xml/xsd/USMTF/GoE_segments.xsd', 'lz': '/xml/lz/nato_segments.xsd.lz'},
-    {'xml': '/xml/xsd/USMTF/GoE_sets.xsd', 'lz': '/xml/lz/nato_sets.xsd.lz'},
-    {'xml': '/xml/xsd/USMTF/GoE_fields.xsd', 'lz': '/xml/lz/nato_fields.xsd.lz'},
-    {'xml': '/xml/xsl/messagesUI.xsl', 'lz': '/xml/lz/messagesUI.xsl.lz'},
-    {'xml': '/xml/xsl/segmentsUI.xsl', 'lz': '/xml/lz/segmentsUI.xsl.lz'},
-    {'xml': '/xml/xsl/setsUI.xsl', 'lz': '/xml/lz/setsUI.xsl.lz'},
-    {'xml': '/xml/xsl/fieldsUI.xsl', 'lz': '/xml/lz/fieldsUI.xsl.lz'}
->>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
 ];
 
 var syncData = function () {

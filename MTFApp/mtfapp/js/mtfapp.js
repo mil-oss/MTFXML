@@ -20,24 +20,6 @@ var storestructure = [
     ['Resources', 'name', false, [['url', 'url', true], ['lastmod', 'lastmod', false], ['data', 'data', false]]],
     ['MTF', 'name', false, [['lastmod', 'lastmod', false], ['data', 'data', false]]]
 ];
-<<<<<<< HEAD
-=======
-
-var resources = {
-    usmtf_msgs: '/xml/lz/usmtf_messages.xsd.lz',
-    usmtf_segs: '/xml/lz/usmtf_segments.xsd.lz',
-    usmtf_sets: '/xml/lz/usmtf_sets.xsd.lz',
-    usmtf_flds: '/xml/lz/usmtf_fields.xsd.lz',
-    nato_msgs: '/xml/lz/nato_messages.xsd.lz',
-    nato_segs: '/xml/lz/nato_segments.xsd.lz',
-    nato_sets: '/xml/lz/nato_sets.xsd.lz',
-    nato_flds: '/xml/lz/nato_fields.xsd.lz',
-    msgs_ui: '/xml/lz/messagesUI.xsl.lz',
-    sets_ui: '/xml/lz/setsUI.xsl.lz',
-    segments_ui: '/xml/lz/segmentsUI.xsl.lz',
-    fields_ui: '/xml/lz/fieldsUI.xsl.lz'
-};
->>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
 
 var compression = false;
 var xj = new X2JS();

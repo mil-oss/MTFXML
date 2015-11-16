@@ -1,30 +1,9 @@
-<<<<<<< HEAD
-
 /* global mtfApp, angular, msgctl, setctl, segctl */
 
 mtfApp.controller('mtfCtl', function () {
-=======
-mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService, xsltService) {
->>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
     var mtfctl = this;
-    mtfctl.messageview = "views/msgView.html";
-    mtfctl.segmentview = "views/segmentView.html";
-    mtfctl.setview = "views/setView.html";
-    mtfctl.fieldview = "views/fieldView.html";
-    mtfctl.view = "";
-<<<<<<< HEAD
     mtfctl.nodeSelected = [];
     mtfctl.listSelected = [];
-=======
-    //
-    
-    dbService.syncResources(resources,function(){
-        console.log("data loaded");
-        dbService.updateUIData(xsltService);
-    }); 
-    
-
->>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
     mtfctl.valuefilter = function (mlist, txt, field) {
         var result = {
         };
