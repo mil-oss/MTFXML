@@ -2,11 +2,19 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
+<<<<<<< HEAD
+    <xsl:variable name="USMTF_SETS" select="document('../xml/xsd/USMTF/GoE_sets.xsd')"/>
+    <xsl:variable name="NATO_SETS" select="document('../xml/xsd/NATOMTF/natomtf_goe_sets.xsd')"/>
+    <xsl:template name="allsetsUI">
+        <xsl:variable name="usmtf_sets_out" select="'../xml/xml/usmtf_sets_ui.xml'"/>
+        <xsl:variable name="nato_sets_out" select="'../xml/xml/nato_sets_ui.xml'"/>
+=======
     <xsl:variable name="USMTF_SETS" select="document('../xsd/USMTF/GoE_sets.xsd')"/>
     <xsl:variable name="NATO_SETS" select="document('../xsd/NATOMTF/natomtf_goe_sets.xsd')"/>
     <xsl:template name="allsetsUI">
         <xsl:variable name="usmtf_sets_out" select="'../../JSON/xml/usmtf_sets_ui.xml'"/>
         <xsl:variable name="nato_sets_out" select="'../../JSON/xml/nato_sets_ui.xml'"/>
+>>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
         <xsl:result-document href="{$usmtf_sets_out}">
            <xsl:call-template name="setsUI">
                <xsl:with-param name="setsxsd" select="$USMTF_SETS"/>

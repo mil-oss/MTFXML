@@ -2,10 +2,17 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
+<<<<<<< HEAD
+    <xsl:variable name="USMTF_SEGMENTS" select="document('../xml/xsd/USMTF/GoE_segments.xsd')"/>
+    <xsl:variable name="NATO_SEGMENTS" select="document('../xml/xsd/NATOMTF/natomtf_goe_segments.xsd')"/>
+    <xsl:variable name="usmtf_segments_out" select="'../xml/xml/usmtf_segments_ui.xml'"/>
+    <xsl:variable name="nato_segments_out" select="'../xml/xml/nato_segments_ui.xml'"/>
+=======
     <xsl:variable name="USMTF_SEGMENTS" select="document('../xsd/USMTF/GoE_segments.xsd')"/>
     <xsl:variable name="NATO_SEGMENTS" select="document('../xsd/NATOMTF/natomtf_goe_segments.xsd')"/>
     <xsl:variable name="usmtf_segments_out" select="'../../JSON/xml/usmtf_segments_ui.xml'"/>
     <xsl:variable name="nato_segments_out" select="'../../JSON/xml/nato_segments_ui.xml'"/>
+>>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
     <xsl:template name="allsegmentsUI">
         <xsl:result-document href="{$usmtf_segments_out}">
             <xsl:call-template name="segmentsUI">

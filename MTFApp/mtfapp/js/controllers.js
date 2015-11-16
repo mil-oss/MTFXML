@@ -1,23 +1,21 @@
+<<<<<<< HEAD
+
+/* global mtfApp, angular, msgctl, setctl, segctl */
+
+mtfApp.controller('mtfCtl', function () {
+=======
 mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService, xsltService) {
+>>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
     var mtfctl = this;
-    mtfctl.msgview = "views/msgView.html";
+    mtfctl.messageview = "views/msgView.html";
     mtfctl.segmentview = "views/segmentView.html";
     mtfctl.setview = "views/setView.html";
     mtfctl.fieldview = "views/fieldView.html";
-    mtfctl.msgview = "";
-    mtfctl.choiceview = "";
-    mtfctl.segmentview = "";
-    mtfctl.setview = "";
-    mtfctl.fieldview = "";
-    mtfctl.selectedMsg = [];
-    mtfctl.selectedSegment = [];
-    mtfctl.selectedSet = [];
-    mtfctl.selectedField = [];
-    mtfctl.selectedSegment = [];
-    mtfctl.selectedSet = [];
-    mtfctl.selectedField = [];
-    mtfctl.selectedStd = "US";
     mtfctl.view = "";
+<<<<<<< HEAD
+    mtfctl.nodeSelected = [];
+    mtfctl.listSelected = [];
+=======
     //
     
     dbService.syncResources(resources,function(){
@@ -26,6 +24,7 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService, xsltService) {
     }); 
     
 
+>>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
     mtfctl.valuefilter = function (mlist, txt, field) {
         var result = {
         };
@@ -42,36 +41,71 @@ mtfApp.controller('mtfCtl', function ($scope, DlgBx, dbService, xsltService) {
         });
         return result;
     };
-    mtfctl.selectMsg = function (std, msg, k) {
+    mtfctl.selectNode = function (list, node, k) {
         mtfctl.view = "views/msgView.html";
         mtfctl.selected = k;
-        mtfctl.selectedStd = std;
-        mtfctl.selectedMsg = msg;
-        console.log(mtfctl.selectedMsg);
-    };
-    mtfctl.selectSegment = function (std, seg, k) {
-        console.log("selectSegment");
-        mtfctl.view = "views/segmentView.html";
-        mtfctl.selected = k;
-        mtfctl.selectedStd = std;
-        mtfctl.selectedSegment = seg;
-    };
-    mtfctl.selectSet = function (std, set, k) {
-        mtfctl.view = "views/setView.html";
-        mtfctl.selected = k;
-        mtfctl.selectedStd = std;
-        mtfctl.selectedSet = set;
-    };
-    mtfctl.selectField = function (std, field, k) {
-        mtfctl.view = "views/fieldView.html";
-        mtfctl.selected = k;
-        mtfctl.selectedStd = std;
-        mtfctl.selectedField = field;
+        mtfctl.listSelected = list;
+        mtfctl.nodeSelected = node;
+        console.log(mtfctl.nodeSelected);
     };
     mtfctl.isSelected = function (k) {
         return mtfctl.selected === k;
     };
+
 });
+
+mtfApp.controller('msgCtl', function (dbService) {
+    var msgctl = this;
+    msgctl.view = "views/msgView.html";
+    msgctl.usmsg = [];
+    msgctl.natomsg = [];
+    dbService.getUIData('msgs_ui', 'nato_msgs', function (jsonres) {
+        msgctl.usmsg = jsonres.Messages;
+    });
+    dbService.getUIData('msgs_ui', 'usmtf_msgs', function (jsonres) {
+        msgctl.natomsg = jsonres.Messages;
+    });
+});
+
+mtfApp.controller('segmentCtl', function (dbService) {
+    var segctl = this;
+    segctl.view = "views/segmentView.html";
+    segctl.usseg = [];
+    segctl.natoseg = [];
+    dbService.getUIData('segments_ui', 'usmtf_segs', function (jsonres) {
+        segctl.usseg = jsonres.Segments;
+    });
+    dbService.getUIData('segments_ui', 'nato_segs', function (jsonres) {
+        segctl.natoseg = jsonres.Segments;
+    });
+});
+
+mtfApp.controller('setCtl', function (dbService) {
+    var setctl = this;
+    setctl.view = "views/setView.html";
+    setctl.usset = [];
+    setctl.natoset = [];
+    dbService.getUIData('sets_ui', 'nato_sets', function (jsonres) {
+        setctl.usset = jsonres.Sets;
+    });
+    dbService.getUIData('sets_ui', 'usmtf_sets', function (jsonres) {
+        setctl.natoset = jsonres.Sets;
+    });
+});
+
+mtfApp.controller('fieldCtl', function (dbService) {
+    var fldctl = this;
+    fldctl.view = "views/fieldView.html";
+    fldctl.usfld = [];
+    fldctl.natofld = [];
+    dbService.getUIData('fields_ui', 'nato_flds', function (jsonres) {
+        fldctl.usfld = jsonres.Fields;
+    });
+    dbService.getUIData('fields_ui', 'usmtf_flds', function (jsonres) {
+        fldctl.natofld = jsonres.Fields;
+    });
+});
+
 mtfApp.controller('menuCtrl', function ($scope) {
     //initiate an array to hold all active tabs
     $scope.activeTabs = [];

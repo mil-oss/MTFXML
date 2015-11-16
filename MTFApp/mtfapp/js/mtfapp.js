@@ -18,8 +18,10 @@
 var databasename = "mtfDb";
 var storestructure = [
     ['Resources', 'name', false, [['url', 'url', true], ['lastmod', 'lastmod', false], ['data', 'data', false]]],
-    ['MTF', 'name', false, [['data', 'data', false]]]
+    ['MTF', 'name', false, [['lastmod', 'lastmod', false], ['data', 'data', false]]]
 ];
+<<<<<<< HEAD
+=======
 
 var resources = {
     usmtf_msgs: '/xml/lz/usmtf_messages.xsd.lz',
@@ -35,6 +37,7 @@ var resources = {
     segments_ui: '/xml/lz/segmentsUI.xsl.lz',
     fields_ui: '/xml/lz/fieldsUI.xsl.lz'
 };
+>>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
 
 var compression = false;
 var xj = new X2JS();
