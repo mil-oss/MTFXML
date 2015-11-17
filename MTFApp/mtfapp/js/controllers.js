@@ -1,9 +1,19 @@
 /* global mtfApp, angular, msgctl, setctl, segctl, umsgctl */
 
-mtfApp.controller('mtfCtl', function () {
+mtfApp.controller('mtfCtl', function (dbService) {
     var mtfctl = this;
-    mtfctl.nodeSelected = [];
+    mtfctl.selNode = [];
     mtfctl.listSelected = [];
+    mtfctl.sequenceview = 'views/sequenceView.html';
+    mtfctl.choiceview = 'views/choiceView.html';
+    mtfctl.setview = 'views/setView.html';
+    mtfctl.segmentview = 'views/segmentView.html';
+    mtfctl.fieldview = 'views/fieldView.html';
+    mtfctl.views=
+        {'msgs':'views/msgView.html',
+        'segs':'views/segmentView.html',
+        'sets':'views/setView.html',
+        'flds':'views/fieldView.html'};
     mtfctl.valuefilter = function (mlist, txt, field) {
         var result = {
         };
@@ -22,8 +32,9 @@ mtfApp.controller('mtfCtl', function () {
     };
     mtfctl.selectNode = function (list, node, k) {
         mtfctl.selected = k;
-        mtfctl.listSelected = list;
-        mtfctl.nodeSelected = node;
+        mtfctl.view=mtfctl.views[list];
+        mtfctl.selNode = node;
+        
     };
     mtfctl.isSelected = function (k) {
         return mtfctl.selected === k;
@@ -33,83 +44,59 @@ mtfApp.controller('mtfCtl', function () {
 
 mtfApp.controller('usmsgCtl', function (dbService) {
     var umsgctl = this;
-    umsgctl.view = "views/msgView.html";
     umsgctl.usmsg = [];
     dbService.getUIData('umsgs_ui', function (jsonres) {
-        angular.forEach(jsonres.Messages.Message, function (msg) {
-            umsgctl.usmsg.push({'Info': msg.Info});
-        });
+        umsgctl.usmsg=jsonres.Messages;
     });
 });
 mtfApp.controller('ussegCtl', function (dbService) {
     var ussegctl = this;
-    ussegctl.view = "views/segmentView.html";
     ussegctl.usseg = [];
     dbService.getUIData('usegments_ui', function (jsonres) {
-        angular.forEach(jsonres.Segments.Segment, function (seg) {
-            ussegctl.usseg.push({'Info': seg.Info});
-        });
+        ussegctl.usseg =jsonres.Segments;
     });
 });
 mtfApp.controller('ussetCtl', function (dbService) {
     var ussetctl = this;
-    ussetctl.view = "views/setView.html";
     ussetctl.usset = [];
     dbService.getUIData('usets_ui', function (jsonres) {
-        angular.forEach(jsonres.Sets.Set, function (set) {
-            ussetctl.usset.push({'Info': set.Info});
-        });
+        ussetctl.usset =jsonres.Sets;
     });
 });
 mtfApp.controller('usfldCtl', function (dbService) {
     var usfldctl = this;
-    usfldctl.view = "views/fieldView.html";
     usfldctl.usfld = [];
     dbService.getUIData('ufields_ui', function (jsonres) {
-        angular.forEach(jsonres.Fields.Field, function (fld) {
-            usfldctl.usfld.push({'Info': fld.Info});
-        });
+        usfldctl.usfld =jsonres.Fields;
     });
 });
 
 mtfApp.controller('natomsgCtl', function (dbService) {
     var nmsgctl = this;
-    nmsgctl.view = "views/msgView.html";
     nmsgctl.natomsg = [];
     dbService.getUIData('nmsgs_ui', function (jsonres) {
-         angular.forEach(jsonres.Messages.Message, function (msg) {
-            nmsgctl.natomsg.push({'Info': msg.Info});
-        });
+        nmsgctl.natomsg =jsonres.Messages;
     });
 });
 mtfApp.controller('natosegCtl', function (dbService) {
     var nsegctl = this;
-    nsegctl.view = "views/segmentView.html";
     nsegctl.natoseg = [];
     dbService.getUIData('nsegments_ui', function (jsonres) {
-         angular.forEach(jsonres.Segments.Segment, function (seg) {
-             nsegctl.natoseg.push({'Info': seg.Info});
-        });
+        nsegctl.natoseg =jsonres.Segments;
     });
 });
 mtfApp.controller('natosetCtl', function (dbService) {
     var nsetctl = this;
-    nsetctl.view = "views/setView.html";
     nsetctl.natoset = [];
     dbService.getUIData('nsets_ui', function (jsonres) {
-          angular.forEach(jsonres.Sets.Set, function (set) {
-            nsetctl.natoset.push({'Info': set.Info});
-        });
+        nsetctl.natoset =jsonres.Sets;
     });
 });
 mtfApp.controller('natofldCtl', function (dbService) {
     var nfldctl = this;
-    nfldctl.view = "views/fieldView.html";
     nfldctl.natofld = [];
     dbService.getUIData('nfields_ui', function (jsonres) {
-          angular.forEach(jsonres.Fields.Field, function (fld) {
-            nfldctl.natofld.push({'Info': fld.Info});
-        });;
+        nfldctl.natofld =jsonres.Fields;
     });
 });
 

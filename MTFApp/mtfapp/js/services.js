@@ -45,7 +45,7 @@ mtfApp.factory('dbService', function ($http, $indexedDB) {
                             dbsvc.dB.openStore('MTF', function (mtfstore) {
                                 mtfstore.upsert({name: uidata, lastmod: xrslt.lastmod, data: jrslt});
                             });
-                        })
+                        });
                     });
                 } else {
                     store.find(uidata).then(function (uidbrec) {

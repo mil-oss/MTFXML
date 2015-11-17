@@ -428,6 +428,13 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
+    <xsl:template match="*:SegmentStructureConcept" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="concept">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
     <xsl:template match="*:SegmentStructureUseDescription" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="usage">
@@ -450,13 +457,6 @@
         <xsl:attribute name="position">
             <xsl:value-of select="number($pos) - $initpos + 1"/>
         </xsl:attribute>
-    </xsl:template>
-    <xsl:template match="*:SegmentStructureConcept" mode="attr">
-        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
-            <xsl:attribute name="concept">
-                <xsl:apply-templates select="text()"/>
-            </xsl:attribute>
-        </xsl:if>
     </xsl:template>
     <xsl:template match="*:SetFormatName" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">

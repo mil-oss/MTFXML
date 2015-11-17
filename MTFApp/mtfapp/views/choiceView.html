@@ -1,22 +1,23 @@
 <div class="choicediv optchceborder">
-    <div class="desc">
-        <div class="name">CHOICE: </div>
-    </div>
     <div class="usage">
         <div class="occur">
-            <b>Min Occurrence: </b>{{val._minOccurs}}</div>
+            <b>Min Occurrence: </b>{{Choice._minOccurs}}</div>
         <div class="repeat">
-            <b>Max Occurrence: </b>{{val._maxOccurs}}</div>
+            <b>Max Occurrence: </b>{{Choice._maxOccurs}}</div>
     </div>
-    <div data-ng-repeat="(key,val) in val | orderBy:Info._position">
+    <div data-ng-repeat="(key,val) in Choice | orderBy:Choice.Info._position">
         <div data-ng-If="key === 'Choice'">
-            <div ng-include="mtfctl.choiceview"></div>
+            <div ng-include="mtfctl.choiceview"/>
         </div>
         <div data-ng-If="key === 'Segment'">
-            <div ng-include="mtfctl.segmentview"></div>
+            <div data-ng-repeat="(k,Segment) in Choice">
+                <div ng-include="mtfctl.segmentview"/>
+            </div>
         </div>
         <div data-ng-If="key === 'Set'">
-            <div ng-include="mtfctl.setview"></div>
+            <div data-ng-repeat="(k,Set) in Choice">
+                <div ng-include="mtfctl.setview"/>
+            </div>
         </div>
     </div>
 </div>

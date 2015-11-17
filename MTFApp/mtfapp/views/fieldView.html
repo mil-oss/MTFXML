@@ -1,11 +1,9 @@
-<div data-ng-if="val._FieldFormatPositionNumber">
 <details class="field">  
-    <summary class="name">{{val._FieldFormatPositionNumber}}. {{val._FieldFormatPositionName}}</summary>
-    <div class="desc txt" data-ng-show="val._FieldFormatPositionConcept">
-        <b>Description: </b>{{val._FieldFormatPositionConcept}} </div>
+    <summary class="name">{{Field._position}}. {{Field._positionName}}</summary>
+    <div class="desc txt" data-ng-show="Field._concept">
+        <b>Documentation: </b>{{Field.Info._explanation}} </div>
     <div class="usage">
         <div class="occur">
             <b>Occurrence: </b>{{val._OccurrenceCategory}} </div>
     </div>
 </details>
-</div>

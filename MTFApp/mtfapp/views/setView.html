@@ -1,21 +1,28 @@
 <div class="set">
-    <div class="name"><b>Set: </b>{{mtfctl.selectedSet.Info._name}}</div>
-    <div class="name"><b>Id: </b>{{mtfctl.selectedSet.Info._id}}</div>
-    <div class="name"><b>Version: </b>{{mtfctl.selectedSet.Info._version}}</div>
+    <div class="name"><b>{{Set.Info. _position}}. </b>{{Set.Info._positionName}}</div>
+    <div class="name"><b>Concept: </b>{{Set.Info. _concept}}</div>
+    <div class="usage">
+        <div class="occur">
+            <b>Min Occurrence: </b>{{Set.Info._minOccurs}}</div>
+        <div class="repeat">
+            <b>Max Occurrence: </b>{{Set.Info._maxOccurs}}</div>
+    </div>
+    <div class="info">
+        <div class="txt" data-ng-hide="Set.Info.Example.join(', ')">
+            <b data-ng-show="Set.Info.Example">Example:</b>
+            <span>{{Set.Info.Example}}</span>
+        </div>
+        <div class="txt" data-ng-show="Set.Info.Example.join(', ')">
+            <b>Example:</b>
+            <span>{{Set.Info.Example.join(', ')}}</span>
+        </div>
+        <div class="txt">
+            <b>Sponsor:</b>
+            <span>{{Set.Info._sponsor}}</span>
+        </div>
+    </div>
     <div
-        data-ng-repeat="e in mtfctl.Example  | orderBy:$index">
-        <div>{{e}}</div>
+        data-ng-repeat="(key,Field) in Set.Sequence | orderBy:'_position'">
+        <div ng-include="mtfctl.fieldview"></div>
     </div>
-<!--    <div data-ng-If="mtfctl.selectedStd==='US'">
-        <div
-            data-ng-repeat="(key,val) in mtfctl.ussets[key].sequence  | orderBy:'_FieldFormatPositionNumber'">
-            <div ng-include="mtfctl.fieldview"></div>
-        </div>
-    </div>
-    <div data-ng-If="mtfctl.selectedStd==='NATO'">
-        <div
-            data-ng-repeat="(key,val) in mtfctl.natosets[key].sequence | orderBy:'_FieldFormatPositionNumber'">
-            <div ng-include="mtfctl.fieldview"></div>
-        </div>
-    </div>-->
 </div>

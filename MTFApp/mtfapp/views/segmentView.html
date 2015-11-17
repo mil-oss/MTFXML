@@ -1,39 +1,29 @@
 <div class="segment">
-    <div class="name"><b>Segment: </b>{{mtfctl.selectedSegment.Info._name}}</div>
     <div class="desc">
         <div class="txt">
-            <b>Concept: </b>{{mtfctl.selectedSegment.Info._concept}} </div>
+            <b>Concept: </b>{{Segment.Info._concept}} </div>
     </div>
     <div class="usage">
         <div class="occur">
-            <b>Usage: </b>{{mtfctl.selectedSegment.Info._usage}} </div>
+            <b>Usage: </b>{{Segment.Info._usage}} </div>
     </div>
-<!--    <div data-ng-If="mtfctl.selectedStd==='US'">
-        <div
-            data-ng-repeat="(key,val) in mtfctl.selectedSegment.Sequence | orderBy:mtfctl.selectedSegment.Info._position">
-            <div data-ng-If="val._ref.substring(0,3)==='set' || val._SetFormatPositionNumber!==null">
+    <div
+        data-ng-repeat="(key,val) in Segment.Sequence | orderBy:val.Info._position">
+        <div data-ng-If="key==='set'">
+            <div data-ng-repeat="(k,Set) in val">
                 <div ng-include="mtfctl.setview"/>
             </div>
-            <div data-ng-If="key.substring(key.length-7) === 'Segment'">
+        </div>
+        <div data-ng-If="key === 'Segment'">
+            <div data-ng-repeat="(k,Segment) in val">
                 <div ng-include="mtfctl.segmentview"/>
             </div>
-            <div data-ng-If="key.substring(0,6) === 'choice'">
-                <div ng-include="mtfctl.choiceview"/>
-            </div>
+        </div>
+        <div data-ng-If="key === 'choice'">
+            <div ng-include="mtfctl.choiceview"/>
         </div>
     </div>
-    <div data-ng-If="mtfctl.selectedStd==='NATO'">
-        <div
-            data-ng-repeat="(key,val) in mtfctl.selectedSegment.Sequence  | orderBy:mtfctl.selectedSegment.Info._position">
-            <div data-ng-If="val._ref.substring(0,3)==='set' || val._SetFormatPositionNumber!==null">
-                <div ng-include="mtfctl.setview"/>
-            </div>
-            <div data-ng-If="key.substring(key.length-7) === 'Segment'">
-                <div ng-include="mtfctl.segmentview"/>
-            </div>
-            <div data-ng-If="key.substring(0,6) === 'choice'">
-                <div ng-include="mtfctl.choiceview"/>
-            </div>
-        </div>
-    </div>-->
+</div>
+</div>
+</div>
 </div>

@@ -441,6 +441,29 @@
         <xsl:value-of select="translate(substring($text, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
         <xsl:value-of select="translate(substring($text, 2, string-length($text) - 1), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
     </xsl:template>
+    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
+    <!--Use Position relative to segment vice position relative to containing message-->
+    <xsl:template match="*:SegmentStructureName" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="name">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SegmentStructureConcept" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="concept">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:SegmentStructureUseDescription" mode="attr">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:attribute name="usage">
+                <xsl:apply-templates select="text()"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
     <xsl:template match="*:SetFormatPositionUseDescription" mode="attr">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:attribute name="usage">

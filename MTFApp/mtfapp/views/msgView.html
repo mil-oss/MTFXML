@@ -3,50 +3,39 @@
         <div class="desc">
             <div>
                 <div class="title">
-                    <b>{{mtfctl.selectedMsg.Info._name}}</b>
+                    <b>{{mtfctl.selNode.Info._name}}</b>
                 </div>
                 <div class="txt">
                     <b>Identifier: </b>
-                    <span>{{mtfctl.selectedMsg.Info._identifier}}</span>
+                    <span>{{mtfctl.selNode.Info._identifier}}</span>
                 </div>
-                <div class="txt">
-                    <b>Description: </b>
-                    <span>{{mtfctl.selectedMsg.Info._doc}}{{mtfctl.selectedMsg.Info._purpose}}</span>
+                <div class="txt" data-ng-show="mtfctl.selNode.Info._purpose">
+                    <b>Purpose: </b>
+                    <span>{{mtfctl.selNode.Info._purpose}}</span>
                 </div>
-                <div class="txt" data-ng-show="mtfctl.selectedMsg.Info._note">
+                <div class="txt" data-ng-show="mtfctl.selNode.Info._note">
                     <b>Note: </b>
-                    <span>{{mtfctl.selectedMsg.Info._note}}</span>
+                    <span>{{mtfctl.selNode.Info._note}}</span>
                 </div>
             </div>
         </div>
         <div class="info">
-            <div class="txt" data-ng-show="mtfctl.selectedMsg.Info.Document">
-                <b>Related Document:</b>
-                <span>{{mtfctl.selectedMsg.Info.Document}}</span>
+            <div class="txt" data-ng-hide="mtfctl.selNode.Info.Document.join(', ')">
+                <b data-ng-show="mtfctl.selNode.Info.Document">Document:</b>
+                <span>{{mtfctl.selNode.Info.Document}}</span>
+            </div>
+            <div class="txt" data-ng-show="mtfctl.selNode.Info.Document.join(', ')">
+                <b>Documents:</b>
+                <span>{{mtfctl.selNode.Info.Document.join(', ')}}</span>
             </div>
             <div class="txt">
                 <b>Sponsor:</b>
-                <span>{{mtfctl.selectedMsg.Info._sponsor}}</span>
+                <span>{{mtfctl.selNode.Info._sponsor}}</span>
             </div>
         </div>
     </div>
-    <div class="msgseq">
-        <div
-            data-ng-repeat="(key,val) in mtfctl.selectedMsg.Sequence">
-            <span>{{key}}</span>
-            <div ng-include="mtfctl.choiceview"/>
-            <div data-ng-if="key === Sequence">
-                <div ng-include="mtfctl.sequenceview"/>
-            </div>
-            <div data-ng-if="key === Choice">
-                <div ng-include="mtfctl.choiceview"/>
-            </div>
-            <div data-ng-if="key === Segment">
-                <div ng-include="mtfctl.segmentview"/>
-            </div>
-            <div data-ng-if="key === Set">
-                <div ng-include="mtfctl.setview"/>
-            </div>
-        </div>
-    </div>
+    <div
+        data-ng-repeat="(key,Node) in Sequence">
+        <div ng-include="mtfctl.sequenceview"/>
+    </div
 </div>
