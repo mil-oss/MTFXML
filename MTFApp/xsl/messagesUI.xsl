@@ -2,17 +2,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
-<<<<<<< HEAD
     <xsl:variable name="USMTF_MESSAGES" select="document('../xml/xsd/USMTF/GoE_messages.xsd')"/>
     <xsl:variable name="NATO_MESSAGES" select="document('../xml/xsd/NATOMTF/natomtf_goe_messages.xsd')"/>
     <xsl:variable name="usmtf_messages_out" select="'../xml/xml/usmtf_messages_ui.xml'"/>
     <xsl:variable name="nato_messages_out" select="'../xml/xml/nato_messages_ui.xml'"/>
-=======
-    <xsl:variable name="USMTF_MESSAGES" select="document('../xsd/USMTF/GoE_messages.xsd')"/>
-    <xsl:variable name="NATO_MESSAGES" select="document('../xsd/NATOMTF/natomtf_goe_messages.xsd')"/>
-    <xsl:variable name="usmtf_messages_out" select="'../../JSON/xml/usmtf_messages_ui.xml'"/>
-    <xsl:variable name="nato_messages_out" select="'../../JSON/xml/nato_messages_ui.xml'"/>
->>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
     <xsl:template name="allmessagesUI">
         <xsl:result-document href="{$usmtf_messages_out}">
             <xsl:call-template name="messagesUI">
@@ -38,14 +31,10 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="/">
-        <xsl:variable name="messages">
-            <xsl:apply-templates select="xsd:schema/xsd:element"/>
-        </xsl:variable>
         <xsl:element name="Messages">
-            <xsl:for-each select="$messages/*">
+            <xsl:apply-templates select="xsd:schema/xsd:element">
                 <xsl:sort select="@name"/>
-                <xsl:copy-of select="."/>
-            </xsl:for-each>
+            </xsl:apply-templates>
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:schema/xsd:element">

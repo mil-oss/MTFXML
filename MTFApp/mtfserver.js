@@ -77,10 +77,14 @@ var res = [
     {'xml': '/xml/xsd/NATOMTF/natomtf_goe_segments.xsd', 'lz': '/xml/lz/nato_segments.xsd.lz'},
     {'xml': '/xml/xsd/NATOMTF/natomtf_goe_sets.xsd', 'lz': '/xml/lz/nato_sets.xsd.lz'},
     {'xml': '/xml/xsd/NATOMTF/natomtf_goe_fields.xsd', 'lz': '/xml/lz/nato_fields.xsd.lz'},
-    {'xml': '/xsl/messagesUI.xsl', 'lz': '/xml/lz/messagesUI.xsl.lz'},
-    {'xml': '/xsl/segmentsUI.xsl', 'lz': '/xml/lz/segmentsUI.xsl.lz'},
-    {'xml': '/xsl/setsUI.xsl', 'lz': '/xml/lz/setsUI.xsl.lz'},
-    {'xml': '/xsl/fieldsUI.xsl', 'lz': '/xml/lz/fieldsUI.xsl.lz'}
+    {'xml': '/xml/xml/usmtf_fields_ui.xml', 'lz': '/xml/lz/usmtf_fields_ui.xml.lz'},
+    {'xml': '/xml/xml/usmtf_sets_ui.xml', 'lz': '/xml/lz/usmtf_sets_ui.xml.lz'},
+    {'xml': '/xml/xml/usmtf_segments_ui.xml', 'lz': '/xml/lz/usmtf_segments_ui.xml.lz'},
+    {'xml': '/xml/xml/usmtf_messages_ui.xml', 'lz': '/xml/lz/usmtf_messages_ui.xml.lz'},
+    {'xml': '/xml/xml/nato_fields_ui.xml', 'lz': '/xml/lz/nato_fields_ui.xml.lz'},
+    {'xml': '/xml/xml/nato_sets_ui.xml', 'lz': '/xml/lz/nato_sets_ui.xml.lz'},
+    {'xml': '/xml/xml/nato_segments_ui.xml', 'lz': '/xml/lz/nato_segments_ui.xml.lz'},
+    {'xml': '/xml/xml/nato_messages_ui.xml', 'lz': '/xml/lz/nato_messages_ui.xml.lz'}
 ];
 
 var syncData = function () {
@@ -97,7 +101,7 @@ var syncLZFile = function (xmlpath, lzpath) {
             fs.stat(lzpath, function (jerr, jstats) {
                 if (jerr === null) {
                     var jd = new Date(jstats.mtime).getMilliseconds();
-                    if (xd > jd) {
+                    if (xd !=jd) {
                         console.log("Update: " + lzpath);
                         compressXML(xmlpath, lzpath);
                     }

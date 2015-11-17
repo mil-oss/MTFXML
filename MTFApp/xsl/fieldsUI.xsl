@@ -2,17 +2,12 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
-<<<<<<< HEAD
+
     <xsl:variable name="usmtf_flds" select="document('../xml/xsd/USMTF/GoE_fields.xsd')"/>
     <xsl:variable name="nato_flds" select="document('../xml/xsd/NATOMTF/natomtf_goe_fields.xsd')"/>
     <xsl:variable name="usmtf_fields_out" select="'../xml/xml/usmtf_fields_ui.xml'"/>
     <xsl:variable name="nato_fields_out" select="'../xml/xml/nato_fields_ui.xml'"/>
-=======
-    <xsl:variable name="usmtf_flds" select="document('../xsd/USMTF/GoE_fields.xsd')"/>
-    <xsl:variable name="nato_flds" select="document('../xsd/NATOMTF/natomtf_goe_fields.xsd')"/>
-    <xsl:variable name="usmtf_fields_out" select="'../../JSON/xml/usmtf_fields_ui.xml'"/>
-    <xsl:variable name="nato_fields_out" select="'../../JSON/xml/nato_fields_ui.xml'"/>
->>>>>>> branch 'master' of https://github.com/mil-oss/MTFXML.git
+
     <xsl:template name="allfieldsUI">
         <xsl:result-document href="{$usmtf_fields_out}">
             <xsl:call-template name="fieldsUI">
@@ -38,14 +33,10 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="/">
-        <xsl:variable name="fields">
-            <xsl:apply-templates select="xsd:schema/xsd:element"/>
-        </xsl:variable>
         <xsl:element name="Fields">
-            <xsl:for-each select="$fields/*">
+            <xsl:apply-templates select="xsd:schema/xsd:element">
                 <xsl:sort select="@name"/>
-                <xsl:copy-of select="."/>
-            </xsl:for-each>
+            </xsl:apply-templates>
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:element[not(@type)][not(@ref)]">
