@@ -1,9 +1,20 @@
-<details class="field">  
-    <summary class="name">{{Field._position}}. {{Field._positionName}}</summary>
-    <div class="desc txt" data-ng-show="Field._concept">
-        <b>Documentation: </b>{{Field.Info._explanation}} </div>
-    <div class="usage">
-        <div class="occur">
-            <b>Occurrence: </b>{{val._OccurrenceCategory}} </div>
+<div class="field" data-ng-controller="fldCtl as fldctl">
+    <div class="name"><b>{{fldctl.Field.Info._name}}</b></div>
+    <div class="desc txt" data-ng-show="fldctl.Field._doc">{{fldctl.Field._doc}}</div>
+    <div class="desc txt" data-ng-show="fldctl.Field.Info._explanation !=  fldctl.Field.Info._doc">{{fldctl.Field.Info._explanation}}</div>
+    <div class="desc txt" data-ng-show="fldctl.Field.Info._version">
+        <b>Version: </b>{{fldctl.Field.Info._version}} </div>
+    <div class="desc txt">
+        <div data-ng-show="fldctl.Field._minLength"><b>Min Length: </b>{{fldctl.Field._minLength}}</div>
+        <div data-ng-show="fldctl.Field._maxLength"><b>Max Length: </b>{{fldctl.Field._maxLength}}</div>
+        <div data-ng-show="fldctl.Field._length"><b>Length: </b>{{fldctl.Field._length}}</div>
+        <div data-ng-show="fldctl.Field._regex"><b>Regex: </b>{{fldctl.Field._regex}}</div>
+        <div data-ng-show="fldctl.Field._minInclusive"><b>Min: </b>{{fldctl.Field._minInclusive}}</div>
+        <div data-ng-show="fldctl.Field._maxInclusive"><b>Max: </b>{{fldctl.Field._maxInclusive}}</div>
+        <div data-ng-show="fldctl.Field._fractionDigits"><b>Fraction Digits: </b>{{fldctl.Field._fractionDigits}}</div>
+        <div data-ng-show="fldctl.Field._totalDigits"><b>Total Digits: </b>{{fldctl.Field._totalDigits}}</div>
     </div>
-</details>
+    <div class="desc txt" data-ng-show="fldctl.Field.choice" data-ng-repeat="(k,e) in fldctl.Field.choice">
+        <div data-ng-show="fldctl.Field._regex"><b>{{e._dataItem}}  </b>{{e._value}}</div>
+    </div>
+</div>

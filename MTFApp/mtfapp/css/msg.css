@@ -25,11 +25,17 @@ body{
     /* width:100%; */ 
     overflow-y:hidden;
 }
-
+#msgColhdr{
+    left:0;
+    top:0;
+    width:224px;  
+    height:30;
+    border:thin solid black;
+}
 #msgCol{
     position:absolute;
     left:0;
-    top:0;
+    top:45px;
     width:224px;  
     height:98%;
     overflow-y:auto;
@@ -38,7 +44,7 @@ body{
 #infoCol{
     position:absolute;
     left:224px; 
-    top:0;
+    top:20px;
     height:100%;
     width:600px;
 }
@@ -159,12 +165,16 @@ body{
 }
 
 .title{
+    text-align: center;
+    font-weight: bold;
     font-size: 14px; 
 }
 
 .name{
+    font-size: 14px; 
+    padding-left:5px;
+    font-weight: bold;
     padding-bottom:5px;
-    margin-bottom:5px;
     width: 100%;
 }
 
