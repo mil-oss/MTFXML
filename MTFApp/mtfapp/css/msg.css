@@ -96,6 +96,11 @@ body{
     user-select: none;
 }
 
+.inline{
+    float:left;
+    padding-left:20px;
+}
+
 .input-group-addon{
     padding:2px 2px;
     font-size: 12px;
@@ -200,9 +205,9 @@ body{
 
 .txt{
     margin-top: 2px;  
+    padding-left:5px;
     word-wrap:break-word;
     width: 95%;
-    /* padding-left: 5px; */
 }
 .info{
     /* float: right; */
@@ -228,4 +233,7 @@ body{
 }
 .optchceborder{
     border:thin red dashed;
+}
+.spc{
+   padding-left: 10px; 
 }

@@ -25,7 +25,7 @@
         </xsl:variable>
         <xsl:element name="Sets">
             <xsl:for-each select="$sets/*">
-                <xsl:sort select="@name"/>
+                <xsl:sort select="name()"/>
                 <xsl:copy-of select="."/>
             </xsl:for-each>
         </xsl:element>
@@ -33,7 +33,7 @@
     <xsl:template match="/">
         <xsl:element name="Sets">
             <xsl:apply-templates select="xsd:schema/xsd:element">
-                <xsl:sort select="@name"/>
+                <xsl:sort select="name()"/>
             </xsl:apply-templates>
         </xsl:element>
     </xsl:template>
@@ -41,10 +41,10 @@
         <xsl:variable name="t">
             <xsl:value-of select="@type"/>
         </xsl:variable>
-        <xsl:element name="Set">
-            <xsl:attribute name="tag">
+        <xsl:element name="{@name}">
+            <!--<xsl:attribute name="tag">
                 <xsl:value-of select="@name"/>
-            </xsl:attribute>
+            </xsl:attribute>-->
             <xsl:attribute name="type">
                 <xsl:value-of select="@type"/>
             </xsl:attribute>
@@ -98,10 +98,10 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:sequence/xsd:element[@name][@type][not(starts-with(@type, 'field:'))]">
-        <xsl:element name="Set">
-            <xsl:attribute name="tag">
+        <xsl:element name="{@name}">
+            <!--<xsl:attribute name="tag">
                 <xsl:value-of select="@name"/>
-            </xsl:attribute>
+            </xsl:attribute>-->
             <xsl:attribute name="type">
                 <xsl:value-of select="@type"/>
             </xsl:attribute>
@@ -112,8 +112,8 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:sequence/xsd:element[@name][xsd:annotation/xsd:appinfo/*:Field]">
-        <xsl:element name="Field">
-            <xsl:attribute name="tag" select="@name"/>
+        <xsl:element name="{@name}">
+            <!--<xsl:attribute name="tag" select="@name"/>-->
             <xsl:apply-templates select="@*[not(name() = 'name')]" mode="copy"/>
             <xsl:apply-templates select=".//@base[1]" mode="copy"/>
             <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="attr"/>
@@ -123,7 +123,7 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:element[@ref][starts-with(@ref, 'field:')]">
-        <xsl:element name="Field">
+        <xsl:element name="{substring-after(@ref, 'field:')}">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Field" mode="info"/>
             <xsl:apply-templates select="*"/>

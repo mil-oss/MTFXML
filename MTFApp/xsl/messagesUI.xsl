@@ -25,7 +25,7 @@
         </xsl:variable>
         <xsl:element name="Messages">
             <xsl:for-each select="$messages/*">
-                <xsl:sort select="@name"/>
+                <xsl:sort select="name()"/>
                 <xsl:copy-of select="."/>
             </xsl:for-each>
         </xsl:element>
@@ -41,10 +41,10 @@
         <xsl:variable name="t">
             <xsl:value-of select="@type"/>
         </xsl:variable>
-        <xsl:element name="Message">
-            <xsl:attribute name="tag">
+        <xsl:element name="{@name}">
+            <!--<xsl:attribute name="tag">
                 <xsl:value-of select="@name"/>
-            </xsl:attribute>
+            </xsl:attribute>-->
             <xsl:attribute name="type">
                 <xsl:value-of select="@type"/>
             </xsl:attribute>
@@ -98,10 +98,10 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:sequence/xsd:element[@name][not(starts-with(@type, 'field:'))][xsd:annotation/xsd:appinfo/*:Set]">
-        <xsl:element name="Set">
-            <xsl:attribute name="tag">
+        <xsl:element name="{@name}">
+            <!--<xsl:attribute name="tag">
                 <xsl:value-of select="@name"/>
-            </xsl:attribute>
+            </xsl:attribute>-->
             <xsl:attribute name="type">
                 <xsl:value-of select="@type"/>
             </xsl:attribute>
@@ -111,8 +111,8 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:sequence/xsd:element[@name][xsd:annotation/xsd:appinfo/*:Field]">
-        <xsl:element name="Field">
-            <xsl:attribute name="tag" select="@name"/>
+        <xsl:element name="{@name}">
+            <!--<xsl:attribute name="tag" select="@name"/>-->
             <xsl:apply-templates select="@*[not(name() = 'name')]" mode="copy"/>
             <xsl:apply-templates select=".//@base[1]" mode="copy"/>
             <xsl:apply-templates select=".//xsd:restriction[1]/*" mode="attr"/>
@@ -121,7 +121,7 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:element[@ref][starts-with(@ref, 'set:')]">
-        <xsl:element name="Set">
+        <xsl:element name="{substring-after(@ref, 'set:')}">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="xsd:documentation" mode="doc"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
@@ -129,24 +129,24 @@
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:element[@ref][starts-with(@ref, 'seg:')]">
-        <xsl:element name="Segment">
+        <xsl:element name="{substring-after(@ref, 'seg:')}">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Segment" mode="info"/>
             <xsl:apply-templates select="*"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:element[@ref][not(contains(@ref, ':'))][xsd:annotation/xsd:appinfo/*:Segment]">
-        <xsl:element name="Segment">
+        <xsl:element name="{@ref}">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Segment" mode="info"/>
             <xsl:apply-templates select="*"/>
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:element[@name][starts-with(@type, 'field:')]">
-        <xsl:element name="Field">
-            <xsl:attribute name="tag">
+        <xsl:element name="{@name}">
+            <!--<xsl:attribute name="tag">
                 <xsl:value-of select="@name"/>
-            </xsl:attribute>
+            </xsl:attribute>-->
             <xsl:apply-templates select="@*" mode="copy"/>
         </xsl:element>
     </xsl:template>
