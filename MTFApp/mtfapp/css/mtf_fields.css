@@ -271,12 +271,10 @@ body{
 .enumcode{
     float:left;
     min-width:4ch;
+    width:22%;
     padding-left:2px;
 }
-span.enumcode{
-    text-align:center;
-    border:none;
-}
+
 .enumdesc{
     float:left;
     padding-left:2px;

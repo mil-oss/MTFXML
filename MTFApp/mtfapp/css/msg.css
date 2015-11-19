@@ -169,6 +169,40 @@ body{
     border: thin solid blue;
 }
 
+.nameview{
+    width:100%;
+    min-height:20px;
+    max-height:150px;
+    overflow-y:auto;
+    border:thin solid grey;
+}
+
+.enumview{
+    width:100%;
+    min-height:20px;
+    max-height:150px;
+    overflow-y:auto;
+}
+.enumlisting{
+    width:98%;
+    float:left;
+    border:thin solid grey;
+}
+.enumcode{
+    float:left;
+    width:15%;
+    padding-left:2px;
+}
+
+
+.enumdesc{
+    float:left;
+    padding-left:2px;
+    padding-right:2px;
+    width:85%;
+    border-left:thin solid grey;
+}
+
 .title{
     text-align: center;
     font-weight: bold;
@@ -184,8 +218,10 @@ body{
 }
 
 .desc{
+    margin-top: 2px;  
     padding-left:5px;
     float: left;
+    word-wrap:break-word;
     width: 95%;
 }
 
@@ -203,12 +239,7 @@ body{
     float:right;
 }
 
-.txt{
-    margin-top: 2px;  
-    padding-left:5px;
-    word-wrap:break-word;
-    width: 95%;
-}
+
 .info{
     /* float: right; */
     padding-left:5px;

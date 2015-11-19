@@ -142,7 +142,8 @@ mtfApp.factory('uiService', function ($http) {
                 if (keys.indexOf(uiname) === -1) {
                     uisvc.toJson(uidata, function (jrslt) {
                         IDB.openStore('MTF', function (mtfstore) {
-                            mtfstore.upsert({ name: uiname, lastmod: lastmod, data: jrslt
+                            mtfstore.upsert({
+                                name: uiname, lastmod: lastmod, data: jrslt
                             }).then(function () {
                                 callback(uiname, jrslt);
                             });
@@ -153,7 +154,8 @@ mtfApp.factory('uiService', function ($http) {
                         if (uidbrec.lastmod !== lastmod) {
                             uisvc.toJson(uidata, function (jrslt) {
                                 IDB.openStore('MTF', function (mtfstore) {
-                                    mtfstore.upsert({ name: uiname, lastmod: lastmod, data: jrslt
+                                    mtfstore.upsert({
+                                        name: uiname, lastmod: lastmod, data: jrslt
                                     }).then(function () {
                                         callback(uiname, jrslt);
                                     });
@@ -176,16 +178,30 @@ mtfApp.factory('uiService', function ($http) {
             });
         });
     };
-    uisvc.getUINode = function (uiname, nodename, IDB, callback) {
-        var jpath = "$.*.*.*[Info._name='" + nodename + "']";
-        console.log(jpath);
+    
+    uisvc.getNode = function (dbrecord, nodename,IDB) {
         IDB.openStore('MTF', function (store) {
-            store.find(uiname).then(function (uijson) {
-                var uinode = jsonPath(uijson.data, jpath);
-                callback(uinode);
+            store.find('ufields_ui').then(function (uijson) {
+                var jobj = JSON.parse(uijson);
+                var objs=uisvc.getJsonNodes (jobj,nodename);
+                console.log(objs);
             });
         });
     };
+    
+    uisvc.getJsonNodes = function(obj, key) {
+        var objects =[];
+        for (var i in obj) {
+            if (! obj.hasOwnProperty(i)) continue;
+            if (typeof obj[i] == 'object') {
+                objects = objects.concat(uisvc.getJsonNodes(obj[i], key));
+            } else if (i == key) {
+                objects.push(obj[i]);
+            }
+        }
+        return objects;
+    }
+    
     uisvc.getUIData = function (uidata, dbService, callback) {
         console.log('getUIData ' + uidata);
         dbService.dB.openStore('MTF', function (store) {

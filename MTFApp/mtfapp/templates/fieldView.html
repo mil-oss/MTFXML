@@ -1,0 +1,57 @@
+<div class="field">
+    <div class="name" data-ng-hide="fldctl.infoList(field.Info)">
+        <b>{{field.Info._name}}</b>
+    </div>
+    <div data-ng-show="fldctl.infoList(field)">
+        <div class="enumview">
+            <div data-ng-repeat="(k,i) in field.Info">
+                <b class="name">{{i._name}}</b>
+                <div class="desc">{{i._explanation}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="desc" data-ng-show="field._doc">{{field._doc}}</div>
+    <div class="desc" data-ng-hide="field._doc">{{field.Info._explanation}}</div>
+    <div class="desc" data-ng-show="field.Info._version">
+        <b>Version: </b>{{field.Info._version}} </div>
+    <div class="desc">
+        <span data-ng-show="fldctl.hasType"><b>Type: </b>{{fldctl.getType(field._base,field.Sequence,field.choice)}}</span>
+        <span class="spc" data-ng-show="field._minLength"><b>Min Length: </b>{{field._minLength}}</span>
+        <span class="spc" data-ng-show="field._maxLength"><b>Max Length: </b>{{field._maxLength}}</span>
+        <span class="spc" data-ng-show="field._length"><b>Length: </b>{{field._length}}</span>
+        <span class="spc" data-ng-show="field._minInclusive"><b>Min: </b>{{field._minInclusive}}</span>
+        <span class="spc" data-ng-show="field._maxInclusive"><b>Max: </b>{{field._maxInclusive}}</span>
+        <span class="spc" data-ng-show="field._fractionDigits"><b>Fraction Digits: </b>{{field._fractionDigits}}</span>
+        <span class="spc" data-ng-show="field._totalDigits"><b>Total Digits: </b>{{field._totalDigits}}</span>
+    </div>
+    <div class="desc" data-ng-show="field._regex"><b>Regex: </b>{{field._regex}}</div>
+    <div class="desc" data-ng-show="field.choice">
+        <div class="desc" data-ng-show="fldctl.singleenum(field.Sequence,field.choice)">
+            <div>Value:</div>
+            <div class="enumlisting">
+                <span class="enumcode">{{field.choice.enumeration._value}}</span>
+                <span class="enumdesc">{{field.choice.enumeration._dataItem}}</span>
+            </div>
+        </div>
+        <div class="desc" data-ng-show="fldctl.enums(field.Sequence,field.choice)">
+            <div class="desc">
+                <div>Values:</div>
+                <div class="enumview">
+                    <div data-ng-repeat="(k,e) in field.choice.enumeration">
+                        <div class="enumlisting">
+                            <span class="enumcode">{{e._value}}</span>
+                            <span class="enumdesc">{{e._dataItem}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="desc" data-if="field.Sequence">
+        <div class="desc">
+            <div data-ng-repeat="f in fldctl.getRefs(field.Sequence)">
+                <!--<field></field>-->
+            </div>
+        </div>
+    </div>
+</div>

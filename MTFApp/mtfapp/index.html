@@ -20,9 +20,9 @@
 <html>
     <head>
         <title>MIL STD 6040 MESSAGE TEXT FORMAT</title>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link type="text/css" rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.min.css"/>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link type="text/css" rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="css/accordion.css" />
         <link type="text/css" rel="stylesheet" href="css/msg.css" />
         <!--<link rel="stylesheet" href="css/mtf_fields.css" />-->
@@ -31,13 +31,13 @@
         <div id="msgs" data-ng-app="mtfApp">
             <div data-ng-controller="mtfCtl as mtfctl">
                 <div id="msgColhdr">
-                <div class="title">MESSAGE TEXT FORMAT</div>
-                <div class="input-group">
-                    <input type="text" class="form-control " data-ng-model="mtftxtsearch" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </span>
-                </div>
+                    <div class="title">MESSAGE TEXT FORMAT</div>
+                    <div class="input-group">
+                        <input type="text" class="form-control " data-ng-model="mtftxtsearch" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </span>
+                    </div>
                 </div>
                 <div id="msgCol" class="accordion__container noselect" data-ng-controller="menuCtrl">
                     <div class="accordion__tab">
@@ -50,7 +50,7 @@
                                         <div class="msglist">
                                             <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.umsgs_ui,mtftxtsearch, '_name')">
                                                 <div class="msglisting" data-ng-click="mtfctl.selectNode('umsgs_ui', mtfctl.umsgs_ui[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                                    data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                         <div class="msglist">
                                             <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.usegments_ui,mtftxtsearch, '_name')">
                                                 <div class="msglisting" data-ng-click="mtfctl.selectNode('usegments_ui', mtfctl.usegments_ui[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                                    data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                         <div class="msglist">
                                             <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.usets_ui,mtftxtsearch, '_name')">
                                                 <div class="msglisting" data-ng-click="mtfctl.selectNode('usets_ui', mtfctl.usets_ui[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                                    data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@
                                         <div class="msglist">
                                             <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.ufields_ui,mtftxtsearch, '_name')">
                                                 <div class="msglisting" data-ng-click="mtfctl.selectNode('ufields_ui', mtfctl.ufields_ui[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                                    data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -107,7 +107,7 @@
                                         <div class="msglist">
                                             <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.nmsgs_ui, mtftxtsearch,'_name')">
                                                 <div class="msglisting" data-ng-click="mtfctl.selectNode('nmsgs_ui', mtfctl.nmsgs_ui[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                                    data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +120,7 @@
                                         <div class="msglist">
                                             <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.nsegments_ui, mtftxtsearch,'_name')">
                                                 <div class="msglisting" data-ng-click="mtfctl.selectNode('nsegments_ui', mtfctl.nsegments_ui[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                                    data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -133,7 +133,7 @@
                                         <div class="msglist">
                                             <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.nsets_ui, mtftxtsearch,'_name')">
                                                 <div class="msglisting" data-ng-click="mtfctl.selectNode('nsets_ui', mtfctl.nsets_ui[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                                    data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -146,7 +146,7 @@
                                         <div class="msglist">
                                             <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.nfields_ui,mtftxtsearch, '_name')">
                                                 <div class="msglisting" data-ng-click="mtfctl.selectNode('nfields_ui', mtfctl.nfields_ui[k], k)"
-                                                     data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
+                                                    data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -156,10 +156,9 @@
                     </div>
                 </div>
                 <div id="infoCol">
-                    <div data-ng-include="mtfctl.view"></div>
+                    <field></field>
                 </div>
-                <div id="editcol">
-                </div>
+                <div id="editcol"> </div>
             </div>
         </div>
         <script src="js/lib/Saxonce/Saxonce.nocache.js"></script>
@@ -173,5 +172,6 @@
         <script src="js/mtfapp.js"></script>
         <script src="js/services.js"></script>
         <script src="js/controllers.js"></script>
+        <script src="js/directives.js"></script>
     </body>
 </html>
