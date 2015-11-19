@@ -2,9 +2,8 @@
 mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     var mtfctl = this;
     mtfctl.selNode =[];
-    mtfctl.listSelected =[];
-    mtfctl.showView ='';
-    mtfctl.views = {
+    $scope.listSelected =[];
+    mtfctl.viewTypes = {
         'umsgs_ui': 'message',
         'nmsgs_ui': 'message',
         'usegments_ui': 'segment',
@@ -14,9 +13,14 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
         'ufields_ui': 'field',
         'nfields_ui': 'field'
     };
+    mtfctl.views = {
+        'field': 'views/fieldView.html',
+        'set': 'views/setView.html',
+        'segment': 'views/segmentView.html',
+        'message': 'views/messageView.html'
+    };
     dbService.syncResources(uiService, mtfctl, function () {
         console.log("Sync complete");
-        //console.log(mtfctl.ufields_ui);
     });
     mtfctl.valuefilter = function (mlist, txt, field) {
         var result = {
@@ -62,50 +66,34 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     };
     mtfctl.selectNode = function (list, node, k) {
         mtfctl.selected = k;
-        mtfctl.showView = mtfctl.views[list];
-        $scope.selNode = node;
-        $scope.selData = mtfctl[list];
+        $scope.listSelected = mtfctl[list];
+        $scope[mtfctl.viewTypes[list]] = node;
+        mtfctl.view = mtfctl.views[mtfctl.viewTypes[list]];
+        console.log($scope.field);
     };
+    //
     mtfctl.isSelected = function (k) {
         return mtfctl.selected === k;
     };
 });
-
-mtfApp.controller('msgCtl', function ($scope, uiService, dbService) {
-    var msgctl = this;
-});
-
-mtfApp.controller('segCtl', function ($scope, uiService, dbService) {
-    var ussegctl = this;
-});
-
-mtfApp.controller('setCtl', function ($scope, uiService, dbService) {
-    var ussetctl = this;
-});
-
-mtfApp.controller('fldCtl', function ($scope, uiService, dbService) {
+mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
     var fldctl = this;
-    var fldsui=[];
-    fldctl.hasType=false;
-    $scope.$watch("selNode", function () {
-        fldctl.field = $scope.selNode;
-        console.log($scope.selNode);
-    });
-    fldctl.getType=function(base,seq,choice){
+    fldctl.fldHasType = false;
+    fldctl.fldGetType = function (base, seq, choice) {
         if (typeof seq != 'undefined' | typeof choice != 'undefined') {
-            fldctl.hasType=false;
-        } else if (base==='FieldIntegerBaseType') {
-            fldctl.hasType=true;
+            fldctl.fldHasType = false;
+        } else if (base === 'FieldIntegerBaseType') {
+            fldctl.fldHasType = true;
             return 'Integer';
-        } else if (base==='FieldDecimalBaseType') {
-            fldctl.hasType=true;
+        } else if (base === 'FieldDecimalBaseType') {
+            fldctl.fldHasType = true;
             return 'Decimal';
-        }else{
-            fldctl.hasType=true;
+        } else {
+            fldctl.fldHasType = true;
             return 'String';
         }
     };
-    fldctl.enums = function (seq, choice) {
+    fldctl.fldEnums = function (seq, choice) {
         if (typeof seq != 'undefined') {
             return false;
         } else if (typeof choice !== 'undefined') {
@@ -116,16 +104,18 @@ mtfApp.controller('fldCtl', function ($scope, uiService, dbService) {
             }
         }
     };
-    fldctl.infoList = function (field) {
-        if (typeof field !== 'undefined') {
-            if (typeof field.Info[0] !== 'undefined') {
-                return true;
-            } else {
-                return false;
-            }
+    fldctl.fldInfoList = function (field) {
+        if (typeof field === 'undefined') {
+            return false;
+        } else if (typeof field.Info === 'undefined') {
+            return false;
+        } else if (typeof field.Info[0] !== 'undefined') {
+            return true;
+        } else {
+            return false;
         }
     };
-    fldctl.singleenum = function (seq, choice) {
+    fldctl.fldSingleEnum = function (seq, choice) {
         if (typeof seq != 'undefined') {
             return false;
         } else if (typeof choice !== 'undefined') {
@@ -138,20 +128,17 @@ mtfApp.controller('fldCtl', function ($scope, uiService, dbService) {
             }
         }
     }
-    fldctl.getRefs = function (sequence) {
-    if (typeof sequence !== 'undefined') {
-        var flds = [];
-        var k =(Object.keys(sequence));
-        for (i = 0; i < k.length; i++) {
-            console.log(k[i]);
-            flds.push($scope.selData[k[i]]);
-        }
-        console.log(flds);
-        return (flds);
+    fldctl.fldRefs = function (sequence) {
+        if (typeof sequence !== 'undefined') {
+            var flds =[];
+            var k =(Object.keys(sequence));
+            for (i = 0; i < k.length; i++) {
+                flds.push($scope.listSelected[k[i]]);
+            }
+            return (flds);
         }
     };
 });
-
 mtfApp.controller('menuCtrl', function ($scope) {
     //initiate an array to hold all active tabs
     $scope.activeTabs =[];

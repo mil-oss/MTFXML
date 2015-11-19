@@ -24,8 +24,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link type="text/css" rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="css/accordion.css" />
-        <link type="text/css" rel="stylesheet" href="css/msg.css" />
-        <!--<link rel="stylesheet" href="css/mtf_fields.css" />-->
+        <link type="text/css" rel="stylesheet" href="css/mtf.css" />
     </head>
     <body>
         <div id="msgs" data-ng-app="mtfApp">
@@ -156,7 +155,8 @@
                     </div>
                 </div>
                 <div id="infoCol">
-                    <field></field>
+                    
+                    <div data-ng-include="mtfctl.view"></div>
                 </div>
                 <div id="editcol"> </div>
             </div>
@@ -172,6 +172,5 @@
         <script src="js/mtfapp.js"></script>
         <script src="js/services.js"></script>
         <script src="js/controllers.js"></script>
-        <script src="js/directives.js"></script>
     </body>
 </html>

@@ -21,13 +21,13 @@ mtfApp.factory('dbService', function ($http, $indexedDB) {
         nfields_ui: '/xml/lz/nato_fields_ui.xml.lz'
     };
     dbsvc.roots = {
-        //umsgs_ui: 'Messages',
+        umsgs_ui: 'Messages',
         usets_ui: 'Sets',
-        //usegments_ui: 'Segments',
+        usegments_ui: 'Segments',
         ufields_ui: 'Fields',
-        //nmsgs_ui: 'Messages',
+        nmsgs_ui: 'Messages',
         nsets_ui: 'Sets',
-        //nsegments_ui: 'Segments',
+        nsegments_ui: 'Segments',
         nfields_ui: 'Fields'
     };
     dbsvc.dB = $indexedDB;
@@ -36,9 +36,9 @@ mtfApp.factory('dbService', function ($http, $indexedDB) {
         var count = 0;
         for (var k in dbsvc.resources) {
             dbsvc.getResource(k, function (res) {
-                if (res[ 'name'].substring(res[ 'name'].length - 2) === 'ui') {
-                    uiService.synchUIData(res[ 'name'], res.data, res.lastmod, dbsvc.dB, function (uiname, uidata) {
-                        mtfctl[uiname] = uidata[dbsvc.roots[res[ 'name']]];
+                if (res['name'].substring(res['name'].length - 2) === 'ui') {
+                    uiService.synchUIData(res['name'], res.data, res.lastmod, dbsvc.dB, function (uiname, uidata) {
+                        mtfctl[res['name']] = uidata[dbsvc.roots[res['name']]];
                         count++;
                         if (count === Object.keys(dbsvc.resources).length) {
                             callback();
