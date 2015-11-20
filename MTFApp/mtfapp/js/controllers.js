@@ -19,6 +19,10 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
         'segment': 'views/segmentView.html',
         'message': 'views/messageView.html'
     };
+    mtfctl.fieldView="views/fieldView.html";
+    mtfctl.setView="views/setView.html";
+    mtfctl.segmentView="views/segmentView.html";
+    mtfctl.messageView="views/messageView.html";
     dbService.syncResources(uiService, mtfctl, function () {
         console.log("Sync complete");
     });
@@ -136,6 +140,30 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
                 flds.push($scope.listSelected[k[i]]);
             }
             return (flds);
+        }
+    };
+});
+mtfApp.controller('setCtl', function ($scope, dbService, uiService) {
+    var setctl = this;
+    setctl.fldInfoList = function (field) {
+        if (typeof field === 'undefined') {
+            return false;
+        } else if (typeof field.Info === 'undefined') {
+            return false;
+        } else if (typeof field.Info[0] !== 'undefined') {
+            return true;
+        } else {
+            return false;
+        }
+    };
+    setctl.setRefs = function (sequence) {
+        if (typeof sequence !== 'undefined') {
+            var nodes =[];
+            var k =(Object.keys(sequence));
+            for (i = 0; i < k.length; i++) {
+                nodes.push($scope.listSelected[k[i]]);
+            }
+            return (nodes);
         }
     };
 });

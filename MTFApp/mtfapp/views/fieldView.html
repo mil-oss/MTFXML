@@ -12,6 +12,7 @@
     </div>
     <div data-ng-show="field._doc"><div class="txt">{{field._doc}}</div></div>
     <div data-ng-hide="field._doc"><div class="txt">{{field.Info._explanation}}</div></div>
+    <div data-ng-show="field.Info._definition"><div class="txt">{{field.Info._definition}}</div></div>
     <div data-ng-show="field.Info._version">
         <b>Version: </b>{{field.Info._version}} </div>
     <div>
@@ -23,6 +24,9 @@
         <span data-ng-show="field._maxInclusive"><b>Max: </b>{{field._maxInclusive}}</span>
         <span data-ng-show="field._fractionDigits"><b>Fraction Digits: </b>{{field._fractionDigits}}</span>
         <span data-ng-show="field._totalDigits"><b>Total Digits: </b>{{field._totalDigits}}</span>
+        <span data-ng-show="setctl._minOccurs"><b>Min Occurs: </b>{{setctl._minOccurs}}</span>
+        <span data-ng-show="setctl._maxOccurs"><b>Max Occurs: </b>{{setctl._maxOccurs}}</span>
+        <span data-ng-show="setctl._nillable"><b>Nillable: </b>{{setctl._nillable}}</span>
     </div>
     <div data-ng-show="field._regex"><b>Regex: </b>{{field._regex}}</div>
     <div data-ng-show="field.choice">

@@ -62,8 +62,16 @@
     <xsl:template match="xsd:schema/xsd:complexType[not(starts-with(@name, 'Amplification'))][not(starts-with(@name, 'Narrative'))]">
         <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="attr"/>
         <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
-        <Set ref="{//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[1]/@name}"/>
-        <Set ref="{//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[2]/@name}"/>
+        <xsl:element name="{//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[1]/@name}">
+            <xsl:attribute name="ref">
+                <xsl:value-of select="//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[1]/@name"/>
+            </xsl:attribute>
+        </xsl:element>
+        <xsl:element name="{//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[2]/@name}">
+            <xsl:attribute name="ref">
+                <xsl:value-of select="//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[2]/@name"/>
+            </xsl:attribute>
+        </xsl:element>
         <xsl:apply-templates select="xsd:complexContent/xsd:extension/*"/>
     </xsl:template>
     <xsl:template match="xsd:documentation" mode="attr">
