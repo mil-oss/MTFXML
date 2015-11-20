@@ -3,6 +3,7 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     var mtfctl = this;
     mtfctl.selNode =[];
     $scope.listSelected =[];
+    $scope.isArray = angular.isArray;
     mtfctl.viewTypes = {
         'umsgs_ui': 'message',
         'nmsgs_ui': 'message',
@@ -19,10 +20,10 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
         'segment': 'views/segmentView.html',
         'message': 'views/messageView.html'
     };
-    mtfctl.fieldView="views/fieldView.html";
-    mtfctl.setView="views/setView.html";
-    mtfctl.segmentView="views/segmentView.html";
-    mtfctl.messageView="views/messageView.html";
+    mtfctl.fieldView = "views/fieldView.html";
+    mtfctl.setView = "views/setView.html";
+    mtfctl.segmentView = "views/segmentView.html";
+    mtfctl.messageView = "views/messageView.html";
     dbService.syncResources(uiService, mtfctl, function () {
         console.log("Sync complete");
     });
@@ -73,7 +74,7 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
         $scope.listSelected = mtfctl[list];
         $scope[mtfctl.viewTypes[list]] = node;
         mtfctl.view = mtfctl.views[mtfctl.viewTypes[list]];
-        console.log($scope.field);
+        console.log($scope[mtfctl.viewTypes[list]]);
     };
     //
     mtfctl.isSelected = function (k) {
@@ -133,6 +134,7 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
         }
     }
     fldctl.fldRefs = function (sequence) {
+        console.log (sequence);
         if (typeof sequence !== 'undefined') {
             var flds =[];
             var k =(Object.keys(sequence));
@@ -160,9 +162,13 @@ mtfApp.controller('setCtl', function ($scope, dbService, uiService) {
         if (typeof sequence !== 'undefined') {
             var nodes =[];
             var k =(Object.keys(sequence));
+            //console.log(k);
             for (i = 0; i < k.length; i++) {
-                nodes.push($scope.listSelected[k[i]]);
+                if (k[i].substring(k[i].length-3)==='Set') {
+                    nodes.push($scope.listSelected[k[i]]);
+                }
             }
+            //console.log(nodes);
             return (nodes);
         }
     };

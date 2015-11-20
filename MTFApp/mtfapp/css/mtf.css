@@ -1,127 +1,137 @@
 body{
-    font-family:monospace;
-    font-size:10px;
-    /* width:100%; */ 
-    overflow-y:hidden;
+    font-family: monospace;
+    font-size: 10px;
+    /* width:100%; */
+    overflow-y: hidden;
 }
 #msgColhdr{
-    left:0;
-    top:0;
-    width:224px;  
-    height:30px;
-    border:thin solid black;
+    left: 0;
+    top: 0;
+    width: 224px;
+    height: 30px;
+    border: thin solid black;
 }
 #msgCol{
-    position:absolute;
-    left:0;
-    top:45px;
-    width:224px;  
-    height:98%;
-    overflow-y:auto;
-    border:thin solid black;
+    position: absolute;
+    left: 0;
+    top: 45px;
+    width: 224px;
+    height: 98%;
+    overflow-y: auto;
+    border: thin solid black;
 }
 #infoCol{
-    position:absolute;
-    left:224px; 
-    top:20px;
-    height:100%;
-    width:600px;
-    padding-left:5px;
+    position: absolute;
+    left: 224px;
+    top: 20px;
+    height: 100%;
+    width: 600px;
+    padding-left: 5px;
 }
 #msgview{
-    position:absolute;
+    position: absolute;
     height: 100%;
-    left:0;
-    top:0;
-    width:600px;
+    left: 0;
+    top: 0;
+    width: 600px;
 }
 #editCol{
-    position:absolute;
-    left:510px;
-    top:0;
-    width:600px;  
-    border:thin solid black;
+    position: absolute;
+    left: 510px;
+    top: 0;
+    width: 600px;
+    border: thin solid black;
 }
 .input-group-addon{
-    padding:2px 2px;
+    padding: 2px 2px;
     font-size: 12px;
 }
 .form-control{
-    height:24px;
-    padding:2px 2px;
+    height: 24px;
+    padding: 2px 2px;
 }
 .title{
     font-weight: bold;
-    font-size: 12px; 
+    font-size: 12px;
 }
 .msglist{
-    width:200px;
-    margin-right:2px;
-    max-height:400px;
-    overflow-y:auto;
+    width: 200px;
+    margin-right: 2px;
+    max-height: 400px;
+    overflow-y: auto;
 }
 .msglisting{
-    width:98%;
-    max-height:55px;
-    cursor:pointer;
-    border:thin solid black;
-    border-radius:2px;
-    padding:3px;
-    box-shadow:2px 2px 2px #888888;
-    margin:2px;
-    text-align:left;
-    font-weight:normal;
+    width: 98%;
+    max-height: 55px;
+    cursor: pointer;
+    border: thin solid black;
+    border-radius: 2px;
+    padding: 3px;
+    box-shadow: 2px 2px 2px #888888;
+    margin: 2px;
+    text-align: left;
+    font-weight: normal;
 }
 .msglabel{
-    margin-left:5px;
-    padding-left:5px;
-    padding-top:8px;
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-top: 8px;
 }
 .noselect{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
-    -khtml-user-select: none;
+    /*-khtml-user-select: none;*/
     -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+    /*-ms-user-select: none;*/
+    /*-o-user-select: none;*/
+    /*user-select: none;*/
 }
+/*FIELDS*/
 .field{
-    float:left;
-    height:auto;
+    float: left;
+    height: auto;
     width: 100%;
-    padding:3px;
-    margin:1px;
+    padding: 3px;
+    margin: 1px;
     border: thin solid green;
 }
 .enumview{
-    width:100%;
-    min-height:20px;
-    max-height:150px;
+    width: 100%;
+    min-height: 20px;
+    max-height: 150px;
     border-top: thin solid grey;
     border-bottom: thin solid grey;
-    overflow-y:auto;
+    overflow-y: auto;
 }
 .enumlisting{
-    float:left;
-    width:100%;
-    border:thin solid grey;
+    float: left;
+    width: 100%;
+    border: thin solid grey;
 }
 .enumcode{
-    float:left;
-    width:15%;
-    padding-left:2px;
+    float: left;
+    width: 15%;
+    padding-left: 2px;
 }
 .enumdesc{
-    float:left;
-    padding-left:2px;
-    padding-right:2px;
-    width:85%;
-    border-left:thin solid grey;
+    float: left;
+    padding-left: 2px;
+    padding-right: 2px;
+    width: 85%;
+    border-left: thin solid grey;
 }
 .txt{
-  padding: 2px;  
-  word-wrap:break-word;
-  border-top: thin solid grey;
-  border-bottom: thin solid grey;
+    padding: 2px;
+    word-wrap: break-word;
+    border-top: thin solid grey;
+    border-bottom: thin solid grey;
+}
+/*SETS*/
+.set{
+    float: left;
+    height: auto;
+    width: 100%;
+    padding: 3px;
+    margin: 1px;
+    border: thin solid blue;
 }

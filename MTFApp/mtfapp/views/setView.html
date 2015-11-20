@@ -1,42 +1,51 @@
 <div class="set" data-ng-controller="setCtl as setctl">
     <div class="title">
-        <span data-ng-show="set.Info._name"><b>{{set.Info._name}}</b></span>
-        <span data-ng-show="set.Info._id"><b> ({{set.Info._id}})</b></span>
+        <span data-ng-show="set.Info._name">
+            <b>{{set.Info._name}}</b>
+        </span>
+        <span data-ng-show="set.Info._id">
+            <b> ({{set.Info._id}})</b>
+        </span>
     </div>
+    <div data-ng-show="set.Info._remark"><b>Remark: </b>{{set.Info._remark}} </div>
     <div data-ng-show="set.Info._version"><b>Version: </b>{{set.Info._version}} </div>
     <div data-ng-show="set.Info._sponsor"><b>Sponsor: </b>{{set.Info._sponsor}} </div>
-    <div data-ng-show="set.Info.Example">
-        <b>Example(s):</b>
-        <div data-ng-repeat="ex in set.Info.Example track by $index" >
-            <div>{{ex}}</div>
+    <div data-ng-if="isArray(set.Info.Example)">
+        <b>Examples:</b>
+        <div data-ng-repeat="(k,v) in set.Info.Example track by $index">
+            <div>{{v}}</div>
         </div>
     </div>
+    <div data-ng-if="isArray(set.Info.Example)===false">
+        <b>Example:</b>
+        <span>{{set.Info.Example}}</span>
+    </div>
     <div>
-        <span data-ng-show="setctl._minOccurs"><b>Min Occurs: </b>{{setctl._minOccurs}}</span>
-        <span data-ng-show="setctl._maxOccurs"><b>Max Occurs: </b>{{setctl._maxOccurs}}</span>
-        <span data-ng-show="setctl._nillable"><b>Nillable: </b>{{setctl._nillable}}</span>
-        <span data-ng-show="setctl._minLength"><b>Min Length: </b>{{setctl._minLength}}</span>
-        <span data-ng-show="setctl._maxLength"><b>Max Length: </b>{{setctl._maxLength}}</span>
+        <span data-ng-show="set._minOccurs"><b>Min Occurs: </b>{{set._minOccurs}}</span>
+        <span data-ng-show="set._maxOccurs"><b>Max Occurs: </b>{{set._maxOccurs}}</span>
+        <span data-ng-show="set._nillable"><b>Nillable: </b>{{set._nillable}}</span>
+        <span data-ng-show="set._minLength"><b>Min Length: </b>{{set._minLength}}</span>
+        <span data-ng-show="set._maxLength"><b>Max Length: </b>{{set._maxLength}}</span>
     </div>
     <div data-ng-repeat="set in setctl.setRefs(set)">
         <div data-ng-include="mtfctl.setView"/>
     </div>
-    <div data-if="set.Sequence">
+    <div data-ng-controller="fldCtl as fldctl">
         <div class="desc">
-            <div data-ng-repeat="set in setctl.setRefs(set.Sequence)">
-                <div data-ng-include="mtfctl.setView"/>
+            <div data-ng-repeat="fld in fldCtl.fldRefs(set.Sequence)">
+                <div data-ng-include="mtfctl.fieldView"/>
             </div>
         </div>
-    </div>
-    <div data-if="set.Sequence.Sequence">
-        <b>Sequence</b>
         <div class="desc">
+            <div data-ng-show="set.Sequence.Sequence">Sequence</div>
             <div>
-                <span data-ng-show="setctl._minOccurs"><b>Min Occurs: </b>{{setctl._minOccurs}}</span>
-                <span data-ng-show="setctl._maxOccurs"><b>Max Occurs: </b>{{setctl._maxOccurs}}</span>
+                <span data-ng-show="set.Sequence.Sequence._minOccurs"><b>Min Occurs: </b>{{setctl.set.Sequence.Sequence._minOccurs}}</span>
+                <span data-ng-show="set.Sequence.Sequence._maxOccurs"><b>Max Occurs: </b>{{setctl.set.Sequence.Sequence._maxOccurs}}</span>
             </div>
-            <div data-ng-repeat="field in setctl.setRefs(set.Sequence)">
-                <div data-ng-include="mtfctl.setView"/>
+            <div class="desc" data-ng-controller="fldCtl as fldctl">
+                <div data-ng-repeat="fld in fldCtl.fldRefs(set.Sequence.Sequence)">
+                    <div data-ng-include="mtfctl.fieldView"/>
+                </div>
             </div>
         </div>
     </div>
