@@ -31,7 +31,7 @@ mtfApp.factory('dbService', function ($http, $indexedDB) {
         nfields_ui: 'Fields'
     };
     dbsvc.dB = $indexedDB;
-    dbsvc.syncResources = function (uiService, mtfctl, callback) {
+    dbsvc.syncResources = function (mtfctl,uiService, callback) {
         console.log("syncResources " + Object.keys(dbsvc.resources).length);
         var count = 0;
         for (var k in dbsvc.resources) {
@@ -136,7 +136,6 @@ mtfApp.factory('uiService', function ($http) {
     };
     uisvc.xj = new X2JS();
     uisvc.synchUIData = function (uiname, uidata, lastmod, IDB, callback) {
-        //console.log('synchUIData ' + uiname);
         IDB.openStore('MTF', function (store) {
             store.getAllKeys().then(function (keys) {
                 if (keys.indexOf(uiname) === -1) {
@@ -177,8 +176,7 @@ mtfApp.factory('uiService', function ($http) {
                 callback(uilist);
             });
         });
-    };
-    
+    };   
     uisvc.getNode = function (dbrecord, nodename,IDB) {
         IDB.openStore('MTF', function (store) {
             store.find('ufields_ui').then(function (uijson) {
@@ -187,8 +185,7 @@ mtfApp.factory('uiService', function ($http) {
                 console.log(objs);
             });
         });
-    };
-    
+    };   
     uisvc.getJsonNodes = function(obj, key) {
         var objects =[];
         for (var i in obj) {
@@ -200,8 +197,7 @@ mtfApp.factory('uiService', function ($http) {
             }
         }
         return objects;
-    }
-    
+    }  
     uisvc.getUIData = function (uidata, dbService, callback) {
         console.log('getUIData ' + uidata);
         dbService.dB.openStore('MTF', function (store) {

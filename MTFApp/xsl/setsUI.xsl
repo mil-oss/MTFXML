@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
-    version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:variable name="USMTF_SETS" select="document('../xml/xsd/USMTF/GoE_sets.xsd')"/>
     <xsl:variable name="NATO_SETS" select="document('../xml/xsd/NATOMTF/natomtf_goe_sets.xsd')"/>
@@ -42,9 +41,6 @@
             <xsl:value-of select="@type"/>
         </xsl:variable>
         <xsl:element name="{@name}">
-            <!--<xsl:attribute name="tag">
-                <xsl:value-of select="@name"/>
-            </xsl:attribute>-->
             <xsl:attribute name="type">
                 <xsl:value-of select="@type"/>
             </xsl:attribute>
@@ -64,12 +60,24 @@
         <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Set" mode="info"/>
         <xsl:element name="{//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[1]/@name}">
             <xsl:attribute name="ref">
-                <xsl:value-of select="//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[1]/@name"/>
+                <xsl:value-of select="//xsd:schema/xsd:complexType[@name = 'SetBaseType']/xsd:sequence/xsd:element[1]/@name"/>
+            </xsl:attribute>
+            <xsl:attribute name="minOccurs">
+                <xsl:text>0</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="maxOccurs">
+                <xsl:text>1</xsl:text>
             </xsl:attribute>
         </xsl:element>
         <xsl:element name="{//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[2]/@name}">
             <xsl:attribute name="ref">
-                <xsl:value-of select="//xsd:schema/xsd:complexType[@name='SetBaseType']/xsd:sequence/xsd:element[2]/@name"/>
+                <xsl:value-of select="//xsd:schema/xsd:complexType[@name = 'SetBaseType']/xsd:sequence/xsd:element[2]/@name"/>
+            </xsl:attribute>
+            <xsl:attribute name="minOccurs">
+                <xsl:text>0</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="maxOccurs">
+                <xsl:text>1</xsl:text>
             </xsl:attribute>
         </xsl:element>
         <xsl:apply-templates select="xsd:complexContent/xsd:extension/*"/>
@@ -105,11 +113,15 @@
             <xsl:apply-templates select="*"/>
         </xsl:element>
     </xsl:template>
+    <xsl:template match="xsd:sequence/xsd:element[@name = 'FreeText'][not(xsd:annotation/xsd:appinfo/*:Field)]">
+        <FreeText minOccurs="1" maxOccurs="1" nillable="true"
+            doc="The free text information expressed in natural language. The field format length is artificial symbology representing an unrestricted length field, i.e., there is no limitation on the number of characters to be entered in the field."
+            base="field:FreeTextType">
+            <Info positionName="FREE TEXT" version="B.1.01.01"/>
+        </FreeText>
+    </xsl:template>
     <xsl:template match="xsd:sequence/xsd:element[@name][@type][not(starts-with(@type, 'field:'))]">
         <xsl:element name="{@name}">
-            <!--<xsl:attribute name="tag">
-                <xsl:value-of select="@name"/>
-            </xsl:attribute>-->
             <xsl:attribute name="type">
                 <xsl:value-of select="@type"/>
             </xsl:attribute>
@@ -121,7 +133,16 @@
     </xsl:template>
     <xsl:template match="xsd:sequence/xsd:element[@name][xsd:annotation/xsd:appinfo/*:Field]">
         <xsl:element name="{@name}">
-            <!--<xsl:attribute name="tag" select="@name"/>-->
+            <xsl:apply-templates select="@*[not(name() = 'name')]" mode="copy"/>
+            <xsl:apply-templates select=".//@base[1]" mode="copy"/>
+            <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="attr"/>
+            <xsl:apply-templates select=".//xsd:restriction[1]/*" mode="attr"/>
+            <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Field" mode="info"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template match="xsd:choice/xsd:element[@name][xsd:annotation/xsd:appinfo/*:Field]">
+        <xsl:element name="{@name}">
             <xsl:apply-templates select="@*[not(name() = 'name')]" mode="copy"/>
             <xsl:apply-templates select=".//@base[1]" mode="copy"/>
             <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="attr"/>

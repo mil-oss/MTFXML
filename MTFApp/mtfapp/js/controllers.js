@@ -1,9 +1,8 @@
 /* global mtfApp, angular, msgctl, setctl, segctl, umsgctl, ussegctl, ussetctl, usfldctl, nmsgctl, nsegctl, nsetctl */
 mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     var mtfctl = this;
-    mtfctl.selNode =[];
-    $scope.listSelected =[];
     $scope.isArray = angular.isArray;
+    mtfctl.view = '';
     mtfctl.viewTypes = {
         'umsgs_ui': 'message',
         'nmsgs_ui': 'message',
@@ -15,17 +14,29 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
         'nfields_ui': 'field'
     };
     mtfctl.views = {
-        'field': 'views/fieldView.html',
-        'set': 'views/setView.html',
-        'segment': 'views/segmentView.html',
-        'message': 'views/messageView.html'
+        'ufields_ui': 'views/fieldView.html',
+        'nfields_ui': 'views/fieldView.html',
+        'usets_ui': 'views/setView.html',
+        'nsets_ui': 'views/setView.html',
+        'usegments_ui': 'views/segmentView.html',
+        'nsegments_ui': 'views/segmentView.html',
+        'umessages_ui': 'views/messageView.html',
+        'nmessages_ui': 'views/messageView.html'
     };
     mtfctl.fieldView = "views/fieldView.html";
     mtfctl.setView = "views/setView.html";
     mtfctl.segmentView = "views/segmentView.html";
     mtfctl.messageView = "views/messageView.html";
-    dbService.syncResources(uiService, mtfctl, function () {
+    dbService.syncResources(mtfctl, uiService, function () {
         console.log("Sync complete");
+        $scope.umsgs_ui = mtfctl.umsgs_ui;
+        $scope.nmsgs_ui = mtfctl.nmsgs_ui;
+        $scope.usegments_ui = mtfctl.usegments_ui;
+        $scope.nsegments_ui = mtfctl.nsegments_ui;
+        $scope.usets_ui = mtfctl.usets_ui;
+        $scope.nsets_ui = mtfctl.nsets_ui;
+        $scope.ufields_ui = mtfctl.ufields_ui;
+        $scope.nfields_ui = mtfctl.nfields_ui;
     });
     mtfctl.valuefilter = function (mlist, txt, field) {
         var result = {
@@ -71,9 +82,9 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     };
     mtfctl.selectNode = function (list, node, k) {
         mtfctl.selected = k;
-        $scope.listSelected = mtfctl[list];
+        $scope.listname = list;
         $scope[mtfctl.viewTypes[list]] = node;
-        mtfctl.view = mtfctl.views[mtfctl.viewTypes[list]];
+        mtfctl.view = mtfctl.views[list];
         console.log($scope[mtfctl.viewTypes[list]]);
     };
     //
@@ -81,6 +92,7 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
         return mtfctl.selected === k;
     };
 });
+//
 mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
     var fldctl = this;
     fldctl.fldHasType = false;
@@ -133,46 +145,72 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
             }
         }
     }
-    fldctl.fldRefs = function (sequence) {
-        console.log (sequence);
-        if (typeof sequence !== 'undefined') {
+    fldctl.fldRefs = function (objseq) {
+        if (typeof objseq !== 'undefined') {
             var flds =[];
-            var k =(Object.keys(sequence));
-            for (i = 0; i < k.length; i++) {
-                flds.push($scope.listSelected[k[i]]);
+            if ($scope.listname === 'ufields_ui') {
+                fldctl.flist = $scope.ufields_ui;
+            } else if ($scope.listname === 'nfields_ui') {
+                fldctl.flist = $scope.nfields_ui;
+            } else if ($scope.listname === 'usets_ui') {
+                fldctl.flist = $scope.ufields_ui;
+            } else if ($scope.listname === 'nsets_ui') {
+                fldctl.flist = $scope.nfields_ui;
             }
+            var k =(Object.keys(objseq));
+            for (i = 0; i < k.length; i++) {
+                if (typeof objseq[k[i]] !== 'undefined') {
+                    if (typeof objseq[k[i]].Info !== 'undefined') {
+                        var f = objseq[k[i]];
+                        f.position = i;
+                        flds.push(f);
+                    } else if (objseq[k[i]]._ref === k[i]) {
+                        var fr = fldctl.flist[k[i]];
+                        fr.position = i;
+                        flds.push(fr);
+                    }
+                }
+            }
+            console.log(flds);
             return (flds);
         }
     };
 });
+//
 mtfApp.controller('setCtl', function ($scope, dbService, uiService) {
     var setctl = this;
-    setctl.fldInfoList = function (field) {
-        if (typeof field === 'undefined') {
-            return false;
-        } else if (typeof field.Info === 'undefined') {
-            return false;
-        } else if (typeof field.Info[0] !== 'undefined') {
-            return true;
-        } else {
-            return false;
-        }
-    };
-    setctl.setRefs = function (sequence) {
-        if (typeof sequence !== 'undefined') {
+    setctl.setRefs = function (objseq) {
+        //console.log(objseq);
+        if (typeof objseq !== 'undefined') {
             var nodes =[];
-            var k =(Object.keys(sequence));
-            //console.log(k);
+            setctl.slist =[];
+            setctl.flist =[];
+            if ($scope.listname === 'usets_ui') {
+                setctl.slist = $scope.usets_ui;
+                setctl.flist = $scope.ufields_ui;
+            } else if ($scope.listname === 'nsets_ui') {
+                setctl.slist = $scope.nsets_ui;
+                setctl.flist = $scope.nfields_ui;
+            }
+            var k =(Object.keys(objseq));
             for (i = 0; i < k.length; i++) {
-                if (k[i].substring(k[i].length-3)==='Set') {
-                    nodes.push($scope.listSelected[k[i]]);
+                if (k[i].substring(k[i].length -3) === 'Set') {
+                    var s = setctl.slist[k[i]];
+                    s._minOccurs = objseq[k[i]]._minOccurs;
+                    s._maxOccurs = objseq[k[i]]._maxOccurs;
+                    s._nillable = objseq[k[i]]._nillable;
+                    s._minLength = objseq[k[i]]._minLength;
+                    s._maxLength = objseq[k[i]]._maxLength;
+                    s.position = i;
+                    nodes.push(s);
                 }
             }
-            //console.log(nodes);
+            console.log(nodes);
             return (nodes);
         }
     };
 });
+//
 mtfApp.controller('menuCtrl', function ($scope) {
     //initiate an array to hold all active tabs
     $scope.activeTabs =[];

@@ -101,7 +101,7 @@ var syncLZFile = function (xmlpath, lzpath) {
             fs.stat(lzpath, function (jerr, jstats) {
                 if (jerr === null) {
                     var jd = new Date(jstats.mtime).getTime();
-                    if (xd !=jd) {
+                    if (xd >jd) {
                         console.log("Update: " + lzpath);
                         compressXML(xmlpath, lzpath);
                     }
