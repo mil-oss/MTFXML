@@ -30,19 +30,22 @@
     <div data-ng-show="field.Document">
         <div data-ng-if="isArray(field.Document)">
             <b>Documents:</b>
-            <div data-ng-repeat="(k,v) in field.Document track by $index">
-                <div class="example">{{v}}</div>
-            </div>
+            <span data-ng-repeat="(k,v) in field.Document track by $index">
+                <span class="example">{{v}}, </span>
+                <span data-ng-repeat-end="true">{{v}}</span>
+            </span>
         </div>
-        <div data-ng-if="isArray(field.Document)===false">
+        <div data-ng-if="isArray(field.Document) === false">
             <b>Document:</b>
-            <span class="example">{{set.Document}}</span>
+            <span class="example">{{field.Document}}</span>
         </div>
     </div>
-    <div data-ng-show="k==='Sequence'">
-        <span><b>SEQUENCE</b></span>
+    <div data-ng-show="k === 'Sequence'">
+        <span>
+            <b>SEQUENCE</b>
+        </span>
     </div>
-    <span data-ng-show="fldctl.fldHasType"><b>Type: </b>{{fldctl.fldGetType(field._base,field.Sequence,field.choice)}}</span>
+    <span data-ng-show="fldctl.fldHasType"><b>Type: </b>{{fldctl.fldGetType(field._base, field.Sequence, field.choice)}}</span>
     <span data-ng-show="field._minLength"><b>Min Length: </b>{{field._minLength}}</span>
     <span data-ng-show="field._maxLength"><b>Max Length: </b>{{field._maxLength}}</span>
     <span data-ng-show="field._length"><b>Length: </b>{{field._length}}</span>
@@ -55,7 +58,7 @@
     <span data-ng-show="field._nillable"><b>Nillable: </b>{{field._nillable}}</span>
     <div data-ng-show="field._regex"><b>Regex: </b>{{field._regex}}</div>
     <div data-ng-show="field.choice">
-        <div data-ng-show="fldctl.fldSingleEnum(field.Sequence,field.choice)">
+        <div data-ng-show="fldctl.fldSingleEnum(field.Sequence, field.choice)">
             <div>
                 <b>Value:</b>
             </div>
@@ -64,7 +67,7 @@
                 <span class="enumdesc">{{field.choice.enumeration._dataItem}}</span>
             </div>
         </div>
-        <div data-ng-if="fldctl.fldEnums(field.Sequence,field.choice)">
+        <div data-ng-if="fldctl.fldEnums(field.Sequence, field.choice)">
             <div class="desc">
                 <div>
                     <b>Values:</b>
@@ -82,24 +85,28 @@
     </div>
     <div data-ng-show="field.Choice">
         <div class="choicediv">
-            <span><b>CHOICE</b></span>
+            <span>
+                <b>CHOICE</b>
+            </span>
             <div data-ng-repeat="(k,field) in fldctl.fldRefs(field.Choice) | orderBy:field.position">
-                <div data-ng-include="mtfctl.fieldView"/>
+                <div data-ng-include="mtfctl.fieldView"></div>
             </div>
         </div>
     </div>
     <div data-ng-show="field.Sequence">
         <div class="sequencediv">
-            <span><b>SEQUENCE</b></span>
-            <div data-ng-repeat="(k,field) in fldctl.fldRefs(field.Sequence) | orderBy:field.position">
-                <div data-ng-include="mtfctl.fieldView"/>
+            <span>
+                <b>SEQUENCE</b>
+            </span>
+            <div data-ng-repeat="(k,field) in fldctl.fldRefs(field.Sequence)| orderBy:field.position">
+                <div data-ng-include="mtfctl.fieldView"></div>
             </div>
         </div>
     </div>
-    <div data-ng-show="k==='Sequence'">
+    <div data-ng-if="k === 'Sequence'">
         <div class="sequencediv">
             <div data-ng-repeat="(k,field) in fldctl.fldRefs(field) | orderBy:field.position">
-                <div data-ng-include="mtfctl.fieldView"/>
+                <div data-ng-include="mtfctl.fieldView"></div>
             </div>
         </div>
     </div>

@@ -97,7 +97,9 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
     var fldctl = this;
     fldctl.fldHasType = false;
     fldctl.fldGetType = function (base, seq, choice) {
-        if (typeof seq != 'undefined' | typeof choice != 'undefined') {
+        if (typeof seq != 'undefined') {
+            fldctl.fldHasType = false;
+        } else if (typeof choice != 'undefined') {
             fldctl.fldHasType = false;
         } else if (base === 'FieldIntegerBaseType') {
             fldctl.fldHasType = true;
@@ -148,6 +150,7 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
     fldctl.fldRefs = function (objseq) {
         if (typeof objseq !== 'undefined') {
             var flds =[];
+            var fldref =[];
             if ($scope.listname === 'ufields_ui') {
                 fldctl.flist = $scope.ufields_ui;
             } else if ($scope.listname === 'nfields_ui') {
@@ -160,18 +163,31 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
             var k =(Object.keys(objseq));
             for (i = 0; i < k.length; i++) {
                 if (typeof objseq[k[i]] !== 'undefined') {
-                    if (typeof objseq[k[i]].Info !== 'undefined') {
-                        var f = objseq[k[i]];
-                        f.position = i;
-                        flds.push(f);
-                    } else if (objseq[k[i]]._ref === k[i]) {
-                        var fr = fldctl.flist[k[i]];
-                        fr.position = i;
-                        flds.push(fr);
+                    if (typeof fldctl.flist[k[i]] !== 'undefined') {
+                        fldref = fldctl.flist[k[i]];
+                        if(fldref._name==='WidthOfAccessFeetYardsOrMetres'){
+                            console.log(fldref);
+                        }
+                        fldref.position = i;
+                        if (typeof objseq[k[i]].Info !== 'undefined') {
+                            fldref.Info._explanation = objseq[k[i]].Info._explanation;
+                            fldref.Info._usage = objseq[k[i]].Info._usage;
+                            fldref.Info._remark = objseq[k[i]].Info._remark;
+                            fldref.Info._version = objseq[k[i]].Info._version;
+                            fldref.Info._definition = objseq[k[i]].Info._definition;
+                            fldref.Info._identifier = objseq[k[i]].Info._identifier;
+                            flds.push(fldref);
+                        } else {
+                            flds.push(fldref);
+                        }
+                    } else if (typeof objseq[k[i]].Info !== 'undefined') {
+                        fldref = objseq[k[i]];
+                        fldref.position = i;
+                        flds.push(fldref);
                     }
                 }
             }
-            console.log(flds);
+            //console.log(flds);
             return (flds);
         }
     };
@@ -194,6 +210,7 @@ mtfApp.controller('setCtl', function ($scope, dbService, uiService) {
             }
             var k =(Object.keys(objseq));
             for (i = 0; i < k.length; i++) {
+                //console.log(k[i]);
                 if (k[i].substring(k[i].length -3) === 'Set') {
                     var s = setctl.slist[k[i]];
                     s._minOccurs = objseq[k[i]]._minOccurs;

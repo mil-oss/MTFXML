@@ -159,6 +159,6 @@ body{
 .sequencediv{
     float: left;
     border: thin solid orange;
-    padding: 1px;
+    padding: 2px;
     width: 99%;
 }

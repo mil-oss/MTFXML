@@ -27,13 +27,13 @@
     <span data-ng-show="set._maxLength"><b>Max Length: </b>{{set._maxLength}}</span>
     <div class="desc">
         <div data-ng-repeat="(k,set) in setctl.setRefs(set)">
-            <div data-ng-include="mtfctl.setView"/>
+            <div data-ng-include="mtfctl.setView"></div>
         </div>
     </div>
     <div data-ng-show="set.Sequence" class="sequencediv" data-ng-controller="fldCtl as fldctl">
         <span><b>SEQUENCE</b></span>
-        <div data-ng-repeat="(k,field) in set.Sequence | orderBy:field.position">
-            <div data-ng-include="mtfctl.fieldView"/>
+        <div data-ng-repeat="(k,field) in fldctl.fldRefs(set.Sequence) | orderBy:field.position">
+            <div data-ng-include="mtfctl.fieldView"></div>
         </div>
     </div>
 </div>

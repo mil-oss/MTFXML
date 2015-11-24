@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
+    version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:variable name="USMTF_SETS" select="document('../xml/xsd/USMTF/GoE_sets.xsd')"/>
     <xsl:variable name="NATO_SETS" select="document('../xml/xsd/NATOMTF/natomtf_goe_sets.xsd')"/>
@@ -113,13 +114,6 @@
             <xsl:apply-templates select="*"/>
         </xsl:element>
     </xsl:template>
-    <xsl:template match="xsd:sequence/xsd:element[@name = 'FreeText'][not(xsd:annotation/xsd:appinfo/*:Field)]">
-        <FreeText minOccurs="1" maxOccurs="1" nillable="true"
-            doc="The free text information expressed in natural language. The field format length is artificial symbology representing an unrestricted length field, i.e., there is no limitation on the number of characters to be entered in the field."
-            base="field:FreeTextType">
-            <Info positionName="FREE TEXT" version="B.1.01.01"/>
-        </FreeText>
-    </xsl:template>
     <xsl:template match="xsd:sequence/xsd:element[@name][@type][not(starts-with(@type, 'field:'))]">
         <xsl:element name="{@name}">
             <xsl:attribute name="type">
@@ -156,6 +150,29 @@
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*:Field" mode="info"/>
             <xsl:apply-templates select="*"/>
+        </xsl:element>
+    </xsl:template>
+    <!--FreeText in USMTF Sets has no annotations-->
+    <xsl:template match="xsd:element[@name = 'FreeText'][not(xsd:annotation/xsd:appinfo/*:Field)]">
+        <xsl:element name="FreeTextField">
+            <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:attribute name="regex">
+                <xsl:text>[A-Z0-9\.,\(\)\?\-!@#$%\^&amp;\*=_\+\[\]\{\}\\&#34;';&gt;&lt;~\|a-z\t\n]|([:A-Z0-9\.,\(\)\?\-!@#$%\^&amp;\*=_\+\[\]\{\}\\&#34;';&gt;&lt;~\|a-z\t\n][/:A-Z0-9 \.,\(\)\?\-!@#$%\^&amp;\*=_\+\[\]\{\}\\&#34;';&gt;&lt;~`\|a-z\t\n]*[A-Z0-9\.,\(\)\?\-!@#$%\^&amp;\*=_\+\[\]\{\}\\&#34;';&gt;&lt;~\|a-z\t\n])</xsl:text>
+            </xsl:attribute>
+            <xsl:attribute name="base">
+                <xsl:text>field:FreeTextFieldType</xsl:text>
+            </xsl:attribute>
+            <xsl:element name="Info">
+                <xsl:attribute name="positionName">
+                    <xsl:text>FREE TEXT</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="explanation">
+                    <xsl:text>The free text information expressed in natural language. The field format length is artificial symbology representing an unrestricted length field, i.e., there is no limitation on the number of characters to be entered in the field.</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="version">
+                    <xsl:text>B.1.01.01</xsl:text>
+                </xsl:attribute>
+            </xsl:element>
         </xsl:element>
     </xsl:template>
     <xsl:template match="xsd:minLength | xsd:maxLength | xsd:length | xsd:minInclusive | xsd:maxInclusive" mode="attr">
