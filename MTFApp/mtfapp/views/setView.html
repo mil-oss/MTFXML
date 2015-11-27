@@ -1,39 +1,31 @@
-<div class="set" data-ng-controller="setCtl as setctl">
+<div class="set" data-ng-controller="fldCtl as fldctl">
     <div class="title">
-        <span data-ng-show="set.Info._name">
-            <b>{{set.Info._name}}</b>
+        <span data-ng-show="node.Info._name">
+            <b>{{node.Info._name}}</b>
         </span>
-        <span data-ng-show="set.Info._id">
-            <b> ({{set.Info._id}})</b>
+        <span data-ng-show="node.Info._id">
+            <b> ({{node.Info._id}})</b>
         </span>
     </div>
-    <div data-ng-show="set.Info._remark"><b>Remark: </b>{{set.Info._remark}} </div>
-    <div data-ng-show="set.Info._version"><b>Version: </b>{{set.Info._version}} </div>
-    <div data-ng-show="set.Info._sponsor"><b>Sponsor: </b>{{set.Info._sponsor}} </div>
-    <div data-ng-if="isArray(set.Info.Example)">
+    <div data-ng-show="node.Info._remark"><b>Remark: </b>{{node.Info._remark}} </div>
+    <div data-ng-show="node.Info._version"><b>Version: </b>{{node.Info._version}} </div>
+    <div data-ng-show="node.Info._sponsor"><b>Sponsor: </b>{{node.Info._sponsor}} </div>
+    <div data-ng-if="isArray(node.Info.Example)">
         <b>Examples:</b>
         <div data-ng-repeat="(k,v) in set.Info.Example track by $index">
             <div class="example">{{v}}</div>
         </div>
     </div>
-    <div data-ng-if="isArray(set.Info.Example)===false">
+    <div data-ng-if="isArray(node.Info.Example)===false">
         <b>Example:</b>
-        <span class="example">{{set.Info.Example}}</span>
+        <span class="example">{{node.Info.Example}}</span>
     </div>
-    <span data-ng-show="set._minOccurs"><b>Min Occurs: </b>{{set._minOccurs}}</span>
-    <span data-ng-show="set._maxOccurs"><b>Max Occurs: </b>{{set._maxOccurs}}</span>
-    <span data-ng-show="set._nillable"><b>Nillable: </b>{{set._nillable}}</span>
-    <span data-ng-show="set._minLength"><b>Min Length: </b>{{set._minLength}}</span>
-    <span data-ng-show="set._maxLength"><b>Max Length: </b>{{set._maxLength}}</span>
-    <div class="desc">
-        <div data-ng-repeat="(k,set) in setctl.setRefs(set)">
-            <div data-ng-include="mtfctl.setView"></div>
-        </div>
-    </div>
-    <div data-ng-show="set.Sequence" class="sequencediv" data-ng-controller="fldCtl as fldctl">
-        <span><b>SEQUENCE</b></span>
-        <div data-ng-repeat="(k,field) in fldctl.fldRefs(set.Sequence) | orderBy:field.position">
-            <div data-ng-include="mtfctl.fieldView"></div>
-        </div>
+    <span data-ng-show="node._minOccurs"><b>Min Occurs: </b>{{node._minOccurs}}</span>
+    <span data-ng-show="node._maxOccurs"><b>Max Occurs: </b>{{node._maxOccurs}}</span>
+    <span data-ng-show="node._nillable"><b>Nillable: </b>{{node._nillable}}</span>
+    <span data-ng-show="node._minLength"><b>Min Length: </b>{{node._minLength}}</span>
+    <span data-ng-show="node._maxLength"><b>Max Length: </b>{{node._maxLength}}</span>
+    <div data-ng-repeat="(k,node) in node | orderBy:node._position">
+        <div ng-include="mtfctl.fieldview"/>
     </div>
 </div>

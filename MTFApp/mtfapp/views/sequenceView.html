@@ -1,5 +1,21 @@
-<div class="msgseq">
-    <div data-ng-repeat="field in sequence">
-        <div ng-include="mtfctl.fieldview"/>
+<div class="sequencediv" data-ng-controller="fldCtl as fldctl">
+    <div class="usage">
+        <div class="occur">
+            <b>Min Occurrence: </b>{{node._minOccurs}}</div>
+        <div class="repeat">
+            <b>Max Occurrence: </b>{{node._maxOccurs}}</div>
     </div>
+    <div data-ng-repeat="(k,node) in fldctl.fldRefs(node.Sequence) | orderBy:node.position">
+        <div data-ng-include="mtfctl.fieldView"></div>
+    </div>
+   <!-- <div data-ng-repeat="(key,node) in fldctl.fldRefs(node) | orderBy:node._position">
+        <div data-ng-If="key === 'Choice'">
+            <div ng-include="mtfctl.choiceview"/>
+        </div>
+        <div data-ng-If="key.indexOf('Set')>0">
+            <div data-ng-repeat="(k,node) in node | orderBy:node._position">
+                <div ng-include="mtfctl.setview"/>
+            </div>
+        </div>
+    </div>-->
 </div>
