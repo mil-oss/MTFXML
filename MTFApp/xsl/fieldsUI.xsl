@@ -27,6 +27,15 @@
                 <xsl:sort select="name()"/>
                 <xsl:copy-of select="."/>
             </xsl:for-each>
+            <FreeText>
+                <xsl:attribute name="name">
+                    <xsl:text>FREE TEXT</xsl:text>
+                </xsl:attribute>
+                <xsl:attribute name="regex">
+                    <xsl:text>[A-Z0-9\.,\(\)\?\-!@#$%\^&amp;\*=_\+\[\]\{\}\\&#34;';&gt;&lt;~\|a-z\t\n]|([:A-Z0-9\.,\(\)\?\-!@#$%\^&amp;\*=_\+\[\]\{\}\\&#34;';&gt;&lt;~\|a-z\t\n][/:A-Z0-9 \.,\(\)\?\-!@#$%\^&amp;\*=_\+\[\]\{\}\\&#34;';&gt;&lt;~`\|a-z\t\n]*[A-Z0-9\.,\(\)\?\-!@#$%\^&amp;\*=_\+\[\]\{\}\\&#34;';&gt;&lt;~\|a-z\t\n])+</xsl:text>
+                </xsl:attribute>
+                <Info name='FREE TEXT'/>
+            </FreeText>
         </xsl:element>
     </xsl:template>
     <xsl:template match="/">

@@ -85,7 +85,7 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     mtfctl.selectNode = function (list, node, k) {
         mtfctl.selected = k;
         $scope.listname = list;
-        $scope['node'] = node;
+        $scope[ 'node'] = node;
         mtfctl.view = mtfctl.views[list];
         console.log($scope.node);
     };
@@ -158,6 +158,37 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
             return $scope.nfields_ui;
         }
     };
+    fldctl.getSetList = function () {
+        if ($scope.listname === 'usets_ui') {
+            return $scope.usets_ui;
+        } else if ($scope.listname === 'nsets_ui') {
+            return $scope.nsets_ui;
+        }
+    };
+    fldctl.setRefs = function (objseq) {
+        if (typeof objseq !== 'undefined') {
+            var flds =[];
+            var fldrefs =[];
+            var flds =[];
+            var k =(Object.keys(objseq));
+            var fnode =[];
+            var slist = fldctl.getSetList();
+            for (i = 0; i < k.length; i++) {
+                if (k[i].substring(k[i].length -3) === 'Set') {
+                    //console.log(k[i]);
+                    if (typeof objseq[k[i]] !== 'undefined') {
+                        fnode[k[i]] = objseq[k[i]];
+                         var f =  fldctl.getFieldDef(slist, k[i], fnode[k[i]]);
+                        fldctl.combineNodes(f, fnode[k[i]], i);
+                        f.position=i;
+                        flds.push(f);
+                    }
+                }
+            }
+            //console.log(flds);
+            return (flds);
+        }
+    };
     fldctl.fldRefs = function (objseq) {
         if (typeof objseq !== 'undefined') {
             var flds =[];
@@ -168,36 +199,14 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
             var flist = fldctl.getFieldList();
             for (i = 0; i < k.length; i++) {
                 if (typeof objseq[k[i]] !== 'undefined') {
-                    if (typeof flist[k[i]] !== 'undefined') {
-                        fnode[k[i]] = objseq[k[i]];
-                        fldrefs[k[i]] = fldctl.getFieldDef(flist, k[i], fnode[k[i]]);
-                        if (typeof fldrefs[k[i]] !== 'undefined') {
-                            if (typeof fldrefs[k[i]].Info !== 'undefined' && typeof fnode[k[i]].Info !== 'undefined') {
-                                //console.log(fnode[k[i]].Info._positionName);
-                                fldrefs[k[i]].Info._positionName = fnode[k[i]].Info._positionName;
-                                fldrefs[k[i]].Info._definition = fnode[k[i]].Info._definition;
-                                fldrefs[k[i]].Info._identifier = fnode[k[i]].Info._identifier;
-                                fldrefs[k[i]].Info._remark = fnode[k[i]].Info._remark;
-                                fldrefs[k[i]].Info._version = fnode[k[i]].Info._version;
-                            }
-                            fldrefs[k[i]]._minOccurs = fnode[k[i]]._minOccurs;
-                            fldrefs[k[i]]._maxOccurs = fnode[k[i]]._maxOccurs;
-                            fldrefs[k[i]]._nillable = fnode[k[i]]._nillable;
-                            fldrefs[k[i]].position = i;
-                            //flds.push(fldrefs[k[i]]);
-                        } else {
-                            fldrefs[k[i]] = fnode[k[i]];
-                            fldrefs[k[i]].position = i;
-                            fldrefs[k[i]]._minOccurs = fnode[k[i]]._minOccurs;
-                            fldrefs[k[i]]._maxOccurs = fnode[k[i]]._maxOccurs;
-                            fldrefs[k[i]]._nillable = fnode[k[i]]._nillable;
-                            //flds.push(fldrefs[k[i]]);
-                        }
-                    }
+                    fnode[k[i]] = objseq[k[i]];
+                    var f = fldctl.getFieldDef(flist, k[i], fnode[k[i]]);
+                    fldctl.combineNodes(f , fnode[k[i]], i);
+                    flds.push(f);
                 }
             }
             //console.log(flds);
-            return (fldrefs);
+            return flds;
         }
     };
     fldctl.getFieldDef = function (flist, ky, fnode) {
@@ -206,21 +215,46 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
         } else if (typeof fnode._ref !== 'undefined') {
             if (typeof flist[fnode._ref] !== 'undefined') {
                 return flist[fnode._ref];
-            } else if (flist[fnode._ref.substring(6)] !== 'undefined') {
+            } else if (typeof flist[fnode._ref.substring(6)] !== 'undefined') {
                 return flist[fnode._ref.substring(6)];
             }
         } else if (typeof fnode._type !== 'undefined') {
             if (typeof flist[fnode._type.substring(0, fnode._type.length -4)] !== 'undefined') {
                 return flist[fnode._type.substring(0, fnode._type.length -4)];
-            } else if (flist[fnode._type.substring(6, fnode._type.length -4)] !== 'undefined') {
+            } else if (typeof flist[fnode._type.substring(6, fnode._type.length -4)] !== 'undefined') {
                 return flist[fnode._type.substring(6, fnode._type.length -4)];
             }
         } else if (typeof fnode._base !== 'undefined') {
             if (typeof flist[fnode._base.substring(0, fnode._base.length -4)] !== 'undefined') {
                 return angular.copy(flist[fnode._base.substring(0, fnode._base.length -4)]);
-            } else if (flist[fnode._base.substring(6, fnode._base.length -4)] !== 'undefined') {
+            } else if (typeof flist[fnode._base.substring(6, fnode._base.length -4)] !== 'undefined') {
                 return angular.copy(flist[fnode._base.substring(6, fnode._base.length -4)]);
             }
+        }else{
+            return fnode;
+        }
+    }
+    fldctl.combineNodes = function (fref, fnode, pos) {
+        if (typeof fref !== 'undefined') {
+            if (typeof fref.Info !== 'undefined' && typeof fnode.Info !== 'undefined') {
+                fref.Info._name = fnode.Info._name;
+                fref.Info._positionName = fnode.Info._positionName;
+                fref.Info._definition = fnode.Info._definition;
+                fref.Info._identifier = fnode.Info._identifier;
+                fref.Info._remark = fnode.Info._remark;
+                fref.Info._usage = fnode.Info._usage;
+                fref.Info._version = fnode.Info._version;
+            }
+            fref._minOccurs = fnode._minOccurs;
+            fref._maxOccurs = fnode._maxOccurs;
+            fref._nillable = fnode._nillable;
+            fref.position = pos;
+        } else {
+            fref = fnode;
+            fref._minOccurs = fnode._minOccurs;
+            fref._maxOccurs = fnode._maxOccurs;
+            fref._nillable = fnode._nillable;
+            fref.position = pos;
         }
     }
 });
