@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+/* 
+ * Copyright (C) 2015 Major James Neushul, USMC
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<html>
+    <head>
+        <title>MIL STD 6040 MESSAGE TEXT FORMAT</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link type="text/css" rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="css/accordion.css" />
+        <link type="text/css" rel="stylesheet" href="css/mtf.css" />
+    </head>
+    <body>
+        <div id="msgs" data-ng-app="mtfApp"> 
+            <div data-ng-controller="mtfCtl as mtfctl">
+                <div id="msgColhdr">
+                    <div class="title">MESSAGE TEXT FORMAT</div>
+                    <div class="input-group">
+                        <input type="text" class="form-control " data-ng-model="mtftxtsearch"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </span>
+                    </div>
+                </div>
+                <div id="msgCol" class="accordion__container noselect" data-ng-controller="tabCtrl">
+                    <!-- USMTF  -->
+                    <data-mtf-tab tabinfo="mtfctl.tabs.usmtf">
+                        <data-mtf-tab tabinfo="mtfctl.tabs.usmtfmsg"></data-mtf-tab>
+                        <data-mtf-tab tabinfo="mtfctl.tabs.usmtfseg"></data-mtf-tab>
+                        <data-mtf-tab tabinfo="mtfctl.tabs.usmtfset"></data-mtf-tab>
+                        <data-mtf-tab tabinfo="mtfctl.tabs.usmtffld"></data-mtf-tab>
+                    </data-mtf-tab>
+                    <!-- NATO MTF-->
+                    <data-mtf-tab tabinfo="mtfctl.tabs.natomtf">
+                        <data-mtf-tab tabinfo="mtfctl.tabs.natomtfmsg"></data-mtf-tab>
+                        <data-mtf-tab tabinfo="mtfctl.tabs.natomtfseg"></data-mtf-tab>
+                        <data-mtf-tab tabinfo="mtfctl.tabs.natomtfset"></data-mtf-tab>
+                        <data-mtf-tab tabinfo="mtfctl.tabs.natomtffld"></data-mtf-tab>
+                    </data-mtf-tab>
+                </div>
+                <div id="infoCol">
+                    <div data-ng-include="mtfctl.view"></div>
+                </div>
+                <div id="editcol"> </div>
+            </div>
+            <script src="js/lib/Saxonce/Saxonce.nocache.js"></script>
+            <script src="js/lib/xml2json.min.js"></script>
+            <script src="node_modules/angular/angular.min.js"></script>
+            <script src="node_modules/angular-route/angular-route.min.js"></script>
+            <script src="node_modules/lz-string/libs/lz-string.min.js"></script>
+            <script src="node_modules/lz-string/libs/base64-string.js"></script>
+            <script src="js/lib/indexdb/angular-indexed-db.min.js"></script>
+            <script src="js/lib/jsonPath.js"></script>
+            <script src="js/mtfapp.js"></script>
+            <script src="js/services.js"></script>
+            <script src="js/directives.js"></script>
+            <script src="js/controllers.js"></script>
+    </body>
+</html>

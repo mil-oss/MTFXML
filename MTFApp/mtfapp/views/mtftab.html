@@ -1,0 +1,7 @@
+
+<div class="accordion__tab">
+    <div class="accordion__tab-title_sm" data-ng-click="openTab(tabinfo.tabid)">{{tabinfo.tabtitle}}</div>
+    <div class="accordion__tab-content" data-ng-show="isOpenTab(tabinfo.tabid)">
+        <div ng-transclude></div>
+    </div>
+</div>

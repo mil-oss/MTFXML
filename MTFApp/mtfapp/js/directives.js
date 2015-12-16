@@ -7,43 +7,58 @@ mtfApp.directive('field', function () {
     flddir.replace = 'true';
     flddir.scope = {
         field: "=field"
-    }
-    flddir.transclude=true;
+    };
+    flddir.transclude = true;
     flddir.templateUrl = 'views/field.html';
-    flddir.controller = 'viewCtl';
-    flddir.controllerAs= 'vwctl';
-    flddir.bindToController= true;
+    flddir.controller = 'mtfCtl';
+    flddir.controllerAs = 'mtfctl';
+    flddir.bindToController = true;
     return flddir;
 });
 
 mtfApp.directive('sequence', function () {
-    var flddir = {
+    var seqdir = {
     };
-    flddir.restrict = 'E';
-    flddir.replace = 'true';
-    flddir.scope = {
-        field: "=seq"
-    }
-    flddir.transclude=true;
-    flddir.templateUrl = 'views/sequence.html';
-    flddir.controller = 'viewCtl';
-    flddir.controllerAs= 'vwctl';
-    flddir.bindToController= true;
-    return flddir;
+    seqdir.restrict = 'E';
+    seqdir.replace = 'true';
+    seqdir.scope = {
+        seq: "=seq"
+    };
+    seqdir.transclude = true;
+    seqdir.templateUrl = 'views/sequence.html';
+    seqdir.controller = 'mtfCtl';
+    seqdir.controllerAs = 'mtfctl';
+    seqdir.bindToController = true;
+    return seqdir;
 });
 
 mtfApp.directive('choice', function () {
-    var flddir = {
+    var chcdir = {
     };
-    flddir.restrict = 'E';
-    flddir.replace = 'true';
-    flddir.scope = {
-        field: "=chce"
-    }
-    flddir.transclude=true;
-    flddir.templateUrl = 'views/choice.html';
-    flddir.controller = 'viewCtl';
-    flddir.controllerAs= 'vwctl';
-    flddir.bindToController= true;
-    return flddir;
+    chcdir.restrict = 'E';
+    chcdir.replace = 'true';
+    chcdir.scope = {
+        choice: "=chce"
+    };
+    chcdir.transclude = true;
+    chcdir.templateUrl = 'views/choice.html';
+    chcdir.controller = 'mtfCtl';
+    chcdir.controllerAs = 'mtfctl';
+    chcdir.bindToController = true;
+    return chcdir;
+});
+
+mtfApp.directive('mtfTab', function () {
+    var mtftab = {
+    };
+    mtftab.restrict = 'E';
+    mtftab.replace = 'true';
+    mtftab.scope = {
+        tabinfo:'=tabinfo'
+    };
+    mtftab.transclude = true;
+    mtftab.templateUrl = 'views/mtftab.html';
+    mtftab.controller = 'tabCtrl';
+    mtftab.controllerAs = 'tabctl';
+    return mtftab;
 });

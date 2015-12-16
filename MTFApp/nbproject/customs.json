@@ -1,0 +1,11 @@
+{
+    "elements": {
+        "data-mtf-parenttab": {},
+        "data-mtf-tab": {}
+    },
+    "attributes": {
+        "tabid": {
+            "context": "div"
+        }
+    }
+}
