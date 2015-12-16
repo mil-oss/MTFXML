@@ -1,9 +1,22 @@
-<div class="field" data-ng-controller="fldCtl as fldctl"> 
-    <div class="title" data-ng-hide="node.Info._positionName">
-        <b><span>{{node.position+1}}</span>. {{node.Info._name}}</b>
+<div class="field"> 
+    {{node.name}}
+    <div data-ng-if="angular.isArray(node.Info)">
+        <div class="title">
+            <div data-ng-show="node.Info._name" data-ng-hide="node.Info._positionName"><span data-ng-show="node.child">{{node.position + 1}}. </span>
+                <b>{{node.Info._name}}</b>
+            </div>
+            <div data-ng-show="node.Info._positionName">
+                <b>{{node.Info._positionName}}</b>
+            </div>
+        </div>
     </div>
-    <div class="title" data-ng-if="node.Info._positionName">
-        <b><span data-ng-show="node.Info._positionName">{{node.position+1}}</span>. {{node.Info._positionName}}</b>
+    <div data-ng-if="angular.isArray(node.Info) === false">
+        <div class="title" data-ng-show="node.Info._name" data-ng-hide="node.Info._positionName">
+            <b><span data-ng-show="node.child">{{node.position + 1}}. </span>{{node.Info._name}}</b>
+        </div>
+        <div class="title" data-ng-show="node.Info._positionName">
+            <b><span data-ng-show="node.child">{{node.position + 1}}. </span>{{node.Info._positionName}}</b>
+        </div>
     </div>
     <div data-ng-show="fldctl.fldInfoList(node)">
         <div class="enumview">
@@ -16,7 +29,7 @@
     <div data-ng-show="node._doc">
         <div class="txt">{{node._doc}}</div>
     </div>
-    <div data-ng-hide="node._doc">
+    <div data-ng-show="node.Info._explanation" data-ng-hide="node._doc">
         <div class="txt">{{node.Info._explanation}}</div>
     </div>
     <div data-ng-show="node._usage">
@@ -28,14 +41,14 @@
     <div data-ng-show="node.Info._version">
         <b>Version: </b>{{node.Info._version}} </div>
     <div data-ng-show="node.Document">
-        <div data-ng-if="isArray(node.Document)">
+        <div data-ng-if="angular.isArray(node.Document)">
             <b>Documents:</b>
             <span data-ng-repeat="(k,v) in node.Document track by $index">
                 <span class="example">{{v}}, </span>
                 <span data-ng-repeat-end="true">{{v}}</span>
             </span>
         </div>
-        <div data-ng-if="isArray(node.Document) === false">
+        <div data-ng-if="angular.isArray(node.Document) === false">
             <b>Document:</b>
             <span class="example">{{node.Document}}</span>
         </div>
@@ -52,7 +65,7 @@
     <span data-ng-show="node._maxOccurs"><b>Max Occurs: </b>{{node._maxOccurs}}</span>
     <span data-ng-show="node._nillable"><b>Nillable: </b>{{node._nillable}}</span>
     <div data-ng-show="node._regex"><b>Regex: </b>{{node._regex}}</div>
-    <div data-ng-show="node.choice">
+    <div data-ng-if="node.choice">
         <div data-ng-show="fldctl.fldSingleEnum(node.Sequence, node.choice)">
             <div>
                 <b>Value:</b>
@@ -62,7 +75,7 @@
                 <span class="enumdesc">{{node.choice.enumeration._dataItem}}</span>
             </div>
         </div>
-        <div data-ng-if="fldctl.fldEnums(node.Sequence, node.choice)">
+        <div data-ng-show="fldctl.fldEnums(node.Sequence, node.choice)">
             <div class="desc">
                 <div>
                     <b>Values:</b>
@@ -77,18 +90,27 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div data-ng-if="node.Choice">
+    </div> 
+    <!--    <div data-ng-show="k === 'Choice'">
+            <div ng-include="mtfctl.choiceView"></div>
+        </div>
+        <div data-ng-show="k === 'Sequence'">
+            <div ng-include="mtfctl.sequenceView"></div>
+        </div>-->
+    <div data-ng-show="node.Choice">
         <div ng-include="mtfctl.choiceView"></div>
     </div>
-    <div data-ng-if="node.Sequence">
-        <span>
-            <b>SEQUENCE</b>
-        </span>
-        <span data-ng-show="node._minInclusive"><b>Min: </b>{{node._minInclusive}}</span>
-        <span data-ng-show="node._maxInclusive"><b>Max: </b>{{node._maxInclusive}}</span>
-        <div data-ng-repeat="(k,node) in fldctl.fldRefs(node.Sequence) | orderBy:node.position">
-            <div ng-include="mtfctl.sequenceView"/>
+    <div data-ng-show="node.Sequence">
+        <div ng-include="mtfctl.sequenceView"></div>
+    </div>
+    <div data-ng-show="node.name === 'Sequence'">
+        <div data-ng-repeat="(k,node) in fldctl.fldRefs(node) | orderBy:node.position">
+            <div data-ng-include="mtfctl.fieldView"></div>
+        </div>
+    </div>
+    <div data-ng-show="node.name === 'Choice'">
+        <div data-ng-repeat="(k,node) in fldctl.fldRefs(node) | orderBy:node.position">
+            <div data-ng-include="mtfctl.fieldView"></div>
         </div>
     </div>
 </div>

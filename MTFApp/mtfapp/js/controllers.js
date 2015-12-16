@@ -2,6 +2,7 @@
 mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     var mtfctl = this;
     $scope.isArray = angular.isArray;
+    $scope.mtftxtsearch = 'ACC';
     mtfctl.view = '';
     mtfctl.viewTypes = {
         'umsgs_ui': 'message',
@@ -86,6 +87,8 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
         mtfctl.selected = k;
         $scope.listname = list;
         $scope[ 'node'] = node;
+        $scope[ 'node'].child=false;
+        $scope[ 'node'].Info._positionName=undefined;
         mtfctl.view = mtfctl.views[list];
         console.log($scope.node);
     };
@@ -97,6 +100,7 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
 //
 mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
     var fldctl = this;
+    fldctl.childnode = false;
     fldctl.fldGetType = function (f) {
         if (typeof f.seq != 'undefined') {
             return false;
@@ -167,20 +171,20 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
     };
     fldctl.setRefs = function (objseq) {
         if (typeof objseq !== 'undefined') {
-            var flds =[];
-            var fldrefs =[];
-            var flds =[];
-            var k =(Object.keys(objseq));
-            var fnode =[];
+            var flds = [];
+            var fldrefs = [];
+            var flds = [];
+            var k = (Object.keys(objseq));
+            var fnode = [];
             var slist = fldctl.getSetList();
             for (i = 0; i < k.length; i++) {
-                if (k[i].substring(k[i].length -3) === 'Set') {
+                if (k[i].substring(k[i].length - 3) === 'Set') {
                     //console.log(k[i]);
                     if (typeof objseq[k[i]] !== 'undefined') {
                         fnode[k[i]] = objseq[k[i]];
-                         var f =  fldctl.getFieldDef(slist, k[i], fnode[k[i]]);
+                        var f = fldctl.getFieldDef(slist, k[i], fnode[k[i]]);
                         fldctl.combineNodes(f, fnode[k[i]], i);
-                        f.position=i;
+                        f.position = i;
                         flds.push(f);
                     }
                 }
@@ -191,18 +195,24 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
     };
     fldctl.fldRefs = function (objseq) {
         if (typeof objseq !== 'undefined') {
-            var flds =[];
-            var fldrefs =[];
-            var flds =[];
-            var k =(Object.keys(objseq));
-            var fnode =[];
+            var flds = [];
+            var flds = [];
+            var k = (Object.keys(objseq));
+            var fnode = [];
             var flist = fldctl.getFieldList();
             for (i = 0; i < k.length; i++) {
                 if (typeof objseq[k[i]] !== 'undefined') {
                     fnode[k[i]] = objseq[k[i]];
                     var f = fldctl.getFieldDef(flist, k[i], fnode[k[i]]);
-                    fldctl.combineNodes(f , fnode[k[i]], i);
-                    flds.push(f);
+                    if (typeof f === 'undefined') {
+                        f = fnode[k[i]];
+                    }
+                    f.child = true;
+                    f.name = k[i];
+                    if (typeof f.name !=='undefined') {
+                        fldctl.combineNodes(f, fnode[k[i]], i);
+                        flds.push(f);
+                    }
                 }
             }
             //console.log(flds);
@@ -219,18 +229,18 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
                 return flist[fnode._ref.substring(6)];
             }
         } else if (typeof fnode._type !== 'undefined') {
-            if (typeof flist[fnode._type.substring(0, fnode._type.length -4)] !== 'undefined') {
-                return flist[fnode._type.substring(0, fnode._type.length -4)];
-            } else if (typeof flist[fnode._type.substring(6, fnode._type.length -4)] !== 'undefined') {
-                return flist[fnode._type.substring(6, fnode._type.length -4)];
+            if (typeof flist[fnode._type.substring(0, fnode._type.length - 4)] !== 'undefined') {
+                return flist[fnode._type.substring(0, fnode._type.length - 4)];
+            } else if (typeof flist[fnode._type.substring(6, fnode._type.length - 4)] !== 'undefined') {
+                return flist[fnode._type.substring(6, fnode._type.length - 4)];
             }
         } else if (typeof fnode._base !== 'undefined') {
-            if (typeof flist[fnode._base.substring(0, fnode._base.length -4)] !== 'undefined') {
-                return angular.copy(flist[fnode._base.substring(0, fnode._base.length -4)]);
-            } else if (typeof flist[fnode._base.substring(6, fnode._base.length -4)] !== 'undefined') {
-                return angular.copy(flist[fnode._base.substring(6, fnode._base.length -4)]);
+            if (typeof flist[fnode._base.substring(0, fnode._base.length - 4)] !== 'undefined') {
+                return angular.copy(flist[fnode._base.substring(0, fnode._base.length - 4)]);
+            } else if (typeof flist[fnode._base.substring(6, fnode._base.length - 4)] !== 'undefined') {
+                return angular.copy(flist[fnode._base.substring(6, fnode._base.length - 4)]);
             }
-        }else{
+        } else {
             return fnode;
         }
     }
@@ -259,9 +269,19 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
     }
 });
 //
+
+
+mtfApp.controller('viewCtl', function ($scope, dbService, uiService){
+   var vwctl = this;
+   
+    
+});
+
+//
+
 mtfApp.controller('menuCtrl', function ($scope) {
     //initiate an array to hold all active tabs
-    $scope.activeTabs =[];
+    $scope.activeTabs = [];
     //check if the tab is active
     $scope.isOpenTab = function (tab) {
         //check if this tab is already in the activeTabs array
@@ -287,7 +307,7 @@ mtfApp.controller('menuCtrl', function ($scope) {
     //function to leave a tab open if open or open if not
     $scope.leaveOpenTab = function (tab) {
         //check if tab is already open
-        if (! $scope.isOpenTab(tab)) {
+        if (!$scope.isOpenTab(tab)) {
             //if it is not open, add to array
             $scope.activeTabs.push(tab);
         }

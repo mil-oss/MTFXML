@@ -132,8 +132,6 @@ body{
 .txt{
     padding: 2px;
     word-wrap: break-word;
-    border-top: thin solid grey;
-    border-bottom: thin solid grey;
 }
 /*SETS*/
 .set{
@@ -141,7 +139,8 @@ body{
     width: 98%;
     height: 98%;
     padding: 3px;
-    margin: 1px;
+    margin: 2px;
+    margin-bottom: 4px;
     border: thin solid blue;
 }
 .example{

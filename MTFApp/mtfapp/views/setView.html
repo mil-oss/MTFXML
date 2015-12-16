@@ -1,4 +1,4 @@
-<div class="set" data-ng-controller="fldCtl as fldctl">
+<div class="set">
     <div class="title">
         <span data-ng-show="node.Info._name">
             <b>{{node.Info._name}}</b>
@@ -16,7 +16,7 @@
             <div class="example">{{v}}</div>
         </div>
     </div>
-    <div data-ng-if="isArray(node.Info.Example)===false">
+    <div data-ng-if="isArray(node.Info.Example) === false">
         <b>Example:</b>
         <span class="example">{{node.Info.Example}}</span>
     </div>
@@ -25,17 +25,19 @@
     <span data-ng-show="node._nillable"><b>Nillable: </b>{{node._nillable}}</span>
     <span data-ng-show="node._minLength"><b>Min Length: </b>{{node._minLength}}</span>
     <span data-ng-show="node._maxLength"><b>Max Length: </b>{{node._maxLength}}</span>
-    <div data-ng-repeat="node in fldctl.setRefs(node) | orderBy:node.position">
+    <div data-ng-repeat="(k,node) in fldctl.setRefs(node)| orderBy:node.position">
         <div ng-include="mtfctl.setView"></div>
     </div>
+        <div data-ng-if="k === 'Sequence'">
+        <div ng-include="mtfctl.sequenceView"></div>
+    </div>
+    <div data-ng-if="k === 'Choice'">
+        <div ng-include="mtfctl.choiceView"></div>
+    </div>
     <div data-ng-if="node.Sequence">
-        <span>
-            <b>SEQUENCE</b>
-        </span>
-        <span data-ng-show="node._minInclusive"><b>Min: </b>{{node._minInclusive}}</span>
-        <span data-ng-show="node._maxInclusive"><b>Max: </b>{{node._maxInclusive}}</span>
-        <div data-ng-repeat="(k,node) in fldctl.fldRefs(node.Sequence) | orderBy:node.position">
-            <div ng-include="mtfctl.sequenceView"/>
-        </div>
+        <div ng-include="mtfctl.sequenceView"></div>
+    </div>
+        <div data-ng-if="node.Choice">
+        <div ng-include="mtfctl.choiceView"></div>
     </div>
 </div>
