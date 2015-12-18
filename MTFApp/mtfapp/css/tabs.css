@@ -1,0 +1,39 @@
+
+.tab__container{
+    background:#FFF;
+    border:1px solid #ccc;
+    /* padding: 2px; */
+}
+.tab{
+    background:#FFF;
+    color:#000;
+    border-bottom:1px solid white;
+    font-size:10px;
+    font-weight:bold;
+}
+.tab-title{
+    background:#BEDFD5;
+    font-size: 12px;
+    padding:5px;
+    cursor:pointer;
+}
+.tab-title_sm{
+    background:#EAF2FE;
+    font-size: 10px;
+    padding:5px;
+    padding-left:10px;
+    cursor:pointer;
+}
+.srch-title{
+    background:#dddddd;
+    padding:5px;
+    color: white;
+    cursor:pointer;
+}
+.tab-content{
+    background:#FFF;
+    padding:2px;
+}
+.selected {
+    background-color: yellow;
+}

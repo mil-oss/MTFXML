@@ -1,64 +1,46 @@
 
 
-mtfApp.directive('field', function () {
-    var flddir = {
+mtfApp.directive('mtfField', function () {
+    return{
+        restrict: 'E',
+        replace: 'true',
+        scope: {
+            field: "=field"
+        },
+        transclude: true,
+        templateUrl: 'views/field.html',
+        controller: 'mtfCtl',
+        controllerAs: 'mtfctl'
     };
-    flddir.restrict = 'E';
-    flddir.replace = 'true';
-    flddir.scope = {
-        field: "=field"
-    };
-    flddir.transclude = true;
-    flddir.templateUrl = 'views/field.html';
-    flddir.controller = 'mtfCtl';
-    flddir.controllerAs = 'mtfctl';
-    flddir.bindToController = true;
-    return flddir;
 });
 
-mtfApp.directive('sequence', function () {
-    var seqdir = {
-    };
-    seqdir.restrict = 'E';
-    seqdir.replace = 'true';
-    seqdir.scope = {
-        seq: "=seq"
-    };
-    seqdir.transclude = true;
-    seqdir.templateUrl = 'views/sequence.html';
-    seqdir.controller = 'mtfCtl';
-    seqdir.controllerAs = 'mtfctl';
-    seqdir.bindToController = true;
-    return seqdir;
-});
 
 mtfApp.directive('choice', function () {
-    var chcdir = {
+    return{
+        restrict: 'E',
+        replace: 'true',
+        scope: {
+            choice: "=chce"
+        },
+        transclude: true,
+        templateUrl: 'views/choice.html',
+        controller: 'mtfCtl',
+        controllerAs: 'mtfctl',
+        bindToController: true
+
     };
-    chcdir.restrict = 'E';
-    chcdir.replace = 'true';
-    chcdir.scope = {
-        choice: "=chce"
-    };
-    chcdir.transclude = true;
-    chcdir.templateUrl = 'views/choice.html';
-    chcdir.controller = 'mtfCtl';
-    chcdir.controllerAs = 'mtfctl';
-    chcdir.bindToController = true;
-    return chcdir;
 });
 
 mtfApp.directive('mtfTab', function () {
-    var mtftab = {
+   return{
+        restrict: 'E',
+        replace: 'true',
+        scope: {
+            tabinfo: "=tabinfo"
+        },
+        transclude: true,
+        templateUrl: 'views/mtftab.html',
+        controller: 'tabCtrl',
+        controllerAs: 'tabctl'
     };
-    mtftab.restrict = 'E';
-    mtftab.replace = 'true';
-    mtftab.scope = {
-        tabinfo:'=tabinfo'
-    };
-    mtftab.transclude = true;
-    mtftab.templateUrl = 'views/mtftab.html';
-    mtftab.controller = 'tabCtrl';
-    mtftab.controllerAs = 'tabctl';
-    return mtftab;
 });

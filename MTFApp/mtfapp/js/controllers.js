@@ -265,15 +265,15 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
             fref._nillable = fnode._nillable;
             fref.position = pos;
         }
-    }
+    };
 });
 //
-
-
 mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     var mtfctl = this;
     $scope.mtftxtsearch = 'ACC';
     mtfctl.view = '';
+    mtfctl.sel = {};
+    mtfctl.isArray = angular.isArray;
     mtfctl.childnode = false;
     mtfctl.viewTypes = {
         'umsgs_ui': 'message',
@@ -286,14 +286,14 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
         'nfields_ui': 'field'
     };
     mtfctl.views = {
-        'ufields_ui': 'views/fieldView.html',
-        'nfields_ui': 'views/fieldView.html',
-        'usets_ui': 'views/setView.html',
-        'nsets_ui': 'views/setView.html',
-        'usegments_ui': 'views/segmentView.html',
-        'nsegments_ui': 'views/segmentView.html',
-        'umessages_ui': 'views/messageView.html',
-        'nmessages_ui': 'views/messageView.html'
+        'ufields_ui': 'field',
+        'nfields_ui': 'field',
+        'usets_ui': 'set',
+        'nsets_ui': 'set',
+        'usegments_ui': 'segment',
+        'nsegments_ui': 'segment',
+        'umessages_ui': 'message',
+        'nmessages_ui': 'message'
     };
     dbService.syncResources(mtfctl, uiService, function () {
         console.log("Sync complete");
@@ -351,9 +351,10 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     mtfctl.selectNode = function (list, node, k) {
         mtfctl.selected = k;
         $scope.listname = list;
-        $scope[ 'node'] = node;
-        $scope[ 'node'].child = false;
-        $scope[ 'node'].Info._positionName = undefined;
+        mtfctl.sel= node;
+        $scope['node'] = node;
+        $scope['node'].child = false;
+        $scope['node'].Info._positionName = undefined;
         mtfctl.view = mtfctl.views[list];
         console.log($scope.node);
     };
@@ -527,19 +528,20 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     };
     mtfctl.tabs={
         usmtf:{tabid:'usmtf',tabtitle:'USMTF'},
-        usmtfmsg:{tabid:'usmtfmsg',tabtitle:'Messages',data:mtfctl.umsgs_ui},
-        usmtfseg:{tabid:'usmtfseg',tabtitle:'Segments',data:mtfctl.usegments_ui},
-        usmtfset:{tabid:'usmtfset',tabtitle:'Sets',data:mtfctl.usets_ui},
-        usmtffld:{tabid:'usmtffld',tabtitle:'Fields',data:mtfctl.ufields_ui},
-        natomtf:{tabid:'natomtf',tabtitle:'NATOMTF'},
-        natomtfmsg:{tabid:'natomtfmsg',tabtitle:'Messages',data:mtfctl.nmsgs_ui},
-        natomtfseg:{tabid:'natomtfseg',tabtitle:'Segments',data:mtfctl.nsegments_ui},
-        natomtfset:{tabid:'natomtfset',tabtitle:'Sets',data:mtfctl.nsets_ui},
-        natomtffld:{tabid:'natomtffld',tabtitle:'Fields',data:mtfctl.nfields_ui},
+        usmtfmsg:{tabid:'usmtfmsg',tabtitle:'Messages'},
+        usmtfseg:{tabid:'usmtfseg',tabtitle:'Segments'},
+        usmtfset:{tabid:'usmtfset',tabtitle:'Sets'},
+        usmtffld:{tabid:'usmtffld',tabtitle:'Fields',listdata:mtfctl.ufields_ui},
+        natomtf:{tabid:'natomtf',tabtitle:'NATO MTF'},
+        natomtfmsg:{tabid:'natomtfmsg',tabtitle:'Messages'},
+        natomtfseg:{tabid:'natomtfseg',tabtitle:'Segments'},
+        natomtfset:{tabid:'natomtfset',tabtitle:'Sets'},
+        natomtffld:{tabid:'natomtffld',tabtitle:'Fields',listdata:mtfctl.nfields_ui}
     };
 });
 //
 mtfApp.controller('tabCtrl', function ($scope) {
+    var tabctl = this;
     //initiate an array to hold all active tabs
     $scope.activeTabs = [];
     //check if the tab is active
@@ -572,4 +574,11 @@ mtfApp.controller('tabCtrl', function ($scope) {
             $scope.activeTabs.push(tab);
         }
     };
+    tabctl.css=[];
+    tabctl.css['USMTF']='tab-title';
+    tabctl.css['NATO MTF']='tab-title';
+    tabctl.css['Messages']='tab-title_sm';
+    tabctl.css['Segments']='tab-title_sm';
+    tabctl.css['Sets']='tab-title_sm';
+    tabctl.css['Fields']='tab-title_sm';
 });
