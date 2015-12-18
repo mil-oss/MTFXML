@@ -5,15 +5,30 @@ mtfApp.directive('mtfField', function () {
         restrict: 'E',
         replace: 'true',
         scope: {
-            field: "=field"
+            field: "=field",
+            list: "=list"
         },
         transclude: true,
-        templateUrl: 'views/field.html',
-        controller: 'mtfCtl',
-        controllerAs: 'mtfctl'
+        templateUrl: 'templates/field.html',
+        controller: 'fldCtl',
+        controllerAs: 'fldctl'
     };
 });
 
+mtfApp.directive('mtfSet', function () {
+    return{
+        restrict: 'E',
+        replace: 'true',
+        scope: {
+            set: "=set",
+            list: "=list"
+        },
+        transclude: true,
+        templateUrl: 'templates/set.html',
+        controller: 'fldCtl',
+        controllerAs: 'fldctl'
+    };
+});
 
 mtfApp.directive('choice', function () {
     return{
@@ -32,7 +47,7 @@ mtfApp.directive('choice', function () {
 });
 
 mtfApp.directive('mtfTab', function () {
-   return{
+    return{
         restrict: 'E',
         replace: 'true',
         scope: {

@@ -1,7 +1,30 @@
 {
     "elements": {
+        "data-mtf-set": {
+            "attributes": {
+                "list": {}
+            }
+        },
         "data-mtf-parenttab": {},
-        "data-mtf-tab": {}
+        "data-mtf-tab": {
+            "attributes": {
+                "tabinfo": {},
+                "class": {}
+            }
+        },
+        "data-mtf-fieldref": {
+            "attributes": {
+                "field": {},
+                "list": {},
+                "ky": {}
+            }
+        },
+        "data-mtf-field": {
+            "attributes": {
+                "field": {},
+                "list": {}
+            }
+        }
     },
     "attributes": {
         "tabid": {

@@ -1,0 +1,53 @@
+<div class="set">
+    <div class="title">
+        <span data-ng-show="set.Info._name">
+            <b>{{set.Info._name}}</b>
+        </span>
+        <span data-ng-show="set.Info._id">
+            <b> ({{set.Info._id}})</b>
+        </span>
+    </div>
+    <div data-ng-show="set.Info._remark"><b>Remark: </b>{{set.Info._remark}} </div>
+    <div data-ng-show="set.Info._version"><b>Version: </b>{{set.Info._version}} </div>
+    <div data-ng-show="set.Info._sponsor"><b>Sponsor: </b>{{set.Info._sponsor}} </div>
+    <div data-ng-if="isArray(set.Info.Example)">
+        <b>Examples:</b>
+        <div data-ng-repeat="(k,v) in set.Info.Example track by $index">
+            <div class="example">{{v}}</div>
+        </div>
+    </div>
+    <div data-ng-if="isArray(set.Info.Example) === false">
+        <b>Example:</b>
+        <span class="example">{{set.Info.Example}}</span>
+    </div>
+    <span data-ng-show="set._minOccurs"><b>Min Occurs: </b>{{set._minOccurs}}</span>
+    <span data-ng-show="set._maxOccurs"><b>Max Occurs: </b>{{set._maxOccurs}}</span>
+    <span data-ng-show="set._nillable"><b>Nillable: </b>{{set._nillable}}</span>
+    <span data-ng-show="set._minLength"><b>Min Length: </b>{{set._minLength}}</span>
+    <span data-ng-show="set._maxLength"><b>Max Length: </b>{{set._maxLength}}</span>
+
+    <div data-ng-repeat="(k,set) in fldctl.setRefs(set,list)| orderBy:node.position">
+        <div ng-include="fldctl.setvw"></div>
+    </div>
+<!--    <div data-ng-if="k === 'Sequence'">
+        <div ng-include="mtfctl.sequenceView"></div>
+    </div>
+    <div data-ng-if="k === 'Choice'">
+        <div ng-include="mtfctl.choiceView"></div>
+    </div>-->
+    <div data-ng-if="node.Sequence">
+        <div class="sequencediv">
+    <span>
+        <b>SEQUENCE</b>
+    </span>
+    <span data-ng-show="node._minInclusive"><b>Min: </b>{{node._minInclusive}}</span>
+    <span data-ng-show="node._maxInclusive"><b>Max: </b>{{node._maxInclusive}}</span>
+    <div data-ng-repeat="(k,node) in fldctl.fldRefs(node) | orderBy:node.position">
+        <data-mtf-field field='node' list='vwctl.list'></data-mtf-field>
+    </div>
+</div>
+    </div>
+    <div data-ng-if="node.Choice">
+        <div ng-include="mtfctl.choiceView"></div>
+    </div>
+</div>

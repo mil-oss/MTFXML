@@ -23,109 +23,117 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link type="text/css" rel="stylesheet" href="js/lib/bootstrap/css/bootstrap.min.css" />
-        <link type="text/css" rel="stylesheet" href="css/tabs.css" />
+        <link type="text/css" rel="stylesheet" href="css/tab.css" />
         <link type="text/css" rel="stylesheet" href="css/mtf.css" />
     </head>
     <body>
         <div id="msgs" data-ng-app="mtfApp"> 
             <div data-ng-controller="mtfCtl as mtfctl">
-                <div id="msgColhdr">
-                    <div class="title">MESSAGE TEXT FORMAT</div>
-                    <div class="input-group">
-                        <input type="text" class="form-control " data-ng-model="mtftxtsearch"/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </span>
+                <div data-ng-controller="viewCtl as vwctl">
+                    <div id="msgColhdr">
+                        <div class="title">MESSAGE TEXT FORMAT</div>
+                        <div class="input-group">
+                            <input type="text" class="form-control " data-ng-model="mtftxtsearch"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </span>
+                        </div>
                     </div>
+                    <div id="msgCol" class="tab__container noselect" data-ng-controller="tabCtrl">
+                        <!-- USMTF  -->
+                        <data-mtf-tab class="tab" tabinfo="vwctl.tabs.usmtf">
+                            <data-mtf-tab tabinfo="vwctl.tabs.usmtfmsg">
+                                <div class="msglist">
+                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.umsgs_ui, mtftxtsearch, '_name')">
+                                        <div class="msglisting" data-ng-click="vwctl.selectNode('msg',mtfctl.umsgs_ui, mtfctl.umsgs_ui[k], k)"
+                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    </div>
+                                </div>
+                            </data-mtf-tab>
+                            <data-mtf-tab tabinfo="vwctl.tabs.usmtfseg">
+                                <div class="msglist">
+                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.usegments_ui, mtftxtsearch, '_name')">
+                                        <div class="msglisting" data-ng-click="vwctl.selectNode('seg',mtfctl.usegments_ui, mtfctl.usegments_ui[k], k)"
+                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    </div>
+                                </div>
+                            </data-mtf-tab>
+                            <data-mtf-tab tabinfo="vwctl.tabs.usmtfset">
+                                <div class="msglist">
+                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.usets_ui, mtftxtsearch, '_name')">
+                                        <div class="msglisting" data-ng-click="vwctl.selectNode('set',mtfctl.usets_ui, mtfctl.usets_ui[k], k)"
+                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    </div>
+                                </div>
+                            </data-mtf-tab>
+                            <data-mtf-tab tabinfo="vwctl.tabs.usmtffld">
+                                <div class="msglist">
+                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.ufields_ui, mtftxtsearch, '_name')">
+                                        <div class="msglisting" data-ng-click="vwctl.selectNode('fld',mtfctl.ufields_ui, mtfctl.ufields_ui[k], k)"
+                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    </div>
+                                </div>
+                            </data-mtf-tab>
+                        </data-mtf-tab>
+                        <!-- NATO MTF-->
+                        <data-mtf-tab class="tab" tabinfo="vwctl.tabs.natomtf">
+                            <data-mtf-tab tabinfo="vwctl.tabs.natomtfmsg">
+                                <div class="msglist">
+                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nmsgs_ui, mtftxtsearch, '_name')">
+                                        <div class="msglisting" data-ng-click="vwctl.selectNode('msg',mtfctl.nmsgs_ui, mtfctl.nmsgs_ui[k], k)"
+                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    </div>
+                                </div>
+                            </data-mtf-tab>
+                            <data-mtf-tab tabinfo="vwctl.tabs.natomtfseg">
+                                <div class="msglist">
+                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nsegments_ui, mtftxtsearch, '_name')">
+                                        <div class="msglisting" data-ng-click="vwctl.selectNode('seg',mtfctl.nsegments_ui, mtfctl.nsegments_ui[k], k)"
+                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    </div>
+                                </div>
+                            </data-mtf-tab>
+                            <data-mtf-tab tabinfo="vwctl.tabs.natomtfset">
+                                <div class="msglist">
+                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nsets_ui, mtftxtsearch, '_name')">
+                                        <div class="msglisting" data-ng-click="vwctl.selectNode('set',mtfctl.nsets_ui, mtfctl.nsets_ui[k], k)"
+                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    </div>
+                                </div>
+                            </data-mtf-tab>
+                            <data-mtf-tab tabinfo="vwctl.tabs.natomtffld">
+                                <div class="msglist">
+                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nfields_ui, mtftxtsearch, '_name')">
+                                        <div class="msglisting" data-ng-click="vwctl.selectNode('fld',mtfctl.nfields_ui, mtfctl.nfields_ui[k], k)"
+                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    </div>
+                                </div>
+                            </data-mtf-tab>
+                        </data-mtf-tab>
+                    </div>
+                    <div id="infoCol">
+                        <div data-ng-if="vwctl.type==='fld'">
+                            <data-mtf-field field='vwctl.sel' list="vwctl.list"></data-mtf-field>
+                        </div>
+                        <div data-ng-if="vwctl.type==='set'">
+                            <data-mtf-set set='vwctl.sel' list="vwctl.list"></data-mtf-set>
+                        </div>
+                    </div>
+                    <div id="editcol"> </div>
                 </div>
-                <div id="msgCol" class="accordion__container noselect" data-ng-controller="tabCtrl">
-                    <!-- USMTF  -->
-                    <data-mtf-tab class="tab" tabinfo="mtfctl.tabs.usmtf">
-                        <data-mtf-tab tabinfo="mtfctl.tabs.usmtfmsg">
-                            <div class="msglist">
-                                <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.umsgs_ui, mtftxtsearch, '_name')">
-                                    <div class="msglisting" data-ng-click="mtfctl.selectNode('umsgs_ui',mtfctl.umsgs_ui[k], k)"
-                                         data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                </div>
-                            </div>
-                        </data-mtf-tab>
-                        <data-mtf-tab tabinfo="mtfctl.tabs.usmtfseg">
-                            <div class="msglist">
-                                <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.usegments_ui, mtftxtsearch, '_name')">
-                                    <div class="msglisting" data-ng-click="mtfctl.selectNode('usegments_ui', mtfctl.usegments_ui[k], k)"
-                                         data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                </div>
-                            </div>
-                        </data-mtf-tab>
-                        <data-mtf-tab tabinfo="mtfctl.tabs.usmtfset">
-                            <div class="msglist">
-                                <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.usets_ui, mtftxtsearch, '_name')">
-                                    <div class="msglisting" data-ng-click="mtfctl.selectNode('usets_ui', mtfctl.usets_ui[k], k)"
-                                         data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                </div>
-                            </div>
-                        </data-mtf-tab>
-                        <data-mtf-tab tabinfo="mtfctl.tabs.usmtffld">
-                            <div class="msglist">
-                                <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.ufields_ui, mtftxtsearch, '_name')">
-                                    <div class="msglisting" data-ng-click="mtfctl.selectNode('ufields_ui', mtfctl.ufields_ui[k], k)"
-                                         data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                </div>
-                            </div>
-                        </data-mtf-tab>
-                    </data-mtf-tab>
-                    <!-- NATO MTF-->
-                    <data-mtf-tab class="tab" tabinfo="mtfctl.tabs.natomtf">
-                        <data-mtf-tab tabinfo="mtfctl.tabs.natomtfmsg">
-                            <div class="msglist">
-                                <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.nmsgs_ui, mtftxtsearch, '_name')">
-                                    <div class="msglisting" data-ng-click="mtfctl.selectNode('nmsgs_ui', mtfctl.nmsgs_ui[k], k)"
-                                         data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                </div>
-                            </div>
-                        </data-mtf-tab>
-                        <data-mtf-tab tabinfo="mtfctl.tabs.natomtfseg">
-                            <div class="msglist">
-                                <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.nsegments_ui, mtftxtsearch, '_name')">
-                                    <div class="msglisting" data-ng-click="mtfctl.selectNode('nsegments_ui', mtfctl.nsegments_ui[k], k)"
-                                         data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                </div>
-                            </div>
-                        </data-mtf-tab>
-                        <data-mtf-tab tabinfo="mtfctl.tabs.natomtfset">
-                            <div class="msglist">
-                                <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.nsets_ui, mtftxtsearch, '_name')">
-                                    <div class="msglisting" data-ng-click="mtfctl.selectNode('nsets_ui', mtfctl.nsets_ui[k], k)"
-                                         data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                </div>
-                            </div>
-                        </data-mtf-tab>
-                        <data-mtf-tab tabinfo="mtfctl.tabs.natomtffld">
-                            <div class="msglist">
-                                <div data-ng-repeat="(k,v) in mtfctl.valuefilter(mtfctl.nfields_ui, mtftxtsearch, '_name')">
-                                    <div class="msglisting" data-ng-click="mtfctl.selectNode('nfields_ui', mtfctl.nfields_ui[k], k)"
-                                         data-ng-class="{selected : mtfctl.isSelected(k)}">{{v}}</div>
-                                </div>
-                            </div>
-                        </data-mtf-tab>
-                    </data-mtf-tab>
-                </div>
-                <div id="infoCol">
-                    <data-mtf-field field='mtfctl.sel'></div>
-                </div>
-                <div id="editcol"> </div>
             </div>
-            <script src="js/lib/Saxonce/Saxonce.nocache.js"></script>
-            <script src="js/lib/xml2json.min.js"></script>
-            <script src="node_modules/angular/angular.min.js"></script>
-            <script src="node_modules/angular-route/angular-route.min.js"></script>
-            <script src="node_modules/lz-string/libs/lz-string.min.js"></script>
-            <script src="node_modules/lz-string/libs/base64-string.js"></script>
-            <script src="js/lib/indexdb/angular-indexed-db.min.js"></script>
-            <script src="js/lib/jsonPath.js"></script>
-            <script src="js/mtfapp.js"></script>
-            <script src="js/services.js"></script>
-            <script src="js/directives.js"></script>
-            <script src="js/controllers.js"></script>
+        </div>
+        <script src="js/lib/Saxonce/Saxonce.nocache.js"></script>
+        <script src="js/lib/xml2json.min.js"></script>
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script src="node_modules/angular-route/angular-route.min.js"></script>
+        <script src="node_modules/lz-string/libs/lz-string.min.js"></script>
+        <script src="node_modules/lz-string/libs/base64-string.js"></script>
+        <script src="js/lib/indexdb/angular-indexed-db.min.js"></script>
+        <script src="js/lib/jsonPath.js"></script>
+        <script src="js/mtfapp.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/directives.js"></script>
+        <script src="js/controllers.js"></script>
     </body>
 </html>
