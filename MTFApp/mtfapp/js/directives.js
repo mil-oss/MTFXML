@@ -6,12 +6,11 @@ mtfApp.directive('mtfField', function () {
         replace: 'true',
         scope: {
             field: "=field",
-            list: "=list"
+            flist: "=flist",
         },
-        transclude: true,
-        templateUrl: 'templates/field.html',
-        controller: 'fldCtl',
-        controllerAs: 'fldctl'
+        templateUrl: "templates/field.html",
+        controller: "fldCtl",
+        controllerAs: "fldctl"
     };
 });
 
@@ -20,32 +19,59 @@ mtfApp.directive('mtfSet', function () {
         restrict: 'E',
         replace: 'true',
         scope: {
-            set: "=set",
-            list: "=list"
+            node: "=node",
+            slist: "=slist",
+            flist: "=flist"
         },
-        transclude: true,
         templateUrl: 'templates/set.html',
-        controller: 'fldCtl',
-        controllerAs: 'fldctl'
+        controller: 'setCtl',
+        controllerAs: 'setctl'
     };
 });
-
-mtfApp.directive('choice', function () {
+mtfApp.directive('mtfSubset', function () {
     return{
         restrict: 'E',
         replace: 'true',
         scope: {
-            choice: "=chce"
+            node: "=node",
+            slist: "=slist",
+            flist: "=flist"
+        },
+        templateUrl: 'templates/subset.html',
+        controller: 'setCtl',
+        controllerAs: 'setctl'
+    }
+});
+mtfApp.directive('mtfChoice', function () {
+    return{
+        restrict: 'E',
+        replace: 'true',
+        scope: {
+            choice: "=choice",
+            slist: "=slist",
+            flist: "=flist"
         },
         transclude: true,
-        templateUrl: 'views/choice.html',
-        controller: 'mtfCtl',
-        controllerAs: 'mtfctl',
-        bindToController: true
-
+        templateUrl: 'templates/choice.html',
+        controller: 'setCtl',
+        controllerAs: 'setctl'
     };
 });
-
+mtfApp.directive('mtfSequence', function () {
+    return{
+        restrict: 'E',
+        replace: 'true',
+        scope: {
+            sequence: "=sequence",
+            slist: "=slist",
+            flist: "=flist"
+        },
+        transclude: true,
+        templateUrl: 'templates/sequence.html',
+        controller: 'setCtl',
+        controllerAs: 'setctl'
+    };
+});
 mtfApp.directive('mtfTab', function () {
     return{
         restrict: 'E',

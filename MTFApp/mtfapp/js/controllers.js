@@ -19,12 +19,12 @@ mtfApp.controller('mtfCtl', function ($scope, dbService, uiService) {
     });
 });
 
-mtfApp.controller('viewCtl', function ($scope, dbService, uiService) {
+mtfApp.controller('viewCtl', function ($scope) {
     var vwctl = this;
     $scope.isArray = angular.isArray;
     $scope.mtftxtsearch = 'ACC';
     vwctl.view = '';
-    vwctl.viewTypes = {
+    vwctl.lists = {
         'umsgs_ui': 'message',
         'nmsgs_ui': 'message',
         'usegments_ui': 'segment',
@@ -76,15 +76,19 @@ mtfApp.controller('viewCtl', function ($scope, dbService, uiService) {
         });
         return result;
     };
-    vwctl.selectNode = function (type,list, node, k) {
+    vwctl.selectNode = function (listname, node, k) {
         vwctl.selected = k;
-        vwctl.type = type;
-        vwctl.list = list;
-        vwctl.node = node;
-        $scope.list = list;
+        vwctl.listname = listname;
+        vwctl.list = $scope[listname];
+        if (listname === 'usets_ui') {
+            vwctl.flist = $scope['ufields_ui'];
+        }
+        if (listname === 'nsets_ui') {
+            vwctl.flist = $scope['nfields_ui'];
+        }
         vwctl.sel = node;
-        //console.log(list);
-        console.log(vwctl.node);
+        console.log(listname);
+        console.log(vwctl.sel);
     };
     vwctl.isSelected = function (k) {
         return vwctl.selected === k;
@@ -103,10 +107,9 @@ mtfApp.controller('viewCtl', function ($scope, dbService, uiService) {
     };
 });
 //
-mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
+mtfApp.controller('fldCtl', function ($scope) {
     var fldctl = this;
-    fldctl.fldctlvw="templates/field.html";
-    fldctl.setvw="templates/set.html";
+    fldctl.fldvw = "templates/field.html";
     fldctl.isArray = angular.isArray;
     fldctl.childnode = false;
     fldctl.fldGetType = function (f) {
@@ -127,7 +130,7 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
         }
     };
     fldctl.fldEnums = function (seq, choice) {
-        if (typeof seq != 'undefined') {
+        if (typeof seq !== 'undefined') {
             return false;
         } else if (typeof choice !== 'undefined') {
             if (typeof choice.enumeration[0] !== 'undefined') {
@@ -161,67 +164,24 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
             }
         }
     };
-    fldctl.getFieldList = function (listname) {
-        if (listname === 'ufields_ui') {
-            return $scope.ufields_ui;
-        } else if (listname === 'nfields_ui') {
-            return $scope.nfields_ui;
-        } else if (listname === 'usets_ui') {
-            return $scope.ufields_ui;
-        } else if (listname === 'nsets_ui') {
-            return $scope.nfields_ui;
-        }
-    };
-    fldctl.getSetList = function () {
-        if ($scope.listname === 'usets_ui') {
-            return $scope.usets_ui;
-        } else if ($scope.listname === 'nsets_ui') {
-            return $scope.nsets_ui;
-        }
-    };
-    fldctl.setRefs = function (objseq,slist) {
+    fldctl.fldRefs = function (objseq, flist) {
         if (typeof objseq !== 'undefined') {
             var flds = [];
             var k = (Object.keys(objseq));
             //console.log(k);
             var fnode = [];
-            //var slist = fldctl.getSetList();
-            for (i = 0; i < k.length; i++) {
-                if (k[i].substring(k[i].length - 3) === 'Set') {
-                    //console.log(k[i]);
-                    if (typeof objseq[k[i]] !== 'undefined') {
-                        fnode[k[i]] = objseq[k[i]];
-                        var f = fldctl.getFieldDef(slist, k[i], fnode[k[i]]);                        
-                        fldctl.combineNodes(f, fnode[k[i]], i);
-                        f.position = i;
-                        flds.push(f);
-                    }
-                }
-            }
-            //console.log(flds);
-            return (flds);
-        }
-    };
-    fldctl.fldRefs = function (objseq,flist) {
-        if (typeof objseq !== 'undefined') {
-            var flds = [];
-            var flds = [];
-            var k = (Object.keys(objseq));
-            //console.log(k);
-            var fnode = [];
-            //var flist = fldctl.getFieldList(listname);
-            //console.log(flist);
+            //var flist = fldctl.getFieldList();
+            console.log(flist);
             for (i = 0; i < k.length; i++) {
                 if (typeof objseq[k[i]] !== 'undefined') {
                     fnode[k[i]] = objseq[k[i]];
-                    var f = fldctl.getFieldDef(flist, k[i], fnode[k[i]]);
+                    var f = fldctl.getFieldRef(flist, k[i], fnode[k[i]], i);
                     if (typeof f === 'undefined') {
                         f = fnode[k[i]];
                     }
                     f.child = true;
                     f.name = k[i];
                     if (typeof f.name !== 'undefined') {
-                        fldctl.combineNodes(f, fnode[k[i]], i);
                         flds.push(f);
                     }
                 }
@@ -230,32 +190,37 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
             return flds;
         }
     };
-    fldctl.getFieldDef = function (flist, ky, fnode) {
-        if (typeof flist[ky] !== 'undefined') {
-            return flist[ky];
+    fldctl.getFieldRef = function (flist, ky, fnode, pos) {
+        console.log(fnode);
+        var fref = {};
+        if (ky === 'Sequence') {
+            fref = fnode;
+            //Return field from list by @name match
+        } else if (typeof flist[ky] !== 'undefined') {
+            fref = flist[ky];
+            //Return field from list by @ref match .. try with removed 'field:'
         } else if (typeof fnode._ref !== 'undefined') {
             if (typeof flist[fnode._ref] !== 'undefined') {
-                return flist[fnode._ref];
+                fref = flist[fnode._ref];
             } else if (typeof flist[fnode._ref.substring(6)] !== 'undefined') {
-                return flist[fnode._ref.substring(6)];
+                fref = flist[fnode._ref.substring(6)];
             }
+            //Return field from list by @type match .. try with removed 'field:' and 'Type'
         } else if (typeof fnode._type !== 'undefined') {
             if (typeof flist[fnode._type.substring(0, fnode._type.length - 4)] !== 'undefined') {
-                return flist[fnode._type.substring(0, fnode._type.length - 4)];
+                fref = flist[fnode._type.substring(0, fnode._type.length - 4)];
             } else if (typeof flist[fnode._type.substring(6, fnode._type.length - 4)] !== 'undefined') {
-                return flist[fnode._type.substring(6, fnode._type.length - 4)];
+                fref = flist[fnode._type.substring(6, fnode._type.length - 4)];
             }
+            //Return field from list by @base match .. try with removed 'field:' and 'Type'
         } else if (typeof fnode._base !== 'undefined') {
             if (typeof flist[fnode._base.substring(0, fnode._base.length - 4)] !== 'undefined') {
-                return angular.copy(flist[fnode._base.substring(0, fnode._base.length - 4)]);
+                fref = angular.copy(flist[fnode._base.substring(0, fnode._base.length - 4)]);
             } else if (typeof flist[fnode._base.substring(6, fnode._base.length - 4)] !== 'undefined') {
-                return angular.copy(flist[fnode._base.substring(6, fnode._base.length - 4)]);
+                fref = angular.copy(flist[fnode._base.substring(6, fnode._base.length - 4)]);
             }
-        } else {
-            return fnode;
         }
-    }
-    fldctl.combineNodes = function (fref, fnode, pos) {
+        console.log(fref);
         if (typeof fref !== 'undefined') {
             if (typeof fref.Info !== 'undefined' && typeof fnode.Info !== 'undefined') {
                 fref.Info._name = fnode.Info._name;
@@ -277,7 +242,105 @@ mtfApp.controller('fldCtl', function ($scope, dbService, uiService) {
             fref._nillable = fnode._nillable;
             fref.position = pos;
         }
-    }
+        return fref;
+    };
+});
+mtfApp.controller('setCtl', function ($scope) {
+    var setctl = this;
+    setctl.setvw = "templates/set.html";
+    setctl.seqvw = "templates/sequence.html";
+    setctl.chcvw = "templates/choice.html";
+    setctl.isArray = angular.isArray;
+    setctl.childnode = false;
+    setctl.setRefs = function (objseq, slist, flist) {
+        if (typeof objseq !== 'undefined') {
+            var nodes = [];
+            var k = (Object.keys(objseq));
+            console.log(k);
+            var fnode = [];
+            //var slist = fldctl.getSetList();
+            for (i = 0; i < k.length; i++) {
+                if (k[i] === 'Info' || k[i] === '_type') {
+                    //ignore
+                }else if (k[i] === 'Sequence') {
+                    nodes.push({Sequence: objseq[k[i]]});
+                } else if (k[i] === 'Choice') {
+                    nodes.push({Choice: objseq[k[i]]});
+                } else if (k[i].substring(k[i].length - 3) === 'Set') {
+                    //console.log(k[i]);
+                    if (typeof objseq[k[i]] !== 'undefined') {
+                        fnode[k[i]] = objseq[k[i]];
+                        var f = setctl.getRef(slist, k[i], fnode[k[i]]);
+                        nodes.push({set: f});
+                    }
+                } else if (typeof objseq[k[i]] !== 'undefined') {
+                    fnode[k[i]] = objseq[k[i]];
+                    var f = setctl.getRef(flist, k[i], fnode[k[i]], i);
+                    if (typeof f === 'undefined') {
+                        f = fnode[k[i]];
+                    }
+                    f.child = true;
+                    f.name = k[i];
+                    if (typeof f.name !== 'undefined') {
+                        nodes.push({field: f});
+                    }
+                }
+            }
+            //console.log(flds);
+            return (nodes);
+        }
+    };
+    setctl.getRef = function (flist, ky, fnode) {
+        var fref = {};
+        if (ky === 'Sequence') {
+            fref = fnode;
+            //Return field from list by @name match
+        } else if (typeof flist[ky] !== 'undefined') {
+            fref = flist[ky];
+            //Return field from list by @ref match .. try with removed 'field:'
+        } else if (typeof fnode._ref !== 'undefined') {
+            if (typeof flist[fnode._ref] !== 'undefined') {
+                fref = flist[fnode._ref];
+            } else if (typeof flist[fnode._ref.substring(6)] !== 'undefined') {
+                fref = flist[fnode._ref.substring(6)];
+            }
+            //Return field from list by @type match .. try with removed 'field:' and 'Type'
+        } else if (typeof fnode._type !== 'undefined') {
+            if (typeof flist[fnode._type.substring(0, fnode._type.length - 4)] !== 'undefined') {
+                fref = flist[fnode._type.substring(0, fnode._type.length - 4)];
+            } else if (typeof flist[fnode._type.substring(6, fnode._type.length - 4)] !== 'undefined') {
+                fref = flist[fnode._type.substring(6, fnode._type.length - 4)];
+            }
+            //Return field from list by @base match .. try with removed 'field:' and 'Type'
+        } else if (typeof fnode._base !== 'undefined') {
+            if (typeof flist[fnode._base.substring(0, fnode._base.length - 4)] !== 'undefined') {
+                fref = angular.copy(flist[fnode._base.substring(0, fnode._base.length - 4)]);
+            } else if (typeof flist[fnode._base.substring(6, fnode._base.length - 4)] !== 'undefined') {
+                fref = angular.copy(flist[fnode._base.substring(6, fnode._base.length - 4)]);
+            }
+        }
+        if (typeof fref !== 'undefined') {
+            if (typeof fref.Info !== 'undefined' && typeof fnode.Info !== 'undefined') {
+                fref.Info._name = fnode.Info._name;
+                fref.Info._positionName = fnode.Info._positionName;
+                fref.Info._definition = fnode.Info._definition;
+                fref.Info._identifier = fnode.Info._identifier;
+                fref.Info._remark = fnode.Info._remark;
+                fref.Info._usage = fnode.Info._usage;
+                fref.Info._version = fnode.Info._version;
+            }
+            fref._minOccurs = fnode._minOccurs;
+            fref._maxOccurs = fnode._maxOccurs;
+            fref._nillable = fnode._nillable;
+        } else {
+            fref = fnode;
+            fref._minOccurs = fnode._minOccurs;
+            fref._maxOccurs = fnode._maxOccurs;
+            fref._nillable = fnode._nillable;
+        }
+        return fref;
+    };
+
 });
 //
 mtfApp.controller('tabCtrl', function ($scope) {

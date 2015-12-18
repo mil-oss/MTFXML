@@ -6,6 +6,20 @@
             }
         },
         "data-mtf-parenttab": {},
+        "data-mtf-choice": {
+            "attributes": {
+                "flist": {},
+                "slist": {},
+                "choice": {}
+            }
+        },
+        "data-mtf-subset": {
+            "attributes": {
+                "node": {},
+                "flist": {},
+                "slist": {}
+            }
+        },
         "data-mtf-tab": {
             "attributes": {
                 "tabinfo": {},
@@ -23,6 +37,12 @@
             "attributes": {
                 "field": {},
                 "list": {}
+            }
+        },
+        "data-mtf-sequence": {
+            "attributes": {
+                "field": {},
+                "flist": {}
             }
         }
     },
