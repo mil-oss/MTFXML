@@ -31,6 +31,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(__dirname + '/'));
 app.get('/*', function (req, res) {
+    console.log(req.url);
     res.sendFile(__dirname + '/mtfapp/' + req.url);
 });
 app.get('/xml/*', function (req, res) {

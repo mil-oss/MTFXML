@@ -49,6 +49,9 @@
     "attributes": {
         "tabid": {
             "context": "div"
+        },
+        "vs-repeat": {
+            "context": "div"
         }
     }
 }

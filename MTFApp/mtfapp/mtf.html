@@ -44,33 +44,41 @@
                         <data-mtf-tab class="tab" tabinfo="vwctl.tabs.usmtf">
                             <data-mtf-tab tabinfo="vwctl.tabs.usmtfmsg">
                                 <div class="msglist">
-                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.umsgs_ui, mtftxtsearch, '_name')">
-                                        <div class="msglisting" data-ng-click="vwctl.selectNode('umsgs_ui', mtfctl.umsgs_ui[k], k)"
-                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    <div vs-repeat>
+                                        <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.umsgs_ui, mtftxtsearch, '_name')">
+                                            <div class="msglisting" data-ng-click="vwctl.selectNode('umsgs_ui', mtfctl.umsgs_ui[k], k)"
+                                                 data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </data-mtf-tab>
                             <data-mtf-tab tabinfo="vwctl.tabs.usmtfseg">
                                 <div class="msglist">
-                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.usegments_ui, mtftxtsearch, '_name')">
-                                        <div class="msglisting" data-ng-click="vwctl.selectNode('usegments_ui', mtfctl.usegments_ui[k], k)"
-                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    <div vs-repeat>
+                                        <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.usegments_ui, mtftxtsearch, '_name')">
+                                            <div class="msglisting" data-ng-click="vwctl.selectNode('usegments_ui', mtfctl.usegments_ui[k], k)"
+                                                 data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </data-mtf-tab>
                             <data-mtf-tab tabinfo="vwctl.tabs.usmtfset">
                                 <div class="msglist">
-                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.usets_ui, mtftxtsearch, '_name')">
-                                        <div class="msglisting" data-ng-click="vwctl.selectNode('usets_ui', mtfctl.usets_ui[k], k)"
-                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    <div vs-repeat>
+                                        <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.usets_ui, mtftxtsearch, '_name')">
+                                            <div class="msglisting" data-ng-click="vwctl.selectNode('usets_ui', mtfctl.usets_ui[k], k)"
+                                                 data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </data-mtf-tab>
                             <data-mtf-tab tabinfo="vwctl.tabs.usmtffld">
                                 <div class="msglist">
-                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.ufields_ui, mtftxtsearch, '_name')">
-                                        <div class="msglisting" data-ng-click="vwctl.selectNode('ufields_ui', mtfctl.ufields_ui[k], k)"
-                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    <div vs-repeat>
+                                        <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.ufields_ui, mtftxtsearch, '_name')">
+                                            <div class="msglisting" data-ng-click="vwctl.selectNode('ufields_ui', mtfctl.ufields_ui[k], k)"
+                                                 data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </data-mtf-tab>
@@ -79,43 +87,51 @@
                         <data-mtf-tab class="tab" tabinfo="vwctl.tabs.natomtf">
                             <data-mtf-tab tabinfo="vwctl.tabs.natomtfmsg">
                                 <div class="msglist">
-                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nmsgs_ui, mtftxtsearch, '_name')">
-                                        <div class="msglisting" data-ng-click="vwctl.selectNode('nmsgs_ui', mtfctl.nmsgs_ui[k], k)"
-                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    <div vs-repeat>
+                                        <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nmsgs_ui, mtftxtsearch, '_name')">
+                                            <div class="msglisting" data-ng-click="vwctl.selectNode('nmsgs_ui', mtfctl.nmsgs_ui[k], k)"
+                                                 data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </data-mtf-tab>
                             <data-mtf-tab tabinfo="vwctl.tabs.natomtfseg">
                                 <div class="msglist">
-                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nsegments_ui, mtftxtsearch, '_name')">
-                                        <div class="msglisting" data-ng-click="vwctl.selectNode('nsegments_ui', mtfctl.nsegments_ui[k], k)"
-                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    <div vs-repeat>
+                                        <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nsegments_ui, mtftxtsearch, '_name')">
+                                            <div class="msglisting" data-ng-click="vwctl.selectNode('nsegments_ui', mtfctl.nsegments_ui[k], k)"
+                                                 data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </data-mtf-tab>
                             <data-mtf-tab tabinfo="vwctl.tabs.natomtfset">
                                 <div class="msglist">
-                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nsets_ui, mtftxtsearch, '_name')">
-                                        <div class="msglisting" data-ng-click="vwctl.selectNode('nsets_ui', mtfctl.nsets_ui[k], k)"
-                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    <div vs-repeat>
+                                        <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nsets_ui, mtftxtsearch, '_name')">
+                                            <div class="msglisting" data-ng-click="vwctl.selectNode('nsets_ui', mtfctl.nsets_ui[k], k)"
+                                                 data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </data-mtf-tab>
                             <data-mtf-tab tabinfo="vwctl.tabs.natomtffld">
                                 <div class="msglist">
-                                    <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nfields_ui, mtftxtsearch, '_name')">
-                                        <div class="msglisting" data-ng-click="vwctl.selectNode('nfields_ui', mtfctl.nfields_ui[k], k)"
-                                             data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                    <div vs-repeat>
+                                        <div data-ng-repeat="(k,v) in vwctl.valuefilter(mtfctl.nfields_ui, mtftxtsearch, '_name')">
+                                            <div class="msglisting" data-ng-click="vwctl.selectNode('nfields_ui', mtfctl.nfields_ui[k], k)"
+                                                 data-ng-class="{selected : vwctl.isSelected(k)}">{{v}}</div>
+                                        </div>
                                     </div>
                                 </div>
                             </data-mtf-tab>
                         </data-mtf-tab>
                     </div>
                     <div id="infoCol">
-                        <div data-ng-if="vwctl.listname==='ufields_ui' || vwctl.listname==='nfields_ui'">
+                        <div data-ng-if="vwctl.listname === 'ufields_ui' || vwctl.listname === 'nfields_ui'">
                             <data-mtf-field field='vwctl.sel' flist='vwctl.list'></data-mtf-field>
                         </div>
-                        <div data-ng-if="vwctl.listname==='usets_ui' || vwctl.listname==='nsets_ui'">
+                        <div data-ng-if="vwctl.listname === 'usets_ui' || vwctl.listname === 'nsets_ui'">
                             <data-mtf-set node='{set:vwctl.sel}' slist='vwctl.list' flist='vwctl.flist'></data-mtf-set>
                         </div>
                     </div>
@@ -131,6 +147,7 @@
         <script src="node_modules/lz-string/libs/base64-string.js"></script>
         <script src="js/lib/indexdb/angular-indexed-db.min.js"></script>
         <script src="js/lib/jsonPath.js"></script>
+        <script src="js/lib/angular-vs-repeat.min.js"></script>
         <script src="js/mtfapp.js"></script>
         <script src="js/services.js"></script>
         <script src="js/directives.js"></script>

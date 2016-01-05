@@ -31,8 +31,10 @@
                 <data-mtf-subset node="{set:setctl.getRef(slist, n._ref, n)}" slist="slist" flist="flist"></data-mtf-subset>
             </div>
             <div data-ng-if="k === 'Sequence'">
-                <div data-ng-repeat="(k,f) in n.Sequence">
-                    <data-mtf-field field="setctl.getRef(slist, n._ref, n)"flist="flist"></data-mtf-field>
+                <div vs-repeat>
+                    <div data-ng-repeat="(k,f) in n.Sequence">
+                        <data-mtf-field field="setctl.getRef(slist, n._ref, n)"flist="flist"></data-mtf-field>
+                    </div>
                 </div>
             </div>
         </div>
