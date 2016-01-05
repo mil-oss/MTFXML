@@ -1,5 +1,6 @@
 <div class="set">
     <div data-ng-if="node.set">
+        {{node.set}}
         <div class="title">
             <span data-ng-show="node.set.Info._name">
                 <b>{{node.set.Info._name}}</b>
@@ -26,19 +27,12 @@
         <span data-ng-if="node.set._nillable"><b>Nillable: </b>{{node.set._nillable}}</span>
         <span data-ng-if="node.set._minLength"><b>Min Length: </b>{{node.set._minLength}}</span>
         <span data-ng-if="node.set._maxLength"><b>Max Length: </b>{{node.set._maxLength}}</span>
-        <div data-ng-repeat="(k,n) in node.set">
-            <div data-ng-if="n._ref">
-                <data-mtf-subset node="{set:setctl.getRef(slist, n._ref, n)}" slist="slist" flist="flist"></data-mtf-subset>
-            </div>
-            <div data-ng-if="k === 'Sequence'">
-                <div data-ng-repeat="(k,f) in n.Sequence">
-                    <data-mtf-field field="setctl.getRef(slist, n._ref, n)"flist="flist"></data-mtf-field>
+<!--        <div data-ng-repeat="(k,n) in node.set">
+            <div data-ng-if="n.Sequence">
+                <div data-ng-repeat="(k,n) in setctl.setRefs(n.Sequence)">
                 </div>
             </div>
-        </div>
-    </div>
-    <div data-ng-if="node.field">
-        <data-mtf-field field='node.field' flist='flist'></data-mtf-field>
+        </div>-->
     </div>
     <!--    <div data-ng-if="node.Sequence">
             <data-mtf-sequence sequence='node.Sequence' slist='slist' flist='flist'></data-mtf-sequence>

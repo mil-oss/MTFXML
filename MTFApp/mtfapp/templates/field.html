@@ -94,10 +94,8 @@
             <span>
                 <b>SEQUENCE</b>
             </span>
-            <span data-ng-show="field._minInclusive"><b>Min: </b>{{node._minInclusive}}</span>
-            <span data-ng-show="field._maxInclusive"><b>Max: </b>{{node._maxInclusive}}</span>
-            <div data-ng-repeat="(k,field) in fldctl.fldRefs(field.Sequence,list) | orderBy:field.position">
-                <div data-ng-include ="fldctl.fldctlvw"></div>
+            <div data-ng-repeat="(k,field) in fldctl.fldRefs(field.Sequence,flist) | orderBy:field.position">   
+                <div data-ng-include='fldctl.fldvw'></div>
             </div>
         </div>
     </div>

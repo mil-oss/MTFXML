@@ -11,13 +11,13 @@ mtfApp.factory('dbService', function ($http, $indexedDB) {
         //        nato_segs: '/xml/lz/nato_segments.xsd.lz',
         //        nato_sets: '/xml/lz/nato_sets.xsd.lz',
         //        nato_flds: '/xml/lz/nato_fields.xsd.lz',
-        //        umsgs_ui: '/xml/lz/usmtf_messages_ui.xml.lz',
+        umsgs_ui: '/xml/lz/usmtf_messages_ui.xml.lz',
         usets_ui: '/xml/lz/usmtf_sets_ui.xml.lz',
-        //        usegments_ui: '/xml/lz/usmtf_segments_ui.xml.lz',
+        usegments_ui: '/xml/lz/usmtf_segments_ui.xml.lz',
         ufields_ui: '/xml/lz/usmtf_fields_ui.xml.lz',
-        //        nmsgs_ui: '/xml/lz/nato_messages_ui.xml.lz',
+        nmsgs_ui: '/xml/lz/nato_messages_ui.xml.lz',
         nsets_ui: '/xml/lz/nato_sets_ui.xml.lz',
-        //        nsegments_ui: '/xml/lz/nato_segments_ui.xml.lz',
+        nsegments_ui: '/xml/lz/nato_segments_ui.xml.lz',
         nfields_ui: '/xml/lz/nato_fields_ui.xml.lz'
     };
     dbsvc.roots = {
@@ -144,6 +144,7 @@ mtfApp.factory('uiService', function ($http) {
                             mtfstore.upsert({
                                 name: uiname, lastmod: lastmod, data: jrslt
                             }).then(function () {
+                                //$http.put("/json/" + uiname + '.json', jrslt);
                                 callback(uiname, jrslt);
                             });
                         });
@@ -156,12 +157,14 @@ mtfApp.factory('uiService', function ($http) {
                                     mtfstore.upsert({
                                         name: uiname, lastmod: lastmod, data: jrslt
                                     }).then(function () {
+                                        //$http.put("/json/" + uiname + '.json', jrslt);
                                         callback(uiname, jrslt);
                                     });
                                 });
                             });
                         } else {
                             //console.log('local data not modified');
+                            //$http.put("/json/" + uiname + '.json', uidbrec.data);
                             callback(uiname, uidbrec.data);
                         }
                     });

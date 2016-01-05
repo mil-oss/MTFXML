@@ -43,13 +43,13 @@ app.post('/json/*', function (req, res) {
     });
 });
 app.put('/json/*', function (req, res) {
-    console.log("Put: " + __dirname + req.url);
-    fs.writeFile(__dirname + req.url, JSON.stringify(req.body), function () {
+    console.log("Put: " + __dirname + '/xml' +req.url);
+    fs.writeFile(__dirname + '/xml' +req.url, JSON.stringify(req.body), function () {
         res.end();
     });
 });
 app.put('/xml/*', function (req, res) {
-    console.log("Put " + req.url);
+    console.log("Put "+ __dirname +req.url);
     //console.log(req.body);
     fs.writeFile(__dirname + '/json' + req.url, req.body, function () {
         res.end();

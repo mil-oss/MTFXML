@@ -1,0 +1,10 @@
+<div class="sequencediv">
+    <span>
+        <b>SEQUENCE</b>
+    </span>
+    <span data-ng-show="sequence._minInclusive"><b>Min: </b>{{sequence._minInclusive}}</span>
+    <span data-ng-show="sequence._maxInclusive"><b>Max: </b>{{sequence._maxInclusive}}</span>
+    <div data-ng-repeat="(k,node) in setctl.setRefs(sequence, slist, flist) | orderBy:node.position">
+        <div ng-include="setctl.fldvw"></div>
+    </div>
+</div>
