@@ -5,14 +5,14 @@
     "license": "GPL3",
     "dependencies": {
         "express": "latest",
-        "body-parser": "1.4.x",
+        "body-parser": "latest",
         "angular": "1.4.x",
         "angular-route": "1.4.x",
         "angular-loader": "1.4.x",
         "angular-mocks": "1.4.x",
         "xml2js": "0.4.x",
         "saxon-xslt": "0.0.x",
-        "lz-string":"1.4.x"
+        "lz-string":"latest"
     },
     "author": "Jmaes Neushul",
     "readmeFilename": "README.md"
