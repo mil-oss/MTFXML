@@ -1,0 +1,39 @@
+MTF XML REFACTOR PROCESS
+=Overview=
+
+DETAILS: This process is retained for purposes of verification, testing and maintenance.  It is not necessary for implementers to repeat the effort.
+
+a. The NormalizedSimpleTypes.xsd file was created using a variety of methods which analyze and compare Regular Expressions. This required subjective decisions which may be adjusted. The XSLT scripts to accomplish this are in the USMTF/XSLT/Normalization/work directory.
+
+b The XSLT scripts to generate the normalized simpleTypes are located in the USMTF/XSLT/Normalization directory. Data products are located in the USMTF/XSD/Normalized/work directory.
+
+c The Strings.xsl, Numerics.xsl, and Enumerations.xsl scripts can be executed in any order. Results are written to the USMTF/XSD/Normalized directory.
+
+d. The GoE_Fields.xsl script consolidates the Strings.xsd, Integers.xsd, Decimals.xsd and Enumerations.xsd files into the GoE_field.xsd document which is stored in the USMTF/XSD/GoE_Schema directory.
+
+e. Sets Re-factor. Sets extend the BaseSetType in order to add the security attribute group at the set level. Because fields types are now also extended, they do not need to be extended in the Sets Schema, but can be directly referenced or typed. Because nillable elements cannot be referenced, they are extended.
+
+f. Segments Re-factor. Segments are extracted from messages to provide the opportunity for re-use. A new Complex Type, SegmentBaseType, is included to insert ICM security attribute group and for further Segment level extension.
+
+==g Messages Re-factor==
+1. Element Name Changes. One of the goals for the re-factor was to minimize impact on current XML Instance documents. In the case of General Text and Heading Information fields the proposed change adds field names which are specific to the required content and eliminate the need to distinguish XML nodes by appending numbers.
+
+2. General Text Re-factor
+
+
+DETAILS: This only applies to USMTF.  It was implemented in order to include fixed required values in the TextIdentification field using XML extension.  This eliminates all rules specifying these values since they are verified by XML validation.  This reduces the size of the XML Schema and reduces the additional rules implementation requirement.
+
+3. Heading Information Re-factor
+
+
+DETAILS: This only applies to USMTF.   This proposed change adds descriptive field names which are specific to the required content and eliminate the need to distinguish XML nodes by appending numbers.  This will affect XML instances and will require mitigation with Baseline XML instances.
+
+4. Message Identification
+
+
+DETAILS: This proposed change adds fixed values to the Message XML Schema in order to
+
+allow validation of Standard, MessageTextFormatIdentifier, and VersionOfMessageFormat using XML validation instead of
+
+requiring rules.
+

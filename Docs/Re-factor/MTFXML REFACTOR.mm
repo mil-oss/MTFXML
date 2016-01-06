@@ -1,6 +1,6 @@
 <map version="freeplane 1.3.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
-<node TEXT="MTFXML REFACTOR" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1445639330806"><hook NAME="MapStyle">
+<node TEXT="MTFXML REFACTOR" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1452054780782"><hook NAME="MapStyle">
 
 <map_styles>
 <stylenode LOCALIZED_TEXT="styles.root_node">
@@ -286,7 +286,7 @@
 <node TEXT="Message Identification" ID="ID_1194973068" CREATED="1445458096340" MODIFIED="1445458121819"/>
 </node>
 </node>
-<node TEXT="NATO MTF  XML Schema Design" POSITION="right" ID="ID_1396388343" CREATED="1444842280471" MODIFIED="1445638890106" HGAP="50" VSHIFT="-350">
+<node TEXT="NATO MTF  XML Schema Design" POSITION="right" ID="ID_1396388343" CREATED="1444842280471" MODIFIED="1452054780780" HGAP="40" VSHIFT="-310">
 <edge COLOR="#0000ff"/>
 <node TEXT="Element Name Changes" ID="ID_899081510" CREATED="1444842303529" MODIFIED="1445458141690" VSHIFT="40"><richcontent TYPE="DETAILS">
 
@@ -311,7 +311,7 @@
 </node>
 </node>
 </node>
-<node TEXT="Current Paper" POSITION="right" ID="ID_205345619" CREATED="1445638910795" MODIFIED="1445639216317">
+<node TEXT="Current Paper" POSITION="right" ID="ID_205345619" CREATED="1445638910795" MODIFIED="1452054938483">
 <edge COLOR="#7c007c"/>
 <node TEXT="1.        Background" ID="ID_1436650638" CREATED="1445638953298" MODIFIED="1445638953298">
 <node TEXT="a.        The current XML Schema for US and NATO MTF are designed for piecemeal implementation of messages based on commonly defined XML nodes which are maintained in relational databases. This makes normalization, re-use, and configuration management difficult.  Because the current XML Schema design does not support implementation of the entire standard, there are persistent mismatches of messages implemented and versions across systems." ID="ID_1018463361" CREATED="1445638953298" MODIFIED="1445638953298"/>
@@ -331,11 +331,11 @@
 <node TEXT="5.  Base Types also provide the opportunity for additional extensions which can be applied at the field level when they are re-used externally or when the MIL STD requirements dictates such an adjustment." ID="ID_1227911003" CREATED="1445639254189" MODIFIED="1445639254189"/>
 </node>
 </node>
-<node TEXT="5.  USMTF XML Schema Design.  Adjustments are made to the format of all XML Schema in order to reduce size, and eliminate redundant or unnecessary information." ID="ID_1022169540" CREATED="1445638953301" MODIFIED="1445639453073">
-<node TEXT="a.          Annotations" ID="ID_515941484" CREATED="1445638953304" MODIFIED="1445638953304">
+<node TEXT="5.  USMTF XML Schema Design.  Adjustments are made to the format of all XML Schema in order to reduce size, and eliminate redundant or unnecessary information." ID="ID_1022169540" CREATED="1445638953301" MODIFIED="1452054963671" HGAP="40" VSHIFT="70">
+<node TEXT="a.          Annotations" ID="ID_515941484" CREATED="1445638953304" MODIFIED="1452054963669" HGAP="30">
 <node TEXT="(1)  Content of annotations is converted from elements to attributes in order to reduce size caused by closing tags. Names are changed to plain language terms instead of database field names.  Elements are used for Examples and Documents which have multiple items. When documentation and appinfo items are duplicative, the information is retained in the documentation node and removed from the appinfo node.  Empty items are omitted." ID="ID_1317650701" CREATED="1445638953304" MODIFIED="1445638953304"/>
 </node>
-<node TEXT="b.          Fields Re-factor" ID="ID_1444218123" CREATED="1445638974757" MODIFIED="1445638974757">
+<node TEXT="b.          Fields Re-factor" ID="ID_1444218123" CREATED="1445638974757" MODIFIED="1452054961411" HGAP="30" VSHIFT="20">
 <node TEXT="(1)        Field Base Types.  The requirement to apply security markings to every field is currently accomplished by extending Simple Type fields at the Set level to add the ICM attribute group. This reduces the ability to reference fields at the Set level and causes unnecessary repetition in the XML Schema design.  The Re-Factor approach is to create FieldBaseTypes which carry the ICM attribute group and can be used to add other field level extensions. All fields are provided as Complex Types which extend the base types." ID="ID_284143835" CREATED="1445638974757" MODIFIED="1445639157827"/>
 <node TEXT="(2)  Strings.  By comparing Regular Expressions the number of types extended by FieldStringBase Type is reduced.  Types which include length and value restrictions in the Regular Expression are removed.  String types are defined using pattern for content, and XML Schema elements to specify lengths at the element level.  The provided example &quot;AlphaNumericBlankSpecialTextType&quot; is re-used 877 times in the USMTF GoE_fields.xsd schema." ID="ID_422057800" CREATED="1445638987959" MODIFIED="1445638987959">
 <node TEXT="1.  Regular Expression Comparison" ID="ID_1529821547" CREATED="1445639401275" MODIFIED="1445639401275"/>
@@ -346,15 +346,15 @@
 <node TEXT="(4)  Integers.  Integers do not require Regular Expressions or types.  the XML Schema integer is extended by FieldIntegerBaseType to include security markings, and each Integer field restricts FieldIntegerBaseType to add value restrictions." ID="ID_432099801" CREATED="1445639007421" MODIFIED="1445639007421"/>
 <node TEXT="(5)  Decimals.  Decimals do not require Regular Expressions or types.  the XML Schema decimal is extended by FieldIntegerBaseType to include security markings, and each Decimal field restricts FieldDecimalBaseType to add value restrictions." ID="ID_1583010864" CREATED="1445639022820" MODIFIED="1445639022820"/>
 </node>
-<node TEXT="c.        Sets Re-factor.  Application of security attribute group at the Field level reduces the need for extensions at the set level." ID="ID_612557000" CREATED="1445639054735" MODIFIED="1445639109982" HGAP="40" VSHIFT="210"/>
-<node TEXT="e.        Segments Re-factor.  Segments are extracted from messages to provide the opportunity for re-use." ID="ID_614797433" CREATED="1445639078646" MODIFIED="1445639113730" HGAP="40" VSHIFT="60"/>
-<node TEXT="f. Summary." ID="ID_1587601114" CREATED="1445639444380" MODIFIED="1445639458910" HGAP="40" VSHIFT="40">
+<node TEXT="c.        Sets Re-factor.  Application of security attribute group at the Field level reduces the need for extensions at the set level." ID="ID_612557000" CREATED="1445639054735" MODIFIED="1452054958813" HGAP="30" VSHIFT="20"/>
+<node TEXT="e.        Segments Re-factor.  Segments are extracted from messages to provide the opportunity for re-use." ID="ID_614797433" CREATED="1445639078646" MODIFIED="1452054957182" HGAP="30" VSHIFT="10"/>
+<node TEXT="f. Summary." ID="ID_1587601114" CREATED="1445639444380" MODIFIED="1452054953388" HGAP="30" VSHIFT="10">
 <node TEXT="1.  String type normalization reduces the number of string simpleTypes from 1624 to 153 without impacting message content." ID="ID_1538999414" CREATED="1445639444380" MODIFIED="1445639444380"/>
 <node TEXT="2.  Enumeration normalization reduces the number of enumerated simpleTypes from 1766 to 1473 without impacting message content." ID="ID_233952357" CREATED="1445639444381" MODIFIED="1445639444381"/>
 <node TEXT="3.  Numeric normalization eliminates 1337 integer simpleTypes and 245 decimal simpleTypes." ID="ID_374397770" CREATED="1445639444381" MODIFIED="1445639444381"/>
 </node>
 </node>
-<node TEXT="6. Processs" ID="ID_1857506947" CREATED="1445639369485" MODIFIED="1445639472552"><richcontent TYPE="DETAILS">
+<node TEXT="6. Processs" ID="ID_1857506947" CREATED="1445639369485" MODIFIED="1452054923921" VSHIFT="60"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -366,17 +366,17 @@
     </p>
   </body>
 </html>
-
 </richcontent>
-<node TEXT="a.  The NormalizedSimpleTypes.xsd file was created using a variety of methods which analyze and compare Regular Expressions. This required subjective decisions which may be adjusted. The XSLT scripts to accomplish this are in the USMTF/XSLT/Normalization/work directory." ID="ID_801444743" CREATED="1445639481024" MODIFIED="1445639522402"/>
-<node TEXT="b  The XSLT scripts to generate the normalized simpleTypes are located in the USMTF/XSLT/Normalization directory. Data products are located in the USMTF/XSD/Normalized/work directory." ID="ID_1576488055" CREATED="1445639481024" MODIFIED="1445639527155"/>
-<node TEXT="c  The Strings.xsl, Numerics.xsl, and Enumerations.xsl scripts can be executed in any order. Results are written to the USMTF/XSD/Normalized directory." ID="ID_27694232" CREATED="1445639481024" MODIFIED="1445639531217"/>
-<node TEXT="d.  The GoE_Fields.xsl script consolidates the Strings.xsd, Integers.xsd, Decimals.xsd and Enumerations.xsd files into the GoE_field.xsd document which is stored in the USMTF/XSD/GoE_Schema directory." ID="ID_1037640678" CREATED="1445639481024" MODIFIED="1445639539720"/>
-<node TEXT="e.  Sets Re-factor.  Sets extend the BaseSetType in order to add the security attribute group at the set level.  Because fields types are now also extended, they do not need to be extended in the Sets Schema, but can be directly referenced or typed.   Because nillable elements cannot be referenced, they are extended." ID="ID_1626783819" CREATED="1445639481024" MODIFIED="1445639544064"/>
+<node TEXT="Overview" ID="ID_755183763" CREATED="1452055299354" MODIFIED="1452055330185">
+<node TEXT="a.  The NormalizedSimpleTypes.xsd file was created using a variety of methods which analyze and compare Regular Expressions. This required subjective decisions which may be adjusted. The XSLT scripts to accomplish this are in the USMTF/XSLT/Normalization/work directory." ID="ID_801444743" CREATED="1445639481024" MODIFIED="1452054914477" VSHIFT="-40"/>
+<node TEXT="b  The XSLT scripts to generate the normalized simpleTypes are located in the USMTF/XSLT/Normalization directory. Data products are located in the USMTF/XSD/Normalized/work directory." ID="ID_1576488055" CREATED="1445639481024" MODIFIED="1452054919622" VSHIFT="-30"/>
+<node TEXT="c  The Strings.xsl, Numerics.xsl, and Enumerations.xsl scripts can be executed in any order. Results are written to the USMTF/XSD/Normalized directory." ID="ID_27694232" CREATED="1445639481024" MODIFIED="1452054921402" HGAP="30" VSHIFT="-30"/>
+<node TEXT="d.  The GoE_Fields.xsl script consolidates the Strings.xsd, Integers.xsd, Decimals.xsd and Enumerations.xsd files into the GoE_field.xsd document which is stored in the USMTF/XSD/GoE_Schema directory." ID="ID_1037640678" CREATED="1445639481024" MODIFIED="1452054923919" VSHIFT="-60"/>
+<node TEXT="e.  Sets Re-factor.  Sets extend the BaseSetType in order to add the security attribute group at the set level.  Because fields types are now also extended, they do not need to be extended in the Sets Schema, but can be directly referenced or typed.   Because nillable elements cannot be referenced, they are extended." ID="ID_1626783819" CREATED="1445639481024" MODIFIED="1452055326765" HGAP="30" VSHIFT="-40"/>
 <node TEXT="f.  Segments Re-factor.  Segments are extracted from messages to provide the opportunity for re-use.  A new Complex Type, SegmentBaseType, is included to insert ICM security attribute group and for further Segment level extension." ID="ID_1143867056" CREATED="1445639481024" MODIFIED="1445639667079"/>
-<node TEXT="g  Messages Re-factor" ID="ID_1347675679" CREATED="1445639481024" MODIFIED="1445639680287">
+<node TEXT="g  Messages Re-factor" ID="ID_1347675679" CREATED="1445639481024" MODIFIED="1452055330185" VSHIFT="40">
 <node TEXT="1.  Element Name Changes.  One of the goals for the re-factor was to minimize impact on current XML Instance documents.  In the case of General Text and Heading Information fields the proposed change adds field names which are specific to the required content and eliminate the need to distinguish XML nodes by appending numbers." ID="ID_464775862" CREATED="1445639481024" MODIFIED="1445639671094"/>
-<node TEXT="2.  General Text Re-factor" ID="ID_1902399333" CREATED="1445639481024" MODIFIED="1445639845965" VSHIFT="10"><richcontent TYPE="DETAILS">
+<node TEXT="2.  General Text Re-factor" ID="ID_1902399333" CREATED="1445639481024" MODIFIED="1452055406247" VSHIFT="10"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -384,28 +384,48 @@
   </head>
   <body>
     <p>
-      This was implemented in order to include fixed required values in the TextIdentification field using XML extension.&#160;&#160;This eliminates all rules specifying these values since they are verified by XML validation.&#160;&#160;This reduces the size of the XML Schema and reduces the additional rules implementation requirement.
+      This only applies to USMTF.&#160;&#160;It was implemented in order to include fixed required values in the TextIdentification field using XML extension.&#160;&#160;This eliminates all rules specifying these values since they are verified by XML validation.&#160;&#160;This reduces the size of the XML Schema and reduces the additional rules implementation requirement.
     </p>
   </body>
 </html>
 
 </richcontent>
 </node>
-<node TEXT="3.  Heading Information Re-factor" ID="ID_297034551" CREATED="1445639481024" MODIFIED="1445639857411" VSHIFT="20"><richcontent TYPE="DETAILS">
+<node TEXT="3.  Heading Information Re-factor" ID="ID_297034551" CREATED="1445639481024" MODIFIED="1452056041332" VSHIFT="20"><richcontent TYPE="DETAILS">
 
 <html>
-  
-
   <head>
-
+    
   </head>
   <body>
+    This only applies to USMTF.&#160;&#160;&#160;This proposed change adds descriptive field names which are specific to the required content and eliminate the need to distinguish XML nodes by appending numbers.&#160;&#160;This will affect XML instances and will require mitigation with Baseline XML instances.
   </body>
 </html>
 
 </richcontent>
 </node>
-<node TEXT="4.  Message Identification" ID="ID_463120136" CREATED="1445639481024" MODIFIED="1445639678701" VSHIFT="20"/>
+<node TEXT="4.  Message Identification" ID="ID_463120136" CREATED="1445639481024" MODIFIED="1452056071192" VSHIFT="20"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      This proposed change adds fixed values to the Message XML Schema in order to
+    </p>
+    <p>
+      allow validation of Standard, MessageTextFormatIdentifier, and VersionOfMessageFormat using XML validation instead of
+    </p>
+    <p>
+      requiring rules.
+    </p>
+  </body>
+</html>
+
+</richcontent>
+</node>
+</node>
 </node>
 </node>
 </node>
