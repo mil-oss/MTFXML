@@ -3,7 +3,7 @@
     <xsl:output method="xml" indent="yes"/>
     <!--This transform extracts usable XML from MS EXCEL documents saved as XML-->
     <xsl:variable name="msgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
-    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/Segment_DeconflictionEXCEL.xml')"/>
+    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/M2014-10-C0-F-SegmentDeconfliction.xml')"/>
     <xsl:variable name="outputDoc" select="'../../XSD/Deconflicted/Segment_Name_Changes.xml'"/>
     <!--Create Attributes from first row labels-->
     <xsl:variable name="colhdrs">
@@ -62,7 +62,7 @@
                             </xsl:attribute>
                         </xsl:when>
                         <xsl:when test="name() = 'REQUIRED_USMTF_CHANGES'">
-                            <xsl:if test="not(contains($R/*:Cell[position() = $p]/*:Data/text(), 'No changes required'))">
+                            <xsl:if test="not(contains($R/*:Cell[position() = $p]/*:Data/text()[1], 'No changes required'))">
                                 <xsl:variable name="newname">
                                     <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
                                 </xsl:variable>
@@ -118,7 +118,7 @@
                 </xsl:for-each>
             </Segment>
         </xsl:variable>
-        <xsl:if test="not(contains($Seg/Segment/@REQUIRED_USMTF_CHANGES, 'No change')) and not(contains($Seg/Segment/@NewElementName,' '))">
+        <xsl:if test="not(contains($Seg/Segment/@REQUIRED_USMTF_CHANGES, 'No change')) and not(contains($Seg/Segment/@NewElementName,' ')) and not($Seg/Segment/@NewElementName='')">
             <xsl:copy-of select="$Seg"/>
         </xsl:if>
     </xsl:template>
