@@ -3,15 +3,15 @@
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <!--This transform extracts usable XML from MS EXCEL documents saved as XML-->
-    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/M201503C0VF-SetDeconfliction.xml')"/>
+    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/M201503C0VFSetDeconfliction.xml')"/>
     <xsl:variable name="sets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
     <xsl:variable name="outputDoc" select="'../../XSD/Deconflicted/Set_Name_Changes.xml'"/>
     <!-- Attribute names from first row-->
     <xsl:variable name="attributes">
         <ATTS>
-            <xsl:for-each select="$sourceDoc//*:Table/*:Row[1]/*:Cell">
+            <xsl:for-each select="$sourceDoc//*:table/*:table-row[1]/*:table-cell[*:p]">
                 <xsl:variable name="datatext">
-                    <xsl:apply-templates select="*:Data/text()[1]"/>
+                    <xsl:apply-templates select="*:p/text()[1]"/>
                 </xsl:variable>
                 <xsl:choose>
                     <xsl:when test="contains($datatext, '(')">
@@ -46,7 +46,7 @@
     <!-- Pull Set changes from spreadsheet and put in extracted Elements names-->
     <!-- ******************* -->
     <xsl:variable name="new_set_elements">
-        <xsl:apply-templates select="$sourceDoc//*:Table"/>
+        <xsl:apply-templates select="$sourceDoc//*:table"/>
     </xsl:variable>
     <xsl:template name="main">
         <xsl:result-document href="{$outputDoc}">
@@ -64,15 +64,15 @@
             </USMTF_Sets>
         </xsl:result-document>
     </xsl:template>
-    <xsl:template match="*:Table">
-        <xsl:apply-templates select="*:Row[*:Cell/*:Data]"/>
+    <xsl:template match="*:table">
+        <xsl:apply-templates select="*:table-row[*:table-cell/*:p]"/>
         <!--        <!-\-NO CHANGES FILTER-\->
-            <xsl:apply-templates select="*:Row[*:Cell/*:Data][not(contains(*:Cell[7]/*:Data/text()[1],'No changes required'))]"/>  -->
+            <xsl:apply-templates select="*:table-row[*:table-cell/*:p][not(contains(*:table-cell[7]/*:p/text()[1],'No changes required'))]"/>  -->
     </xsl:template>
-    <xsl:template match="*:Row[1]"/>
-    <xsl:template match="*:Row">
+    <xsl:template match="*:table-row[1]"/>
+    <xsl:template match="*:table-row">
         <xsl:variable name="setid">
-            <xsl:value-of select="*:Cell[8]/*:Data/text()"/>
+            <xsl:value-of select="*:table-cell[8]/*:p/text()"/>
         </xsl:variable>
         <xsl:variable name="Elname">
             <xsl:value-of select="$mtf_set_elements/SetElements/*[@SetId = $setid][1]/name()"/>
@@ -82,53 +82,95 @@
                 <xsl:attribute name="ElementName">
                     <xsl:value-of select="$Elname"/>
                 </xsl:attribute>
-                <xsl:apply-templates select="*:Cell[1]"/>
-                <!-- <xsl:attribute name="SetId">
-                    <xsl:value-of select="$setid"/>
-                </xsl:attribute>
-                <xsl:attribute name="ProposedSetFormatPositionConceptChanges">
-                    <xsl:value-of select="*:Cell[6]/*:Data/text()"/>
-                </xsl:attribute>
-                <xsl:attribute name="SETNAMESHORT">
-                    <xsl:value-of select="*:Cell[8]/*:Data/text()"/>
-                </xsl:attribute>
-                <xsl:attribute name="SETNAMELONG">
-                    <xsl:value-of select="*:Cell[9]/*:Data/text()"/>
-                </xsl:attribute>
-                <xsl:attribute name="ProposedSetFormatPositionName">
-                    <xsl:apply-templates select="*:Cell[15]/*:Data/text()"/>
-                </xsl:attribute>
-                <xsl:attribute name="ProposedSetFormatName">
-                    <xsl:apply-templates select="*:Cell[16]/*:Data/text()"/>
-                </xsl:attribute>
-                <xsl:attribute name="ProposedSetFormatDescription">
-                    <xsl:apply-templates select="*:Cell[17]/*:Data/text()"/>
-                </xsl:attribute>-->
+                <!--<xsl:apply-templates select="*:table-cell"/>-->
+                <xsl:apply-templates select="*:table-cell[1]">
+                    <xsl:with-param name="pos" select="1"/>
+                </xsl:apply-templates>
             </xsl:element>
         </xsl:if>
     </xsl:template>
-    <xsl:template match="*:Cell">
-        <xsl:param name="offset"/>
+    <!--    <xsl:template match="*:table-cell">
         <xsl:variable name="pos" select="position()"/>
-        <xsl:variable name="offset" select="preceding-sibling::*:Cell[@*:Index]/position()"/>
-        <xsl:variable name="offsetval">
-            <xsl:value-of select="preceding-sibling::*:Cell[@*:Index][1]/@*:Index"/>
-        </xsl:variable>
+          
+        <xsl:attribute name="{concat('cell',$pos)}">
+            <xsl:value-of select="$attributes//ATT[number($pos)]/@name"/> ...<xsl:apply-templates select="*:p/text()"/> .... <xsl:value-of select="$pos"/>
+        </xsl:attribute>
+
+    </xsl:template>-->
+    <xsl:template match="*:table-cell">
+        <xsl:param name="pos"/>
         <xsl:variable name="adjpos">
             <xsl:choose>
-                <xsl:when test="$offset">
-                    <xsl:value-of select="$pos + $offsetval"/>
+                <xsl:when test="./@*:number-columns-repeated">
+                    <xsl:value-of select="number(@*:number-columns-repeated)"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$pos"/>
+                    <xsl:value-of select="1"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:attribute name="{$attributes//ATT[$pos]/@name}">
-            <xsl:apply-templates select="*:Data/text()"/>
-            <xsl:value-of select="$offset"/> - <xsl:value-of select="$offsetval"/>
-        </xsl:attribute>
+       <xsl:choose>
+           <xsl:when test="./@*:number-columns-repeated">
+               <xsl:if test="*:p">
+                   <xsl:call-template name="reptVal">
+                       <xsl:with-param name="pos">
+                           <xsl:value-of select="$pos"/>
+                       </xsl:with-param>
+                       <xsl:with-param name="rpt">
+                           <xsl:value-of select="./@*:number-columns-repeated"/>
+                       </xsl:with-param>
+                       <xsl:with-param name="val">
+                           <xsl:apply-templates select="*:p"/>
+                       </xsl:with-param>
+                   </xsl:call-template>
+               </xsl:if>
+               <xsl:if test="following-sibling::*:table-cell[*:p]">
+                   <xsl:apply-templates select="following-sibling::*:table-cell[1]">
+                       <xsl:with-param name="pos">
+                           <xsl:value-of select="number($pos) + number($adjpos)"/>
+                       </xsl:with-param>
+                   </xsl:apply-templates>
+               </xsl:if>  
+           </xsl:when>
+           <xsl:otherwise>
+               <xsl:attribute name="{$attributes//ATT[number($pos)]/@name}">
+                   <xsl:apply-templates select="*:p"/>
+               </xsl:attribute>
+               <xsl:if test="following-sibling::*:table-cell[*:p]">
+                   <xsl:apply-templates select="following-sibling::*:table-cell[1]">
+                       <xsl:with-param name="pos">
+                           <xsl:value-of select="number($pos) + number($adjpos)"/>
+                       </xsl:with-param>
+                   </xsl:apply-templates>
+               </xsl:if>
+           </xsl:otherwise>
+       </xsl:choose>    
     </xsl:template>
+    <xsl:template name="reptVal">
+        <xsl:param name="pos"/>
+        <xsl:param name="rpt"/>
+        <xsl:param name="val"/>
+        <xsl:attribute name="{$attributes//ATT[number($pos)]/@name}">
+            <xsl:value-of select="$val"/>
+        </xsl:attribute>
+        <xsl:variable name="cnt">
+            <xsl:value-of select="number($rpt)-1"/>
+        </xsl:variable>
+        <xsl:if test="$cnt &gt;0">
+            <xsl:call-template name="reptVal">
+                <xsl:with-param name="pos">
+                    <xsl:value-of select="number($pos)+1"/>
+                </xsl:with-param>
+                <xsl:with-param name="rpt">
+                    <xsl:value-of select="$cnt"/>
+                </xsl:with-param>
+                <xsl:with-param name="val">
+                    <xsl:value-of select="$val"/>
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+    
     <xsl:template match="text()">
         <xsl:value-of select="normalize-space(replace(., '&#34;', ''))"/>
     </xsl:template>

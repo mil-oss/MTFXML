@@ -3,13 +3,13 @@
     <xsl:output method="xml" indent="yes"/>
     <!--This transform extracts usable XML from MS EXCEL documents saved as XML-->
     <xsl:variable name="msgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
-    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/M2014-10-C0-F-SegmentDeconfliction.xml')"/>
+    <xsl:variable name="sourceDoc" select="document('../../XSD/Deconflicted/M2014-10-C0-FSegmentDeconfliction.xml')"/>
     <xsl:variable name="outputDoc" select="'../../XSD/Deconflicted/Segment_Name_Changes.xml'"/>
     <!--Create Attributes from first row labels-->
     <xsl:variable name="colhdrs">
-        <xsl:for-each select="$sourceDoc//*:Table[1]/*:Row[1]/*:Cell">
-            <xsl:if test="string-length(*:Data/text()) > 0">
-                <xsl:element name="{translate(normalize-space(*:Data/text()),' /:','_')}"/>
+        <xsl:for-each select="$sourceDoc//*:table[1]/*:table-row[1]/*:table-cell">
+            <xsl:if test="string-length(*:p/text()) > 0">
+                <xsl:element name="{translate(normalize-space(*:p/text()),' /:','_')}"/>
             </xsl:if>
         </xsl:for-each>
     </xsl:variable>
@@ -28,7 +28,7 @@
     </xsl:variable>
     <!--Create list of all Segments identified as having duplicate names in provided Spreadsheet-->
     <xsl:variable name="new_segment_elements">
-        <xsl:apply-templates select="$sourceDoc//*:Table[1]"/>
+        <xsl:apply-templates select="$sourceDoc//*:table[1]"/>
     </xsl:variable>
     <xsl:template name="main">
         <xsl:result-document href="{$outputDoc}">
@@ -41,30 +41,30 @@
         </xsl:result-document>
     </xsl:template>
     <!-- Extract Segments from Spreadsheet XML with required changes identified-->
-    <xsl:template match="*:Table">
-        <xsl:apply-templates select="*:Row[*:Cell/*:Data]"/>
+    <xsl:template match="*:table">
+        <xsl:apply-templates select="*:table-row[*:table-cell/*:p]"/>
     </xsl:template>
     <!-- Match Element names from Baseline XML Schema-->
-    <xsl:template match="*:Row">
+    <xsl:template match="*:table-row">
         <xsl:variable name="R" select="."/>
         <xsl:variable name="Seg">
             <Segment>
                 <xsl:for-each select="$colhdrs/*">
                     <xsl:variable name="p" select="position()"/>
                     <xsl:attribute name="{name()}">
-                        <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                        <xsl:apply-templates select="$R/*:table-cell[position() = $p]/*:p/text()"/>
                         <!--<xsl:value-of select="$p"/>-->
                     </xsl:attribute>
                     <xsl:choose>
                         <xsl:when test="name() = 'MSGID'">
                             <xsl:attribute name="MsgId">
-                                <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                <xsl:apply-templates select="$R/*:table-cell[position() = $p]/*:p/text()"/>
                             </xsl:attribute>
                         </xsl:when>
                         <xsl:when test="name() = 'REQUIRED_USMTF_CHANGES'">
-                            <xsl:if test="not(contains($R/*:Cell[position() = $p]/*:Data/text()[1], 'No changes required'))">
+                            <xsl:if test="not(contains($R/*:table-cell[position() = $p]/*:p[1], 'No changes required'))">
                                 <xsl:variable name="newname">
-                                    <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                    <xsl:apply-templates select="$R/*:table-cell[position() = $p]/*:p/text()"/>
                                 </xsl:variable>
                                 <xsl:attribute name="NewElementName">
                                     <xsl:call-template name="CamelCase">
@@ -82,7 +82,7 @@
                             <xsl:attribute name="ElementName">
                                 <xsl:call-template name="CamelCase">
                                     <xsl:with-param name="txt">
-                                        <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                        <xsl:apply-templates select="$R/*:table-cell[position() = $p]/*:p/text()"/>
                                     </xsl:with-param>
                                 </xsl:call-template>
                             </xsl:attribute>
@@ -91,7 +91,7 @@
                             <xsl:attribute name="ElementName">
                                 <xsl:call-template name="CamelCase">
                                     <xsl:with-param name="txt">
-                                        <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                        <xsl:apply-templates select="$R/*:table-cell[position() = $p]/*:p/text()"/>
                                     </xsl:with-param>
                                 </xsl:call-template>
                             </xsl:attribute>
@@ -100,7 +100,7 @@
                             <xsl:attribute name="ProposedSegmentElement">
                                 <xsl:call-template name="CamelCase">
                                     <xsl:with-param name="txt">
-                                        <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                        <xsl:apply-templates select="$R/*:table-cell[position() = $p]/*:p/text()"/>
                                     </xsl:with-param>
                                 </xsl:call-template>
                             </xsl:attribute>
@@ -109,7 +109,7 @@
                             <xsl:attribute name="ProposedSegmentType">
                                 <xsl:call-template name="CamelCase">
                                     <xsl:with-param name="txt">
-                                        <xsl:apply-templates select="$R/*:Cell[position() = $p]/*:Data/text()"/>
+                                        <xsl:apply-templates select="$R/*:table-cell[position() = $p]/*:p/text()"/>
                                     </xsl:with-param>
                                 </xsl:call-template>
                             </xsl:attribute>
