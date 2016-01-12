@@ -249,7 +249,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 <node TEXT="Consolidated" ID="ID_1671451576" CREATED="1452111635605" MODIFIED="1452114116822" VSHIFT="30">
 <font BOLD="true"/>
@@ -278,7 +277,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 </node>
@@ -294,7 +292,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 <node TEXT="SeparateMessages" ID="ID_1152324782" CREATED="1452111652869" MODIFIED="1452114100661" VSHIFT="-8"><richcontent TYPE="DETAILS">
 
@@ -308,7 +305,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 <font BOLD="true"/>
 </node>
@@ -324,7 +320,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 <font BOLD="true"/>
 </node>
@@ -396,7 +391,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 <node TEXT="(2) XML Export" ID="ID_1270052326" CREATED="1452109195501" MODIFIED="1452110659487"><richcontent TYPE="DETAILS">
@@ -411,7 +405,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 <node TEXT="(2) Conversion XSLT" ID="ID_353540863" CREATED="1452058677362" MODIFIED="1452106168682" VSHIFT="10"><richcontent TYPE="DETAILS">
@@ -426,7 +419,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 <node TEXT="(3) XML Resource" ID="ID_1469958833" CREATED="1452062764562" MODIFIED="1452064817830"><richcontent TYPE="DETAILS">
@@ -474,7 +466,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 <node TEXT="(3) XML Resource" ID="ID_1161760396" CREATED="1452062764562" MODIFIED="1452107875956"><richcontent TYPE="DETAILS">
@@ -492,7 +483,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 </node>
@@ -531,18 +521,25 @@
 <node TEXT="(c)  XML Schema, XML resources, and results are all programmed to remain in directories which are defined as symbolic links in order to ensure that restricted information is not included in the project.  It is important to retain this design." ID="ID_592650779" CREATED="1452066373730" MODIFIED="1452114374126"/>
 <node TEXT="(d)  All processes need to be executed in the specified order because each XSLT is designed to consume results of prior XSLT." ID="ID_983001900" CREATED="1452066952564" MODIFIED="1452114382278" VSHIFT="20"/>
 </node>
-<node TEXT="3.  Refactored USMTF XML Schema Generation" POSITION="right" ID="ID_1595577374" CREATED="1452057516613" MODIFIED="1452066000044" VSHIFT="30">
+<node TEXT="3.  Refactored USMTF XML Schema Generation" POSITION="right" ID="ID_1595577374" CREATED="1452057516613" MODIFIED="1452585200492" VSHIFT="30">
 <edge COLOR="#ff00ff"/>
-<node TEXT="a.  Generate Changes XML" ID="ID_463924320" CREATED="1452065932307" MODIFIED="1452114394873" VSHIFT="-10">
-<node TEXT="(1)  Run XSLT: MTFXML/USMTF/XSLT/Deconfliction/SegmentsSpreadsheetToXML.xsl" ID="ID_46924234" CREATED="1452106141909" MODIFIED="1452114561550" VSHIFT="-10"/>
+<node TEXT="a.  Generate Changes XML" ID="ID_463924320" CREATED="1452065932307" MODIFIED="1452585200492" VSHIFT="20">
+<node TEXT="(1)  Run XSLT: MTFXML/USMTF/XSLT/Deconfliction/SegmentsSpreadsheetToXML.xsl" ID="ID_46924234" CREATED="1452106141909" MODIFIED="1452585145049"/>
 <node TEXT="(2)  Run XSLT: MTFXML/USMTF/XSLT/Deconfliction/SetsSpreadsheetToXML.xsl" ID="ID_1623228197" CREATED="1452106187060" MODIFIED="1452107623261"/>
 </node>
-<node TEXT="b." ID="ID_1038478486" CREATED="1452065936327" MODIFIED="1452065945398" VSHIFT="20"/>
+<node TEXT="b." ID="ID_1038478486" CREATED="1452065936327" MODIFIED="1452065945398" VSHIFT="20">
+<node TEXT="(1)  Run XSLT: MTFXML/NATO_MTF/XSLT/APP-11C-GoE/NATO_GoE_fields.xsl" ID="ID_603830278" CREATED="1452583805971" MODIFIED="1452584791841"/>
+<node TEXT="(2)  Run XSLT: MTFXML/NATO_MTF/XSLT/APP-11C-GoE/NATO_GoE_sets.xsl" ID="ID_1056765884" CREATED="1452583808500" MODIFIED="1452584788088"/>
+<node TEXT="(3)  Run XSLT: MTFXML/NATO_MTF/XSLT/APP-11C-GoE/NATO_GoE_segments.xsl" ID="ID_328976642" CREATED="1452583809534" MODIFIED="1452584783955"/>
+<node TEXT="(4)  Run XSLT: MTFXML/NATO_MTF/XSLT/APP-11C-GoE/NATO_GoE_messages.xsl" ID="ID_1618304725" CREATED="1452583810244" MODIFIED="1452584781080"/>
 </node>
-<node TEXT="4.  Refactored NATO XML Schema Generation" POSITION="right" ID="ID_1731516315" CREATED="1452057516613" MODIFIED="1452066029420" VSHIFT="30">
+</node>
+<node TEXT="4.  Refactored NATO XML Schema Generation" POSITION="right" ID="ID_1731516315" CREATED="1452057516613" MODIFIED="1452585135289" VSHIFT="30">
 <edge COLOR="#ff00ff"/>
-<node TEXT="a.  USMTF" ID="ID_1116581390" CREATED="1452065932307" MODIFIED="1452065984634" VSHIFT="-10"/>
-<node TEXT="b." ID="ID_367004354" CREATED="1452065936327" MODIFIED="1452065945398" VSHIFT="20"/>
+<node TEXT="(1)  Run XSLT: MTFXML/USMTF/XSLT/USMTF_GoE/GoE_Fields.xsl" ID="ID_1116581390" CREATED="1452065932307" MODIFIED="1452585132278" VSHIFT="30"/>
+<node TEXT="(2)  Run XSLT: MTFXML/USMTF/XSLT/USMTF_GoE/GoE_Fields.xsl" ID="ID_367004354" CREATED="1452065936327" MODIFIED="1452585135289"/>
+<node TEXT="(3)  Run XSLT: MTFXML/USMTF/XSLT/USMTF_GoE/GoE_Fields.xsl" ID="ID_939061477" CREATED="1452583811060" MODIFIED="1452584604037"/>
+<node TEXT="(4)  Run XSLT: MTFXML/USMTF/XSLT/USMTF_GoE/GoE_Fields.xsl" ID="ID_1529813174" CREATED="1452583811060" MODIFIED="1452585130514" VSHIFT="-30"/>
 </node>
 </node>
 </map>
