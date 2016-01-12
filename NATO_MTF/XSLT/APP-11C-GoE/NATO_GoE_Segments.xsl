@@ -35,7 +35,7 @@
     <!--This process preserves all structure and converts it to desired format with references which will be used in ComplexTypes-->
     <!-- Add id to match msdid and element name with proposed name change list -->
     <xsl:variable name="segment_elements">
-        <xsl:for-each select="$baseline_msgs/*//xsd:element[contains(@name, 'Segment')]">
+        <xsl:for-each select="$baseline_msgs/*//xsd:element[xsd:annotation/xsd:appinfo/*:SegmentStructureName]">
             <xsl:sort select="@name" data-type="text"/>
             <xsl:variable name="mtfid" select="ancestor-or-self::xsd:element[parent::xsd:schema]/xsd:annotation/xsd:appinfo/*:MtfIdentifier"/>
             <xsl:variable name="baseline_name">

@@ -153,7 +153,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <xsl:template match="xsd:element[ends-with(@name, 'Segment')]" mode="ctype">
+    <xsl:template match="xsd:element[xsd:annotation/xsd:appinfo/*:SegmentStructureName]" mode="ctype">
         <xsl:variable name="elname">
             <xsl:value-of select="@name"/>
         </xsl:variable>
@@ -371,9 +371,9 @@
     <xsl:template match="xsd:element[@name = 'MessageIdentifier']" mode="ctype">
         <xsd:element name="MessageIdentifier">
             <xsl:apply-templates select="@*" mode="msgid"/>
-            <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:annotation" mode="msgid"/>
+            <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierSetType']/xsd:annotation" mode="msgid"/>
             <xsd:complexType>
-                <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:complexContent" mode="msgid">
+                <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierSetType']/xsd:complexContent" mode="msgid">
                     <xsl:with-param name="msgid" select="ancestor::xsd:complexType/xsd:attribute[@name = 'mtfid']/@fixed"/>
                 </xsl:apply-templates>
             </xsd:complexType>

@@ -35,7 +35,7 @@
     <!--This process preserves all structure and converts it to desired format with references which will be used in ComplexTypes-->
     <!-- Add id to match msdid and element name with proposed name change list -->
     <xsl:variable name="segment_elements">
-        <xsl:for-each select="$baseline_msgs/*//xsd:element[ends-with(@name, 'Segment') or contains(@name, 'Segment_')]">
+        <xsl:for-each select="$baseline_msgs/*//xsd:element[xsd:annotation/xsd:appinfo/*:SegmentStructureName]">
             <xsl:sort select="@name" data-type="text"/>
             <xsl:variable name="mtfid" select="ancestor-or-self::xsd:element[parent::xsd:schema]/xsd:annotation/xsd:appinfo/*:MtfIdentifier"/>
             <xsl:variable name="baseline_name">
@@ -51,13 +51,13 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
-            <xsl:variable name="SegChange" select="$new_segment_names/USMTF_Segments/Segment[@MTF_NAME = $mtfid and @SegmentElement = $baseline_name]"/>
+            <xsl:variable name="SegChange" select="$new_segment_names/USMTF_Segments/Segment[@MSGIDENTIFIER = $mtfid and @SegmentElement = $baseline_name]"/>
             <xsl:copy copy-namespaces="no">
                 <xsl:attribute name="name">
                     <xsl:choose>
-                        <xsl:when test="$new_segment_names/USMTF_Segments/Segment[@MSG_ID = $mtfid and @SegmentElement = $baseline_name]">
+                        <xsl:when test="$new_segment_names/USMTF_Segments/Segment[@MSG_ID = $mtfid and @SegmentElement = $baseline_name and @ProposedElementName]">
                             <xsl:value-of
-                                select="$new_segment_names/USMTF_Segments/Segment[@MSG_ID = $mtfid and @SegmentElement = $baseline_name]/@ProposedSegmentElement"
+                                select="$new_segment_names/USMTF_Segments/Segment[@MSG_ID = $mtfid and @SegmentElement = $baseline_name]/@ProposedElementName"
                             />
                         </xsl:when>
                         <xsl:otherwise>
@@ -101,11 +101,6 @@
                 <xsl:apply-templates select="*" mode="attr">
                     <xsl:with-param name="SegChange" select="$SegChange"/>
                 </xsl:apply-templates>
-                <xsl:if test="$SegChange/@PROPOSED_SEGMENT_TYPE_DESCRIPTION">
-                    <xsl:attribute name="description">
-                        <xsl:value-of select="$SegChange/@PROPOSED_SEGMENT_TYPE_DESCRIPTION"/>
-                    </xsl:attribute>
-                </xsl:if>
             </xsl:element>
         </xsl:copy>
     </xsl:template>
@@ -198,9 +193,9 @@
                 select="$baseline_sets/xsd:schema/xsd:complexType[@name = concat($elname, 'Type')]/xsd:annotation/xsd:appinfo/*:SetFormatIdentifier"/>
         </xsl:variable>
         <xsl:variable name="newSetName">
-            <xsl:value-of
-                select="concat(translate($new_set_names/USMTF_Sets/Set[@SETNAMESHORT = $setID][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', ''),'Set')"
-            />
+                    <xsl:value-of
+                        select="concat(translate($new_set_names/USMTF_Sets/Set[@SETNAMESHORT = $setID][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', ''),'Set')"
+                    />
         </xsl:variable>
         <xsl:choose>
             <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = $newSetName">
@@ -516,8 +511,8 @@
         <xsl:choose>
             <xsl:when test="$SegChange">
                 <xsl:choose>
-                    <xsl:when test="$SegChange/* and string-length($SegChange/@SEGMENT_NAME) > 0">
-                        <xsl:value-of select="$SegChange/@SEGMENT_NAME"/>
+                    <xsl:when test="$SegChange/* and string-length($SegChange/@ProposedSegmentName) > 0">
+                        <xsl:value-of select="$SegChange/@ProposedSegmentName"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">

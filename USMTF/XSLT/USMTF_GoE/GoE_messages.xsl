@@ -222,7 +222,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <xsl:template match="xsd:element[ends-with(@name, 'Segment')]" mode="ctype">
+    <xsl:template match="xsd:element[xsd:annotation/xsd:appinfo/*:SegmentStructureName]" mode="ctype">
         <xsl:variable name="elname">
             <xsl:value-of select="@name"/>
         </xsl:variable>
@@ -272,7 +272,7 @@
         <xsl:variable name="lparen">&#40;</xsl:variable>
         <xsl:variable name="rparen">&#41;</xsl:variable>
         <xsl:variable name="UseDesc">
-            <xsl:value-of select="translate(upper-case(xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription), '.', '')"/>
+            <xsl:value-of select="normalize-space(translate(upper-case(xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription), '.', ''))"/>
         </xsl:variable>
         <xsl:variable name="TextInd">
             <xsl:value-of select="normalize-space(substring-after($UseDesc, 'MUST EQUAL'))"/>
@@ -333,7 +333,7 @@
         <xsl:variable name="lparen">&#40;</xsl:variable>
         <xsl:variable name="rparen">&#41;</xsl:variable>
         <xsl:variable name="UseDesc">
-            <xsl:value-of select="translate(upper-case(xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription), '.', '')"/>
+            <xsl:value-of select="normalize-space(translate(upper-case(xsd:annotation/xsd:appinfo/*:SetFormatPositionUseDescription), '.', ''))"/>
         </xsl:variable>
         <xsl:variable name="TextInd">
             <xsl:value-of select="normalize-space(substring-after($UseDesc, 'MUST EQUAL'))"/>
@@ -557,9 +557,9 @@
         <xsl:variable name="msgid" select="ancestor::xsd:complexType/xsd:attribute[@name = 'mtfid']/@fixed"/>
         <xsd:element name="MessageIdentifier">
             <xsl:apply-templates select="@*" mode="msgid"/>
-            <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/xsd:annotation" mode="msgid"/>
+            <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierSetType']/xsd:annotation" mode="msgid"/>
             <xsd:complexType>
-                <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierType']/*[not(name() = 'xsd:annotation')]"
+                <xsl:apply-templates select="$sets/xsd:schema/xsd:complexType[@name = 'MessageIdentifierSetType']/*[not(name() = 'xsd:annotation')]"
                     mode="msgid">
                     <xsl:with-param name="msgid" select="$msgid"/>
                 </xsl:apply-templates>

@@ -56,7 +56,7 @@
                     <xsl:value-of select="count($new_set_elements/*)"/>
                 </xsl:attribute>
                 <xsl:for-each select="$new_set_elements/*">
-                    <!--                    <xsl:variable name="n" select="@ElementName"/>
+                    <!--<xsl:variable name="n" select="@ElementName"/>
                     <xsl:if test="not(preceding-sibling::*/@ElementName=$n)">-->
                     <xsl:copy-of select="."/>
                     <!--</xsl:if>-->
@@ -82,7 +82,6 @@
                 <xsl:attribute name="ElementName">
                     <xsl:value-of select="$Elname"/>
                 </xsl:attribute>
-                <!--<xsl:apply-templates select="*:table-cell"/>-->
                 <xsl:apply-templates select="*:table-cell[1]">
                     <xsl:with-param name="pos" select="1"/>
                 </xsl:apply-templates>
@@ -171,7 +170,7 @@
         </xsl:if>
     </xsl:template>
     
-    <xsl:template match="text()">
-        <xsl:value-of select="normalize-space(replace(., '&#34;', ''))"/>
+    <xsl:template match="*:p">
+        <xsl:value-of select="normalize-space(replace(text(), '&#34;', ''))"/>
     </xsl:template>
 </xsl:stylesheet>
