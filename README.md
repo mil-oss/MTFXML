@@ -5,4 +5,4 @@ This project supports collaborative development, configuration management and im
 
 Detailed informration and resources are available at:
 
-https://github.com/mil-oss/MTFXML/wiki/MTFXML-DEVELOPMENT-PAGE
+https://github.com/mil-oss/MTFXML/wiki
