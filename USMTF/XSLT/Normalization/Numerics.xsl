@@ -19,7 +19,7 @@
         <xsl:apply-templates select="$decimals_xsd" mode="dec"/>
     </xsl:variable>
 
-    <xsl:template match="/">
+    <xsl:template name="main">
         <xsl:result-document href="{$integersoutputdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -73,6 +73,7 @@
             <xsl:attribute name="name">
                 <xsl:value-of select="$nm"/>
             </xsl:attribute>
+            <xsl:attribute name="nillable">true</xsl:attribute>
             <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexType>
                 <xsd:simpleContent>
@@ -153,6 +154,7 @@
             <xsl:attribute name="name">
                 <xsl:value-of select="$nm"/>
             </xsl:attribute>
+            <xsl:attribute name="nillable">true</xsl:attribute>
             <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexType>
                 <xsd:simpleContent>

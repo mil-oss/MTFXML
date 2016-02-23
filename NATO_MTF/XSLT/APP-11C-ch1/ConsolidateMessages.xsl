@@ -24,7 +24,7 @@
     <xsl:variable name="MsgList" select="document('../../XML/MessageList.xml')"/>
     <xsl:variable name="ConsolidatedMessagesPath" select="'../../XSD/APP-11C-ch1/Consolidated/messages.xsd'"/>
 
-    <xsl:template match="/">
+    <xsl:template name="main">
         <xsl:result-document method="xml" href="{$ConsolidatedMessagesPath}">
                 <xsd:schema targetNamespace="urn:int:nato:mtf:app-11(c):change01:msgs" 
                     xml:lang="en-GB"

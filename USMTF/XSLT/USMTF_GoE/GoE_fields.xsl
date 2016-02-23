@@ -115,6 +115,7 @@
             <xsl:attribute name="type">
                 <xsl:value-of select="@name"/>
             </xsl:attribute>
+            <xsl:attribute name="nillable">true</xsl:attribute>
         </xsd:element>
     </xsl:template>
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->

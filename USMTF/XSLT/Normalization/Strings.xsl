@@ -105,7 +105,7 @@
 
 
     <!--    OUTPUT RESULT-->
-    <xsl:template match="/">
+    <xsl:template name="main">
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -250,6 +250,7 @@
             <xsl:attribute name="name">
                 <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
             </xsl:attribute>
+            <xsl:attribute name="nillable">true</xsl:attribute>
             <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexType>
                 <xsd:simpleContent>

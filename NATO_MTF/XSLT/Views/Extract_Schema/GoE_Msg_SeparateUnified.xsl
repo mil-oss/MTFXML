@@ -7,7 +7,7 @@
     <xsl:variable name="Fields" select="document('../../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd')"/>
     <xsl:variable name="MsgId" select="'ACSAMSTAT'"/>
     <xsl:variable name="OutDir" select="'../../../XSD/APP-11C-GoE/SeparateMessagesUnified/'"/>
-    <xsl:template name="ExtractAllMessageSchemaUnified">
+    <xsl:template name="main">
         <xsl:param name="outdir" select="$OutDir"/>
         <xsl:for-each select="$Msgs/xsd:schema/xsd:complexType[xsd:annotation/xsd:appinfo/*:Msg/@identifier]">
             <xsl:call-template name="ExtractMessageSchemaUnified">

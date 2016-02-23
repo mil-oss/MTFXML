@@ -146,14 +146,7 @@
             <xsl:with-param name="max" select="@maxOccurs"/>
         </xsl:apply-templates>
     </xsl:template>
-    <xsl:template match="xsd:element[@nillable]">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*"/>
-            <xsl:apply-templates select="text()"/>
-            <xsl:apply-templates select="*"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="xsd:element[not(@nillable)][not(@name = 'GroupOfFields')]">
+    <xsl:template match="xsd:element[not(@name = 'GroupOfFields')]">
         <xsl:variable name="n">
             <xsl:value-of select="@name"/>
         </xsl:variable>
@@ -185,24 +178,28 @@
                             <xsl:attribute name="ref">
                                 <xsl:text>field:RoutingIndicator</xsl:text>
                             </xsl:attribute>
+                            <xsl:apply-templates select="@*[not(name()='name')]"/>
                             <xsl:apply-templates select="xsd:annotation"/>
                         </xsl:when>
                         <xsl:when test="@name = 'Activity'">
                             <xsl:attribute name="ref">
                                 <xsl:text>field:Activity</xsl:text>
                             </xsl:attribute>
+                            <xsl:apply-templates select="@*[not(name()='name')]"/>
                             <xsl:apply-templates select="xsd:annotation"/>
                         </xsl:when>
                         <xsl:when test="@name = 'Event'">
                             <xsl:attribute name="ref">
                                 <xsl:text>field:Event</xsl:text>
                             </xsl:attribute>
+                            <xsl:apply-templates select="@*[not(name()='name')]"/>
                             <xsl:apply-templates select="xsd:annotation"/>
                         </xsl:when>
                         <xsl:when test="$n = $basel and $goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
                             <xsl:attribute name="ref">
                                 <xsl:value-of select="concat('field:', $basel)"/>
                             </xsl:attribute>
+                            <xsl:apply-templates select="@*[not(name()='name')]"/>
                             <xsl:apply-templates select="xsd:annotation"/>
                         </xsl:when>
                         <xsl:when test="$n != $basel and $goe_fields_xsd/xsd:schema/xsd:complexType[@name = $basetype]">
@@ -374,6 +371,7 @@
         </xsl:copy>
     </xsl:template>
     <!--*****************************************************-->
+    <xsl:template match="@nillable"/>
     <xsl:template match="@*" mode="chg"/>
     <!--Replace Data Specified in Deconfliction XML Document-->
     <xsl:template match="@ProposedSetFormatPositionName" mode="chg">

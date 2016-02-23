@@ -26,7 +26,7 @@
     <xsl:variable name="MsgListPath" select="'../../XSD/Normalized/MessageList.xml'"/>
 
 
-    <xsl:template match="/">
+    <xsl:template name="main">
         <xsl:variable name="list">
             <NatoMsgs>
                 <xsl:apply-templates select="$MsgList/*//*:enumeration" mode="msglist"/>

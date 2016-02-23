@@ -38,7 +38,7 @@
         <xsl:apply-templates select="$uniquefields/field" mode="gettypes"/>
     </xsl:variable>
 
-    <xsl:template match="/">
+    <xsl:template name="main">
         <xsl:result-document method="xml" href="{$ConsolidateFieldsPath}">
             <xsd:schema targetNamespace="urn:int:nato:mtf:app-11(c):change01:elementals" 
                 xml:lang="en-GB" 

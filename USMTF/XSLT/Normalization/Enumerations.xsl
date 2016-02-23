@@ -59,7 +59,7 @@
         </xsl:for-each>
     </xsl:variable>
 
-    <xsl:template match="/">
+    <xsl:template name="main">
         <xsl:result-document href="{$enumerationsoutdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
                 xmlns:ism="urn:us:gov:ic:ism:v2"
@@ -91,7 +91,7 @@
                 </xsl:for-each>
                 <xsl:for-each select="$enumelementsandtypes/*[name() = 'xsd:element']">
                     <xsl:sort select="@name"/>
-                    <xsd:element name="{@name}" type="{concat(substring-before(@type,'SimpleType'),'Type')}">
+                    <xsd:element name="{@name}" type="{concat(substring-before(@type,'SimpleType'),'Type')}" nillable="true">
                         <xsl:copy-of select="xsd:annotation"/>
                     </xsd:element>
                 </xsl:for-each>
@@ -249,8 +249,6 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
-
     <xsl:template match="*:FudExplanation" mode="attr"/>
     <xsl:template match="*:Explanation" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
@@ -270,7 +268,6 @@
     <xsl:template match="*:LengthVariable" mode="attr"/>
     <xsl:template match="*:DataItemSponsor" mode="attr"/>
     <xsl:template match="*:DataItemSequenceNumber" mode="attr"/>
-
     <xsl:template match="*" mode="copy">
         <xsl:copy>
             <xsl:apply-templates select="@*" mode="copy"/>

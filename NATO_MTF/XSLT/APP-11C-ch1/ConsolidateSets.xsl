@@ -34,7 +34,7 @@
         </xsl:apply-templates>
     </xsl:variable>
 
-    <xsl:template match="/">
+    <xsl:template name="main">
         <xsl:result-document method="xml" href="{$ConsolidatedSetsPath}">
             <xsd:schema targetNamespace="urn:int:nato:mtf:app-11(c):change01:sets" 
                 xml:lang="en-GB" 
