@@ -130,6 +130,7 @@
             <xsl:attribute name="type">
                 <xsl:value-of select="@name"/>
             </xsl:attribute>
+            <xsl:attribute name="nillable">true</xsl:attribute>
         </xsd:element>
     </xsl:template>
     <!-- ******************** NAME CONFLICTS BETWEEN FIELDS AND COMPOSITES ******************** -->
@@ -147,6 +148,7 @@
             <xsl:attribute name="type">
                 <xsl:text>DutyOtherCodeType</xsl:text>
             </xsl:attribute>
+            <xsl:attribute name="nillable">true</xsl:attribute>
         </xsd:element>
     </xsl:template>
     <xsl:template match="xsd:complexType[@name = 'QRoutePointDesignatorType']">
@@ -163,6 +165,7 @@
             <xsl:attribute name="type">
                 <xsl:text>QRoutePointCodeType</xsl:text>
             </xsl:attribute>
+            <xsl:attribute name="nillable">true</xsl:attribute>
         </xsd:element>
     </xsl:template>
     <!-- ************************************************************************************** -->

@@ -118,14 +118,7 @@
             <xsl:apply-templates select="xsd:complexType/xsd:sequence/*"/>
         </xsd:sequence>
     </xsl:template>
-    <xsl:template match="xsd:element[@nillable]">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*"/>
-            <xsl:apply-templates select="text()"/>
-            <xsl:apply-templates select="*"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="xsd:element[not(@nillable)][not(@name = 'GroupOfFields')]">
+    <xsl:template match="xsd:element[not(@name = 'GroupOfFields')]">
         <xsl:variable name="n">
             <xsl:value-of select="@name"/>
         </xsl:variable>
@@ -358,6 +351,7 @@
         </xsl:copy>
     </xsl:template>
     <!--*****************************************************-->
+    <xsl:template match="@nillable"/>
     <!--Copy element and use template mode to convert elements to attributes in FIELD element-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:param name="doc"/>

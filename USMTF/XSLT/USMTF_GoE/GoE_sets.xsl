@@ -104,8 +104,8 @@
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="SetBaseType">
                     <xsd:sequence>
-                        <xsd:element name="AmplificationSet" type="AmplificationSetType" minOccurs="0" maxOccurs="1"/>
-                        <xsd:element name="NarrativeInformationSet" type="NarrativeInformationSetType" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element ref="AmplificationSet" minOccurs="0" maxOccurs="1"/>
+                        <xsd:element ref="NarrativeInformationSet" minOccurs="0" maxOccurs="1"/>
                     </xsd:sequence>
                     <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                 </xsd:complexType>
