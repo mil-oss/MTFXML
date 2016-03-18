@@ -597,7 +597,7 @@
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="*[@name = 'MessageTextFormatIdentifierType']" mode="msgid"/>
-    <xsl:template match="*[@name = 'VersionOfMessageTextFormat']" mode="msgid">
+<!--    <xsl:template match="*[@name = 'VersionOfMessageTextFormat']" mode="msgid">
         <xsl:param name="msgid"/>
         <xsd:element name="MessageTextFormatIdentifier" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" maxOccurs="1" nillable="true"
             fixed="{$msgid}">
@@ -616,7 +616,7 @@
                 </xsd:appinfo>
             </xsd:annotation>
         </xsd:element>
-    </xsl:template>
+    </xsl:template>-->
     <xsl:template match="*[@name = 'StandardOfMessageTextFormat']" mode="msgid">
         <xsd:element name="Standard" type="field:AlphaNumericBlankSpecialInitDataLoadIDType" minOccurs="1" maxOccurs="1" nillable="true"
             fixed="MIL-STD-6040(SERIES)">
