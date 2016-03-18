@@ -2,14 +2,14 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
     version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:include href="Name_Changes.xsl"/>
+    <xsl:include href="USMTF_Name_Changes.xsl"/>
     <xsl:variable name="Msgs" select="document('../../XSD/GoE_Schema/GoE_messages.xsd')"/>
     <xsl:variable name="Segments" select="document('../../XSD/GoE_Schema/GoE_segments.xsd')"/>
     <xsl:variable name="Sets" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
     <xsl:variable name="Fields" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
-    <xsl:variable name="global_fields_output" select="'../../XSD/Normalized/global_fields.xsd'"/>
-    <xsl:variable name="global_simpleTypes_output" select="'../../XSD/Normalized/global_simpletypes.xsd'"/>
-    <xsl:variable name="global_complexTypes_output" select="'../../XSD/Normalized/global_complextypes.xsd'"/>
+    <xsl:variable name="global_fields_output" select="'../../XSD/Normalized/globalized_set_fields.xsd'"/>
+<!--    <xsl:variable name="global_simpleTypes_output" select="'../../XSD/Normalized/global_simpletypes.xsd'"/>
+    <xsl:variable name="global_complexTypes_output" select="'../../XSD/Normalized/global_complextypes.xsd'"/>-->
     <xsl:variable name="nonGlobals">
         <xsl:apply-templates select="$Sets/*/*//xsd:element[@name]"/>
         <xsl:apply-templates select="$Segments/*/*//xsd:element[@name]"/>
@@ -25,6 +25,7 @@
                 <xsl:text>&#10;</xsl:text>
                 <xsl:for-each select="$nonGlobals/*[@type]">
                     <xsl:sort select="@name"/>
+                    <xsl:sort select="@type"/>
                     <xsl:variable name="n" select="@name"/>
                     <xsl:variable name="t" select="@type"/>
                     <xsl:choose>
@@ -58,7 +59,7 @@
                     <xsl:sort select="@name"/>
                     <xsl:variable name="n" select="@name"/>
                     <xsl:choose>
-                        <xsl:when test="deep-equal($Fields/xsd:schema/xsd:element[@name = $n], .)"/>
+                        <xsl:when test="$Fields/xsd:schema/xsd:element[@name = $n]"/>
                         <xsl:when test="deep-equal(preceding-sibling::xsd:element[@name = $n][1], .)"/>
                         <xsl:otherwise>
                             <xsl:copy-of select="." copy-namespaces="no"/>
