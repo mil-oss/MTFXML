@@ -8,7 +8,7 @@
     <xsl:variable name="Sets" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
     <xsl:variable name="Fields" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
     <xsl:variable name="global_fields_output" select="'../../XSD/Normalized/globalized_fields.xsd'"/>
-<!--    <xsl:variable name="global_simpleTypes_output" select="'../../XSD/Normalized/global_simpletypes.xsd'"/>
+    <!--    <xsl:variable name="global_simpleTypes_output" select="'../../XSD/Normalized/global_simpletypes.xsd'"/>
     <xsl:variable name="global_complexTypes_output" select="'../../XSD/Normalized/global_complextypes.xsd'"/>-->
     <xsl:variable name="nonGlobals">
         <xsl:apply-templates select="$Sets/*//xsd:element[@name]"/>
