@@ -604,13 +604,23 @@
 
     <!--Globals Copy-->
     <xsl:template match="xsd:element[@name]" mode="globalscopy">
-        <xsl:variable name="namechange">
+        <!--<xsl:variable name="namechange">
             <xsl:apply-templates select="." mode="copy"/>
+        </xsl:variable>-->
+        <xsl:variable name="n">
+            <xsl:value-of select="@name"/>
+        </xsl:variable>
+        <xsl:variable name="parentsetname">
+            <xsl:value-of select="substring-before(ancestor::xsd:complexType[1]/@name,'SetType')"/>
         </xsl:variable>
         <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="$namechange/xsd:element/@*" mode="copy"/>
-            <xsl:comment>&#10;***Parent: <xsl:value-of select="ancestor::xsd:complexType[1]/@name"/>***</xsl:comment>
-            <xsl:apply-templates select="$namechange/xsd:element/*" mode="globalscopy"/>
+            <xsl:attribute name="name">
+                <xsl:value-of select="concat($parentsetname,$n)"/>
+            </xsl:attribute>
+            <!--<xsl:apply-templates select="$namechange/xsd:element/@*" mode="copy"/>-->
+            <!--<xsl:comment>&#10;***Parent: <xsl:value-of select="ancestor::xsd:complexType[1]/@name"/>***</xsl:comment>-->
+            <xsl:apply-templates select="@type" mode="copy"/>
+            <xsl:apply-templates select="*" mode="globalscopy"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="*" mode="globalscopy">
@@ -620,6 +630,11 @@
         </xsl:copy>
     </xsl:template>
     <xsl:template match="xsd:documentation" mode="globalscopy"/>
+   
+    <xsl:template match="xsd:element[@name='Amplification'][ancestor::xsd:complexType[1]/@name='ExerciseIdentificationSetType']" mode="globalscopy"/>
+    <xsl:template match="xsd:element[@name='Amplification'][ancestor::xsd:complexType[1]/@name='OperationCodewordSetType']" mode="globalscopy"/>    
+    
+
 
     <!--Refs Copy-->
     <xsl:template match="*" mode="refscopy">
@@ -639,17 +654,38 @@
         </xsl:if>
     </xsl:template>
     <xsl:template match="xsd:complexType/*//xsd:element[@name]" mode="refscopy">
-        <xsl:variable name="namechange">
+        <!--<xsl:variable name="namechange">
             <xsl:apply-templates select="." mode="copy"/>
+        </xsl:variable>-->
+        <xsl:variable name="n">
+            <xsl:value-of select="@name"/>
+        </xsl:variable>
+        <xsl:variable name="parentsetname">
+            <xsl:value-of select="substring-before(ancestor::xsd:complexType[1]/@name,'SetType')"/>
         </xsl:variable>
         <xsd:element>
             <xsl:attribute name="ref">
-                <xsl:value-of select="$namechange/xsd:element/@name"/>
+                <xsl:value-of select="concat($parentsetname,$n)"/>
+                <!--<xsl:value-of select="$namechange/xsd:element/@name"/>-->
             </xsl:attribute>
-            <xsl:apply-templates select="$namechange/xsd:element/@*[not(name() = 'name')][not(name() = 'type')]" mode="copy"/>
-            <xsl:apply-templates select="$namechange/xsd:element/xsd:annotation" mode="copy"/>
+            <xsl:apply-templates select="@*[not(name()='name')][not(name()='type')]" mode="copy"/>
+            <xsl:apply-templates select="xsd:annotation" mode="copy"/>
+            <!--<xsl:apply-templates select="$namechange/xsd:element/@*[not(name() = 'name')][not(name() = 'type')]" mode="copy"/>
+            <xsl:apply-templates select="$namechange/xsd:element/xsd:annotation" mode="copy"/>-->
         </xsd:element>
     </xsl:template>
+
+    <xsl:template match="xsd:complexType[@name='ExerciseIdentificationSetType']/*//xsd:element[@name='Amplification']" mode="refscopy">
+        <xsd:element ref="AmplificationSet">
+            <xsl:apply-templates select="@*[not(name()='name')][not(name()='type')]" mode="copy"/>
+        </xsd:element>
+    </xsl:template>
+    <xsl:template match="xsd:complexType[@name='OperationCodewordSetType']/*//xsd:element[@name='Amplification']" mode="refscopy">
+        <xsd:element ref="AmplificationSet">
+            <xsl:apply-templates select="@*[not(name()='name')][not(name()='type')]" mode="copy"/>
+        </xsd:element>
+    </xsl:template>
+
 
     <!--Copy-->
     <xsl:template match="*" mode="copy">

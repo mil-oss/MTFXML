@@ -356,7 +356,7 @@
         </xsd:element>
     </xsl:template>
     <!--SETS-->
-    <xsl:template match="xsd:element[@name = 'Amplification']">
+    <xsl:template match="xsd:element[@name = 'Amplification'][not(@type)]" mode="copy">
         <xsd:element name="AmplificationSet" type="AmplificationSetType"/>
     </xsl:template>
     <xsl:template match="xsd:element[@name = 'ActivityLocation'][ancestor::xsd:complexType[1]/@name = 'AdditionalSightingsSetType']" mode="copy">
