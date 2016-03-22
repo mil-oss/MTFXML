@@ -12,9 +12,7 @@
     <xsl:variable name="Fields" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
     <xsl:variable name="global_elements_output" select="'../../XSD/Normalized/globalized_set_elements.xsd'"/>
     <xsl:variable name="nonGlobals">
-        <xsl:apply-templates select="$Sets/xsd:schema/*//xsd:element[@name]"/>
-        <!--<xsl:apply-templates select="$Segments/xsd:schema/*//xsd:element[@name]"/>
-        <xsl:apply-templates select="$Msgs/xsd:schema/*//xsd:element[@name]"/>-->
+        <xsl:apply-templates select="$Sets/xsd:schema/xsd:complexType//xsd:element[@name]"/>
     </xsl:variable>
     <xsl:template name="main">
         <xsl:result-document href="{$global_elements_output}">
@@ -30,9 +28,9 @@
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** ComplexTypes **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
-                <xsl:for-each select="$nonGlobals/*[@type]">
+                <xsl:for-each select="$nonGlobals/*">
                     <xsl:sort select="@name"/>
-                    <xsl:sort select="@type"/>
+                    <!--<xsl:sort select="@type"/>
                     <xsl:variable name="n" select="@name"/>
                     <xsl:variable name="t" select="@type"/>
                     <xsl:variable name="b" select=".//xsd:restriction/@base"/>
@@ -59,9 +57,10 @@
                         <xsl:otherwise>
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:otherwise>
-                    </xsl:choose>
+                    </xsl:choose>-->
+                    <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
-                <xsl:for-each select="$nonGlobals/*[not(@type)][not(.//*:Set)][not(.//xsd:choice)]">
+<!--                <xsl:for-each select="$nonGlobals/*[not(@type)][not(.//*:Set)][not(.//xsd:choice)]">
                     <xsl:sort select="@name"/>
                     <xsl:variable name="n" select="@name"/>
                     <xsl:variable name="b" select=".//xsd:restriction/@base"/>
@@ -78,11 +77,11 @@
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                </xsl:for-each>
+                </xsl:for-each>-->
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** Set Globals **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
-                <xsl:for-each select="$nonGlobals/*[not(@type)]">
+<!--                <xsl:for-each select="$nonGlobals/*[not(@type)]">
                     <xsl:sort select="@name"/>
                     <xsl:variable name="n" select="@name"/>
                     <xsl:variable name="b" select=".//xsd:restriction/@base"/>
@@ -100,7 +99,7 @@
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:otherwise>
                     </xsl:choose>
-                </xsl:for-each>
+                </xsl:for-each>-->
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>

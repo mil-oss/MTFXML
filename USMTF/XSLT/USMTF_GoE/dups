@@ -1,0 +1,2637 @@
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ActivityType'.
+Start location: 149684:22
+End location: 149684:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ActivityType'.
+Start location: 149714:22
+End location: 149714:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ActivityType'.
+Start location: 149725:22
+End location: 149725:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftType'.
+Start location: 151705:22
+End location: 151705:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftType'.
+Start location: 151744:22
+End location: 151744:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftType'.
+Start location: 151792:22
+End location: 151792:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftType'.
+Start location: 151822:22
+End location: 151822:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftType'.
+Start location: 151852:22
+End location: 151852:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftType'.
+Start location: 151882:22
+End location: 151882:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftType'.
+Start location: 151912:22
+End location: 151912:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftType'.
+Start location: 151942:22
+End location: 151942:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AircraftTypeAndModel'.
+Start location: 152002:22
+End location: 152002:44
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AlertStatus'.
+Start location: 152557:22
+End location: 152557:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AlertStatus'.
+Start location: 152587:22
+End location: 152587:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AlertStatus'.
+Start location: 152617:22
+End location: 152617:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Altitude'.
+Start location: 153212:22
+End location: 153212:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Altitude'.
+Start location: 153242:22
+End location: 153242:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Altitude'.
+Start location: 153281:22
+End location: 153281:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Altitude'.
+Start location: 153311:22
+End location: 153311:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AmplificationSet'.
+Start location: 153711:22
+End location: 153711:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ArrivalDateTime'.
+Start location: 154918:22
+End location: 154918:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,AssetMissionType'.
+Start location: 155370:22
+End location: 155370:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,CallSign'.
+Start location: 157359:22
+End location: 157359:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,CargoCubicSize'.
+Start location: 157868:22
+End location: 157868:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,CloudRadius'.
+Start location: 159208:22
+End location: 159208:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,CountOfEnemyEquipment'.
+Start location: 162452:22
+End location: 162452:45
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,CountOfEnemyTargets'.
+Start location: 162517:22
+End location: 162517:43
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,CountOfShips'.
+Start location: 162757:22
+End location: 162757:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,DayTime'.
+Start location: 164600:22
+End location: 164600:31
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,DayTimeGroupZulu'.
+Start location: 164761:22
+End location: 164761:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,DeploymentDate'.
+Start location: 165689:22
+End location: 165689:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,DmpiLocation'.
+Start location: 167311:22
+End location: 167311:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,DownwindDirectionOfRadioactiveCloud'.
+Start location: 167514:22
+End location: 167514:59
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,DownwindDistanceOfZone1'.
+Start location: 167555:22
+End location: 167555:47
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EffectiveTime'.
+Start location: 168359:22
+End location: 168359:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ElintNotationOrSortingCode'.
+Start location: 168754:22
+End location: 168754:50
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EmitterLocation'.
+Start location: 169188:22
+End location: 169188:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EmitterLocation'.
+Start location: 169236:22
+End location: 169236:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EndPosition'.
+Start location: 170057:22
+End location: 170057:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EndTime'.
+Start location: 170117:22
+End location: 170117:31
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EndTime'.
+Start location: 170147:22
+End location: 170147:31
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EnemyUnitLocation'.
+Start location: 170923:22
+End location: 170923:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EnemyWeaponType'.
+Start location: 171040:22
+End location: 171040:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EquipmentLocation'.
+Start location: 171505:22
+End location: 171505:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EquipmentLocation'.
+Start location: 171544:22
+End location: 171544:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,EquipmentLocation'.
+Start location: 171583:22
+End location: 171583:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Frequency'.
+Start location: 175044:22
+End location: 175044:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Frequency'.
+Start location: 175083:22
+End location: 175083:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Frequency'.
+Start location: 175113:22
+End location: 175113:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Frequency'.
+Start location: 175152:22
+End location: 175152:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Frequency'.
+Start location: 175182:22
+End location: 175182:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Frequency'.
+Start location: 175212:22
+End location: 175212:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,FriendlyUnitLocation'.
+Start location: 175837:22
+End location: 175837:44
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,FriendlyUnitLocation'.
+Start location: 175876:22
+End location: 175876:44
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,GridZone'.
+Start location: 176706:22
+End location: 176706:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,HullNumber'.
+Start location: 178072:22
+End location: 178072:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,IncidentLocation'.
+Start location: 178566:22
+End location: 178566:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,InnerRadiusInNauticalMiles'.
+Start location: 179054:22
+End location: 179054:50
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,IntervalSpacingDistanceFtYdNmMKmKyd'.
+Start location: 179640:22
+End location: 179640:59
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LeftRadialLine'.
+Start location: 181273:22
+End location: 181273:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LoadType'.
+Start location: 182129:22
+End location: 182129:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LoadType'.
+Start location: 182159:22
+End location: 182159:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182292:22
+End location: 182292:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182331:22
+End location: 182331:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182352:22
+End location: 182352:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182481:22
+End location: 182481:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182610:22
+End location: 182610:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182649:22
+End location: 182649:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182751:22
+End location: 182751:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182781:22
+End location: 182781:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182820:22
+End location: 182820:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182850:22
+End location: 182850:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182907:22
+End location: 182907:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Location'.
+Start location: 182955:22
+End location: 182955:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LocationDesignator'.
+Start location: 183153:22
+End location: 183153:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LocationOfEvent'.
+Start location: 183824:22
+End location: 183824:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LocationOfEvent'.
+Start location: 183881:22
+End location: 183881:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LocationOfTarget'.
+Start location: 184922:22
+End location: 184922:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LowerAltitudeLimit'.
+Start location: 185357:22
+End location: 185357:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LowerElectronicAttackFrequency'.
+Start location: 185417:22
+End location: 185417:54
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LowerFrequency'.
+Start location: 185469:22
+End location: 185469:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,LowerFrequency'.
+Start location: 185480:22
+End location: 185480:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,MissileType'.
+Start location: 188346:22
+End location: 188346:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Name'.
+Start location: 189885:22
+End location: 189885:28
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Nationality'.
+Start location: 190075:22
+End location: 190075:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,NetTime'.
+Start location: 190491:22
+End location: 190491:31
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,NetTimeOnTarget'.
+Start location: 190532:22
+End location: 190532:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,NltTime'.
+Start location: 190933:22
+End location: 190933:31
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,NltTime'.
+Start location: 190963:22
+End location: 190963:31
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,NumberAndTypeModelOfAircraft'.
+Start location: 191705:22
+End location: 191705:52
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,NumberAndTypeOfAircraft'.
+Start location: 191749:22
+End location: 191749:47
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,NumberOfDeliverySystems'.
+Start location: 192489:22
+End location: 192489:47
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ObserverSLocation'.
+Start location: 193690:22
+End location: 193690:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OffloadLocation'.
+Start location: 193878:22
+End location: 193878:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OffloadLocation'.
+Start location: 193926:22
+End location: 193926:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OffloadLocation'.
+Start location: 193956:22
+End location: 193956:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OnloadLocation'.
+Start location: 194376:22
+End location: 194376:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OnloadLocation'.
+Start location: 194433:22
+End location: 194433:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OnloadLocation'.
+Start location: 194481:22
+End location: 194481:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OrdnanceType'.
+Start location: 194975:22
+End location: 194975:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OrdnanceType'.
+Start location: 195014:22
+End location: 195014:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Organization'.
+Start location: 195096:22
+End location: 195096:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OriginOfBearing'.
+Start location: 195296:22
+End location: 195296:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,OuterRadiusInNauticalMiles'.
+Start location: 195487:22
+End location: 195487:50
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PlatformName'.
+Start location: 196942:22
+End location: 196942:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Position'.
+Start location: 197271:22
+End location: 197271:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Position'.
+Start location: 197310:22
+End location: 197310:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Position'.
+Start location: 197358:22
+End location: 197358:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Position'.
+Start location: 197487:22
+End location: 197487:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PositionOfContact'.
+Start location: 197684:22
+End location: 197684:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PositionOrPoint'.
+Start location: 197774:22
+End location: 197774:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PositionOrientation'.
+Start location: 197969:22
+End location: 197969:43
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PresentLocation'.
+Start location: 198615:22
+End location: 198615:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryCommunicationParameters'.
+Start location: 198855:22
+End location: 198855:54
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryCommunicationParameters'.
+Start location: 198993:22
+End location: 198993:54
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryFrequency'.
+Start location: 199300:22
+End location: 199300:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryFrequency'.
+Start location: 199330:22
+End location: 199330:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryFrequency'.
+Start location: 199369:22
+End location: 199369:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryFrequency'.
+Start location: 199408:22
+End location: 199408:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryFrequency'.
+Start location: 199438:22
+End location: 199438:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryFrequency'.
+Start location: 199468:22
+End location: 199468:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryIdentifier'.
+Start location: 199696:22
+End location: 199696:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryIdentifier'.
+Start location: 199753:22
+End location: 199753:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,PrimaryMissionType'.
+Start location: 199967:22
+End location: 199967:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Priority'.
+Start location: 200174:22
+End location: 200174:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Priority'.
+Start location: 200204:22
+End location: 200204:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Priority'.
+Start location: 200252:22
+End location: 200252:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RadioFrequency'.
+Start location: 201666:22
+End location: 201666:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RadioFrequency'.
+Start location: 201696:22
+End location: 201696:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RadioFrequency'.
+Start location: 201726:22
+End location: 201726:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ReceiverLocation'.
+Start location: 202628:22
+End location: 202628:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RegistrationIdentification'.
+Start location: 203400:22
+End location: 203400:50
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RendezvousPosition'.
+Start location: 204667:22
+End location: 204667:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RendezvousTime'.
+Start location: 204745:22
+End location: 204745:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ReportInPoint'.
+Start location: 204927:22
+End location: 204927:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RepresentativeDownwindDirection'.
+Start location: 205450:22
+End location: 205450:55
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RequiredDeliveryDate'.
+Start location: 205651:22
+End location: 205651:44
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ResourceIdentification'.
+Start location: 205920:22
+End location: 205920:46
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ResourceIdentification'.
+Start location: 205977:22
+End location: 205977:46
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ResourceLocation'.
+Start location: 206046:22
+End location: 206046:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RightRadialLine'.
+Start location: 206495:22
+End location: 206495:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,RoutePoint'.
+Start location: 206873:22
+End location: 206873:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SecondaryCommunicationParameters'.
+Start location: 208676:22
+End location: 208676:56
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SecondaryCommunicationParameters'.
+Start location: 208724:22
+End location: 208724:56
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SecondaryCommunicationParameters'.
+Start location: 208772:22
+End location: 208772:56
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SecondaryCommunicationParameters'.
+Start location: 208910:22
+End location: 208910:56
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SecondaryFrequency'.
+Start location: 209198:22
+End location: 209198:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SecondaryFrequency'.
+Start location: 209237:22
+End location: 209237:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SecondaryFrequency'.
+Start location: 209267:22
+End location: 209267:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SensorLocation'.
+Start location: 210321:22
+End location: 210321:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SensorType'.
+Start location: 210395:22
+End location: 210395:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ShipIdentification'.
+Start location: 210701:22
+End location: 210701:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ShipIdentity'.
+Start location: 210761:22
+End location: 210761:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ShipIdentity'.
+Start location: 210827:22
+End location: 210827:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ShipLocation'.
+Start location: 210905:22
+End location: 210905:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ShipLocation'.
+Start location: 211034:22
+End location: 211034:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ShipName'.
+Start location: 211106:22
+End location: 211106:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,ShipOrAircraftType'.
+Start location: 211308:22
+End location: 211308:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SpeedOfAdvance'.
+Start location: 212752:22
+End location: 212752:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartLocation'.
+Start location: 213056:22
+End location: 213056:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartLocation'.
+Start location: 213095:22
+End location: 213095:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartPosition'.
+Start location: 213321:22
+End location: 213321:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartPosition'.
+Start location: 213369:22
+End location: 213369:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartTime'.
+Start location: 213421:22
+End location: 213421:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartTime'.
+Start location: 213432:22
+End location: 213432:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartTime'.
+Start location: 213471:22
+End location: 213471:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartTime'.
+Start location: 213501:22
+End location: 213501:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StartTime'.
+Start location: 213540:22
+End location: 213540:33
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StationLocation'.
+Start location: 213715:22
+End location: 213715:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StationLocation'.
+Start location: 213763:22
+End location: 213763:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StationLocation'.
+Start location: 213802:22
+End location: 213802:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StopLocation'.
+Start location: 214093:22
+End location: 214093:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StopLocation'.
+Start location: 214132:22
+End location: 214132:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StopLocation'.
+Start location: 214171:22
+End location: 214171:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StopTime'.
+Start location: 214260:22
+End location: 214260:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StopTime'.
+Start location: 214290:22
+End location: 214290:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StopTime'.
+Start location: 214320:22
+End location: 214320:32
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,StrikeLocation'.
+Start location: 214482:22
+End location: 214482:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SubjectIdentifier'.
+Start location: 214817:22
+End location: 214817:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SubmarineContactDesignator'.
+Start location: 215206:22
+End location: 215206:50
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SubordinateReportingUnitIdentificationCode'.
+Start location: 215836:22
+End location: 215836:66
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SubstanceReleaseHeight'.
+Start location: 216151:22
+End location: 216151:46
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SupportingUnitLocation'.
+Start location: 217339:22
+End location: 217339:46
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,SupportingUnitLocation'.
+Start location: 217378:22
+End location: 217378:46
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Target'.
+Start location: 218128:22
+End location: 218128:30
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetDescription'.
+Start location: 218336:22
+End location: 218336:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 218869:22
+End location: 218869:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 218955:22
+End location: 218955:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219050:22
+End location: 219050:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219145:22
+End location: 219145:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219184:22
+End location: 219184:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219214:22
+End location: 219214:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219300:22
+End location: 219300:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219339:22
+End location: 219339:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219369:22
+End location: 219369:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219399:22
+End location: 219399:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219469:22
+End location: 219469:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219508:22
+End location: 219508:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219538:22
+End location: 219538:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219633:22
+End location: 219633:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219663:22
+End location: 219663:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetIdentifier'.
+Start location: 219711:22
+End location: 219711:40
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetLocation'.
+Start location: 219922:22
+End location: 219922:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetLocation'.
+Start location: 219961:22
+End location: 219961:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetLocation'.
+Start location: 219982:22
+End location: 219982:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetLocation'.
+Start location: 220012:22
+End location: 220012:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetLocation'.
+Start location: 220159:22
+End location: 220159:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetLocation'.
+Start location: 220216:22
+End location: 220216:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetLocation'.
+Start location: 220246:22
+End location: 220246:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetPosition'.
+Start location: 220527:22
+End location: 220527:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetType'.
+Start location: 220720:22
+End location: 220720:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TargetType'.
+Start location: 220750:22
+End location: 220750:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TgtName'.
+Start location: 221776:22
+End location: 221776:31
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TgtPosition'.
+Start location: 221903:22
+End location: 221903:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Time'.
+Start location: 222385:22
+End location: 222385:28
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOfPosition'.
+Start location: 222811:22
+End location: 222811:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOfPosition'.
+Start location: 222841:22
+End location: 222841:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOfPosition'.
+Start location: 222852:22
+End location: 222852:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOfPosition'.
+Start location: 222882:22
+End location: 222882:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOfPosition'.
+Start location: 222921:22
+End location: 222921:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOfReturnToOperation'.
+Start location: 223009:22
+End location: 223009:47
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOfReturnToOperation'.
+Start location: 223048:22
+End location: 223048:47
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOff'.
+Start location: 223189:22
+End location: 223189:31
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOn'.
+Start location: 223297:22
+End location: 223297:30
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOnTarget'.
+Start location: 223396:22
+End location: 223396:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOnTarget'.
+Start location: 223407:22
+End location: 223407:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOnTarget'.
+Start location: 223455:22
+End location: 223455:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TimeOnTarget'.
+Start location: 223485:22
+End location: 223485:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TracePoint'.
+Start location: 224506:22
+End location: 224506:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TrackLocation'.
+Start location: 225003:22
+End location: 225003:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TrackNumberBlockOrPoolAllocation'.
+Start location: 225074:22
+End location: 225074:56
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TypeOfAircraft'.
+Start location: 226015:22
+End location: 226015:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TypeOfAsset'.
+Start location: 226102:22
+End location: 226102:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,TypeOfAsset'.
+Start location: 226177:22
+End location: 226177:35
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Unit'.
+Start location: 226879:22
+End location: 226879:28
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Unit'.
+Start location: 226909:22
+End location: 226909:28
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227016:22
+End location: 227016:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227035:22
+End location: 227035:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227092:22
+End location: 227092:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227140:22
+End location: 227140:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227179:22
+End location: 227179:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227236:22
+End location: 227236:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227293:22
+End location: 227293:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227350:22
+End location: 227350:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227407:22
+End location: 227407:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227464:22
+End location: 227464:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227521:22
+End location: 227521:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227578:22
+End location: 227578:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227635:22
+End location: 227635:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227654:22
+End location: 227654:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignation'.
+Start location: 227684:22
+End location: 227684:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignator'.
+Start location: 227811:22
+End location: 227811:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitDesignator'.
+Start location: 227841:22
+End location: 227841:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentification'.
+Start location: 228018:22
+End location: 228018:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentification'.
+Start location: 228068:22
+End location: 228068:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentification'.
+Start location: 228107:22
+End location: 228107:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentification'.
+Start location: 228137:22
+End location: 228137:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentification'.
+Start location: 228167:22
+End location: 228167:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228227:22
+End location: 228227:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228277:22
+End location: 228277:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228325:22
+End location: 228325:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228355:22
+End location: 228355:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228385:22
+End location: 228385:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228433:22
+End location: 228433:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228463:22
+End location: 228463:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228493:22
+End location: 228493:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228523:22
+End location: 228523:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228553:22
+End location: 228553:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228583:22
+End location: 228583:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitIdentifier'.
+Start location: 228613:22
+End location: 228613:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitLocation'.
+Start location: 228749:22
+End location: 228749:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitLocation'.
+Start location: 228862:22
+End location: 228862:36
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitLocationLatLongMinutes'.
+Start location: 228922:22
+End location: 228922:50
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UnitReferenceNumber'.
+Start location: 229353:22
+End location: 229353:43
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UpperAltitudeLimit'.
+Start location: 229589:22
+End location: 229589:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UpperAltitudeLimit'.
+Start location: 229619:22
+End location: 229619:42
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UpperDepthLimit'.
+Start location: 229679:22
+End location: 229679:39
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UpperElectronicAttackFrequency'.
+Start location: 229739:22
+End location: 229739:54
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UpperFrequency'.
+Start location: 229791:22
+End location: 229791:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,UpperFrequency'.
+Start location: 229802:22
+End location: 229802:38
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,Utm1MeterNorthing'.
+Start location: 230011:22
+End location: 230011:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,VerifiedCourseDirectionAndSpeed'.
+Start location: 230300:22
+End location: 230300:55
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,VerifiedCourseSpeedInKnots'.
+Start location: 230324:22
+End location: 230324:50
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,VerticalDimension'.
+Start location: 230629:22
+End location: 230629:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,VerticalDimension'.
+Start location: 230695:22
+End location: 230695:41
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,WeaponType'.
+Start location: 231230:22
+End location: 231230:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,WeaponType'.
+Start location: 231249:22
+End location: 231249:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,WeaponType'.
+Start location: 231279:22
+End location: 231279:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,WeaponType'.
+Start location: 231336:22
+End location: 231336:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,WeaponType'.
+Start location: 231393:22
+End location: 231393:34
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,WindDirection'.
+Start location: 231699:22
+End location: 231699:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,WindDirection'.
+Start location: 231738:22
+End location: 231738:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
+System ID: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Main validation file: /home/jdn/Work/Development/GITHUB/MTFXML/USMTF/XSD/GoE_Schema/GoE_sets.xsd
+Engine name: Xerces
+Severity: error
+Description: sch-props-correct.2: A schema cannot contain two global components with the same name; this schema contains two occurrences of 'urn:mtf:mil:6040b:goe:sets,WindDirection'.
+Start location: 231768:22
+End location: 231768:37
+URL: http://www.w3.org/TR/xmlschema-1/#sch-props-correct
+
