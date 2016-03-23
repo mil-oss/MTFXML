@@ -101,6 +101,7 @@
             <xsl:sort select="@name"/>
         </xsl:apply-templates>
         <xsd:element name="BlankSpaceCharacter" type="BlankSpaceType"/>
+        <xsd:element name="FreeText" type="FreeTextType" nillable="true"/>
     </xsl:variable>
 
 
@@ -392,7 +393,7 @@
     
 
     <!-- ******************** FILTERS ******************** -->
-    <xsl:template match="*[@name = 'FreeTextType']"/>
+    <!--<xsl:template match="*[@name = 'FreeTextType']"/>-->
     <xsl:template match="*[@name = 'FreeTextBaseType']" mode="el"/>
     <xsl:template match="*[@name = 'FreeTextBase']" mode="el"/>
     <xsl:template match="*[@name = 'BlankSpaceCharacterType']"/>
