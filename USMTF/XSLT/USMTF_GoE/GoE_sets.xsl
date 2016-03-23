@@ -19,7 +19,6 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:include href="../Normalization/USMTF_Name_Changes.xsl"/>
     <!--  This XSLT refactors baseline USMTF "fields" XML Schema by replacing annotation elements
     with attributes, removing unused elements and other adjustments-->
     <!--Fields from the baseline Composites XML Schema are also included as ComplexTypes in accordance with the intent to 
@@ -27,11 +26,13 @@
     type references are converted to local.-->
     <!--Baseline Fields XML Schema document-->
     <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
-    <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
+    <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields_Initial.xsd')"/>
     <!--Set deconfliction and annotation changes-->
     <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
-    <xsl:variable name="output" select="'../../XSD/GoE_Schema/GoE_sets.xsd'"/>
-    <!--Root level complexTypes-->
+    <xsl:variable name="sets_output" select="'../../XSD/GoE_Schema/GoE_sets.xsd'"/>
+    <xsl:variable name="fields_output" select="'../../XSD/GoE_Schema/GoE_fields.xsd'"/>
+    
+    <!--Create root level complexTypes-->
     <xsl:variable name="complex_types">
         <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')]">
             <xsl:variable name="elname">
@@ -62,10 +63,8 @@
             </xsd:complexType>
         </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="complex_types_globalized">
-        <xsl:apply-templates select="$complex_types/*" mode="refscopy"/>
-    </xsl:variable>
-    <!--Root level elements-->
+
+    <!--Create root level set Elements based on complexTypes-->
     <xsl:variable name="global_elements">
         <xsl:for-each select="$complex_types/xsd:complexType">
             <xsl:variable name="elname">
@@ -94,10 +93,56 @@
             </xsd:element>
         </xsl:for-each>
     </xsl:variable>
-    <!--Global SimpleTypes-->
+ 
+    <!--Create root level Elements from non-global elements in complexTypes-->
     <xsl:variable name="globalized_elements">
-        <xsl:apply-templates select="$complex_types//xsd:element[@name]" mode="globalscopy"/>
+        <xsl:apply-templates select="$complex_types//xsd:element[@name]" mode="non-globals"/>
     </xsl:variable>
+    
+    <!--Create root level Elements from non-global elements in complexTypes-->
+    <xsl:variable name="normalized_globalized_elements">
+        <xsl:for-each select="$globalized_elements/*">
+            <xsl:sort select="@name"/>
+            <xsl:variable name="e">
+                <xsl:copy-of select="./xsd:element"/>
+            </xsl:variable>
+            <xsl:variable name="n">
+                <xsl:value-of select="./xsd:element/@name"/>
+            </xsl:variable>
+            <xsl:variable name="p">
+                <xsl:value-of select="@parent"/>
+            </xsl:variable>
+            <xsl:choose>
+                <!--Omit all but last occurrence of duplicate nodes-->
+                <xsl:when test="deep-equal(preceding-sibling::*[1]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[2]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[3]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[4]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[5]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[6]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[7]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[8]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[9]/xsd:element,$e)"/>
+                <xsl:when test="deep-equal(preceding-sibling::*[10]/xsd:element,$e)"/>
+                <!--Same name - diferrent content - rename by concatenating parent name-->
+                <xsl:when test="preceding-sibling::*[1]/xsd:element/@name = $n">
+                    <xsd:element name="{concat(substring-before($p,'SetType'),$n)}">
+                        <xsl:copy-of select="./xsd:element/@type"/>
+                        <xsl:apply-templates select="./xsd:element/*" mode="globalscopy"/>
+                    </xsd:element>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="./xsd:element"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:variable>
+         
+    <xsl:variable name="complex_types_globalized">
+        <xsl:apply-templates select="$complex_types/*" mode="refscopy"/>
+    </xsl:variable>
+    
+    
     <!--Global Subsets-->
     <xsl:variable name="all_global_elements">
         <xsl:copy-of select="$global_elements"/>
@@ -105,34 +150,25 @@
     </xsl:variable>
     <!--*****************************************************-->
     <xsl:template name="main">
-        <xsl:result-document href="{$output}">
+        <xsl:result-document href="{$sets_output}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2"
                 targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
-                <xsd:complexType name="SetBaseType">
+                <!--<xsd:complexType name="SetBaseType">
                     <xsd:sequence>
                         <xsd:element ref="AmplificationSet" minOccurs="0" maxOccurs="1"/>
                         <xsd:element ref="NarrativeInformationSet" minOccurs="0" maxOccurs="1"/>
                     </xsd:sequence>
                     <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-                </xsd:complexType>
-                <xsl:for-each select="$complex_types_globalized/*">
+                </xsd:complexType>-->
+                <!--<xsl:for-each select="$complex_types_globalized/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="." copy-namespaces="no"/>
-                </xsl:for-each>
-                <xsl:for-each select="$all_global_elements/*">
+                </xsl:for-each>-->
+                <xsl:for-each select="$normalized_globalized_elements/*">
                     <xsl:sort select="@name"/>
-                    <xsl:variable name="n" select="@name"/>
-                    <xsl:choose>
-                        <xsl:when test="deep-equal(preceding-sibling::xsd:element[@name = $n][1], .)"/>
-                        <xsl:when test="deep-equal(preceding-sibling::xsd:element[@name = $n][2], .)"/>
-                        <xsl:when test="deep-equal(preceding-sibling::xsd:element[@name = $n][3], .)"/>
-                        <xsl:when test="deep-equal(preceding-sibling::xsd:element[@name = $n][4], .)"/>
-                        <xsl:otherwise>
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
             </xsd:schema>
         </xsl:result-document>
@@ -181,6 +217,13 @@
         <xsl:variable name="basel" select="substring($basetype, 0, string-length($basetype) - 3)"/>
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
+                <xsl:when test="@name = 'Amplification'">
+                    <xsl:attribute name="ref">
+                        <xsl:text>AmplificationSet</xsl:text>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="@*[not(name() = 'name')]"/>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                </xsl:when>
                 <xsl:when test="@name = 'RoutingIndicator'">
                     <xsl:attribute name="ref">
                         <xsl:text>field:RoutingIndicator</xsl:text>
@@ -369,7 +412,101 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
+   
     <!--*****************************************************-->
+    
+    <!--Non-Globals-->
+    <!--Create a list of XML nodes containing XSD elements with parent info for use in naming de-confliction-->
+    <xsl:template match="xsd:element[@name]" mode="non-globals">
+        <xsl:variable name="parent">
+            <xsl:value-of select="substring-before(ancestor::xsd:complexType[1]/@name,'SetType')"/>
+        </xsl:variable>
+        <xsl:variable name="n">
+            <xsl:value-of select="@name"/>
+        </xsl:variable>
+        <Global node="{$n}" parent="{$parent}">
+            <xsl:apply-templates select="." mode="globalscopy"/>
+        </Global>
+    </xsl:template>
+    <xsl:template match="*" mode="globalscopy">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:apply-templates select="*" mode="globalscopy"/>
+        </xsl:copy>
+    </xsl:template>
+    <!--    Leave documentation out of globals..-->
+    <xsl:template match="xsd:documentation" mode="globalscopy"/>
+    
+        <!--*****************************************************-->
+        
+    <!--Refs Copy-->
+    <xsl:template match="*" mode="refscopy">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*" mode="refscopy"/>
+            <xsl:apply-templates select="*" mode="refscopy"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@*" mode="refscopy">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="xsd:documentation" mode="refscopy">
+        <xsl:if test="string-length(normalize-space(text())) &gt; 0">
+            <xsl:copy copy-namespaces="no">
+                <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
+            </xsl:copy>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="xsd:complexType/*//xsd:element[@name]" mode="refscopy">
+        <!--<xsl:variable name="namechange">
+            <xsl:apply-templates select="." mode="copy"/>
+        </xsl:variable>-->
+        <xsl:variable name="n">
+            <xsl:value-of select="@name"/>
+        </xsl:variable>
+        <xsl:variable name="parentsetname">
+            <xsl:value-of select="substring-before(ancestor::xsd:complexType[1]/@name,'SetType')"/>
+        </xsl:variable>
+        <xsd:element>
+            <xsl:attribute name="ref">
+                <xsl:value-of select="concat($parentsetname,$n)"/>
+                <!--<xsl:value-of select="$namechange/xsd:element/@name"/>-->
+            </xsl:attribute>
+            <xsl:apply-templates select="@*[not(name()='name')][not(name()='type')]" mode="copy"/>
+            <xsl:apply-templates select="xsd:annotation" mode="copy"/>
+            <!--<xsl:apply-templates select="$namechange/xsd:element/@*[not(name() = 'name')][not(name() = 'type')]" mode="copy"/>
+            <xsl:apply-templates select="$namechange/xsd:element/xsd:annotation" mode="copy"/>-->
+        </xsd:element>
+    </xsl:template>
+
+    <!--Copy-->
+    <xsl:template match="*" mode="copy">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*" mode="copy"/>
+            <xsl:apply-templates select="*" mode="copy"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@*" mode="copy">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="xsd:documentation" mode="copy">
+        <xsl:if test="string-length(normalize-space(text())) &gt; 0">
+            <xsl:copy copy-namespaces="no">
+                <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
+            </xsl:copy>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="@minOccurs" mode="copy"/>
+    <xsl:template match="@maxOccurs" mode="copy"/>
+    <xsl:template match="@nillable" mode="copy"/>
+    
+    <!--<xsl:template match="@fixed" mode="copy"/>-->
+    <xsl:template match="@ColumnHeader" mode="copy"/>
+    <xsl:template match="@identifier" mode="copy"/>
+    <xsl:template match="@Justification" mode="copy"/>
+    <xsl:template match="@remark" mode="copy"/>
+    
+    <!--*****************************************************-->
+    
     <xsl:template match="@nillable"/>
     <xsl:template match="@*" mode="chg"/>
     <!--Replace Data Specified in Deconfliction XML Document-->
@@ -602,115 +739,4 @@
     <xsl:template match="xsd:restriction[@base = 'xsd:string']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
 
-    <!--Globals Copy-->
-    <xsl:template match="xsd:element[@name]" mode="globalscopy">
-        <!--<xsl:variable name="namechange">
-            <xsl:apply-templates select="." mode="copy"/>
-        </xsl:variable>-->
-        <xsl:variable name="n">
-            <xsl:value-of select="@name"/>
-        </xsl:variable>
-        <xsl:variable name="parentsetname">
-            <xsl:value-of select="substring-before(ancestor::xsd:complexType[1]/@name,'SetType')"/>
-        </xsl:variable>
-        <xsl:copy copy-namespaces="no">
-            <xsl:attribute name="name">
-                <xsl:value-of select="concat($parentsetname,$n)"/>
-            </xsl:attribute>
-            <!--<xsl:apply-templates select="$namechange/xsd:element/@*" mode="copy"/>-->
-            <!--<xsl:comment>&#10;***Parent: <xsl:value-of select="ancestor::xsd:complexType[1]/@name"/>***</xsl:comment>-->
-            <xsl:apply-templates select="@type" mode="copy"/>
-            <xsl:apply-templates select="*" mode="globalscopy"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="*" mode="globalscopy">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*" mode="copy"/>
-            <xsl:apply-templates select="*" mode="globalscopy"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="xsd:documentation" mode="globalscopy"/>
-   
-    <xsl:template match="xsd:element[@name='Amplification'][ancestor::xsd:complexType[1]/@name='ExerciseIdentificationSetType']" mode="globalscopy"/>
-    <xsl:template match="xsd:element[@name='Amplification'][ancestor::xsd:complexType[1]/@name='OperationCodewordSetType']" mode="globalscopy"/>    
-    
-
-
-    <!--Refs Copy-->
-    <xsl:template match="*" mode="refscopy">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*" mode="refscopy"/>
-            <xsl:apply-templates select="*" mode="refscopy"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="@*" mode="refscopy">
-        <xsl:copy-of select="."/>
-    </xsl:template>
-    <xsl:template match="xsd:documentation" mode="refscopy">
-        <xsl:if test="string-length(normalize-space(text())) &gt; 0">
-            <xsl:copy copy-namespaces="no">
-                <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
-            </xsl:copy>
-        </xsl:if>
-    </xsl:template>
-    <xsl:template match="xsd:complexType/*//xsd:element[@name]" mode="refscopy">
-        <!--<xsl:variable name="namechange">
-            <xsl:apply-templates select="." mode="copy"/>
-        </xsl:variable>-->
-        <xsl:variable name="n">
-            <xsl:value-of select="@name"/>
-        </xsl:variable>
-        <xsl:variable name="parentsetname">
-            <xsl:value-of select="substring-before(ancestor::xsd:complexType[1]/@name,'SetType')"/>
-        </xsl:variable>
-        <xsd:element>
-            <xsl:attribute name="ref">
-                <xsl:value-of select="concat($parentsetname,$n)"/>
-                <!--<xsl:value-of select="$namechange/xsd:element/@name"/>-->
-            </xsl:attribute>
-            <xsl:apply-templates select="@*[not(name()='name')][not(name()='type')]" mode="copy"/>
-            <xsl:apply-templates select="xsd:annotation" mode="copy"/>
-            <!--<xsl:apply-templates select="$namechange/xsd:element/@*[not(name() = 'name')][not(name() = 'type')]" mode="copy"/>
-            <xsl:apply-templates select="$namechange/xsd:element/xsd:annotation" mode="copy"/>-->
-        </xsd:element>
-    </xsl:template>
-
-    <xsl:template match="xsd:complexType[@name='ExerciseIdentificationSetType']/*//xsd:element[@name='Amplification']" mode="refscopy">
-        <xsd:element ref="AmplificationSet">
-            <xsl:apply-templates select="@*[not(name()='name')][not(name()='type')]" mode="copy"/>
-        </xsd:element>
-    </xsl:template>
-    <xsl:template match="xsd:complexType[@name='OperationCodewordSetType']/*//xsd:element[@name='Amplification']" mode="refscopy">
-        <xsd:element ref="AmplificationSet">
-            <xsl:apply-templates select="@*[not(name()='name')][not(name()='type')]" mode="copy"/>
-        </xsd:element>
-    </xsl:template>
-
-
-    <!--Copy-->
-    <xsl:template match="*" mode="copy">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*" mode="copy"/>
-            <xsl:apply-templates select="*" mode="copy"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="@*" mode="copy">
-        <xsl:copy-of select="."/>
-    </xsl:template>
-    <xsl:template match="xsd:documentation" mode="copy">
-        <xsl:if test="string-length(normalize-space(text())) &gt; 0">
-            <xsl:copy copy-namespaces="no">
-                <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
-            </xsl:copy>
-        </xsl:if>
-    </xsl:template>
-    <xsl:template match="@minOccurs" mode="copy"/>
-    <xsl:template match="@maxOccurs" mode="copy"/>
-    <xsl:template match="@nillable" mode="copy"/>
-
-    <!--<xsl:template match="@fixed" mode="copy"/>-->
-    <xsl:template match="@ColumnHeader" mode="copy"/>
-    <xsl:template match="@identifier" mode="copy"/>
-    <xsl:template match="@Justification" mode="copy"/>
-    <xsl:template match="@remark" mode="copy"/>
 </xsl:stylesheet>

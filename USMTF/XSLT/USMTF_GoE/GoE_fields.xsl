@@ -30,7 +30,6 @@
     <xsl:variable name="integer_fields_xsd" select="document('../../XSD/Normalized/Integers.xsd')"/>
     <xsl:variable name="decimal_fields_xsd" select="document('../../XSD/Normalized/Decimals.xsd')"/>
     <xsl:variable name="enumerated_fields_xsd" select="document('../../XSD/Normalized/Enumerations.xsd')"/>
-    <xsl:variable name="globalized_set_fields" select="document('../../XSD/Normalized/globalized_set_fields.xsd')"/>
     <!--Composite Fields Baseline XML Schema document-->
     <xsl:variable name="composites_xsd" select="document('../../XSD/Baseline_Schema/composites.xsd')"/>
     <!--Simple Fields Baseline XML Schema document-->
@@ -38,22 +37,31 @@
     <!--Normalized xsd:simpleTypes-->
     <xsl:variable name="normalizedsimpletypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
     <!--Output Document-->
-    <xsl:variable name="output_fields_xsd" select="'../../XSD/GoE_Schema/GoE_fields.xsd'"/>
+    <xsl:variable name="output_fields_xsd" select="'../../XSD/GoE_Schema/GoE_fields_Initial.xsd'"/>
     <!--Consolidated xsd:simpleTypes and xsd:elements for local referenece by xsd:complexTypes-->
     <xsl:variable name="refactor_fields_xsd">
+        <xsl:text>&#10;</xsl:text>
+        <xsl:comment> ************** STRING FIELDS **************</xsl:comment>
+        <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$string_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
         </xsl:for-each>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:comment>************** INTEGER FIELDS **************</xsl:comment>
+        <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$integer_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
         </xsl:for-each>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:comment>*************** DECIMAL FIELDS **************</xsl:comment>
+        <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$decimal_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
         </xsl:for-each>
+        <xsl:text>&#10;</xsl:text>
+        <xsl:comment>************* ENUMERATED FIELDS *************</xsl:comment>
+        <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$enumerated_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
-            <xsl:copy-of select="."/>
-        </xsl:for-each>
-        <xsl:for-each select="$globalized_set_fields/xsd:schema/xsd:element[not(//xsd:complexType)]">
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
@@ -64,9 +72,6 @@
     </xsl:variable>
     <xsl:variable name="complex_elements">
         <xsl:apply-templates select="$complex_types_xsd/*" mode="el"/>
-        <xsl:for-each select="$globalized_set_fields/xsd:schema/xsd:element[//xsd:complexType]">
-            <xsl:copy-of select="." copy-namespaces="no"/>
-        </xsl:for-each>
     </xsl:variable>
     <!--*****************************************************-->
     <xsl:template name="main">
@@ -74,16 +79,7 @@
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
-                <xsl:comment> ************** FIELD TYPES **************</xsl:comment>
-                <xsl:for-each select="$refactor_fields_xsd/xsd:complexType">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-                <xsl:comment> ************** FIELD ELEMENTS **************</xsl:comment>
-                <xsl:for-each select="$refactor_fields_xsd/xsd:element">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
+                <xsl:copy-of select="$refactor_fields_xsd"/>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** COMPOSITE TYPES **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
