@@ -34,7 +34,7 @@
 
     <!--Create root level complexTypes-->
     <xsl:variable name="complex_types">
-        <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')][position() &lt; 100]">
+        <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')]">
             <xsl:variable name="elname">
                 <xsl:value-of select="concat(translate(substring(@name, 0, string-length(@name) - 3), '-', ''), 'Set')"/>
             </xsl:variable>
@@ -59,9 +59,10 @@
                 </xsl:choose>
             </xsl:variable>
             <xsd:complexType name="{concat($newname, 'Type')}">
+                <xsl:apply-templates select="xsd:annotation"/>
                 <xsd:complexContent>
                     <xsd:extension base="SetBaseType">
-                        <xsl:apply-templates select="*"/>
+                        <xsl:apply-templates select="*[not(name()='xsd:annotation')]"/>
                     </xsd:extension>
                 </xsd:complexContent>
             </xsd:complexType>
@@ -157,7 +158,7 @@
                     <xsl:apply-templates select="xsd:annotation" mode="copy"/>
                     <xsd:complexContent>
                         <xsd:extension base="SetBaseType">
-                            <xsl:apply-templates select="*" mode="copy"/>
+                            <xsl:apply-templates select="*[not(name()='xsd:annotation')]" mode="copy"/>
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsd:complexType>
@@ -181,11 +182,11 @@
                 <xsl:variable name="n">
                     <xsl:value-of select="@name"/>
                 </xsl:variable>
-                <xsl:if test="not(preceding-sibling::xsd:element[@name = $n]) and .//*:Field">
+                <xsl:if test="not(preceding-sibling::xsd:element[@name = $n]) and .//*:Field and not(.//xsd:choice)">
                     <xsl:variable name="n" select="@name"/>
                     <xsl:if test="not($goe_fields_xsd/xsd:schema/xsd:element/@name = $n)">
                         <xsl:copy copy-namespaces="no">
-                            <xsl:apply-templates select="@*" mode="fcopy"/>
+                            <xsl:apply-templates select="@type" mode="copy"/>
                             <xsl:attribute name="nillable">
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
@@ -203,14 +204,28 @@
 
     <!--*****************************************************-->
     <xsl:template name="main">
-        <!--<xsl:result-document href="{$fields_output}">
+        <xsl:result-document href="{$fields_output}">
             <xsl:copy-of select="$fields_xsd"/>
-        </xsl:result-document>-->
+        </xsl:result-document>
         <xsl:result-document href="{$sets_output}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2"
-                targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" 
+                xmlns:field="urn:mtf:mil:6040b:goe:fields"
+                xmlns:ism="urn:us:gov:ic:ism:v2"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"  
+                xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+                xmlns:em="http://release.niem.gov/niem/domains/emergencyManagement/3.0/"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/3.0/#ExtensionSchemaDocument" 
+                targetNamespace="urn:mtf:mil:6040b:goe:sets"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified"
+                version="0.1">
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:annotation>
+                    <xsd:documentation>NIEM Conformant XML Schema for USMTF Sets</xsd:documentation>
+                </xsd:annotation>
                 <xsd:complexType name="FieldSequenceType">
                     <xsd:annotation>
                         <xsd:documentation>Base type for sequences.</xsd:documentation>
@@ -231,7 +246,6 @@
                                 <xsd:element ref="AmplificationSet" minOccurs="0" maxOccurs="1"/>
                                 <xsd:element ref="NarrativeInformationSet" minOccurs="0" maxOccurs="1"/>
                             </xsd:sequence>
-                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsd:complexType>
@@ -257,38 +271,57 @@
     <!--*****************************************************-->
 
     <!--**************** ELEMENT NODES ********************-->
-    <xsl:template match="xsd:element[@name = 'GroupOfFields'][@minOccurs]">
-        <xsd:sequence minOccurs="{@minOccurs}" maxOccurs="{@maxOccurs}">
-            <xsl:apply-templates select="*"/>
-        </xsd:sequence>
-    </xsl:template>
-
-    <xsl:template match="xsd:sequence[parent::xsd:element/@name = 'GroupOfFields']">
+    <xsl:template match="xsd:sequence">
         <xsl:apply-templates select="*"/>
     </xsl:template>
     
-    <xsl:template match="xsd:sequence[parent::xsd:element/@name = 'GroupOfFields']/xsd:complexType">
+    <xsl:template match="xsd:element[@name = 'GroupOfFields'][@minOccurs]">
+        <!--<xsl:choose>
+            <xsl:when test="@maxOccurs='unbounded' and count(//xsd:element)">
+                
+            </xsl:when>
+            <xsl:otherwise>-->
+                <xsd:sequence>
+                <xsl:apply-templates select="*"/>
+                </xsd:sequence>
+            <!--</xsl:otherwise>
+        </xsl:choose>-->
+    </xsl:template>
+    
+    <xsl:template match="xsd:sequence[ancestor::xsd:element[1]/@name = 'GroupOfFields']">
         <xsl:apply-templates select="*"/>
     </xsl:template>
-
-    <xsl:template match="xsd:sequence[@minOccurs]">
-        <xsd:sequence minOccurs="{@minOccurs}" maxOccurs="{@maxOccurs}">
+    
+    <xsl:template match="xsd:sequence[descendant::xsd:element[1]/@name = 'GroupOfFields']">
             <xsl:apply-templates select="*"/>
-        </xsd:sequence>
     </xsl:template>
-
-    <xsl:template match="xsd:sequence[not(parent::xsd:element/@name = 'GroupOfFields')][not(child::xsd:element/@name = 'GroupOfFields')]">
+    
+    <xsl:template match="xsd:sequence[not(ancestor::xsd:element[1]/@name = 'GroupOfFields')and not(descendant::xsd:element[1]/@name = 'GroupOfFields')]">
         <xsl:copy>
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="*"/>
         </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="xsd:sequence">
-        <xsl:apply-templates select="*"/>
+    <xsl:template match="xsd:sequence[@minOccurs]">
+        <xsl:copy>
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="xsd:sequence/@maxOccurs"/>
+
+    <xsl:template match="xsd:choice">
+        <xsd:sequence>
+            <xsl:copy>
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*"/>
+            </xsl:copy>
+        </xsd:sequence>
     </xsl:template>
 
-    <xsl:template match="xsd:element[not(@name = 'GroupOfFields')]">
+    <xsl:template match="xsd:element[not(@name = 'GroupOfFields')][not(@name = 'Amplification')]">
         <xsl:variable name="n">
             <xsl:value-of select="@name"/>
         </xsl:variable>
@@ -308,13 +341,6 @@
         <xsl:variable name="basel" select="substring($basetype, 0, string-length($basetype) - 3)"/>
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
-                <xsl:when test="@name = 'Amplification'">
-                    <xsl:attribute name="ref">
-                        <xsl:text>AmplificationSet</xsl:text>
-                    </xsl:attribute>
-                    <xsl:apply-templates select="@*[not(name() = 'name')]"/>
-                    <xsl:apply-templates select="xsd:annotation"/>
-                </xsl:when>
                 <xsl:when test="@name = 'RoutingIndicator'">
                     <xsl:attribute name="ref">
                         <xsl:text>field:RoutingIndicator</xsl:text>
@@ -384,6 +410,7 @@
     <xsl:template match="xsd:extension[@base = 'SetBaseType']">
         <xsl:apply-templates select="*"/>
     </xsl:template>
+    
     <xsl:template match="xsd:extension">
         <xsl:variable name="basetype">
             <xsl:choose>
@@ -488,6 +515,26 @@
             <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:goe:sets">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr"/>
+                <xsl:if test="ancestor::xsd:complexType//xsd:sequence[@minOccurs&gt;1]">
+                    <xsl:attribute name="minOccurs">
+                        <xsl:value-of select="ancestor::xsd:complexType//xsd:sequence[1]/@minOccurs"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="ancestor::xsd:complexType//xsd:sequence[@maxOccurs]">
+                    <xsl:attribute name="maxOccurs">
+                        <xsl:value-of select="ancestor::xsd:complexType//xsd:sequence[1]/@maxOccurs"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="ancestor::xsd:complexType//xsd:element[@name='GroupOfFields'][@minOccurs&gt;1]">
+                    <xsl:attribute name="minOccurs">
+                        <xsl:value-of select="ancestor::xsd:complexType//xsd:element[@name='GroupOfFields']/@minOccurs"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="ancestor::xsd:complexType//xsd:element[@name='GroupOfFields'][@maxOccurs]">
+                    <xsl:attribute name="maxOccurs">
+                        <xsl:value-of select="ancestor::xsd:complexType//xsd:element[@name='GroupOfFields']/@maxOccurs"/>
+                    </xsl:attribute>
+                </xsl:if>
                 <xsl:apply-templates select="$set_Changes/*[@SETNAMESHORT = $setid]/@*[string-length(.) > 0][1]" mode="chg"/>
                 <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
                 <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
@@ -559,7 +606,6 @@
         <xsl:copy-of select="."/>
     </xsl:template>
 
-
     <xsl:template match="xsd:schema/xsd:element/@minOccurs" mode="copy"/>
     <xsl:template match="xsd:schema/xsd:element/@maxOccurs" mode="copy"/>
     <xsl:template match="xsd:schema/xsd:element/@nillable" mode="copy"/>
@@ -596,12 +642,19 @@
         <xsl:copy-of select="."/>
     </xsl:template>
 
-    <xsl:template match="@*[starts-with(., 'field:')]" mode="fcopy">
-        <xsl:attribute name="{name()}">
-            <xsl:value-of select="substring-after(., 'field:')"/>
-        </xsl:attribute>
+    <xsl:template match="@*" mode="fcopyglobal">
+        <xsl:choose>
+            <xsl:when test="starts-with(., 'field:')">
+                <xsl:copy>
+                    <xsl:value-of select="substring-after(., 'field:')"/>
+                </xsl:copy>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
-
+    
     <!--*****************************************************-->
 
     <xsl:template match="@nillable"/>
@@ -831,6 +884,7 @@
     <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>
     <xsl:template match="xsd:attribute[@name = 'ffSeq']"/>
     <xsl:template match="xsd:attribute[@name = 'ffirnFudn']"/>
+    <xsl:template match="xsd:attribute[@name = 'setid']"/>
     <!--Filter empty xsd:annotations-->
     <xsl:template match="xsd:restriction[@base = 'xsd:integer']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:string']/xsd:annotation"/>

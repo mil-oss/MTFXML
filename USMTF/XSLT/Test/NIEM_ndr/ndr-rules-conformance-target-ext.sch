@@ -371,7 +371,7 @@
               
 <sch:pattern id="rule_9-66"><sch:title>Sequence has maximum cardinality 1</sch:title>
   <sch:rule context="xs:sequence">
-    <sch:assert test="empty(@maxOccurs) or (@maxOccurs instance of xs:integer                                             and 1 = xs:integer(@maxOccurs))">Rule 9-66: An element xs:sequence MUST either not have the attribute {}maxOccurs, or that attribute MUST have a value of 1.</sch:assert>
+    <sch:assert test="empty(@maxOccurs) or (@maxOccurs instance of xs:integer and 1 = xs:integer(@maxOccurs))">Rule 9-66: An element xs:sequence MUST either not have the attribute {}maxOccurs, or that attribute MUST have a value of 1.</sch:assert>
   </sch:rule>
 </sch:pattern>
               
@@ -383,7 +383,7 @@
               
 <sch:pattern id="rule_9-68"><sch:title>Choice has maximum cardinality 1</sch:title>
   <sch:rule context="xs:choice">
-    <sch:assert test="empty(@maxOccurs) or (@maxOccurs instance of xs:integer                                             and 1 = xs:integer(@maxOccurs))">Rule 9-68: An element xs:choice MUST either not have the attribute {}maxOccurs, or that attribute MUST have a value of 1.</sch:assert>
+    <sch:assert test="empty(@maxOccurs) or (@maxOccurs instance of xs:integer and 1 = xs:integer(@maxOccurs))">Rule 9-68: An element xs:choice MUST either not have the attribute {}maxOccurs, or that attribute MUST have a value of 1.</sch:assert>
   </sch:rule>
 </sch:pattern>
               
