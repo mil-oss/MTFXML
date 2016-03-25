@@ -17,29 +17,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="yes"/>
 
     <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
     <xsl:variable name="normalized_fields_xsd" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
-    
+
     <!--Baseline Fields XML Schema document-->
-    <xsl:variable name="enumerations_xsd"
-        select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]"/>
-    
+    <xsl:variable name="enumerations_xsd" select="$fields_xsd/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]"/>
+
     <!--Output-->
     <xsl:variable name="enumerationsoutdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
-    
+
     <!--A normalized list of xsd:string types with common REGEX patterns without length qualifiers for re-use globally-->
-    <xsl:variable name="normenumerationtypes"
-        select="$normalized_fields_xsd/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
+    <xsl:variable name="normenumerationtypes" select="$normalized_fields_xsd/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
 
     <!--xsd:simpleTypes with Enumerations-->
     <xsl:variable name="enumtypes">
-        <xsl:apply-templates
-            select="$fields_xsd/*/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]">
+        <xsl:apply-templates select="$fields_xsd/*/xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]">
             <xsl:sort select="@name"/>
         </xsl:apply-templates>
     </xsl:variable>
@@ -61,13 +57,8 @@
 
     <xsl:template name="main">
         <xsl:result-document href="{$enumerationsoutdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
-                xmlns:ism="urn:us:gov:ic:ism:v2"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:goe:fields"
-                xml:lang="en-US"
-                elementFormDefault="unqualified"
-                attributeFormDefault="unqualified">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:goe:fields"
+                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="FieldEnumeratedBaseType">
                     <xsd:simpleContent>
@@ -172,8 +163,7 @@
         <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
                 <xsl:apply-templates select="@*"/>
-                <xsl:if
-                    test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
+                <xsl:if test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
                     <xsl:element name="xsd:documentation">
                         <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
                     </xsl:element>
@@ -201,7 +191,17 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
-    
+
+    <xsl:template match="xsd:enumeration/xsd:annotation">
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="xsd:documentation">
+                <xsl:value-of select="normalize-space(xsd:appinfo/*:DataItem/text())"/>
+            </xsl:element>
+            <xsl:apply-templates select="xsd:documentation"/>
+            <xsl:apply-templates select="xsd:appinfo"/>
+        </xsl:copy>
+    </xsl:template>
+
     <xsl:template match="xsd:enumeration/xsd:annotation/xsd:appinfo">
         <xsl:copy copy-namespaces="no">
             <xsl:element name="Enum" namespace="urn:mtf:mil:6040b:goe:fields">
@@ -229,10 +229,10 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="*:DataCode" mode="attr"/>
 
-<!--    <xsl:template match="*:DataCode" mode="attr">
+    <!--    <xsl:template match="*:DataCode" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="dataCode">

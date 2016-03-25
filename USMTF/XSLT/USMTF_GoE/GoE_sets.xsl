@@ -186,7 +186,10 @@
                     <xsl:variable name="n" select="@name"/>
                     <xsl:if test="not($goe_fields_xsd/xsd:schema/xsd:element/@name = $n)">
                         <xsl:copy copy-namespaces="no">
-                            <xsl:apply-templates select="@type" mode="copy"/>
+                            <xsl:attribute name="name">
+                                <xsl:value-of select="$n"/>
+                            </xsl:attribute>
+                            <xsl:apply-templates select="@type" mode="fcopy"/>
                             <xsl:attribute name="nillable">
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
@@ -637,20 +640,32 @@
             <xsl:apply-templates select="*" mode="fcopy"/>
         </xsl:copy>
     </xsl:template>
+    
+    <xsl:template match="*:Field" mode="fcopy">
+        <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:fields">
+            <xsl:apply-templates select="@*" mode="fcopy"/>
+        </xsl:element>
+    </xsl:template>
+    
+    <xsl:template match="xsd:simpleContent" mode="fcopy">
+        <xsl:element name="xsd:complexType">
+            <xsl:copy>
+                <xsl:apply-templates select="@*" mode="fcopy"/>
+                <xsl:apply-templates select="*" mode="fcopy"/>
+            </xsl:copy>
+        </xsl:element>
+    </xsl:template>
+    
 
     <xsl:template match="@*" mode="fcopy">
-        <xsl:copy-of select="."/>
-    </xsl:template>
-
-    <xsl:template match="@*" mode="fcopyglobal">
         <xsl:choose>
             <xsl:when test="starts-with(., 'field:')">
-                <xsl:copy>
+                <xsl:attribute name="{name()}">
                     <xsl:value-of select="substring-after(., 'field:')"/>
-                </xsl:copy>
+                </xsl:attribute>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:copy-of select="."/>
+                <xsl:copy-of select="." copy-namespaces="no"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
