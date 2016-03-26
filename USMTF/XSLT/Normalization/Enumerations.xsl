@@ -61,6 +61,9 @@
                 xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="FieldEnumeratedBaseType">
+                    <xsd:annotation>
+                        <xsd:documentation>Base type for MTF enumerated fields</xsd:documentation>
+                    </xsd:annotation>
                     <xsd:simpleContent>
                         <xsd:extension base="xsd:string">
                             <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
@@ -69,16 +72,23 @@
                 </xsd:complexType>
                 <xsl:for-each select="$enumcombinedTypes/*">
                     <xsl:sort select="@name"/>
-                    <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
-                        <xsl:copy-of select="xsd:annotation"/>
-                        <xsd:simpleContent>
-                            <xsd:restriction base="FieldEnumeratedBaseType">
-                                <xsl:for-each select="xsd:restriction/xsd:enumeration">
-                                    <xsl:copy-of select="."/>
-                                </xsl:for-each>
-                            </xsd:restriction>
-                        </xsd:simpleContent>
-                    </xsd:complexType>
+                    <xsl:variable name="n" select="@name"/>
+                    <xsl:choose>
+                        <xsl:when test="following-sibling::*[@name=$n] and xsd:annotation/xsd:documentation='Data definition required'"/>
+                        <xsl:when test="preceding-sibling::*[@name=$n] and xsd:annotation/xsd:documentation='Data definition required'"/>   
+                        <xsl:otherwise>
+                            <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
+                                <xsl:copy-of select="xsd:annotation"/>
+                                <xsd:simpleContent>
+                                    <xsd:restriction base="FieldEnumeratedBaseType">
+                                        <xsl:for-each select="xsd:restriction/xsd:enumeration">
+                                            <xsl:copy-of select="."/>
+                                        </xsl:for-each>
+                                    </xsd:restriction>
+                                </xsd:simpleContent>
+                            </xsd:complexType>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:for-each>
                 <xsl:for-each select="$enumelementsandtypes/*[name() = 'xsd:element']">
                     <xsl:sort select="@name"/>
@@ -160,7 +170,6 @@
     <!--Copy annotation only it has descendents with text content-->
     <!--Add xsd:documentation using FudExplanation if it exists-->
     <xsl:template match="xsd:annotation">
-        <xsl:if test="*//text()">
             <xsl:copy copy-namespaces="no">
                 <xsl:apply-templates select="@*"/>
                 <xsl:if test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
@@ -170,16 +179,23 @@
                 </xsl:if>
                 <xsl:apply-templates select="*"/>
             </xsl:copy>
-        </xsl:if>
     </xsl:template>
 
-    <!--Copy documentation only it has text content-->
+    <!--Copy documentation -->
     <xsl:template match="xsd:documentation">
-        <xsl:if test="text()">
-            <xsl:copy copy-namespaces="no">
-                <xsl:apply-templates select="text()"/>
-            </xsl:copy>
-        </xsl:if>
+        <xsl:copy copy-namespaces="no">
+        <xsl:choose>
+            <xsl:when test="text()">
+                    <xsl:apply-templates select="text()"/>
+            </xsl:when>
+            <xsl:when test="ancestor::xsd:enumeration">
+                <xsl:value-of select="normalize-space(parent::xsd:annotation/xsd:appinfo/*:DataItem/text())"/>
+            </xsl:when>
+            <xsl:otherwise>
+                    <xsl:text>Data definition required</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+        </xsl:copy>
     </xsl:template>
 
     <!--Copy element and use template mode to convert elements to attributes-->
@@ -194,9 +210,9 @@
 
     <xsl:template match="xsd:enumeration/xsd:annotation">
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="xsd:documentation">
+<!--            <xsl:element name="xsd:documentation">
                 <xsl:value-of select="normalize-space(xsd:appinfo/*:DataItem/text())"/>
-            </xsl:element>
+            </xsl:element>-->
             <xsl:apply-templates select="xsd:documentation"/>
             <xsl:apply-templates select="xsd:appinfo"/>
         </xsl:copy>

@@ -229,22 +229,12 @@
                 <xsd:annotation>
                     <xsd:documentation>NIEM Conformant XML Schema for USMTF Sets</xsd:documentation>
                 </xsd:annotation>
-                <xsd:complexType name="FieldSequenceType">
-                    <xsd:annotation>
-                        <xsd:documentation>Base type for sequences.</xsd:documentation>
-                    </xsd:annotation>
-                    <xsd:complexContent>
-                        <xsd:restriction base="field:FieldStringBaseType">
-                            <xsd:sequence/>
-                        </xsd:restriction>
-                    </xsd:complexContent>
-                </xsd:complexType>
                 <xsd:complexType name="SetBaseType">
                     <xsd:annotation>
                         <xsd:documentation>Provides default content for all Sets.</xsd:documentation>
                     </xsd:annotation>
                     <xsd:complexContent>
-                        <xsd:extension base="FieldSequenceType">
+                        <xsd:extension base="field:FieldSequenceType">
                             <xsd:sequence>
                                 <xsd:element ref="AmplificationSet" minOccurs="0" maxOccurs="1"/>
                                 <xsd:element ref="NarrativeInformationSet" minOccurs="0" maxOccurs="1"/>

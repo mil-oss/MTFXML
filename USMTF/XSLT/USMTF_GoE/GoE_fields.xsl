@@ -17,8 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
-    version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <!--  This XSLT refactors baseline USMTF "fields" XML Schema by replacing annotation elements
     with attributes, removing unused elements and other adjustments-->
@@ -76,9 +75,19 @@
     <!--*****************************************************-->
     <xsl:template name="main">
         <xsl:result-document href="{$output_fields_xsd}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:goe:fields"
+                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:complexType name="FieldSequenceType">
+                    <xsd:annotation>
+                        <xsd:documentation>Base type for sequences.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexContent>
+                        <xsd:restriction base="FieldStringBaseType">
+                            <xsd:sequence/>
+                        </xsd:restriction>
+                    </xsd:complexContent>
+                </xsd:complexType>
                 <xsl:copy-of select="$refactor_fields_xsd"/>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** COMPOSITE TYPES **************</xsl:comment>
@@ -104,6 +113,15 @@
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="*"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="xsd:complexType[xsd:sequence]">
+        <xsl:copy copy-namespaces="no">
+            <xsd:complexContent>
+                <xsd:extension base="FieldSequenceType">
+                    <xsl:apply-templates select="*"/>
+                </xsd:extension>
+            </xsd:complexContent>
         </xsl:copy>
     </xsl:template>
     <!--Create global xsd:element nodes for xsd:complexTypes -->
