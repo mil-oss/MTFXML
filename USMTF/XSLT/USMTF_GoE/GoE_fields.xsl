@@ -19,6 +19,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
+    <xsl:include href="Utility.xsl"/>
     <!--  This XSLT refactors baseline USMTF "fields" XML Schema by replacing annotation elements
     with attributes, removing unused elements and other adjustments-->
     <!--Fields from the baseline Composites XML Schema are also included as ComplexTypes in accordance with the intent to 
@@ -36,7 +37,7 @@
     <!--Normalized xsd:simpleTypes-->
     <xsl:variable name="normalizedsimpletypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
     <!--Output Document-->
-    <xsl:variable name="output_fields_xsd" select="'../../XSD/GoE_Schema/GoE_fields_Initial.xsd'"/>
+    <xsl:variable name="output_fields_xsd" select="'../../XSD/GoE_Schema/GoE_fields.xsd'"/>
     <!--Consolidated xsd:simpleTypes and xsd:elements for local referenece by xsd:complexTypes-->
     <xsl:variable name="refactor_fields_xsd">
         <xsl:text>&#10;</xsl:text>
@@ -117,6 +118,7 @@
     </xsl:template>
     <xsl:template match="xsd:complexType[xsd:sequence]">
         <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@name"/>
             <xsd:complexContent>
                 <xsd:extension base="FieldSequenceType">
                     <xsl:apply-templates select="*"/>
@@ -126,12 +128,15 @@
     </xsl:template>
     <!--Create global xsd:element nodes for xsd:complexTypes -->
     <xsl:template match="xsd:complexType" mode="el">
+        <xsl:variable name="n">
+            <xsl:apply-templates select="@name" mode="txt"/>
+        </xsl:variable>
         <xsd:element>
             <xsl:attribute name="name">
-                <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
+                <xsl:value-of select="substring($n, 0, string-length($n) - 3)"/>
             </xsl:attribute>
             <xsl:attribute name="type">
-                <xsl:value-of select="@name"/>
+                <xsl:value-of select="$n"/>
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
         </xsd:element>
@@ -139,7 +144,7 @@
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->
     <xsl:template match="xsd:element[@type]">
         <xsl:variable name="nm">
-            <xsl:value-of select="@name"/>
+            <xsl:apply-templates select="@name" mode="txt"/>
         </xsl:variable>
         <xsl:variable name="typename">
             <xsl:choose>
@@ -147,7 +152,7 @@
                     <xsl:value-of select="substring-after(@type, 'f:')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="@type"/>
+                    <xsl:apply-templates select="@type" mode="txt"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -275,7 +280,7 @@
     </xsl:template>
     <!-- _______________________________________________________ -->
     <!-- ******************** FORMATTING ******************** -->
-    <xsl:template match="*">
+   <!-- <xsl:template match="*">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="*"/>
@@ -285,7 +290,7 @@
         <xsl:copy copy-namespaces="no">
             <xsl:value-of select="replace(., '&#34;', '')"/>
         </xsl:copy>
-    </xsl:template>
+    </xsl:template>-->
     <xsl:template match="*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="el"/>
@@ -295,6 +300,16 @@
     <xsl:template match="@*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:value-of select="replace(., '&#34;', '')"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@name" mode="el">
+        <xsl:copy>
+            <xsl:apply-templates select="." mode="txt"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@type" mode="el">
+        <xsl:copy>
+            <xsl:apply-templates select="." mode="txt"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="xsd:annotation" mode="el"/>
@@ -339,20 +354,20 @@
         </xsl:if>
     </xsl:template>
     <!--Convert elements in xsd:appinfo to attributes-->
-    <xsl:template match="*" mode="attr">
+    <!--<xsl:template match="*" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="{name()}">
                 <xsl:value-of select="normalize-space(text())"/>
             </xsl:attribute>
         </xsl:if>
-    </xsl:template>
+    </xsl:template>-->
     <!--Normalize extra whitespace and linefeeds in text-->
-    <xsl:template match="text()">
+   <!-- <xsl:template match="text()">
         <xsl:value-of select="normalize-space(.)"/>
-    </xsl:template>
+    </xsl:template>-->
     <!-- _______________________________________________________ -->
-    <xsl:template match="*:FudName" mode="attr">
+<!--    <xsl:template match="*:FudName" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="name">
@@ -375,11 +390,11 @@
                 <xsl:value-of select="normalize-space(text())"/>
             </xsl:attribute>
         </xsl:if>
-    </xsl:template>
+    </xsl:template>-->
     <!-- ******************** FILTERS ******************** -->
-    <xsl:template match="xsd:element/xsd:annotation"/>
+   <!-- <xsl:template match="xsd:element/xsd:annotation"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
-    <xsl:template match="*:FudRelatedDocument" mode="attr"/>
+    <xsl:template match="*:FudRelatedDocument" mode="attr"/>-->
     <!-- _______________________________________________________ -->
 </xsl:stylesheet>
