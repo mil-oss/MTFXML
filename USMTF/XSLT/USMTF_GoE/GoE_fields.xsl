@@ -77,8 +77,11 @@
     <xsl:template name="main">
         <xsl:result-document href="{$output_fields_xsd}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:goe:fields"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:annotation>
+                    <xsd:documentation>Message Text Format Fields</xsd:documentation>
+                </xsd:annotation>
                 <xsd:complexType name="FieldSequenceType">
                     <xsd:annotation>
                         <xsd:documentation>Base type for sequences.</xsd:documentation>

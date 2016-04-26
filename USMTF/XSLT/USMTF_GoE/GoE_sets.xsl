@@ -95,9 +95,9 @@
             <xsd:complexType name="{concat($nn,'Type')}">
                 <xsl:copy-of select="xsd:annotation"/>
                 <xsd:complexContent>
-                    <xsd:extension base="ChoiceType">
+                    <!--<xsd:extension base="ChoiceType">-->
                         <xsl:apply-templates select="xsd:complexType/*" mode="globals"/>
-                    </xsd:extension>
+                    <!--</xsd:extension>-->
                 </xsd:complexContent>
             </xsd:complexType>
             <xsd:element name="{$nn}" type="{concat($nn,'Type')}">
@@ -244,9 +244,11 @@
     <xsl:variable name="all_complexTypes">
         <!--<xsl:copy-of select="$complex_types"/>-->
         <xsl:for-each select="$new_globals/xsd:complexType">
+            <xsl:sort select="@name"/>
             <xsl:apply-templates select="." mode="copyCTypes"/>
         </xsl:for-each>
         <xsl:for-each select="$subsequences/xsd:complexType">
+            <xsl:sort select="@name"/>
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
@@ -254,6 +256,7 @@
     <xsl:variable name="all_elements">
         <xsl:copy-of select="$global_elements"/>
         <xsl:for-each select="$subsequences/xsd:element">
+            <xsl:sort select="@name"/>
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
@@ -261,12 +264,15 @@
     <xsl:template name="main">
         <xsl:result-document href="{$output}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2"
-                targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:annotation>
+                    <xsd:documentation>Message Text Format Sets</xsd:documentation>
+                </xsd:annotation>
                 <xsd:complexType name="SetBaseType">
                     <xsd:annotation>
-                        <xsd:documentation>Base type for sets which adds AMPN, NARR and security tagging.</xsd:documentation>
+                        <xsd:documentation>Base type for Sets which adds AMPN, NARR and security tagging.</xsd:documentation>
                     </xsd:annotation>
                     <xsd:complexContent>
                         <xsd:extension base="field:FieldSequenceType">
@@ -278,16 +284,16 @@
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsd:complexType>
-                <xsd:complexType name="ChoiceType">
+<!--                <xsd:complexType name="ChoiceType">
                     <xsd:annotation>
-                        <xsd:documentation>Base type for alternate content.</xsd:documentation>
+                        <xsd:documentation>Base type for alternate field content.</xsd:documentation>
                     </xsd:annotation>
                     <xsd:complexContent>
                         <xsd:restriction base="SetBaseType">
                             <xsd:sequence/>
                         </xsd:restriction>
                     </xsd:complexContent>
-                </xsd:complexType>
+                </xsd:complexType>-->
                 <xsl:for-each select="$all_complexTypes/*">
                     <xsl:sort select="@name"/>
                     <xsl:choose>
@@ -313,10 +319,19 @@
     </xsl:template>
     <!--*****************************************************-->
     <xsl:template match="xsd:element[@name = 'GroupOfFields']">
-        <xsl:apply-templates select="xsd:complexType/xsd:sequence" mode="group">
-            <xsl:with-param name="min" select="@minOccurs"/>
-            <xsl:with-param name="max" select="@maxOccurs"/>
-        </xsl:apply-templates>
+        <xsl:variable name="parent">
+            <xsl:value-of select="ancestor::xsd:complexType/@name"/>
+        </xsl:variable>
+        <xsd:element name="{concat(substring($parent, 0, string-length($parent) - 3),'GroupOfFields')}">
+            <xsl:copy-of select="@minOccurs"/>
+            <xsl:copy-of select="@maxOccurs"/>
+            <xsd:complexType>
+                <xsl:apply-templates select="xsd:complexType/xsd:sequence" mode="group">
+                    <!--<xsl:with-param name="min" select="@minOccurs"/>
+            <xsl:with-param name="max" select="@maxOccurs"/>-->
+                </xsl:apply-templates>
+            </xsd:complexType>
+        </xsd:element>
     </xsl:template>
     <xsl:template match="xsd:element[not(@name = 'GroupOfFields')]">
         <xsl:variable name="n">
@@ -444,9 +459,9 @@
         </xsl:choose>
     </xsl:template>
     <xsl:template match="xsd:sequence" mode="group">
-        <xsl:param name="min"/>
-        <xsl:param name="max"/>
-        <xsd:sequence minOccurs="{$min}" maxOccurs="{$max}">
+        <!--<xsl:param name="min"/>
+        <xsl:param name="max"/>-->
+        <xsd:sequence>
             <xsl:apply-templates select="*"/>
         </xsd:sequence>
     </xsl:template>
