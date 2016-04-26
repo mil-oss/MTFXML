@@ -143,145 +143,24 @@
             </xsl:when>
         </xsl:choose>
     </xsl:template>
-    <!-- ***********************  Global Types  ************************-->
+    <!-- ***********************  Complex Types  ************************-->
     <xsl:variable name="complex_types">
         <xsl:for-each select="$segment_elements/*">
+            <xsl:sort select="@name"/>
             <xsl:variable name="nm" select="@name"/>
-            <!--<xsl:if test="not(preceding-sibling::xsd:element[@name = $nm])">-->
-            <xsl:apply-templates select="." mode="globaltype">
-                <xsl:sort select="@name"/>
-            </xsl:apply-templates>
-            <!--</xsl:if>-->
+            <xsd:complexType>
+                <xsl:attribute name="name">
+                    <xsl:value-of select="concat($nm, 'Type')"/>
+                </xsl:attribute>
+                <xsl:apply-templates select="xsd:annotation" mode="global"/>
+                <xsd:complexContent>
+                    <xsd:extension base="SegmentBaseType">
+                        <xsl:apply-templates select="xsd:complexType/xsd:sequence" mode="global"/>
+                    </xsd:extension>
+                </xsd:complexContent>
+            </xsd:complexType>
         </xsl:for-each>
     </xsl:variable>
-
-    <xsl:variable name="global_types">
-        <xsl:for-each select="$complex_types//*/*//xsd:element[@name]">
-            <xsl:variable name="nm" select="@name"/>
-            <xsl:choose>
-                <xsl:when test="ends-with($nm, 'Indicator')">
-                    <xsd:element name="{$nm}" type="{@type}" fixed="{@fixed}">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <xsl:value-of select="concat('Text Indicator Field with value ', @fixed)"/>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                </xsl:when>
-                <xsl:when test="ends-with($nm, 'Header')">
-                    <xsd:element name="{$nm}" type="{@type}" fixed="{@fixed}">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <xsl:value-of select="concat('Header Field with value ', @fixed)"/>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsd:complexType>
-                        <xsl:attribute name="name">
-                            <xsl:value-of select="concat($nm, 'Type')"/>
-                        </xsl:attribute>
-                        <xsl:choose>
-                            <xsl:when test="count($complex_types//*/*//xsd:element[@name = $nm]) &gt; 1">
-                                <xsd:annotation>
-                                    <xsd:documentation>
-                                        <xsl:value-of select="xsd:annotation/xsd:appinfo/*:Set/@positionName"/>
-                                    </xsd:documentation>
-                                </xsd:annotation>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:apply-templates select="xsd:annotation" mode="globalize"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                        <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
-                    </xsd:complexType>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>
-        <xsl:apply-templates select="$complex_types/*" mode="globalize"/>
-    </xsl:variable>
-
-    <xsl:template match="*" mode="globalize">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*" mode="globalize"/>
-            <xsl:apply-templates select="text()" mode="globalize"/>
-            <xsl:apply-templates select="*" mode="globalize"/>
-        </xsl:copy>
-    </xsl:template>
-
-    <xsl:template match="xsd:element[@name]" mode="globalize">
-        <xsl:variable name="nm" select="@name"/>
-        <xsl:choose>
-            <xsl:when test="ends-with($nm, 'Indicator')">
-                <xsd:element ref="{$nm}">
-                    <xsl:apply-templates select="@*" mode="globalize"/>
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:value-of select="concat('Text Indicator Field with value ', @fixed)"/>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:element>
-            </xsl:when>
-            <xsl:when test="ends-with($nm, 'Header')">
-                <xsd:element ref="{$nm}">
-                    <xsl:apply-templates select="@minOccurs" mode="global"/>
-                    <xsl:apply-templates select="@maxOccurs" mode="global"/>
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:value-of select="concat('Header Field with value ', @fixed)"/>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:element>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsd:element ref="{$nm}">
-                    <xsl:apply-templates select="@minOccurs" mode="global"/>
-                    <xsl:apply-templates select="@maxOccurs" mode="global"/>
-                    <xsl:apply-templates select="xsd:annotation" mode="globalize"/>
-                </xsd:element>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
-
-    <xsl:template match="@*" mode="globalize">
-        <xsl:copy-of select="." copy-namespaces="no"/>
-    </xsl:template>
-    <xsl:template match="xsd:element/@name" mode="globalize"/>
-    <xsl:template match="@type" mode="globalize"/>
-    <xsl:template match="@fixed" mode="globalize"/>
-    <xsl:template match="@position" mode="globalize"/>
-    <xsl:template match="text()" mode="globalize">
-        <xsl:value-of select="normalize-space(.)"/>
-    </xsl:template>
-    <xsl:template match="xsd:element" mode="globaltype">
-        <xsl:variable name="nm">
-            <xsl:value-of select="@name"/>
-        </xsl:variable>
-        <xsd:complexType>
-            <xsl:attribute name="name">
-                <xsl:value-of select="concat($nm, 'Type')"/>
-            </xsl:attribute>
-            <xsl:choose>
-                <xsl:when test="count($segment_elements/*[@name = $nm]) &gt; 1">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:value-of select="replace(normalize-space(xsd:annotation/xsd:appinfo/*:SegmentStructureName), '&#34;', '')"/>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates select="xsd:annotation" mode="global"/>
-                </xsl:otherwise>
-            </xsl:choose>
-            <xsd:complexContent>
-                <xsd:extension base="SegmentBaseType">
-                    <xsl:apply-templates select="xsd:complexType/xsd:sequence" mode="global"/>
-                </xsd:extension>
-            </xsd:complexContent>
-        </xsd:complexType>
-    </xsl:template>
-
     <xsl:template match="*" mode="global">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="global"/>
@@ -289,12 +168,19 @@
             <xsl:apply-templates select="*" mode="global"/>
         </xsl:copy>
     </xsl:template>
-
+    <xsl:template match="xsd:choice/xsd:annotation" mode="global"/>
+    <xsl:template match="xsd:annotation" mode="global">
+        <xsl:copy>
+            <xsd:documentation>
+                <xsl:value-of select="xsd:appinfo/*:Segment/@name"/>
+                <xsl:value-of select="xsd:appinfo/*:Set/@name"/>
+            </xsd:documentation>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@position" mode="global"/>
     <xsl:template match="@*" mode="global">
         <xsl:copy-of select="." copy-namespaces="no"/>
     </xsl:template>
-
-    <!--Normalize extra whitespace and linefeeds in text-->
     <xsl:template match="text()" mode="global">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
@@ -505,8 +391,125 @@
             <xsl:apply-templates select="*" mode="global"/>
         </xsl:copy>
     </xsl:template>
-    <!-- ********************  Global Elements  *********************-->
 
+    <!-- ***********************  Global Types  ************************-->
+    <xsl:variable name="global_types">
+        <xsl:for-each select="$complex_types//*/*//xsd:element[@name]">
+            <xsl:variable name="nm" select="@name"/>
+            <xsl:choose>
+                <xsl:when test="ends-with($nm, 'Indicator')">
+                    <xsd:element name="{$nm}" type="{@type}" fixed="{@fixed}">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="concat('Text Indicator Field with value ', @fixed)"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsl:when>
+                <xsl:when test="ends-with($nm, 'Header')">
+                    <xsd:element name="{$nm}" type="{@type}" fixed="{@fixed}">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="concat('Header Field with value ', @fixed)"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsl:when>
+                <xsl:when test="ends-with($nm, 'Heading')">
+                    <xsd:complexType>
+                        <xsl:attribute name="name">
+                            <xsl:value-of select="concat($nm, 'Type')"/>
+                        </xsl:attribute>
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="xsd:annotation/xsd:appinfo/*/@name"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                        <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
+                    </xsd:complexType>
+                </xsl:when>
+                <xsl:when test="ends-with($nm, 'GenText')">
+                    <xsd:complexType>
+                        <xsl:attribute name="name">
+                            <xsl:value-of select="concat($nm, 'Type')"/>
+                        </xsl:attribute>
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="xsd:annotation/xsd:appinfo/*/@positionName"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                        <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
+                    </xsd:complexType>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsd:complexType>
+                        <xsl:attribute name="name">
+                            <xsl:value-of select="concat($nm, 'Type')"/>
+                        </xsl:attribute>
+                        <xsl:apply-templates select="xsd:annotation" mode="globalize"/>
+                        <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
+                    </xsd:complexType>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+        <xsl:for-each select="$complex_types/*">
+            <xsd:complexType name="{@name}">
+                <xsl:copy-of select="xsd:annotation"/>
+                <xsl:apply-templates select="xsd:complexContent" mode="globalize"/>
+            </xsd:complexType>
+        </xsl:for-each>
+    </xsl:variable>
+    <xsl:template match="*" mode="globalize">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*" mode="globalize"/>
+            <xsl:apply-templates select="text()" mode="globalize"/>
+            <xsl:apply-templates select="*" mode="globalize"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="xsd:element[@name]" mode="globalize">
+        <xsl:variable name="nm" select="@name"/>
+        <xsl:choose>
+            <xsl:when test="ends-with($nm, 'Indicator')">
+                <xsd:element ref="{$nm}">
+                    <xsl:apply-templates select="@*" mode="globalize"/>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <xsl:value-of select="concat('Text Indicator Field with value ', @fixed)"/>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsl:when>
+            <xsl:when test="ends-with($nm, 'Header')">
+                <xsd:element ref="{$nm}">
+                    <xsl:apply-templates select="@minOccurs" mode="global"/>
+                    <xsl:apply-templates select="@maxOccurs" mode="global"/>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <xsl:value-of select="concat('Header Field with value ', @fixed)"/>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsd:element ref="{$nm}">
+                    <xsl:apply-templates select="@minOccurs" mode="global"/>
+                    <xsl:apply-templates select="@maxOccurs" mode="global"/>
+                    <xsl:apply-templates select="xsd:annotation" mode="globalize"/>
+                </xsd:element>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template match="@*" mode="globalize">
+        <xsl:copy-of select="." copy-namespaces="no"/>
+    </xsl:template>
+    <xsl:template match="xsd:element/@name" mode="globalize"/>
+    <xsl:template match="@type" mode="globalize"/>
+    <xsl:template match="@fixed" mode="globalize"/>
+    <xsl:template match="@position" mode="globalize"/>
+    <xsl:template match="text()" mode="globalize">
+        <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+    <!-- ********************  Global Elements  *********************-->
     <xsl:variable name="global_elements">
         <xsl:for-each select="$global_types/xsd:complexType">
             <xsl:variable name="nm" select="@name"/>
@@ -527,27 +530,6 @@
         </xsl:for-each>
     </xsl:variable>
 
-    <xsl:variable name="allNodes">
-        <xsl:for-each select="$global_types/xsd:complexType">
-            <xsl:sort select="@name"/>
-            <xsl:choose>
-                <xsl:when test="deep-equal(preceding-sibling::*, .)"/>
-                <xsl:otherwise>
-                    <xsl:copy-of select="."/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>
-        <xsl:for-each select="$global_elements/*[string-length(@type) &gt; 0]">
-            <xsl:sort select="@name"/>
-            <xsl:choose>
-                <xsl:when test="deep-equal(preceding-sibling::*, .)"/>
-                <xsl:otherwise>
-                    <xsl:copy-of select="."/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:for-each>
-    </xsl:variable>
-
     <!-- ************************************************************-->
     <!--Build XML Schema and add Global Elements and Complex Types -->
     <xsl:template name="main">
@@ -561,8 +543,35 @@
                     <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                 </xsd:complexType>
                 <!--<xsl:copy-of select="$segment_elements"/>-->
-                <xsl:for-each select="$allNodes/*">
-                    <xsl:copy-of select="."/>
+                <xsl:for-each select="$global_types/xsd:complexType">
+                    <xsl:sort select="@name"/>
+                    <xsl:choose>
+                        <xsl:when test="deep-equal(preceding-sibling::*[1], .)"/>
+                        <xsl:when test="deep-equal(preceding-sibling::*[2], .)"/>
+                        <xsl:when test="deep-equal(preceding-sibling::*[3], .)"/>
+                        <xsl:when test="deep-equal(preceding-sibling::*[4], .)"/>
+                        <xsl:when test="deep-equal(preceding-sibling::*[5], .)"/>
+                        <xsl:otherwise>
+                            <xsl:copy-of select="."/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+                <xsl:for-each select="$global_elements/*[string-length(@type) &gt; 0]">
+                    <xsl:sort select="@name"/>
+                    <xsl:variable name="n" select="@name"/>
+                    <xsl:choose>
+                        <xsl:when test="count($global_elements/*[@name=$n])=1">
+                            <xsl:copy-of select="."/>
+                        </xsl:when>
+                        <xsl:when test="deep-equal(preceding-sibling::*[1], .)"/>
+                        <xsl:when test="deep-equal(preceding-sibling::*[2], .)"/>
+                        <xsl:when test="deep-equal(preceding-sibling::*[3], .)"/>
+                        <xsl:when test="deep-equal(preceding-sibling::*[4], .)"/>
+                        <xsl:when test="deep-equal(preceding-sibling::*[5], .)"/>
+                        <xsl:otherwise>
+                            <xsl:copy-of select="."/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:for-each>
             </xsd:schema>
         </xsl:result-document>
@@ -667,29 +676,29 @@
     <!--Use Position relative to segment vice position relative to containing message-->
     <xsl:template match="*:SegmentStructureName" mode="attr">
         <xsl:param name="SegChange"/>
-        <xsl:choose>
-            <xsl:when test="$SegChange">
-                <xsl:choose>
-                    <xsl:when test="$SegChange/* and string-length($SegChange/@ProposedSegmentName) > 0">
-                        <xsl:value-of select="$SegChange/@ProposedSegmentName"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
-                            <xsl:attribute name="name">
-                                <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
-                            </xsl:attribute>
-                        </xsl:if>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
-                    <xsl:attribute name="name">
+        <xsl:attribute name="name">
+            <xsl:choose>
+                <xsl:when test="$SegChange">
+                    <xsl:choose>
+                        <xsl:when test="$SegChange/* and string-length($SegChange/@ProposedSegmentName) > 0">
+                            <xsl:value-of select="$SegChange/@ProposedSegmentName"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+                                <xsl:attribute name="name">
+                                    <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                                </xsl:attribute>
+                            </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
                         <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
-                    </xsl:attribute>
-                </xsl:if>
-            </xsl:otherwise>
-        </xsl:choose>
+                    </xsl:if>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:attribute>
     </xsl:template>
     <xsl:template match="*:SegmentStructureUseDescription" mode="attr">
         <xsl:param name="SegChange"/>
