@@ -48,7 +48,7 @@
             <xsl:variable name="newname">
                 <xsl:choose>
                     <xsl:when test="$setid = '1APHIB'">
-                        <xsl:text>AmphibiousForceCompositionSet</xsl:text>
+                        <xsl:text>AmphibiousForcesSituationSet</xsl:text>
                     </xsl:when>
                     <xsl:when test="$setid = 'MARACT'">
                         <xsl:text>MaritimeActivitySet</xsl:text>
