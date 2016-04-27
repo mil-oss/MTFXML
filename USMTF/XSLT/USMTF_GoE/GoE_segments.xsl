@@ -23,6 +23,8 @@
     <!--This Transform produces a "Garden of Eden" style global elements XML Schema for Segments in the USMTF Military Message Standard.-->
     <!--The Resulting Global Elements will be included in the "usmtf_fields" XML Schema per proposed changes of September 2014-->
     <!--Duplicate Segment Names are deconflicted using an XML document containing affected messages, elements and approved changes-->
+    
+    <xsl:include href="NIEM_Util.xsl"/>
     <xsl:variable name="baseline_sets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
     <xsl:variable name="baseline_msgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
     <xsl:variable name="goe_sets_xsd" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
@@ -293,9 +295,9 @@
         <xsl:variable name="n">
             <xsl:value-of select="translate(replace(replace($CCase, '(TAS)', ''), '(mpa)', ''), ' ()', '')"/>
         </xsl:variable>
+
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
-            <!--handle 2 special cases with parens-->
             <xsl:attribute name="name">
                 <xsl:value-of select="concat($n, 'GenText')"/>
             </xsl:attribute>
@@ -351,7 +353,7 @@
                 <xsd:complexContent>
                     <xsd:extension base="set:HeadingInformationSetType">
                         <xsd:sequence>
-                            <xsd:element name="{concat($n,'Heading')}" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
+                            <xsd:element name="{concat($n,'HeadingText')}" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
                                 <xsd:annotation>
                                     <xsd:documentation>
                                         <xsl:value-of select="$fixed"/>
@@ -418,11 +420,11 @@
                         </xsd:annotation>
                     </xsd:element>
                 </xsl:when>
-                <xsl:when test="ends-with($nm, 'Heading')">
+                <xsl:when test="ends-with($nm, 'HeadingText')">
                     <xsd:element name="{$nm}" type="field:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <xsl:value-of select="concat('Heading with fixed value ', @fixed)"/>
+                                <xsl:value-of select="concat('Heading fixed value ', @fixed)"/>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -626,11 +628,6 @@
                 <xsl:when test="deep-equal(preceding-sibling::xsd:element[3], .)"/>
                 <xsl:when test="deep-equal(preceding-sibling::xsd:element[4], .)"/>
                 <xsl:when test="deep-equal(preceding-sibling::xsd:element[5], .)"/>
-                <xsl:when test="deep-equal(preceding-sibling::xsd:element[6], .)"/>
-                <xsl:when test="deep-equal(preceding-sibling::xsd:element[7], .)"/>
-                <xsl:when test="deep-equal(preceding-sibling::xsd:element[8], .)"/>
-                <xsl:when test="deep-equal(preceding-sibling::xsd:element[9], .)"/>
-                <xsl:when test="deep-equal(preceding-sibling::xsd:element[10], .)"/>
                 <xsl:when test="preceding-sibling::xsd:element/@name = $n"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
@@ -638,6 +635,19 @@
             </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
+    
+    <!--Apply Workaround to avoid fixed values prohibited by NIEM-->
+    <xsl:variable name="final">
+        <xsl:for-each select="$dedup_global_types/xsd:complexType">
+            <xsl:sort select="@name"/>
+            <xsl:apply-templates select="." mode="ncopy"/>
+        </xsl:for-each>
+        <xsl:for-each select="$dedup_global_elements/xsd:element">
+            <xsl:sort select="@name"/>
+            <xsl:apply-templates select="." mode="ncopy"/>
+        </xsl:for-each>
+    </xsl:variable>
+   
 
     <!-- ************************************************************-->
     <!--Build XML Schema and add Global Elements and Complex Types -->
@@ -661,11 +671,11 @@
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsd:complexType>
-                <xsl:for-each select="$dedup_global_types/xsd:complexType">
+                <xsl:for-each select="$final/xsd:complexType">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
-                <xsl:for-each select="$dedup_global_elements/xsd:element">
+                <xsl:for-each select="$final/xsd:element">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
@@ -673,6 +683,11 @@
         </xsl:result-document>
     </xsl:template>
     <!-- **************************************-->
+    
+    
+    
+    <!-- **************************************-->
+    
     <xsl:template name="matchChange">
         <xsl:param name="matchEl"/>
         <xsl:variable name="match">
@@ -744,28 +759,7 @@
             </xsl:copy>
         </xsl:if>
     </xsl:template>
-    <xsl:template match="xsd:appinfo" mode="ref">
-        <xsl:param name="fldinfo"/>
-        <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" namespace="urn:mtf:mil:6040b:goe:segments">
-                <xsl:apply-templates select="*" mode="attr"/>
-                <xsl:if test="parent::xsd:annotation/parent::xsd:extension">
-                    <xsl:variable name="ffdno">
-                        <xsl:value-of select="parent::xsd:annotation/parent::xsd:extension/xsd:attribute[@name = 'ffirnFudn']/@fixed"/>
-                    </xsl:variable>
-                    <xsl:variable name="ffdinfo">
-                        <xsl:copy-of select="$goe_fields_xsd//*:Field[@ffirnFudn = $ffdno]"/>
-                    </xsl:variable>
-                    <xsl:attribute name="name">
-                        <xsl:value-of select="$ffdinfo/*/@FudName"/>
-                    </xsl:attribute>
-                    <xsl:attribute name="explanation">
-                        <xsl:value-of select="$ffdinfo/*/@FudExplanation"/>
-                    </xsl:attribute>
-                </xsl:if>
-            </xsl:element>
-        </xsl:copy>
-    </xsl:template>
+    
     <!--Convert appinfo items-->
     <!--InitialSetFormatPosition only applies in context of containing message-->
     <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>

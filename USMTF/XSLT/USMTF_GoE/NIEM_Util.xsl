@@ -6,29 +6,29 @@
     
     <xsl:variable name="no_fixed_segments" select="'../../XSD/GoE_Schema/GoE_segments_no_fixed.xsd'"/>
        
-    <xsl:template name="main">
+<!--    <xsl:template name="main">
         <xsl:result-document href="{$no_fixed_segments}">
-            <xsl:apply-templates select="$segments/*" mode="copy"/>
+            <xsl:apply-templates select="$segments/*" mode="ncopy"/>
         </xsl:result-document>
-    </xsl:template>
+    </xsl:template>-->
     
-    <xsl:template match="*" mode="copy">
+    <xsl:template match="*" mode="ncopy">
         <xsl:copy>
-            <xsl:apply-templates select="@*" mode="copy"/>
-            <xsl:apply-templates select="text()" mode="copy"/>
-            <xsl:apply-templates select="*" mode="copy"/>
+            <xsl:apply-templates select="@*" mode="ncopy"/>
+            <xsl:apply-templates select="text()" mode="ncopy"/>
+            <xsl:apply-templates select="*" mode="ncopy"/>
         </xsl:copy>
     </xsl:template>
     
-    <xsl:template match="@*" mode="copy">
+    <xsl:template match="@*" mode="ncopy">
         <xsl:copy-of select="."/>
     </xsl:template>
     
-    <xsl:template match="text()" mode="copy">
+    <xsl:template match="text()" mode="ncopy">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
     
-    <xsl:template match="xsd:element[@fixed]" mode="copy">
+    <xsl:template match="xsd:element[@fixed]" mode="ncopy">
         <xsd:complexType name="{concat(@name,'Type')}">
             <xsl:copy-of select="xsd:annotation"/>
             <xsd:simpleContent>
