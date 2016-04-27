@@ -73,11 +73,11 @@
             <xsl:sort select="@name"/>
             <xsl:variable name="parent">
                 <xsl:choose>
-                    <xsl:when test="ends-with(ancestor::xsd:complexType[1]/@name, 'SetType')">
-                        <xsl:value-of select="replace(ancestor::xsd:complexType[1]/@name, 'SetType', '')"/>
+                    <xsl:when test="ends-with(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'SetType')">
+                        <xsl:value-of select="replace(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'SetType', '')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="replace(ancestor::xsd:complexType[1]/@name, 'Type', '')"/>
+                        <xsl:value-of select="replace(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'Type', '')"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -96,7 +96,9 @@
                 <xsl:copy-of select="xsd:annotation"/>
                 <xsd:complexContent>
                     <!--<xsd:extension base="ChoiceType">-->
+                    <xsd:extension base="SetBaseType">
                         <xsl:apply-templates select="xsd:complexType/*" mode="globals"/>
+                    </xsd:extension>
                     <!--</xsd:extension>-->
                 </xsd:complexContent>
             </xsd:complexType>
@@ -110,11 +112,11 @@
             <xsl:sort select="@name"/>
             <xsl:variable name="parent">
                 <xsl:choose>
-                    <xsl:when test="ends-with(ancestor::xsd:complexType[1]/@name, 'SetType')">
-                        <xsl:value-of select="replace(ancestor::xsd:complexType[1]/@name, 'SetType', '')"/>
+                    <xsl:when test="ends-with(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'SetType')">
+                        <xsl:value-of select="replace(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'SetType', '')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="replace(ancestor::xsd:complexType[1]/@name, 'Type', '')"/>
+                        <xsl:value-of select="replace(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'Type', '')"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -320,16 +322,15 @@
     <!--*****************************************************-->
     <xsl:template match="xsd:element[@name = 'GroupOfFields']">
         <xsl:variable name="parent">
-            <xsl:value-of select="ancestor::xsd:complexType/@name"/>
+            <xsl:value-of select="ancestor::xsd:complexType[parent::xsd:schema][1]/@name"/>
         </xsl:variable>
         <xsd:element name="{concat(substring($parent, 0, string-length($parent) - 3),'GroupOfFields')}">
             <xsl:copy-of select="@minOccurs"/>
             <xsl:copy-of select="@maxOccurs"/>
             <xsd:complexType>
-                <xsl:apply-templates select="xsd:complexType/xsd:sequence" mode="group">
-                    <!--<xsl:with-param name="min" select="@minOccurs"/>
-            <xsl:with-param name="max" select="@maxOccurs"/>-->
-                </xsl:apply-templates>
+                <xsd:sequence>
+                    <xsl:apply-templates select="xsd:complexType/xsd:sequence/*"/>
+                </xsd:sequence>
             </xsd:complexType>
         </xsd:element>
     </xsl:template>
@@ -457,13 +458,6 @@
                 <xsd:extension base="{concat($basel,'Type')}"/>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
-    <xsl:template match="xsd:sequence" mode="group">
-        <!--<xsl:param name="min"/>
-        <xsl:param name="max"/>-->
-        <xsd:sequence>
-            <xsl:apply-templates select="*"/>
-        </xsd:sequence>
     </xsl:template>
     <xsl:template match="xsd:annotation">
         <xsl:variable name="setid">
@@ -711,11 +705,11 @@
         </xsl:variable>
         <xsl:variable name="parent">
             <xsl:choose>
-                <xsl:when test="ends-with(ancestor::xsd:complexType[1]/@name, 'SetType')">
-                    <xsl:value-of select="replace(ancestor::xsd:complexType[1]/@name, 'SetType', '')"/>
+                <xsl:when test="ends-with(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'SetType')">
+                    <xsl:value-of select="replace(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'SetType', '')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="replace(ancestor::xsd:complexType[1]/@name, 'Type', '')"/>
+                    <xsl:value-of select="replace(ancestor::xsd:complexType[parent::xsd:schema][1]/@name, 'Type', '')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
