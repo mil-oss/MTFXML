@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
+    <xsl:include href="../USMTF_GoE/Utility.xsl"/>
     <!--Baseline xsd:simpleTypes-->
     <xsl:variable name="integers_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:integer']]"/>
     <xsl:variable name="decimals_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:decimal']]"/>
@@ -18,14 +19,18 @@
 
     <xsl:template name="main">
         <xsl:result-document href="{$integersoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:fields"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
-                <xsd:complexType name="FieldIntegerBaseType">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:ism="urn:us:gov:ic:ism:v2"
+            targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US"
+            elementFormDefault="unqualified" attributeFormDefault="unqualified">
+            <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+            <xsd:complexType name="FieldIntegerBaseType">
+                    <xsd:annotation>
+                        <xsd:documentation>Base type for Integers.</xsd:documentation>
+                    </xsd:annotation>
                     <xsd:simpleContent>
-                        <xsd:extension base="xsd:integer">
-                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-                        </xsd:extension>
+                        <xsd:extension base="xsd:integer"/>
                     </xsd:simpleContent>
                 </xsd:complexType>
                 <xsl:for-each select="$integers/xsd:complexType">
@@ -39,14 +44,14 @@
             </xsd:schema>
         </xsl:result-document>
         <xsl:result-document href="{$decimalsoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:fields"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:complexType name="FieldDecimalBaseType">
+                    <xsd:annotation>
+                        <xsd:documentation>Base type for Decimals.</xsd:documentation>
+                    </xsd:annotation>
                     <xsd:simpleContent>
-                        <xsd:extension base="xsd:decimal">
-                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-                        </xsd:extension>
+                        <xsd:extension base="xsd:decimal"/>
                     </xsd:simpleContent>
                 </xsd:complexType>
                 <xsl:for-each select="$decimals/xsd:complexType">
@@ -64,15 +69,27 @@
     <!-- ******************** Integer Types ******************** -->
     <xsl:template match="xsd:simpleType" mode="int">
         <xsl:variable name="nm">
-            <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
+            <xsl:apply-templates select="@name" mode="fromtype"/>
         </xsl:variable>
         <xsl:variable name="min" select="xsd:restriction/xsd:minInclusive/@value"/>
         <xsl:variable name="max" select="xsd:restriction/xsd:maxInclusive/@value"/>
         <xsl:element name="xsd:complexType">
             <xsl:attribute name="name">
-                <xsl:value-of select="@name"/>
+                <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:attribute>
-            <xsl:apply-templates select="xsd:annotation"/>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <xsl:choose>
+                        <xsl:when test="xsd:annotation/xsd:documentation">
+                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsd:documentation>
+                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
+            </xsd:annotation>
             <xsd:simpleContent>
                 <xsl:element name="xsd:restriction">
                     <xsl:attribute name="base">
@@ -89,13 +106,21 @@
                 <xsl:value-of select="$nm"/>
             </xsl:attribute>
             <xsl:attribute name="type">
-                <xsl:value-of select="@name"/>
+                <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
             <xsd:annotation>
                 <xsd:documentation>
-                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
+                    <xsl:choose>
+                        <xsl:when test="xsd:annotation/xsd:documentation">
+                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsd:documentation>
+                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
             </xsd:annotation>
         </xsl:element>
     </xsl:template>
@@ -121,7 +146,7 @@
     <!-- ******************** Decimal Types ******************** -->
     <xsl:template match="xsd:simpleType" mode="dec">
         <xsl:variable name="nm">
-            <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
+            <xsl:apply-templates select="@name" mode="fromtype"/>
         </xsl:variable>
         <xsl:variable name="min" select="xsd:restriction/xsd:minInclusive/@value"/>
         <xsl:variable name="max" select="xsd:restriction/xsd:maxInclusive/@value"/>
@@ -162,9 +187,21 @@
         </xsl:variable>
         <xsl:element name="xsd:complexType">
             <xsl:attribute name="name">
-                <xsl:value-of select="@name"/>
+                <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:attribute>
-            <xsl:apply-templates select="xsd:annotation"/>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <xsl:choose>
+                        <xsl:when test="xsd:annotation/xsd:documentation">
+                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsd:documentation>
+                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
+            </xsd:annotation>
             <xsd:simpleContent>
                 <xsl:element name="xsd:restriction">
                     <xsl:attribute name="base">
@@ -191,13 +228,21 @@
                 <xsl:value-of select="$nm"/>
             </xsl:attribute>
             <xsl:attribute name="type">
-                <xsl:value-of select="@name"/>
+                <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
             <xsd:annotation>
                 <xsd:documentation>
-                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
+                    <xsl:choose>
+                        <xsl:when test="xsd:annotation/xsd:documentation">
+                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsd:documentation>
+                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
             </xsd:annotation>
         </xsl:element>
     </xsl:template>
@@ -301,35 +346,14 @@
 
     <!-- _______________________________________________________ -->
 
-
-    <!--Convert elements in xsd:appinfo to attributes-->
-    <xsl:template match="*" mode="attr">
-        <xsl:variable name="txt" select="normalize-space(text())"/>
-        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
-            <xsl:attribute name="{name()}">
-                <xsl:value-of select="normalize-space(text())"/>
-            </xsl:attribute>
-        </xsl:if>
+    <!--Copy element and use template mode to convert elements to attributes-->
+    <xsl:template match="xsd:appinfo">
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Field" namespace="urn:int:nato:mtf:app-11(c):goe:elementals">
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*" mode="attr"/>
+            </xsl:element>
+        </xsl:copy>
     </xsl:template>
 
-    <xsl:template match="*:FudName">
-        <Field name="{text()}"/>
-    </xsl:template>
-    <xsl:template match="*:FudExplanation"/>
-    <xsl:template match="*:FieldFormatIndexReferenceNumber"/>
-    <xsl:template match="*:FudNumber"/>
-    <xsl:template match="*:VersionIndicator"/>
-    <xsl:template match="*:MinimumLength"/>
-    <xsl:template match="*:MaximumLength"/>
-    <xsl:template match="*:LengthLimitation"/>
-    <xsl:template match="*:UnitOfMeasure"/>
-    <xsl:template match="*:Type"/>
-    <xsl:template match="*:FudSponsor"/>
-    <xsl:template match="*:FudRelatedDocument"/>
-    <xsl:template match="*:DataType"/>
-    <xsl:template match="*:EntryType"/>
-    <xsl:template match="*:Explanation"/>
-    <xsl:template match="*:MinimumInclusiveValue"/>
-    <xsl:template match="*:MaximumInclusiveValue"/>
-    <xsl:template match="*:LengthVariable"/>
 </xsl:stylesheet>

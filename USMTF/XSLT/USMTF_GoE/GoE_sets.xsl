@@ -204,7 +204,7 @@
                         <xsd:documentation>Base type for sets which adds AMPN, NARR and security tagging.</xsd:documentation>
                     </xsd:annotation>
                     <xsd:complexContent>
-                        <xsd:extension base="field:FieldSequenceType">
+                        <xsd:extension base="field:CompositeType">
                             <xsd:sequence>
                                 <xsd:element ref="AmplificationSet" minOccurs="0" maxOccurs="1"/>
                                 <xsd:element ref="NarrativeInformationSet" minOccurs="0" maxOccurs="1"/>
@@ -588,7 +588,7 @@
             <xsl:apply-templates select="@*" mode="copyCTypes"/>
             <xsl:apply-templates select="xsd:annotation" mode="copyCTypes"/>
             <xsd:complexContent>
-                <xsd:extension base="field:FieldSequenceType">
+                <xsd:extension base="field:CompositeType">
                     <xsl:apply-templates select="xsd:sequence" mode="copyCTypes"/>
                 </xsd:extension>
             </xsd:complexContent>
@@ -599,7 +599,7 @@
             <xsl:apply-templates select="@*" mode="copyCTypes"/>
             <xsl:apply-templates select="xsd:annotation" mode="copyCTypes"/>
             <xsd:complexContent>
-                <xsd:extension base="field:FieldSequenceType">
+                <xsd:extension base="field:CompositeType">
                     <xsl:apply-templates select="xsd:sequence" mode="copyCTypes"/>
                 </xsd:extension>
             </xsd:complexContent>
@@ -610,7 +610,7 @@
             <xsl:apply-templates select="@*" mode="copyCTypes"/>
             <xsl:apply-templates select="xsd:annotation" mode="copyCTypes"/>
             <xsd:complexContent>
-                <xsd:extension base="field:FieldSequenceType">
+                <xsd:extension base="field:CompositeType">
                     <xsl:apply-templates select="xsd:sequence" mode="copyCTypes"/>
                 </xsd:extension>
             </xsd:complexContent>
