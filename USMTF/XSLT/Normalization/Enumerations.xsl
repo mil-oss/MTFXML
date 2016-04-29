@@ -61,8 +61,8 @@
                 xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="FieldEnumeratedBaseType">
-                    <xsd:annotation>
-                        <xsd:documentation>Base type for MTF enumerated fields</xsd:documentation>
+                    <xsd:annotation>  
+                        <xsd:documentation>A base type for enumerated content whcih includes security tags.</xsd:documentation>        
                     </xsd:annotation>
                     <xsd:simpleContent>
                         <xsd:extension base="xsd:string">

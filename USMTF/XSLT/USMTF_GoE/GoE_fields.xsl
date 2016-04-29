@@ -77,20 +77,13 @@
     <xsl:template name="main">
         <xsl:result-document href="{$output_fields_xsd}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:goe:fields"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
+                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>Message Text Format Fields</xsd:documentation>
-                </xsd:annotation>
-                <xsd:complexType name="FieldSequenceType">
+                <xsd:complexType name="CompositeType" abstract="true">
                     <xsd:annotation>
                         <xsd:documentation>Base type for sequences.</xsd:documentation>
                     </xsd:annotation>
-                    <xsd:complexContent>
-                        <xsd:restriction base="FieldStringBaseType">
-                            <xsd:sequence/>
-                        </xsd:restriction>
-                    </xsd:complexContent>
+                    <xsd:sequence/>
                 </xsd:complexType>
                 <xsl:copy-of select="$refactor_fields_xsd"/>
                 <xsl:text>&#10;</xsl:text>
@@ -122,10 +115,9 @@
     <xsl:template match="xsd:complexType[xsd:sequence]">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@name"/>
-            <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexContent>
-                <xsd:extension base="FieldSequenceType">
-                    <xsl:apply-templates select="*[not(name()='xsd:annotation')]"/>
+                <xsd:extension base="CompositeType">
+                    <xsl:apply-templates select="*"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsl:copy>
@@ -151,14 +143,7 @@
             <xsl:apply-templates select="@name" mode="txt"/>
         </xsl:variable>
         <xsl:variable name="typename">
-            <xsl:choose>
-                <xsl:when test="starts-with(@type, 'f:')">
-                    <xsl:value-of select="substring-after(@type, 'f:')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates select="@type" mode="txt"/>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:apply-templates select="@type" mode="txt"/>
         </xsl:variable>
         <!--Use Regex from baseline fields without min max qalifiers to match with normalized types-->
         <xsl:variable name="typepattern">
@@ -284,6 +269,17 @@
     </xsl:template>
     <!-- _______________________________________________________ -->
     <!-- ******************** FORMATTING ******************** -->
+   <!-- <xsl:template match="*">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@*">
+        <xsl:copy copy-namespaces="no">
+            <xsl:value-of select="replace(., '&#34;', '')"/>
+        </xsl:copy>
+    </xsl:template>-->
     <xsl:template match="*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="el"/>
@@ -305,22 +301,29 @@
             <xsl:apply-templates select="." mode="txt"/>
         </xsl:copy>
     </xsl:template>
+    <xsl:template match="xsd:annotation" mode="el"/>
+    <!--Copy annotation only it has descendents with text content-->
+    <!--Add xsd:documentation using FudExplanation if it exists-->
     <xsl:template match="xsd:annotation">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*"/>
-            <xsl:if test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
-                <xsl:element name="xsd:documentation">
-                    <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
-                </xsl:element>
-            </xsl:if>
-            <xsl:apply-templates select="*"/>
-        </xsl:copy>
+        <xsl:if test="*//text()">
+            <xsl:copy copy-namespaces="no">
+                <xsl:apply-templates select="@*"/>
+                <xsl:if test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
+                    <xsl:element name="xsd:documentation">
+                        <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
+                    </xsl:element>
+                </xsl:if>
+                <xsl:apply-templates select="*"/>
+            </xsl:copy>
+        </xsl:if>
     </xsl:template>
     <!--Copy documentation only it has text content-->
     <xsl:template match="xsd:documentation">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="text()"/>
-        </xsl:copy>
+        <xsl:if test="text()">
+            <xsl:copy copy-namespaces="no">
+                <xsl:apply-templates select="text()"/>
+            </xsl:copy>
+        </xsl:if>
     </xsl:template>
     <!--Copy element and use template mode to convert elements to attributes-->
     <xsl:template match="xsd:appinfo">
@@ -339,4 +342,48 @@
             </xsl:copy>
         </xsl:if>
     </xsl:template>
+    <!--Convert elements in xsd:appinfo to attributes-->
+    <!--<xsl:template match="*" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="{name()}">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>-->
+    <!--Normalize extra whitespace and linefeeds in text-->
+   <!-- <xsl:template match="text()">
+        <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>-->
+    <!-- _______________________________________________________ -->
+<!--    <xsl:template match="*:FudName" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="name">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:FudExplanation" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="explanation">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="*:VersionIndicator" mode="attr">
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
+            <xsl:attribute name="version">
+                <xsl:value-of select="normalize-space(text())"/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>-->
+    <!-- ******************** FILTERS ******************** -->
+   <!-- <xsl:template match="xsd:element/xsd:annotation"/>
+    <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
+    <xsl:template match="*:FudNumber" mode="attr"/>
+    <xsl:template match="*:FudRelatedDocument" mode="attr"/>-->
+    <!-- _______________________________________________________ -->
 </xsl:stylesheet>

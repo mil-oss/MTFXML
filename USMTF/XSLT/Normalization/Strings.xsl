@@ -19,7 +19,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-
+    <xsl:include href="../USMTF_GoE/Utility.xsl"/>
     <!--  This XSLT refactors baseline USMTF "fields" XML Schema by replacing annotation elements
     with attributes, removing unused elements and other adjustments-->
 
@@ -150,7 +150,8 @@
 
     <!-- ******************** SIMPLE TYPES ******************** -->
     <xsl:template match="xsd:simpleType" mode="stypes">
-        <xsd:complexType name="{@name}">
+        <xsd:complexType>
+            <xsl:apply-templates select="@name"/>
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
                     <xsl:apply-templates select="xsd:restriction/*"/>
@@ -237,19 +238,17 @@
             <xsl:choose>
                 <!--If there is is a match - use it-->
                 <xsl:when test="$normalizedstrtypes/xsd:restriction/xsd:pattern/@value = $pattern">
-                    <xsl:value-of select="$normalizedstrtypes[xsd:restriction/xsd:pattern/@value = $pattern]/@name"/>
+                    <xsl:apply-templates select="$normalizedstrtypes[xsd:restriction/xsd:pattern/@value = $pattern]/@name" mode="txt"/>
                 </xsl:when>
                 <xsl:when test="$normalizedstrtypes/xsd:restriction/xsd:pattern/@value = $patternvalue">
-                    <xsl:value-of select="$normalizedstrtypes[xsd:restriction/xsd:pattern/@value = $patternvalue]/@name"/>
+                    <xsl:apply-templates select="$normalizedstrtypes[xsd:restriction/xsd:pattern/@value = $patternvalue]/@name" mode="txt"/>
                 </xsl:when>
                 <!--If there is is no match - will use current type-->
                 <xsl:otherwise/>
             </xsl:choose>
         </xsl:variable>
         <xsl:element name="xsd:complexType">
-            <xsl:attribute name="name">
-                <xsl:value-of select="@name"/>
-            </xsl:attribute>
+            <xsl:apply-templates select="@name"/>
             <!--<xsl:attribute name="nillable">true</xsl:attribute>-->
             <xsl:apply-templates select="xsd:annotation"/>
             <!--<xsd:complexType>-->
@@ -271,11 +270,9 @@
         </xsl:element>
         <xsl:element name="xsd:element">
             <xsl:attribute name="name">
-                <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
+            <xsl:apply-templates select="@name" mode="fromtype"/>
             </xsl:attribute>
-            <xsl:attribute name="type">
-                <xsl:value-of select="@name"/>
-            </xsl:attribute>
+            <xsl:apply-templates select="@type"/>
             <xsl:attribute name="nillable">true</xsl:attribute>
             <xsd:annotation>
                 <xsd:documentation>
@@ -288,7 +285,7 @@
     <!-- _______________________________________________________ -->
 
     <!-- ******** FORMATIING ********-->
-    <xsl:template match="*">
+   <!-- <xsl:template match="*">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="*"/>
@@ -298,7 +295,7 @@
         <xsl:copy copy-namespaces="no">
             <xsl:value-of select="replace(., '&#34;', '')"/>
         </xsl:copy>
-    </xsl:template>
+    </xsl:template>-->
 
     <xsl:template match="*" mode="el">
         <xsl:copy copy-namespaces="no">
@@ -360,21 +357,21 @@
     </xsl:template>
 
     <!--Convert elements in xsd:appinfo to attributes-->
-    <xsl:template match="*" mode="attr">
+   <!-- <xsl:template match="*" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="{name()}">
                 <xsl:value-of select="normalize-space(text())"/>
             </xsl:attribute>
         </xsl:if>
-    </xsl:template>
+    </xsl:template>-->
 
     <!--Normalize extra whitespace and linefeeds in text-->
-    <xsl:template match="text()">
+  <!--  <xsl:template match="text()">
         <xsl:value-of select="normalize-space(.)"/>
-    </xsl:template>
+    </xsl:template>-->
     <!-- _______________________________________________________ -->
-
+<!--
     <xsl:template match="*:FudName" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
@@ -401,7 +398,7 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-
+-->
 
     <!-- ******************** FILTERS ******************** -->
     <!--<xsl:template match="*[@name = 'FreeTextType']"/>-->
@@ -416,11 +413,11 @@
     <!--- Remove Pattern from type containing base of xsd:decimal -->
     <xsl:template match="xsd:pattern[parent::xsd:restriction/@base = 'xsd:decimal']"/>
     <!--- Remove Pattern from enumerations -->
-    <xsl:template match="xsd:restriction/xsd:pattern[exists(parent::xsd:restriction/xsd:enumeration)]"/>
-    <xsl:template match="xsd:restriction[@base = 'xsd:integer']/xsd:annotation"/>
+   <!-- <xsl:template match="xsd:restriction/xsd:pattern[exists(parent::xsd:restriction/xsd:enumeration)]"/>-->
+    <!--<xsl:template match="xsd:restriction[@base = 'xsd:integer']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:string']/xsd:annotation"/>
-    <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
-    <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
+    <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>-->
+<!--    <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
     <xsl:template match="*:MinimumLength" mode="attr"/>
     <xsl:template match="*:MaximumLength" mode="attr"/>
@@ -434,6 +431,6 @@
     <xsl:template match="*:MtfRegularExpression" mode="attr"/>
     <xsl:template match="*:MinimumInclusiveValue" mode="attr"/>
     <xsl:template match="*:MaximumInclusiveValue" mode="attr"/>
-    <xsl:template match="*:Explanation" mode="attr"/>
+    <xsl:template match="*:Explanation" mode="attr"/>-->
     <!-- _______________________________________________________ -->
 </xsl:stylesheet>
