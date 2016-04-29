@@ -44,8 +44,12 @@
             </xsd:schema>
         </xsl:result-document>
         <xsl:result-document href="{$decimalsoutputdoc}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:ism="urn:us:gov:ic:ism:v2"
+                targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:complexType name="FieldDecimalBaseType">
                     <xsd:annotation>
                         <xsd:documentation>Base type for Decimals.</xsd:documentation>
