@@ -34,7 +34,6 @@
     <!--A normalized list of xsd:string types with common REGEX patterns without length qualifiers for re-use globally-->
     <xsl:variable name="normalizedstrtypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
 
-
     <xsl:variable name="str_types">
         <xsl:for-each select="$mtf_str">
             <xsl:variable name="pattern" select="xsd:restriction/xsd:pattern/@value"/>
@@ -91,7 +90,6 @@
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
-
 
     <!-- Contains a list of xsd:elements with normalized xsd:simpleTypes and 
         including xsd:maxLength and xsd:minLength extensions for xsd:simpleTypes 
@@ -270,9 +268,11 @@
         </xsl:element>
         <xsl:element name="xsd:element">
             <xsl:attribute name="name">
-            <xsl:apply-templates select="@name" mode="fromtype"/>
+                <xsl:apply-templates select="@name" mode="fromtype"/>
             </xsl:attribute>
-            <xsl:apply-templates select="@type"/>
+            <xsl:attribute name="type">
+                <xsl:apply-templates select="@name" mode="txt"/>
+            </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
             <xsd:annotation>
                 <xsd:documentation>
@@ -285,7 +285,7 @@
     <!-- _______________________________________________________ -->
 
     <!-- ******** FORMATIING ********-->
-   <!-- <xsl:template match="*">
+    <!-- <xsl:template match="*">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="*"/>
@@ -357,7 +357,7 @@
     </xsl:template>
 
     <!--Convert elements in xsd:appinfo to attributes-->
-   <!-- <xsl:template match="*" mode="attr">
+    <!-- <xsl:template match="*" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="{name()}">
@@ -367,11 +367,11 @@
     </xsl:template>-->
 
     <!--Normalize extra whitespace and linefeeds in text-->
-  <!--  <xsl:template match="text()">
+    <!--  <xsl:template match="text()">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>-->
     <!-- _______________________________________________________ -->
-<!--
+    <!--
     <xsl:template match="*:FudName" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
@@ -413,11 +413,11 @@
     <!--- Remove Pattern from type containing base of xsd:decimal -->
     <xsl:template match="xsd:pattern[parent::xsd:restriction/@base = 'xsd:decimal']"/>
     <!--- Remove Pattern from enumerations -->
-   <!-- <xsl:template match="xsd:restriction/xsd:pattern[exists(parent::xsd:restriction/xsd:enumeration)]"/>-->
+    <!-- <xsl:template match="xsd:restriction/xsd:pattern[exists(parent::xsd:restriction/xsd:enumeration)]"/>-->
     <!--<xsl:template match="xsd:restriction[@base = 'xsd:integer']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:string']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>-->
-<!--    <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
+    <!--    <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
     <xsl:template match="*:MinimumLength" mode="attr"/>
     <xsl:template match="*:MaximumLength" mode="attr"/>

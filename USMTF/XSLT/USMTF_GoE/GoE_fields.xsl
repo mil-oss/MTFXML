@@ -79,6 +79,9 @@
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:goe:fields"
                 xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:annotation>
+                    <xsd:documentation>XML Schema for MTF Fields.</xsd:documentation>
+                </xsd:annotation>
                 <xsd:complexType name="CompositeType" abstract="true">
                     <xsd:annotation>
                         <xsd:documentation>Base type for sequences.</xsd:documentation>

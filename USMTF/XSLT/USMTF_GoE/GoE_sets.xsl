@@ -54,7 +54,7 @@
                         <xsl:text>MaritimeActivitySet</xsl:text>
                     </xsl:when>
                     <xsl:when test="exists($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0])">
-                        <xsl:value-of select="concat(translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-()', ''), 'Set')"
+                        <xsl:value-of select="concat(translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-().', ''), 'Set')"
                         />
                     </xsl:when>
                     <xsl:otherwise>
@@ -701,7 +701,7 @@
     </xsl:template>
     <xsl:template match="@ProposedSetFormatName" mode="chg">
         <xsl:attribute name="name">
-            <xsl:value-of select="."/>
+            <xsl:value-of select="translate(.,' ,/-().', '')"/>
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="@ProposedSetFormatDescription" mode="chg">
