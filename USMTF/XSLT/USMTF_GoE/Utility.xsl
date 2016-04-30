@@ -26,7 +26,7 @@
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="text()">
-        <xsl:value-of select="normalize-space(translate(., '&#34;', ''))"/>
+        <xsl:value-of select="normalize-space(translate(., '&#34;&#xA;', ''))"/>
     </xsl:template>
 
     <!-- ************** Copy ***************-->
@@ -47,6 +47,12 @@
     <!-- ************ ELEMENT TO ATTRIBUTE ***********-->
     <xsl:template match="*" mode="attr">
         <xsl:variable name="nm" select="name()"/>
+        <xsl:variable name="apos">
+            <xsl:text>&apos;</xsl:text>
+        </xsl:variable>
+        <xsl:variable name="quot">
+            <xsl:text>&quot;</xsl:text>
+        </xsl:variable>
         <xsl:variable name="attrname">
             <xsl:choose>
                 <xsl:when test="$AttrNameChanges/*[@from = $nm]">
@@ -58,7 +64,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="txt">
-            <xsl:value-of select="normalize-space(.)"/>
+            <xsl:value-of select="replace(normalize-space(.), $quot, $apos)"/>
         </xsl:variable>
         <xsl:if test="string-length($txt) &gt; 0">
             <xsl:attribute name="{$attrname}">
@@ -89,18 +95,34 @@
         <Change from="SetFormatRemark" to="remark"/>
         <Change from="SetFormatSponsor" to="sponsor"/>
         <Change from="VersionIndicator" to="version"/>
+        <Change from="SegmentStructureName" to="name"/>
+        <Change from="SegmentStructureConcept" to="concept"/>
+        <Change from="SegmentStructureUseDescription" to="usage"/>
+        <Change from="SetFormatPositionUseDescription" to="usage"/>
+        <Change from="SetFormatPositionName" to="positionName"/>
+        <Change from="SetFormatPositionNumber" to="position"/>
+        <Change from="SetFormatPositionConcept" to="concept"/>
+        <Change from="MtfName" to="name"/>
+        <Change from="MtfIdentifier" to="identifier"/>
+        <Change from="MtfSponsor" to="sponsor"/>
+        <Change from="MtfPurpose" to="purpose"/>
+        <Change from="MtfNote" to="note"/>
+        <Change from="MtfSponsor" to="sponsor"/>
     </xsl:variable>
 
     <!-- *************** NODE NAME CHANGES ****************-->
     <xsl:template match="@name" mode="fromtype">
         <xsl:variable name="nm" select="."/>
-        <xsl:value-of select="translate(substring($nm, 0, string-length($nm) - 3), '-', '')"/>
+        <xsl:value-of select="translate(substring($nm, 0, string-length($nm) - 3), '-.', '')"/>
     </xsl:template>
     <xsl:template match="@name" mode="txt">
         <xsl:variable name="t">
             <xsl:choose>
                 <xsl:when test="starts-with(., 'f:')">
                     <xsl:value-of select="substring-after(., 'f:')"/>
+                </xsl:when>
+                <xsl:when test="starts-with(., 's:')">
+                    <xsl:value-of select="substring-after(., 's:')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="."/>
@@ -221,6 +243,8 @@
         <Change from="_9UnitCommentsType" to="NineUnitCommentsType"/>
         <Change from="_2DigitYearType" to="TwoDigitYearType"/>
         <Change from="_2DigitYear" to="TwoDigitYear"/>
+        <Change from="_4WDispositionGridParametersType" to="FourWhiskeyDispositionGridParametersType"/>
+        <Change from="_4WDispositionGridParameters" to="FourWhiskeyDispositionGridParameters"/>
     </xsl:variable>
     <xsl:template name="nodoc">
         <xsd:annotation>
@@ -298,4 +322,22 @@
     <xsl:template match="xsd:restriction[@base = 'xsd:string']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
 
+    <!-- ***************** MSGS *****************-->
+    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
+    <xsl:template match="*:SegmentStructureName" mode="attr"/>
+    <xsl:template match="*:SegmentStructureConcept" mode="attr"/>
+    <xsl:template match="*:SegmentStructureUseDescription" mode="attr"/>
+    <xsl:template match="*:SetFormatPositionUseDescription" mode="attr"/>
+    <xsl:template match="*:SetFormatPositionName" mode="attr"/>
+    <xsl:template match="*:SetFormatPositionNumber" mode="attr"/>
+    <xsl:template match="*:SetFormatPositionConcept" mode="attr"/>
+    <xsl:template match="*:MtfName" mode="attr"/>
+    <xsl:template match="*:MtfIdentifier" mode="attr"/>
+    <xsl:template match="*:MtfSponsor" mode="attr"/>
+    <xsl:template match="*:MtfPurpose" mode="attr"/>
+    <xsl:template match="*:VersionIndicator" mode="attr"/>
+    <xsl:template match="*:MtfNote" mode="attr"/>        
+    <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
+    <xsl:template match="*:Repeatability" mode="attr"/>
+    <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
 </xsl:stylesheet>

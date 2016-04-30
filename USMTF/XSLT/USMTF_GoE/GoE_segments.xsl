@@ -666,7 +666,7 @@
                         <xsd:documentation>Base type for Segments which add security tagging.</xsd:documentation>
                     </xsd:annotation>
                     <xsd:complexContent>
-                        <xsd:extension base="field:FieldSequenceType">
+                        <xsd:extension base="field:CompositeType">
                             <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         </xsd:extension>
                     </xsd:complexContent>
@@ -682,10 +682,6 @@
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
-    <!-- **************************************-->
-    
-    
-    
     <!-- **************************************-->
     
     <xsl:template name="matchChange">

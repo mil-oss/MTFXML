@@ -118,9 +118,10 @@
     <xsl:template match="xsd:complexType[xsd:sequence]">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@name"/>
+            <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexContent>
                 <xsd:extension base="CompositeType">
-                    <xsl:apply-templates select="*"/>
+                    <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsl:copy>
@@ -138,6 +139,9 @@
                 <xsl:value-of select="$n"/>
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
+            <xsd:annotation>
+                <xsl:apply-templates select="xsd:annotation/xsd:documentation"/>
+            </xsd:annotation>
         </xsd:element>
     </xsl:template>
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->
@@ -272,7 +276,7 @@
     </xsl:template>
     <!-- _______________________________________________________ -->
     <!-- ******************** FORMATTING ******************** -->
-   <!-- <xsl:template match="*">
+    <!-- <xsl:template match="*">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="*"/>
@@ -308,25 +312,41 @@
     <!--Copy annotation only it has descendents with text content-->
     <!--Add xsd:documentation using FudExplanation if it exists-->
     <xsl:template match="xsd:annotation">
-        <xsl:if test="*//text()">
-            <xsl:copy copy-namespaces="no">
-                <xsl:apply-templates select="@*"/>
-                <xsl:if test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
-                    <xsl:element name="xsd:documentation">
-                        <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
-                    </xsl:element>
-                </xsl:if>
-                <xsl:apply-templates select="*"/>
-            </xsl:copy>
-        </xsl:if>
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="*//text()">
+                    <xsl:apply-templates select="@*"/>
+                    <xsl:choose>
+                        <xsl:when test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
+                            <xsl:element name="xsd:documentation">
+                                <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
+                            </xsl:element>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="*"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsd:documentation>
+                        <xsl:text>Data definition required</xsl:text>
+                    </xsd:documentation>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
     </xsl:template>
     <!--Copy documentation only it has text content-->
     <xsl:template match="xsd:documentation">
-        <xsl:if test="text()">
-            <xsl:copy copy-namespaces="no">
-                <xsl:apply-templates select="text()"/>
-            </xsl:copy>
-        </xsl:if>
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="text()">
+                    <xsl:apply-templates select="text()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Data definition required</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
     </xsl:template>
     <!--Copy element and use template mode to convert elements to attributes-->
     <xsl:template match="xsd:appinfo">
@@ -355,11 +375,11 @@
         </xsl:if>
     </xsl:template>-->
     <!--Normalize extra whitespace and linefeeds in text-->
-   <!-- <xsl:template match="text()">
+    <!-- <xsl:template match="text()">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>-->
     <!-- _______________________________________________________ -->
-<!--    <xsl:template match="*:FudName" mode="attr">
+    <!--    <xsl:template match="*:FudName" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="name">
@@ -384,7 +404,7 @@
         </xsl:if>
     </xsl:template>-->
     <!-- ******************** FILTERS ******************** -->
-   <!-- <xsl:template match="xsd:element/xsd:annotation"/>
+    <!-- <xsl:template match="xsd:element/xsd:annotation"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
     <xsl:template match="*:FudRelatedDocument" mode="attr"/>-->
