@@ -47,7 +47,7 @@
     <xsl:variable name="global_ctypes">
         <xsl:for-each select="$ctypes/*/*//xsd:element[@name]">
             <xsd:complexType name="{concat(@name,'Type')}">
-                <xsl:copy-of select="xsd:annotation"/>
+                <xsl:apply-templates select="xsd:annotation" mode="global"/>
                 <xsl:copy-of select="xsd:complexType/xsd:complexContent"/>
             </xsd:complexType>
         </xsl:for-each>
@@ -72,6 +72,24 @@
         </xsd:element>
     </xsl:template>
 
+    <xsl:template match="*" mode="global">
+        <xsl:copy>
+            <xsl:apply-templates select="*" mode="global"/>
+            <xsl:apply-templates select="text()" mode="global"/>
+            <xsl:apply-templates select="@*" mode="global"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@*" mode="global">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="text()" mode="global">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    <xsl:template match="@concept" mode="global"/>
+    <xsl:template match="@position" mode="global"/>
+    <xsl:template match="@usage" mode="global"/>
+    <xsl:template match="@minOccurs" mode="global"/>
+    
     <!--*****************************************************-->
     <xsl:template name="main">
         <xsl:result-document href="{$outputdoc}">
@@ -432,10 +450,10 @@
                 <xsd:complexContent>
                     <xsd:extension base="set:GeneralTextSetType">
                         <xsd:sequence>
-                            <xsd:element name="{concat($n,'Indicator')}" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{replace($TextInd,$apos,'')}">
+                            <xsd:element name="{concat($n,'Indicator')}" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
                                 <xsd:annotation>
                                     <xsd:documentation>
-                                        <xsl:value-of select="@fixed"/>
+                                        <xsl:value-of select="$fixed"/>
                                     </xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>

@@ -94,20 +94,17 @@
         <Change from="SetFormatPositionName" to="positionName"/>
         <Change from="SetFormatRemark" to="remark"/>
         <Change from="SetFormatSponsor" to="sponsor"/>
-        <Change from="VersionIndicator" to="version"/>
         <Change from="SegmentStructureName" to="name"/>
         <Change from="SegmentStructureConcept" to="concept"/>
         <Change from="SegmentStructureUseDescription" to="usage"/>
         <Change from="SetFormatPositionUseDescription" to="usage"/>
-        <Change from="SetFormatPositionName" to="positionName"/>
         <Change from="SetFormatPositionNumber" to="position"/>
-        <Change from="SetFormatPositionConcept" to="concept"/>
         <Change from="MtfName" to="name"/>
         <Change from="MtfIdentifier" to="identifier"/>
         <Change from="MtfSponsor" to="sponsor"/>
         <Change from="MtfPurpose" to="purpose"/>
         <Change from="MtfNote" to="note"/>
-        <Change from="MtfSponsor" to="sponsor"/>
+        <Change from="VersionIndicator" to="version"/>
     </xsl:variable>
 
     <!-- *************** NODE NAME CHANGES ****************-->
@@ -314,6 +311,7 @@
     <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>
     <xsl:template match="*:ColumnarIndicator" mode="attr"/>
     <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>
+    <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="xsd:attributeGroup"/>
     <xsl:template match="xsd:attribute[@name = 'ffSeq']"/>
     <xsl:template match="xsd:attribute[@name = 'ffirnFudn']"/>
@@ -323,7 +321,7 @@
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
 
     <!-- ***************** MSGS *****************-->
-    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
+<!--    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
     <xsl:template match="*:SegmentStructureName" mode="attr"/>
     <xsl:template match="*:SegmentStructureConcept" mode="attr"/>
     <xsl:template match="*:SegmentStructureUseDescription" mode="attr"/>
@@ -339,5 +337,5 @@
     <xsl:template match="*:MtfNote" mode="attr"/>        
     <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
-    <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
+    <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>-->
 </xsl:stylesheet>
