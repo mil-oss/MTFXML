@@ -321,6 +321,7 @@
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
 
     <!-- ***************** MSGS *****************-->
+    <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
 <!--    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
     <xsl:template match="*:SegmentStructureName" mode="attr"/>
     <xsl:template match="*:SegmentStructureConcept" mode="attr"/>
