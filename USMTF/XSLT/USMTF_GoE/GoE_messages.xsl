@@ -385,32 +385,24 @@
                     </xsd:complexType>
                 </xsl:when>
                 <xsl:when test="$nm='ShipPositionAndMovementArrivalSet'">
-                    <xsd:complexType name="ShipPositionAndMovementArrivalSetType">
+                    <xsd:element name="ShipPositionAndMovementArrivalSet" type="set:ShipPositionAndMovementSetType">
                         <xsd:annotation>
                             <xsd:documentation>The 9SHIP set reports the location and movement of the ships reported in the 1SHIPARR set.</xsd:documentation>
                             <xsd:appinfo>
                                 <Set positionName="SHIP POSITION AND MOVEMENT DATA"/>
                             </xsd:appinfo>
                         </xsd:annotation>
-                        <xsd:complexContent>
-                            <xsd:extension base="set:ShipPositionAndMovementSetType">
-                            </xsd:extension>
-                        </xsd:complexContent>
-                    </xsd:complexType>
+                    </xsd:element>
                 </xsl:when>
-                <xsl:when test="$nm='ShipPositionAndMovementDepartureSetType'">
-                    <xsd:complexType name="ShipPositionAndMovementDepartureSetType">
+                <xsl:when test="$nm='ShipPositionAndMovementDepartureSet'">
+                    <xsd:element name="ShipPositionAndMovementDepartureSet" type="set:ShipPositionAndMovementSetType">
                         <xsd:annotation>
                             <xsd:documentation>The 9SHIP set reports the location and movement of the ships reported in the 1SHIPDEP set.</xsd:documentation>
                             <xsd:appinfo>
                                 <Set positionName="SHIP POSITION AND MOVEMENT DATA"/>
                             </xsd:appinfo>
                         </xsd:annotation>
-                        <xsd:complexContent>
-                            <xsd:extension base="set:ShipPositionAndMovementSetType">
-                            </xsd:extension>
-                        </xsd:complexContent>
-                    </xsd:complexType>
+                    </xsd:element>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsd:complexType name="{concat(@name,'Type')}">
