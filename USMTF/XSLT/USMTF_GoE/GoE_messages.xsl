@@ -40,15 +40,13 @@
             <xsd:element name="{concat(@name,'Rules')}">
                 <xsd:annotation>
                     <xsd:appinfo>
-                        <Msg>
-                            <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*[name() = 'MtfStructuralRelationship']" mode="el"/>
-                        </Msg>
+                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*[name() = 'MtfStructuralRelationship']" mode="el"/>
                     </xsd:appinfo>
                 </xsd:annotation>
             </xsd:element>
         </xsl:for-each>
     </xsl:variable>
-    <!--*****************************************************-->  
+    <!--*****************************************************-->
     <xsl:template match="xsd:schema/xsd:element" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:variable name="n">
@@ -80,11 +78,11 @@
         <xsl:copy copy-namespaces="no">
             <xsl:value-of select="normalize-space(.)"/>
         </xsl:copy>
-    </xsl:template>   
+    </xsl:template>
     <!--Include Rules as attribute strings.  Replace double quotes with single quotes-->
     <xsl:template match="*[name() = 'MtfStructuralRelationship']" mode="el">
         <!--OMIT RULES ENFORCED BY ASSIGNED FIXED VALUES-->
-        <xsl:choose>
+        <!--<xsl:choose>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F1')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F2')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F3')"/>
@@ -96,11 +94,14 @@
             <xsl:when test="starts-with(*:MtfStructuralRelationshipExplanation/text(), 'Field 1 in HEADING')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipExplanation/text(), 'Field 1 of HEADING')"/>
             <xsl:otherwise>
-                <xsl:element name="Rule">
+                <!-\-<xsl:element name="MsgRule">-\->
                     <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
-                </xsl:element>
+                <!-\-</xsl:element>-\->
             </xsl:otherwise>
-        </xsl:choose>
+        </xsl:choose>-->
+        <xsl:element name="Msg">
+            <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
+        </xsl:element>
     </xsl:template>
     <xsl:template match="*" mode="trimattr">
         <xsl:variable name="apos">&#39;</xsl:variable>
@@ -127,7 +128,11 @@
         <xsd:complexType name="{concat(@name,'Type')}">
             <xsl:apply-templates select="@*" mode="ctype"/>
             <xsl:apply-templates select="xsd:annotation" mode="el"/>
-            <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]" mode="ctype"/>
+            <xsd:complexContent>
+                <xsd:extension base="MessageBaseType">
+                    <xsl:apply-templates select="xsd:complexType/xsd:sequence" mode="ctype"/>
+                </xsd:extension>
+            </xsd:complexContent>
         </xsd:complexType>
     </xsl:template>
     <xsl:template match="@base" mode="ctype">
@@ -141,7 +146,7 @@
     <xsl:template match="xsd:schema/xsd:element/@name" mode="ctype"/>
     <xsl:template match="xsd:schema/xsd:element/xsd:annotation/xsd:appinfo" mode="ctype">
         <xsl:copy>
-            <xsl:apply-templates select="*" mode="attr"></xsl:apply-templates>
+            <xsl:apply-templates select="*" mode="attr"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="xsd:element" mode="ctype">
@@ -182,7 +187,7 @@
         </xsl:variable>
         <xsl:choose>
             <!--DECONFLICT SPECIFICS-->
-            <xsl:when test="$newname = 'ShipPositionAndMovement' and contains(xsd:annotation/xsd:documentation, '1SHIPARR')">
+            <xsl:when test="$newname = 'ShipPositionAndMovementSet' and contains(xsd:annotation/xsd:documentation, '1SHIPARR')">
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="name">
                         <xsl:text>ShipPositionAndMovementArrivalSet</xsl:text>
@@ -191,7 +196,6 @@
                         <xsl:text>set:ShipPositionAndMovementSetType</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')][not(name() = 'type')]" mode="ctype"/>
-                    <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
                 </xsl:copy>
             </xsl:when>
             <xsl:when test="$newname = 'ShipPositionAndMovementSet' and contains(xsd:annotation/xsd:documentation, '1SHIPDEP')">
@@ -203,7 +207,6 @@
                         <xsl:text>set:ShipPositionAndMovementSetType</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')][not(name() = 'type')]" mode="ctype"/>
-                    <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
                 </xsl:copy>
             </xsl:when>
             <xsl:when test="exists($sets/xsd:schema/xsd:element[@name = $newname])">
@@ -322,14 +325,14 @@
     </xsl:template>
     <xsl:template match="xsd:complexType/xsd:sequence/xsd:choice/xsd:annotation" mode="ctype"/>
     <xsl:template match="xsd:schema/xsd:element/xsd:complexType/xsd:attribute" mode="ctype"/>
-    <!--*****************************************************-->  
+    <!--*****************************************************-->
     <xsl:variable name="ref_ctypes">
-        <xsl:for-each select="$ctypes/*" >
+        <xsl:for-each select="$ctypes/*">
             <xsl:copy copy-namespaces="no">
                 <xsl:apply-templates select="@*" mode="globalize"/>
                 <xsl:apply-templates select="text()" mode="globalize"/>
                 <xsl:copy-of select="xsd:annotation"/>
-                <xsl:apply-templates select="*[not(name()='xsd:annotation')]" mode="globalize"/>
+                <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]" mode="globalize"/>
             </xsl:copy>
         </xsl:for-each>
     </xsl:variable>
@@ -381,13 +384,50 @@
                         <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
                     </xsd:complexType>
                 </xsl:when>
+                <xsl:when test="$nm='ShipPositionAndMovementArrivalSet'">
+                    <xsd:complexType name="ShipPositionAndMovementArrivalSetType">
+                        <xsd:annotation>
+                            <xsd:documentation>The 9SHIP set reports the location and movement of the ships reported in the 1SHIPARR set.</xsd:documentation>
+                            <xsd:appinfo>
+                                <Set positionName="SHIP POSITION AND MOVEMENT DATA"/>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                        <xsd:complexContent>
+                            <xsd:extension base="set:ShipPositionAndMovementSetType">
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsl:when>
+                <xsl:when test="$nm='ShipPositionAndMovementDepartureSetType'">
+                    <xsd:complexType name="ShipPositionAndMovementDepartureSetType">
+                        <xsd:annotation>
+                            <xsd:documentation>The 9SHIP set reports the location and movement of the ships reported in the 1SHIPDEP set.</xsd:documentation>
+                            <xsd:appinfo>
+                                <Set positionName="SHIP POSITION AND MOVEMENT DATA"/>
+                            </xsd:appinfo>
+                        </xsd:annotation>
+                        <xsd:complexContent>
+                            <xsd:extension base="set:ShipPositionAndMovementSetType">
+                            </xsd:extension>
+                        </xsd:complexContent>
+                    </xsd:complexType>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsd:complexType name="{concat(@name,'Type')}">
                         <xsl:apply-templates select="xsd:annotation" mode="global"/>
-                        <xsl:apply-templates  select="xsd:complexType/xsd:complexContent" mode="globalize"/>
+                        <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
                     </xsd:complexType>
                 </xsl:otherwise>
             </xsl:choose>
+        </xsl:for-each>
+        <xsl:for-each select="$ctypes//xsd:element[@ref = 'set:MessageIdentifierSet']">
+            <xsl:variable name="msgnm" select="ancestor::xsd:complexType[@name][1]/@name"/>
+            <xsl:call-template name="MSGidSet">
+                <xsl:with-param name="msgnode" select="substring($msgnm,0,string-length($msgnm)-3)"/>
+                <xsl:with-param name="appinfo">
+                    <xsl:copy-of select="ancestor::xsd:complexType[@name][1]/xsd:annotation/xsd:appinfo"/>
+                </xsl:with-param>
+            </xsl:call-template>
         </xsl:for-each>
     </xsl:variable>
     <!--Replace named elements with refs-->
@@ -400,6 +440,7 @@
     </xsl:template>
     <xsl:template match="xsd:element[@name]" mode="globalize">
         <xsl:variable name="nm" select="@name"/>
+        <xsl:variable name="msgnm" select="ancestor::xsd:complexType[@name][1]/@name"/>
         <xsl:choose>
             <xsl:when test="ends-with($nm, 'Indicator')">
                 <xsd:element ref="{$nm}">
@@ -432,11 +473,6 @@
     <xsl:template match="@*" mode="globalize">
         <xsl:copy-of select="." copy-namespaces="no"/>
     </xsl:template>
-    <xsl:template match="xsd:sequence//xsd:element[@name]" mode="makerefs">
-        <xsd:element ref="{@name}">
-            <xsl:copy-of select="xsd:annotation"/>
-        </xsd:element>
-    </xsl:template>
     <xsl:template match="xsd:element/@name" mode="globalize"/>
     <xsl:template match="xsd:appinfo" mode="globalize">
         <xsl:copy>
@@ -447,11 +483,21 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
+    <xsl:template match="@ref[.='set:MessageIdentifierSet']" mode="globalize">
+        <xsl:variable name="msgnode" select="ancestor::xsd:complexType[@name][1]/@name"/>
+        <xsl:variable name="msgnoderef">
+            <xsl:value-of select="substring($msgnode,0,string-length($msgnode)-3)"/>
+        </xsl:variable>
+        <xsl:attribute name="ref">
+            <xsl:value-of select="concat($msgnoderef,'MessageIdentifierSet')"/>
+        </xsl:attribute>
+    </xsl:template>
     <xsl:template match="@type" mode="globalize"/>
     <xsl:template match="@maxOccurs" mode="globalize"/>
     <xsl:template match="xsd:choice/@minOccurs" mode="globalize"/>
     <xsl:template match="@fixed" mode="globalize"/>
     <xsl:template match="@position" mode="globalize"/>
+
     <!--*****************************************************-->
     <xsl:template match="*" mode="global">
         <xsl:copy>
@@ -489,6 +535,7 @@
         <xsl:for-each select="$global_ctypes/xsd:element">
             <xsl:copy-of select="."/>
         </xsl:for-each>
+        <xsl:call-template name="MsgStdandVersion"/>
     </xsl:variable>
     <xsl:variable name="deconfl_ctypes">
         <xsl:for-each select="$global_ctypes/xsd:complexType">
@@ -543,6 +590,19 @@
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="GoE_sets.xsd"/>
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:segments" schemaLocation="GoE_segments.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:annotation>
+                    <xsd:documentation>XML Schema for MTF Messages</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType name="MessageBaseType">
+                    <xsd:annotation>
+                        <xsd:documentation>Base type for Messages which add security tagging.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexContent>
+                        <xsd:extension base="field:CompositeType">
+                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** MESSAGE TYPES **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
@@ -710,7 +770,165 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
-      
+    <!--*****************************************************-->
+    <xsl:template name="MSGidSet">
+        <xsl:param name="msgnode"/>
+        <xsl:param name="appinfo"/>
+        <xsd:complexType name="{concat($msgnode,'MessageIdentifierSetType')}">
+            <xsd:annotation>
+                <xsd:documentation>
+                    <xsl:value-of select="concat($appinfo/*/*:Msg/@name, ' MESSAGE IDENTIFIER SET')"/>
+                </xsd:documentation>
+                <xsl:copy-of select="$appinfo"/>
+            </xsd:annotation>
+            <xsd:complexContent>
+                <xsd:extension base="set:SetBaseType">
+                    <xsd:sequence>
+                        <xsd:element ref="{concat($msgnode,'MessageIdentifier')}">
+                            <xsd:annotation>
+                                <xsd:documentation>THE IDENTIFIER OF A MESSAGE OR REPORT.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="MESSAGE TEXT FORMAT IDENTIFIER" concept="THE IDENTIFIER OF A MESSAGE OR REPORT." identifier="A" name="MessageType"
+                                        definition="THE TYPE OF MESSAGE OR REPORT." version="B.1.01.00"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="MessageTextFormatStandard" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>The military standard that contains the message format rules.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="STANDARD OF MESSAGE TEXT FORMAT" concept="The military standard that contains the message format rules." identifier="A" name="Standard"
+                                        definition="The standard from which the message is derived." version="B.1.01.00"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="MessageTextFormatVersion" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>The version of the message text format. The message version consists of four parts: Part 1 is the edition letter of MIL-STD-6040(SERIES), e.g., A, B,
+                                    C through Z, Part 2 is the change number of the edition (0-5), Part 3 is the major change for the message, e.g., 01-99, and Part 4 is the minor change for the
+                                    message, e.g., 00-99.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="VERSION OF MESSAGE TEXT FORMAT"
+                                        concept="The version of the message text format. The message version consists of four parts: Part 1 is the edition letter of MIL-STD-6040(SERIES), e.g., A, B, C through Z, Part 2 is the change number of the edition (0-5), Part 3 is the major change for the message, e.g., 01-99, and Part 4 is the minor change for the message, e.g., 00-99."
+                                        identifier="A" name="Standard" definition="The standard from which the message is derived." version="B.1.01.00"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="field:Originator" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>The identifier of the originator of the message.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="ORIGINATOR" concept="The identifier of the originator of the message." identifier="A" name="Originator"
+                                        definition="ANY COMBINATION OF CHARACTERS WHICH UNIQUELY IDENTIFY THE ORIGINATOR OF A MESSAGE." version="B.1.01.00"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="field:MessageSerialNumber" minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>The serial number assigned to a specific message. The originating command may develop the message serial number by any method.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="MESSAGE SERIAL NUMBER"
+                                        concept="The serial number assigned to a specific message. The originating command may develop the message serial number by any method." identifier="A"
+                                        name="SerialNumber" definition="A UNIQUE IDENTIFIER SEQUENTIALLY ASSIGNED BY AN ORIGINATOR." version="B.1.01.00"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="set:ReferenceTimeOfPublication" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>The reference time of publication using either the ISO 8601 standardized date-time or the abbreviated month name.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="REFERENCE TIME OF PUBLICATION"
+                                        concept="The reference time of publication using either the ISO 8601 standardized date-time or the abbreviated month name."/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="field:Qualifier" minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>A qualifier which caveats a message status.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="QUALIFIER" concept="A qualifier which caveats a message status." identifier="A" name="Qualifier"
+                                        definition="A QUALIFIER WHICH CAVEATS A MESSAGE STATUS." version="B.1.01.00"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="field:SerialNumberOfQualifier" minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>A number assigned serially to identify the sequential version of a message qualifier for a basic message.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="SERIAL NUMBER OF QUALIFIER" concept="A number assigned serially to identify the sequential version of a message qualifier for a basic message."
+                                        identifier="A" name="Number" definition="AN IDENTIFIER OF AN ENTITY, COMMONLY CONSIDERED TO BE OR REFERRED TO AS A 'NUMBER.'" version="B.1.01.01"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="field:MessageSecurityPolicy" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>The security policy that applies to the information contained in a message text format.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="MESSAGE SECURITY POLICY" concept="The security policy that applies to the information contained in a message text format." identifier="A"
+                                        name="SecurityMarkingsSchemaAttributes" definition="THE MARKINGS USED IN AN XML SCHEMA TO DOCUMENT SECURITY MARKINGS ATTRIBUTES." version="B.1.01.00"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="set:MessageSecurityClassification" minOccurs="1" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>The security classification of the message.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="MESSAGE SECURITY CLASSIFICATION" concept="The security classification of the message."/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element ref="field:MessageSecurityCategory" minOccurs="0" maxOccurs="1">
+                            <xsd:annotation>
+                                <xsd:documentation>The security category that applies to the information contained in a message text format.</xsd:documentation>
+                                <xsd:appinfo>
+                                    <Field positionName="MESSAGE SECURITY CATEGORY" concept="The security category that applies to the information contained in a message text format." identifier="A"
+                                        name="SecurityMarkingsSchemaAttributes" definition="THE MARKINGS USED IN AN XML SCHEMA TO DOCUMENT SECURITY MARKINGS ATTRIBUTES." version="B.1.01.00"/>
+                                </xsd:appinfo>
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+        <xsd:element name="{concat($msgnode,'MessageIdentifier')}" type="field:MessageTextFormatIdentifierType" fixed="MSGID">
+            <xsd:annotation>
+                <xsd:documentation>
+                    <xsl:value-of select="concat($appinfo/*/*:Msg/@name, ' MESSAGE IDENTIFIER')"/>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>
+        <!--<xsd:element name="{concat($msgnode,'MessageIdentifierSet')}" type="{concat($msgnode,'MessageIdentifierSetType')}">
+            <xsd:annotation>
+                <xsd:documentation>
+                    <xsl:value-of select="concat($appinfo/*:Msg/@name, ' MESSAGE IDENTIFIER SET')"/>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="{concat($msgnode,'MessageIdentifier')}" type="field:MessageTextFormatIdentifierType" fixed="MSGID">
+            <xsd:annotation>
+                <xsd:documentation>
+                    <xsl:value-of select="concat($appinfo/*:Msg/@name, ' MESSAGE IDENTIFIER')"/>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>-->
+    </xsl:template>
+
+    <xsl:template name="MsgStdandVersion">
+
+        <xsd:element name="MessageTextFormatStandard" type="field:StandardOfMessageTextFormatType" fixed="MIL-STD-6040(SERIES)">
+            <xsd:annotation>
+                <xsd:documentation>The military standard that contains the message format rules.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>
+        <xsd:element name="MessageTextFormatVersion" type="field:VersionOfMessageTextFormatType" fixed="B.1.01.12">
+            <xsd:annotation>
+                <xsd:documentation>The version of the message text format. The message version consists of four parts: Part 1 is the edition letter of MIL-STD-6040(SERIES), e.g., A, B, C through Z,
+                    Part 2 is the change number of the edition (0-5), Part 3 is the major change for the message, e.g., 01-99, and Part 4 is the minor change for the message, e.g.,
+                    00-99.</xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>
+    </xsl:template>
+
     <!--*****************************************************-->
     <xsl:template name="CamelCase">
         <xsl:param name="text"/>

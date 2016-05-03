@@ -430,6 +430,9 @@
         <xsl:variable name="remark">
             <xsl:apply-templates select="xsd:appinfo/*:SetFormatRemark/text()"/>
         </xsl:variable>
+        <xsl:variable name="name">
+            <xsl:apply-templates select="xsd:appinfo/*:SetFormatName/text()"/>
+        </xsl:variable>
         <xsl:variable name="newdesc">
             <xsl:value-of select="normalize-space($set_Changes/*[@SETNAMESHORT = $setid][@ProposedSetFormatDescription][1]/@ProposedSetFormatDescription)"/>
         </xsl:variable>
@@ -446,6 +449,9 @@
                 </xsl:when>
                 <xsl:when test="string-length($remark) > 0">
                     <xsl:value-of select="$remark"/>
+                </xsl:when>
+                <xsl:when test="string-length($name) > 0">
+                    <xsl:value-of select="$name"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:text>Data definition required</xsl:text>
