@@ -24,7 +24,6 @@
     <!--The Resulting Global Elements will be included in the "usmtf_fields" XML Schema per proposed changes of September 2014-->
     <!--Duplicate Segment Names are deconflicted using an XML document containing affected messages, elements and approved changes-->
     
-    <xsl:include href="NIEM_Util.xsl"/>
     <xsl:variable name="baseline_sets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
     <xsl:variable name="baseline_msgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
     <xsl:variable name="goe_sets_xsd" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
@@ -931,6 +930,51 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
+    
+    <!--************* Replaced Fixed Value with one item Enumeratoin for NIEM *****************-->
+    
+    <xsl:template match="*" mode="ncopy">
+        <xsl:copy>
+            <xsl:apply-templates select="@*" mode="ncopy"/>
+            <xsl:apply-templates select="text()" mode="ncopy"/>
+            <xsl:apply-templates select="*" mode="ncopy"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="@*" mode="ncopy">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    
+    <xsl:template match="text()" mode="ncopy">
+        <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+    
+    <xsl:template match="xsd:element[@fixed]" mode="ncopy">
+        <xsd:complexType name="{concat(@name,'Type')}">
+            <xsl:copy-of select="xsd:annotation"/>
+            <xsd:simpleContent>
+                <xsd:restriction base="field:FieldEnumeratedBaseType">
+                    <xsd:enumeration value="{@fixed}">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="concat(@fixed,' fixed value')"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                </xsd:restriction>
+            </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:element name="{@name}" type="{concat(@name,'Type')}">
+            <xsd:annotation>
+                <xsl:copy-of select="xsd:annotation/xsd:documentation"/>
+                <xsd:appinfo>
+                    <Field fixed="{@fixed}"/>
+                </xsd:appinfo>
+            </xsd:annotation>
+        </xsd:element>
+    </xsl:template>
+    
+    
     <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
     <xsl:template match="*:AlternativeType" mode="attr"/>
     <xsl:template match="*:AlternativeType" mode="global"/>

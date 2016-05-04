@@ -73,6 +73,7 @@
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
+
     <xsl:variable name="complex_elements">
         <xsl:apply-templates select="$complex_types_xsd/*" mode="el"/>
         <xsl:for-each select="$refactor_fields_xsd/xsd:element">
@@ -84,16 +85,15 @@
     <xsl:template name="main">
         <xsl:result-document href="{$output_fields_xsd}">
             <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:complexType name="FieldSequenceType">
+                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
+                <xsd:annotation>
+                    <xsd:documentation>XML Schema for MTF Fields</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType name="CompositeType" abstract="true">
                     <xsd:annotation>
                         <xsd:documentation>Base type for sequences.</xsd:documentation>
                     </xsd:annotation>
-                    <xsd:complexContent>
-                        <xsd:restriction base="FieldStringBaseType">
-                            <xsd:sequence/>
-                        </xsd:restriction>
-                    </xsd:complexContent>
+                    <xsd:sequence/>
                 </xsd:complexType>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** COMPOSITE TYPES **************</xsl:comment>
@@ -110,6 +110,13 @@
                     <xsl:variable name="n" select="@name"/>
                     <xsl:choose>
                         <xsl:when test="@name = ''"/>
+                        <xsl:when test="@name = 'BlankSpaceCharacter'">
+                            <xsd:element name="BlankSpaceCharacter" type="BlankSpaceType" nillable="true">
+                                <xsd:annotation>
+                                    <xsd:documentation>Blank Space Character</xsd:documentation>
+                                </xsd:annotation>
+                            </xsd:element>
+                        </xsl:when>
                         <xsl:when test="preceding-sibling::xsd:element/@name = $n"/>
                         <xsl:otherwise>
                             <xsl:copy-of select="."/>
@@ -123,58 +130,48 @@
     <!-- ******************** COMPLEX TYPES ******************** -->
     <!--Copy root level complexTypes-->
     <xsl:template match="xsd:complexType">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*"/>
+            <xsl:apply-templates select="*"/>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="xsd:complexType[xsd:sequence]">
         <xsl:choose>
-            <xsl:when test="xsd:sequence">
+            <xsl:when test="@name='DutyOtherType'">
+                <xsd:complexType name="DutyOtherCodeType">
+                    <xsl:apply-templates select="@*[not(name() = 'name')]"/>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                    <xsd:complexContent>
+                        <xsd:extension base="CompositeType">
+                            <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsl:when>
+            <xsl:when test="@name='QRoutePointDesignatorType'">
+                <xsd:complexType name="QRoutePointCodeType">
+                    <xsl:apply-templates select="@*[not(name() = 'name')]"/>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                    <xsd:complexContent>
+                        <xsd:extension base="CompositeType">
+                            <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsl:when>
+            <xsl:otherwise>
                 <xsl:copy copy-namespaces="no">
                     <xsl:apply-templates select="@name"/>
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:choose>
-                                <xsl:when test="xsd:annotation/xsd:documentation">
-                                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo[1]/*:FudExplanation[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsd:documentation>
-                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-                    </xsd:annotation>
+                    <xsl:apply-templates select="xsd:annotation"/>
                     <xsd:complexContent>
-                        <xsd:extension base="FieldSequenceType">
+                        <xsd:extension base="CompositeType">
                             <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsl:copy>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy copy-namespaces="no">
-                    <xsl:apply-templates select="@*"/>
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:choose>
-                                <xsl:when test="xsd:annotation/xsd:documentation">
-                                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsd:documentation>
-                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-                    </xsd:annotation>
-                    <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
-                </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
     <!--Create global xsd:element nodes for xsd:complexTypes -->
     <xsl:template match="xsd:complexType" mode="el">
         <xsl:variable name="n">
@@ -189,57 +186,23 @@
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
             <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:when test="xsd:annotation/xsd:appinfo[1]/*:FudName[1]">
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo[1]/*:FudName[1]"/>
-                        </xsl:when>
-                        <xsl:when test="$composites_xsd/xsd:schema/*[@name = $n]//*:FudName[1]">
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $n]//*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
+                <xsl:apply-templates select="xsd:annotation/xsd:documentation"/>
             </xsd:annotation>
         </xsd:element>
     </xsl:template>
     <!-- ******************** NAME CONFLICTS BETWEEN FIELDS AND COMPOSITES ******************** -->
-    <xsl:template match="xsd:complexType[@name = 'DutyOtherType']">
+    <!--<xsl:template match="xsd:complexType[@name = 'DutyOtherType']">
         <xsl:variable name="n" select="@name"/>
         <xsd:complexType name="DutyOtherCodeType">
             <xsl:apply-templates select="@*[not(name() = 'name')]"/>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                        </xsl:when>
-                        <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudName[1]/text()) &gt; 0">
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $n]//*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexContent>
-                <xsd:extension base="FieldSequenceType">
+                <xsd:extension base="CompositeType">
                     <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
-    </xsl:template>
+    </xsl:template>-->
     <xsl:template match="xsd:complexType[@name = 'DutyOtherType'][xsd:sequence]" mode="el">
         <xsl:variable name="n" select="@name"/>
         <xsd:element>
@@ -250,57 +213,21 @@
                 <xsl:text>DutyOtherCodeType</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                        </xsl:when>
-                        <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudName[1]/text()) &gt; 0">
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $n]//*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation"/>
         </xsd:element>
     </xsl:template>
-    <xsl:template match="xsd:complexType[@name = 'QRoutePointDesignatorType']">
+    <!--<xsl:template match="xsd:complexType[@name = 'QRoutePointDesignatorType']">
         <xsl:variable name="n" select="@name"/>
         <xsd:complexType name="QRoutePointCodeType">
             <xsl:apply-templates select="@*[not(name() = 'name')]"/>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                        </xsl:when>
-                        <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudName[1]/text()) &gt; 0">
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $n]//*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation"/>
             <xsd:complexContent>
-                <xsd:extension base="FieldSequenceType">
+                <xsd:extension base="CompositeType">
                     <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
-    </xsl:template>
+    </xsl:template>-->
     <xsl:template match="xsd:complexType[@name = 'QRoutePointDesignatorType'][xsd:sequence]" mode="el">
         <xsl:variable name="n" select="@name"/>
         <xsd:element>
@@ -311,41 +238,17 @@
                 <xsl:text>QRoutePointCodeType</xsl:text>
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
-            <xsd:documentation>
-                <xsl:choose>
-                    <xsl:when test="xsd:annotation/xsd:documentation">
-                        <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                    </xsl:when>
-                    <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                        <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                    </xsl:when>
-                    <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudName[1]/text()) &gt; 0">
-                        <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $n]//*:FudName[1]"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:documentation>
+            <xsl:apply-templates select="xsd:annotation"/>
         </xsd:element>
     </xsl:template>
     <!-- ************************************************************************************** -->
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->
     <xsl:template match="xsd:element[@type]">
-        <xsl:variable name="n" select="@name"/>
         <xsl:variable name="nm">
             <xsl:apply-templates select="@name" mode="txt"/>
         </xsl:variable>
         <xsl:variable name="typename">
-            <xsl:choose>
-                <xsl:when test="starts-with(@type, 'f:')">
-                    <xsl:value-of select="substring-after(@type, 'f:')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates select="@type" mode="txt"/>
-                </xsl:otherwise>
-            </xsl:choose>
+            <xsl:apply-templates select="@type" mode="txt"/>
         </xsl:variable>
         <!--Use Regex from baseline fields without min max qalifiers to match with normalized types-->
         <xsl:variable name="typepattern">
@@ -374,70 +277,19 @@
                     <xsl:attribute name="ref">
                         <xsl:value-of select="$nm"/>
                     </xsl:attribute>
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:choose>
-                                <xsl:when test="xsd:annotation/xsd:documentation">
-                                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudName[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                                </xsl:when>
-                                <xsl:when test="$composites_xsd/xsd:schema/*[@name = $n]//*:FudName[1]">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $n]//*:FudName[1]"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsd:documentation>
-                        <!--<xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>-->
-                    </xsd:annotation>
+                    <xsl:apply-templates select="*"/>
                 </xsl:copy>
             </xsl:when>
             <!--Create reference when modifed name matches global type-->
             <xsl:when test="exists($refactor_fields_xsd/*[@name = $refName])">
                 <xsd:element ref="{$refName}">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:choose>
-                                <xsl:when test="xsd:annotation/xsd:documentation">
-                                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudName[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $n]//*:FudName[1]"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsd:documentation>
-                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-                    </xsd:annotation>
+                    <xsl:apply-templates select="xsd:annotation"/>
                 </xsd:element>
             </xsl:when>
             <!--Eliminate BlankSpaceCharacter type name variants-->
             <xsl:when test="starts-with(@name, 'BlankSpaceCharacter')">
                 <xsd:element ref="BlankSpaceCharacter">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:choose>
-                                <xsl:when test="xsd:annotation/xsd:documentation">
-                                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsd:documentation>
-                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-                    </xsd:annotation>
+                    <xsl:apply-templates select="xsd:annotation"/>
                 </xsd:element>
             </xsl:when>
             <!--Include element name variants with normalized type-->
@@ -449,26 +301,6 @@
                     <xsl:attribute name="type">
                         <xsl:text>BlankSpaceSimpleType</xsl:text>
                     </xsl:attribute>
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:choose>
-                                <xsl:when test="xsd:annotation/xsd:documentation">
-                                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudName[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $nm]//*:FudName[1]"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsd:documentation>
-                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-                    </xsd:annotation>
-                    <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
                 </xsl:element>
             </xsl:when>
             <xsl:when test="exists($fields_xsd/*[@name = $type]/xsd:restriction[@base = 'xsd:string']/xsd:pattern)">
@@ -491,25 +323,7 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:choose>
-                                <xsl:when test="xsd:annotation/xsd:documentation">
-                                    <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudExplanation[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudExplanation[1]"/>
-                                </xsl:when>
-                                <xsl:when test="string-length(xsd:annotation/xsd:appinfo/*:FudName[1]/text()) &gt; 0">
-                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:value-of select="$fields_xsd/xsd:schema/*[@name = $n]//*:FudName[1]"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsd:documentation>
-                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-                    </xsd:annotation>
+                    <xsl:apply-templates select="*"/>
                 </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
@@ -560,17 +374,7 @@
     </xsl:template>
     <!-- _______________________________________________________ -->
     <!-- ******************** FORMATTING ******************** -->
-    <!-- <xsl:template match="*">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*"/>
-            <xsl:apply-templates select="*"/>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="@*">
-        <xsl:copy copy-namespaces="no">
-            <xsl:value-of select="replace(., '&#34;', '')"/>
-        </xsl:copy>
-    </xsl:template>-->
+    <!--Create global xsd:element nodes for xsd:complexTypes -->
     <xsl:template match="*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="el"/>
@@ -593,28 +397,43 @@
         </xsl:copy>
     </xsl:template>
     <xsl:template match="xsd:annotation" mode="el"/>
-    <!--Copy annotation only it has descendents with text content-->
     <!--Add xsd:documentation using FudExplanation if it exists-->
     <xsl:template match="xsd:annotation">
-        <xsl:if test="*//text()">
-            <xsl:copy copy-namespaces="no">
-                <xsl:apply-templates select="@*"/>
-                <xsl:if test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
-                    <xsl:element name="xsd:documentation">
-                        <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
-                    </xsl:element>
-                </xsl:if>
-                <xsl:apply-templates select="*"/>
-            </xsl:copy>
-        </xsl:if>
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="*//text()">
+                    <xsl:apply-templates select="@*"/>
+                    <xsl:choose>
+                        <xsl:when test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
+                            <xsl:element name="xsd:documentation">
+                                <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
+                            </xsl:element>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:apply-templates select="*"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsd:documentation>
+                        <xsl:text>Data definition required</xsl:text>
+                    </xsd:documentation>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
     </xsl:template>
     <!--Copy documentation only it has text content-->
     <xsl:template match="xsd:documentation">
-        <xsl:if test="text()">
-            <xsl:copy copy-namespaces="no">
-                <xsl:apply-templates select="text()"/>
-            </xsl:copy>
-        </xsl:if>
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="text()">
+                    <xsl:apply-templates select="text()"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Data definition required</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
     </xsl:template>
     <!--Copy element and use template mode to convert elements to attributes-->
     <xsl:template match="xsd:appinfo">
@@ -633,48 +452,5 @@
             </xsl:copy>
         </xsl:if>
     </xsl:template>
-    <!--Convert elements in xsd:appinfo to attributes-->
-    <!--<xsl:template match="*" mode="attr">
-        <xsl:variable name="txt" select="normalize-space(text())"/>
-        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
-            <xsl:attribute name="{name()}">
-                <xsl:value-of select="normalize-space(text())"/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>-->
-    <!--Normalize extra whitespace and linefeeds in text-->
-    <!-- <xsl:template match="text()">
-        <xsl:value-of select="normalize-space(.)"/>
-    </xsl:template>-->
-    <!-- _______________________________________________________ -->
-    <!--    <xsl:template match="*:FudName" mode="attr">
-        <xsl:variable name="txt" select="normalize-space(text())"/>
-        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
-            <xsl:attribute name="name">
-                <xsl:value-of select="normalize-space(text())"/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>
-    <xsl:template match="*:FudExplanation" mode="attr">
-        <xsl:variable name="txt" select="normalize-space(text())"/>
-        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
-            <xsl:attribute name="explanation">
-                <xsl:value-of select="normalize-space(text())"/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>
-    <xsl:template match="*:VersionIndicator" mode="attr">
-        <xsl:variable name="txt" select="normalize-space(text())"/>
-        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
-            <xsl:attribute name="version">
-                <xsl:value-of select="normalize-space(text())"/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>-->
-    <!-- ******************** FILTERS ******************** -->
-    <!-- <xsl:template match="xsd:element/xsd:annotation"/>
-    <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
-    <xsl:template match="*:FudNumber" mode="attr"/>
-    <xsl:template match="*:FudRelatedDocument" mode="attr"/>-->
     <!-- _______________________________________________________ -->
 </xsl:stylesheet>

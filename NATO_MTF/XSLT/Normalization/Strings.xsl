@@ -174,6 +174,8 @@
             </xsd:simpleContent>
         </xsd:complexType>
     </xsl:template>
+    
+    
 
     <!--Call patternValue template to remove min and max length qualifiers in RegEx
     for matching and output-->
@@ -319,7 +321,6 @@
 
     <!-- _______________________________________________________ -->
 
-
     <xsl:template match="*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="el"/>
@@ -384,6 +385,7 @@
 
     <!-- ******************** FILTERS ******************** -->
     <!--<xsl:template match="*[@name = 'FreeTextType']"/>-->
+    <xsl:template match="*[@name = 'FreeTextBaseType']" mode="stypes"/>
     <xsl:template match="*[@name = 'FreeTextBaseType']" mode="el"/>
     <xsl:template match="*[@name = 'FreeTextBase']" mode="el"/>
     <xsl:template match="*[@name = 'BlankSpaceCharacterType']"/>

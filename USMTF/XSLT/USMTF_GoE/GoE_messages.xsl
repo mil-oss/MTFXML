@@ -560,15 +560,27 @@
                     <xsl:choose>
                         <xsl:when test="not(preceding-sibling::xsd:element[@name = $n])">
                             <!--<xsl:copy-of select="."/>-->
-                            <xsl:copy-of select="."/>
+                            <xsl:apply-templates select="." mode="ncopy"/>
                         </xsl:when>
                         <xsl:otherwise/>
                     </xsl:choose>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:copy-of select="."/>
+                    <xsl:apply-templates select="." mode="ncopy"/>
                 </xsl:otherwise>
             </xsl:choose>
+        </xsl:for-each>
+    </xsl:variable>
+    
+    <xsl:variable name="niem_ctypes">
+        <xsl:copy-of select="$deconfl_ctypes"/>
+        <xsl:for-each select="$deconfl_gels/xsd:complexType">
+            <xsl:copy-of select="."/>
+        </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="niem_elements">
+        <xsl:for-each select="$deconfl_gels/xsd:element">
+            <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
 
@@ -577,7 +589,7 @@
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xml:lang="en-US" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:mtf:mil:6040b:goe:mtf" targetNamespace="urn:mtf:mil:6040b:goe:mtf"
                 xmlns:field="urn:mtf:mil:6040b:goe:fields" xmlns:set="urn:mtf:mil:6040b:goe:sets" xmlns:seg="urn:mtf:mil:6040b:goe:segments" xmlns:ism="urn:us:gov:ic:ism:v2"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="GoE_sets.xsd"/>
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:segments" schemaLocation="GoE_segments.xsd"/>
@@ -606,14 +618,14 @@
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** GLOBAL TYPES **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
-                <xsl:for-each select="$deconfl_ctypes/xsd:complexType">
+                <xsl:for-each select="$niem_ctypes/xsd:complexType">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** GLOBAL ELEMENTS **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
-                <xsl:for-each select="$deconfl_gels/xsd:element">
+                <xsl:for-each select="$niem_elements/xsd:element">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
@@ -954,5 +966,48 @@
         <xsl:param name="text"/>
         <xsl:value-of select="translate(substring($text, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
         <xsl:value-of select="translate(substring($text, 2, string-length($text) - 1), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
+    </xsl:template>
+    
+    <!--************* Replaced Fixed Value with one item Enumeratoin for NIEM *****************-->
+    
+    <xsl:template match="*" mode="ncopy">
+        <xsl:copy>
+            <xsl:apply-templates select="@*" mode="ncopy"/>
+            <xsl:apply-templates select="text()" mode="ncopy"/>
+            <xsl:apply-templates select="*" mode="ncopy"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="@*" mode="ncopy">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+    
+    <xsl:template match="text()" mode="ncopy">
+        <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+    
+    <xsl:template match="xsd:element[@fixed]" mode="ncopy">
+        <xsd:complexType name="{concat(@name,'Type')}">
+            <xsl:copy-of select="xsd:annotation"/>
+            <xsd:simpleContent>
+                <xsd:restriction base="field:FieldEnumeratedBaseType">
+                    <xsd:enumeration value="{@fixed}">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="concat(@fixed,' fixed value')"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                </xsd:restriction>
+            </xsd:simpleContent>
+        </xsd:complexType>
+        <xsd:element name="{@name}" type="{concat(@name,'Type')}">
+            <xsd:annotation>
+                <xsl:copy-of select="xsd:annotation/xsd:documentation"/>
+                <xsd:appinfo>
+                    <Field fixed="{@fixed}"/>
+                </xsd:appinfo>
+            </xsd:annotation>
+        </xsd:element>
     </xsl:template>
 </xsl:stylesheet>
