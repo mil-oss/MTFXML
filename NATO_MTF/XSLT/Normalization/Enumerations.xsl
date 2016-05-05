@@ -20,6 +20,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="yes"/>
+    <xsl:include href="../APP-11C-GoE/Utility.xsl"/>
 
     <xsl:variable name="fields_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')"/>
     <xsl:variable name="normalized_fields_xsd" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
@@ -150,59 +151,12 @@
     </xsl:template>
 
     <!-- ******** FORMATIING ********-->
-    <xsl:template match="*">
+<!--    <xsl:template match="*">
         <xsl:element name="{name()}">
             <xsl:apply-templates select="@*"/>
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="*"/>
         </xsl:element>
-    </xsl:template>
-
-    <xsl:template match="@*">
-        <xsl:attribute name="{name()}">
-            <xsl:value-of select="."/>
-        </xsl:attribute>
-    </xsl:template>
-
-    <xsl:template match="text()">
-        <xsl:copy-of select="normalize-space(.)"/>
-    </xsl:template>
-
-    <!--Add xsd:documentation using FudExplanation if it exists-->
-    <xsl:template match="xsd:annotation">
-        <xsd:annotation>
-            <xsd:documentation>
-                <xsl:choose>
-                    <xsl:when test="xsd:documentation">
-                        <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                    </xsl:when>
-                    <xsl:when test="string-length(xsd:appinfo/*:FudExplanation/text())&gt;0">
-                       <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation[1])"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="xsd:appinfo/*:FudName[1]"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsd:documentation>
-            <xsl:apply-templates select="xsd:appinfo"/>
-        </xsd:annotation>
-    </xsl:template>
-
-    <!--Copy documentation -->
-<!--    <xsl:template match="xsd:documentation">
-        <xsl:copy copy-namespaces="no">
-        <xsl:choose>
-            <xsl:when test="text()">
-                    <xsl:apply-templates select="text()"/>
-            </xsl:when>
-            <xsl:when test="ancestor::xsd:enumeration">
-                <xsl:value-of select="normalize-space(parent::xsd:annotation/xsd:appinfo/*:DataItem/text())"/>
-            </xsl:when>
-            <xsl:otherwise>
-                    <xsl:text>Data definition required</xsl:text>
-            </xsl:otherwise>
-        </xsl:choose>
-        </xsl:copy>
     </xsl:template>-->
 
     <!--Copy element and use template mode to convert elements to attributes-->
@@ -220,7 +174,6 @@
             <xsl:element name="xsd:documentation">
                 <xsl:value-of select="normalize-space(xsd:appinfo/*:DataItem/text())"/>
             </xsl:element>
-           <!-- <xsl:apply-templates select="xsd:documentation"/>-->
             <xsl:apply-templates select="xsd:appinfo"/>
         </xsl:copy>
     </xsl:template>
@@ -235,14 +188,14 @@
     </xsl:template>
 
     <!--Convert elements in xsd:appinfo to attributes-->
-    <xsl:template match="*" mode="attr">
+<!--    <xsl:template match="*" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
             <xsl:attribute name="{name()}">
                 <xsl:value-of select="normalize-space(text())"/>
             </xsl:attribute>
         </xsl:if>
-    </xsl:template>
+    </xsl:template>-->
 
     <xsl:template match="*:FudName" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
@@ -253,17 +206,6 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="*:DataCode" mode="attr"/>
-
-    <!--    <xsl:template match="*:DataCode" mode="attr">
-        <xsl:variable name="txt" select="normalize-space(text())"/>
-        <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
-            <xsl:attribute name="dataCode">
-                <xsl:value-of select="normalize-space(text())"/>
-            </xsl:attribute>
-        </xsl:if>
-    </xsl:template>-->
-
     <xsl:template match="*:DataItem" mode="attr">
         <xsl:variable name="txt" select="normalize-space(text())"/>
         <xsl:if test="not($txt = ' ') and not(*) and not($txt = '')">
@@ -272,7 +214,9 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>
-    <xsl:template match="*:FudExplanation" mode="attr"/>
+   
+<!--    <xsl:template match="*:FudExplanation" mode="attr"/>
+     <xsl:template match="*:DataCode" mode="attr"/>
     <xsl:template match="*:Explanation" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
@@ -290,8 +234,8 @@
     <xsl:template match="*:MaximumInclusiveValue" mode="attr"/>
     <xsl:template match="*:LengthVariable" mode="attr"/>
     <xsl:template match="*:DataItemSponsor" mode="attr"/>
-    <xsl:template match="*:DataItemSequenceNumber" mode="attr"/>
-    <xsl:template match="*" mode="copy">
+    <xsl:template match="*:DataItemSequenceNumber" mode="attr"/>-->
+<!--    <xsl:template match="*" mode="copy">
         <xsl:copy>
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="text()" mode="copy"/>
@@ -303,6 +247,6 @@
     </xsl:template>
     <xsl:template match="text()" mode="copy">
         <xsl:value-of select="."/>
-    </xsl:template>
+    </xsl:template>-->
 
 </xsl:stylesheet>

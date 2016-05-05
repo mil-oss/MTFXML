@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/* 
+ * Copyright (C) 2015 JD NEUSHUL
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="../APP-11C-GoE/Utility.xsl"/>
@@ -70,22 +88,15 @@
         <xsl:variable name="min" select="xsd:restriction/xsd:minInclusive/@value"/>
         <xsl:variable name="max" select="xsd:restriction/xsd:maxInclusive/@value"/>
         <xsl:element name="xsd:complexType">
-            <xsl:attribute name="name">
+            <xsl:variable name="nm">
                 <xsl:apply-templates select="@name" mode="txt"/>
+            </xsl:variable>
+            <xsl:attribute name="name">
+                <xsl:value-of select="$nm"/>
             </xsl:attribute>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation">
+                <xsl:with-param name="nm" select="$nm"/>
+            </xsl:apply-templates>
             <xsd:simpleContent>
                 <xsl:element name="xsd:restriction">
                     <xsl:attribute name="base">
@@ -105,38 +116,10 @@
                 <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation">
+                <xsl:with-param name="nm" select="$nm"/>
+            </xsl:apply-templates>
         </xsl:element>
-    </xsl:template>
-
-    <xsl:template match="*">
-        <xsl:element name="{name()}">
-            <xsl:apply-templates select="@*"/>
-            <xsl:apply-templates select="text()"/>
-            <xsl:apply-templates select="*"/>
-        </xsl:element>
-    </xsl:template>
-
-    <xsl:template match="@*">
-        <xsl:attribute name="{name()}">
-            <xsl:value-of select="."/>
-        </xsl:attribute>
-    </xsl:template>
-
-    <xsl:template match="text()">
-        <xsl:copy-of select="normalize-space(.)"/>
     </xsl:template>
 
     <!-- ******************** Decimal Types ******************** -->
@@ -185,19 +168,9 @@
             <xsl:attribute name="name">
                 <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:attribute>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation">
+                <xsl:with-param name="nm" select="$nm"/>
+            </xsl:apply-templates>
             <xsd:simpleContent>
                 <xsl:element name="xsd:restriction">
                     <xsl:attribute name="base">
@@ -227,19 +200,9 @@
                 <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation">
+                <xsl:with-param name="nm" select="$nm"/>
+            </xsl:apply-templates>
         </xsl:element>
     </xsl:template>
 

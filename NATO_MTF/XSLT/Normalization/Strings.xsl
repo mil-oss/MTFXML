@@ -27,14 +27,13 @@
     consolidate fields and composites as global elements in the "Fields" XML Schema for the GoE refactor.-->
 
     <!--Baseline Fields XML Schema document-->
-    <xsl:variable name="mtf_str"
-        select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
-    
+    <xsl:variable name="mtf_str" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
+
     <xsl:variable name="outputdoc" select="'../../XSD/Normalized/Strings.xsd'"/>
 
     <!--A normalized list of xsd:string types with common REGEX patterns without length qualifiers for re-use globally-->
     <xsl:variable name="normalizedstrtypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
-    
+
     <xsl:variable name="str_types">
         <xsl:for-each select="$mtf_str">
             <xsl:variable name="pattern" select="xsd:restriction/xsd:pattern/@value"/>
@@ -65,20 +64,13 @@
     <!-- Contains a list of all baseline and normalized xsd:simpleTypes for sorting on output.-->
     <xsl:variable name="alltypes">
         <xsl:for-each select="$normalizedstrtypes">
-            <xsd:complexType name="{concat(substring-before(@name,'SimpleType'),'Type')}">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:choose>
-                            <xsl:when test="xsd:annotation/xsd:documentation">
-                                <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsd:documentation>
-                    <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-                </xsd:annotation>
+            <xsl:variable name="nm">
+                <xsl:value-of select="substring-before(@name, 'SimpleType')"/>
+            </xsl:variable>
+            <xsd:complexType name="{concat($nm,'Type')}">
+                <xsl:apply-templates select="xsd:annotation">
+                    <xsl:with-param name="nm" select="$nm"/>
+                </xsl:apply-templates>
                 <xsd:simpleContent>
                     <xsd:restriction base="FieldStringBaseType">
                         <xsl:choose>
@@ -111,18 +103,18 @@
         <xsl:apply-templates select="$mtf_str" mode="el">
             <xsl:sort select="@name"/>
         </xsl:apply-templates>
-        <xsd:element name="BlankSpaceCharacter" type="BlankSpaceType"/>
+        <xsd:element name="BlankSpaceCharacter" type="BlankSpaceType">
+            <xsd:annotation>
+                <xsd:documentation>Blank Space Character</xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>
     </xsl:variable>
 
     <!--    OUTPUT RESULT-->
     <xsl:template name="main">
         <xsl:result-document href="{$outputdoc}">
-            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals"
-                xml:lang="en-GB"
-                elementFormDefault="unqualified"
-                attributeFormDefault="unqualified">               
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:mtf:app-11(c):goe:elementals" xml:lang="en-GB"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:complexType name="FieldStringBaseType">
                     <xsd:annotation>
                         <xsd:documentation>MTF String base type</xsd:documentation>
@@ -152,21 +144,16 @@
 
     <!-- ******************** SIMPLE TYPES ******************** -->
     <xsl:template match="xsd:simpleType" mode="stypes">
+        <xsl:variable name="nm">
+            <xsl:apply-templates select="@name" mode="txt"/>
+        </xsl:variable>
         <xsd:complexType>
-            <xsl:apply-templates select="@name"/>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:attribute name="name">
+                <xsl:value-of select="$nm"/>
+            </xsl:attribute>
+            <xsl:apply-templates select="xsd:annotation">
+                <xsl:with-param name="nm" select="$nm"/>
+            </xsl:apply-templates>
             <xsd:simpleContent>
                 <xsd:restriction base="FieldStringBaseType">
                     <xsl:apply-templates select="xsd:restriction/*"/>
@@ -174,8 +161,6 @@
             </xsd:simpleContent>
         </xsd:complexType>
     </xsl:template>
-    
-    
 
     <!--Call patternValue template to remove min and max length qualifiers in RegEx
     for matching and output-->
@@ -265,26 +250,24 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:element name="xsd:complexType">
-            <xsl:apply-templates select="@name"/>
+            <xsl:variable name="nm">
+                <xsl:apply-templates select="@name" mode="txt"/>
+            </xsl:variable>
+            <xsl:variable name="t">
+                <xsl:value-of select="concat(substring-before($type,'SimpleType'),'Type')"/>
+            </xsl:variable>
+            <xsl:attribute name="name">
+                <xsl:value-of select="$nm"/>
+            </xsl:attribute>
             <!--<xsl:attribute name="nillable">true</xsl:attribute>-->
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation">
+                <xsl:with-param name="nm" select="$nm"/>
+            </xsl:apply-templates>
             <!--<xsd:complexType>-->
             <xsd:simpleContent>
                 <xsl:choose>
                     <xsl:when test="string-length($type) > 0">
-                        <xsd:restriction base="{concat(substring-before($type,'SimpleType'),'Type')}">
+                        <xsd:restriction base="{$t}">
                             <xsl:apply-templates select="xsd:restriction/*"/>
                         </xsd:restriction>
                     </xsl:when>
@@ -298,24 +281,19 @@
             <!--</xsd:complexType>-->
         </xsl:element>
         <xsl:element name="xsd:element">
+            <xsl:variable name="nm">
+                <xsl:apply-templates select="@name" mode="fromtype"/>
+            </xsl:variable>
             <xsl:attribute name="name">
-            <xsl:apply-templates select="@name" mode="fromtype"/>
+                <xsl:value-of select="$nm"/>
             </xsl:attribute>
-            <xsl:apply-templates select="@type"/>
+            <xsl:attribute name="type">
+                <xsl:value-of select="concat($nm,'Type')"/>
+            </xsl:attribute>
             <xsl:attribute name="nillable">true</xsl:attribute>
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:choose>
-                        <xsl:when test="xsd:annotation/xsd:documentation">
-                            <xsl:value-of select="xsd:annotation/xsd:documentation"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudName[1]"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </xsd:documentation>
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
-            </xsd:annotation>
+            <xsl:apply-templates select="xsd:annotation">
+                <xsl:with-param name="nm" select="$nm"/>
+            </xsl:apply-templates>
         </xsl:element>
     </xsl:template>
 
@@ -331,32 +309,6 @@
     <xsl:template match="@*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:value-of select="replace(., '&#34;', '')"/>
-        </xsl:copy>
-    </xsl:template>
-
-
-    <!--Copy annotation only it has descendents with text content-->
-    <!--Add xsd:documentation using FudExplanation if it exists-->
-    <xsl:template match="xsd:annotation">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="*"/>
-        </xsl:copy>
-    </xsl:template>
-
-    <!--Copy documentation using FudExplanation or text content-->
-    <xsl:template match="xsd:documentation">
-        <xsl:copy copy-namespaces="no">
-            <xsl:choose>
-                <xsl:when test="exists(xsd:appinfo/*:FudExplanation) and not(xsd:documentation/text())">
-                    <xsl:apply-templates select="text()"/>
-                </xsl:when>
-                <xsl:when test="text()">
-                    <xsl:apply-templates select="text()"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <text>Data definition required</text>
-                </xsl:otherwise>
-            </xsl:choose>
         </xsl:copy>
     </xsl:template>
 

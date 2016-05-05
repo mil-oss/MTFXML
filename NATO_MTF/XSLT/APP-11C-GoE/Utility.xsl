@@ -129,22 +129,12 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="tc">
-            <xsl:choose>
-                <xsl:when test="ends-with($t,'_1')">
-                    <xsl:value-of select="substring-before($t,'_1')"/>
-                </xsl:when>
-                <xsl:when test="ends-with($t,'_2')">
-                    <xsl:value-of select="substring-before($t,'_2')"/>
-                </xsl:when>
-            </xsl:choose>
-        </xsl:variable>
         <xsl:choose>
-            <xsl:when test="$tc = $NodeNameChanges/*/@from">
-                <xsl:value-of select="$NodeNameChanges/*[@from = $tc]/@to"/>
+            <xsl:when test="$t = $NodeNameChanges/*/@from">
+                <xsl:value-of select="$NodeNameChanges/*[@from = $t]/@to"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$tc"/>
+                <xsl:value-of select="$t"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -162,22 +152,12 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="tc">
-            <xsl:choose>
-                <xsl:when test="ends-with($t,'_1')">
-                    <xsl:value-of select="substring-before($t,'_1')"/>
-                </xsl:when>
-                <xsl:when test="ends-with($t,'_2')">
-                    <xsl:value-of select="substring-before($t,'_2')"/>
-                </xsl:when>
-            </xsl:choose>
-        </xsl:variable>
         <xsl:choose>
-            <xsl:when test="$tc = $NodeNameChanges/*/@from">
-                <xsl:value-of select="$NodeNameChanges/*[@from = $tc]/@to"/>
+            <xsl:when test="$t = $NodeNameChanges/*/@from">
+                <xsl:value-of select="$NodeNameChanges/*[@from = $t]/@to"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$tc"/>
+                <xsl:value-of select="$t"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -271,19 +251,24 @@
         <Change from="_2DigitYear" to="TwoDigitYear"/>
         <Change from="_4WDispositionGridParametersType" to="FourWhiskeyDispositionGridParametersType"/>
         <Change from="_4WDispositionGridParameters" to="FourWhiskeyDispositionGridParameters"/>
-        <Change from="_4WGridSegmentType" to="FourWhiskeyGridSegmentType"/>
-        <Change from="_4WGridColumn" to="FourWhiskeyGridColumn"/>
+        <Change from="_4WGridSegmentType" to="FourWhiskeySegmentType"/>
+        <Change from="_4WGridSegment" to="FourWhiskeySegment"/>
         <Change from="_4WGridColumnType" to="FourWhiskeyGridColumnType"/>
+        <Change from="_4WGridColumn" to="FourWhiskeyGridColumn"/>
+        <Change from="_4WGridColumn_1" to="FourWhiskeyGridColumn"/>
+        <Change from="_4WGridColumn_2" to="FourWhiskeyGridColumn"/>
+        <Change from="_4WGridRowType" to="FourWhiskeyGridRowType"/>
         <Change from="_4WGridRow" to="FourWhiskeyGridRow"/>
-        <Change from="_4WGridRowType" to="FourWhiskeyGridRowType"/>
-        <Change from="_4WGridRowType" to="FourWhiskeyGridRowType"/>
-        <Change from="_4WGridSquare" to="FourWhiskeyGridSquare"/>
+        <Change from="_4WGridRow_1" to="FourWhiskeyGridRow"/>
+        <Change from="_4WGridRow_2" to="FourWhiskeyGridRow"/>
         <Change from="_4WGridSquareType" to="FourWhiskeyGridSquareType"/>
-        <Change from="_4WLaneAlphabetic" to="FourWhiskeyLaneAlphabetic"/>
+        <Change from="_4WGridSquare" to="FourWhiskeyGridSquare"/>
         <Change from="_4WLaneAlphabeticType" to="FourWhiskeyLaneAlphabeticType"/>
-        <Change from="_4WLaneNumeric" to="FourWhiskeyLaneNumeric"/>
+        <Change from="_4WLaneAlphabetic" to="FourWhiskeyLaneAlphabetic"/>
         <Change from="_4WLaneNumericType" to="FourWhiskeyLaneNumericType"/>
+        <Change from="_4WLaneNumeric" to="FourWhiskeyLaneNumeric"/>
     </xsl:variable>
+    
     <xsl:template name="nodoc">
         <xsd:annotation>
             <xsd:documentation>Data definition required</xsd:documentation>
@@ -309,6 +294,7 @@
     <xsl:template match="*:DataItemSequenceNumber" mode="attr"/>
     <xsl:template match="*:DataType"/>
     <xsl:template match="*:DataType" mode="attr"/>
+    <xsl:template match="*:ElementalFfirnFudnSequence" mode="attr"/>
     <xsl:template match="*:EntryType"/>
     <xsl:template match="*:EntryType" mode="attr"/>
     <xsl:template match="*:Explanation"/>
@@ -340,7 +326,7 @@
     <xsl:template match="*:UnitOfMeasure"/>
     <xsl:template match="*:UnitOfMeasure" mode="attr"/>
     <xsl:template match="*:VersionIndicator"/>
-    <xsl:template match="*:ElementalFfirnFudnSequence" mode="attr"/>
+
     <!-- ***************** SETS *****************-->
     <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
@@ -380,4 +366,139 @@
     <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>-->
+    
+    
+    <!-- ***************** Data Definitions *****************-->
+    <xsl:template match="xsd:annotation">
+        <xsl:param name="nm"/>
+        <xsl:variable name="name">
+            <xsl:choose>
+                <xsl:when test="string-length($nm)&gt;0">
+                    <xsl:value-of select="$nm"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="ancestor::*[@name][1]/@name" mode="txt"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="xsd:documentation">
+                    <xsl:apply-templates select="xsd:documentation">
+                        <xsl:with-param name="nm" select="$name"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsd:documentation>
+                        <xsl:choose>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:FudExplanation/text())&gt;0">
+                                <xsl:value-of select="xsd:appinfo/*:FudExplanation"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:FudName/text())&gt;0">
+                                <xsl:value-of select="xsd:appinfo/*:FudName"/>
+                            </xsl:when>
+                            <xsl:when test="xsd:appinfo/*:Field/@explanation">
+                                <xsl:value-of select="xsd:appinfo/*:Field/@explanation"/>
+                            </xsl:when>
+                            <xsl:when test="xsd:appinfo/*:Field/@name">
+                                <xsl:value-of select="xsd:appinfo/*:Field/@name"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:call-template name="breakIntoWords">
+                                    <xsl:with-param name="string">
+                                        <xsl:value-of select="$name"/>
+                                    </xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsd:documentation>
+                </xsl:otherwise>
+            </xsl:choose>
+             <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="xsd:documentation">
+        <xsl:param name="nm"/>
+        <xsl:variable name="name">
+            <xsl:choose>
+                <xsl:when test="string-length($nm)&gt;0">
+                    <xsl:value-of select="$nm"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="ancestor::*[@name][1]/@name" mode="txt"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="text() and not(text() = 'Data definition required')">
+                    <xsl:apply-templates select="text()"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FudExplanation">
+                    <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation)"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FudName">
+                    <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudName)"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:Field/@explanation">
+                    <xsl:value-of select="parent::*/xsd:appinfo/*:Field/@explanation"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:Field/@name">
+                    <xsl:value-of select="parent::*/xsd:appinfo/*:Field/@name"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="breakIntoWords">
+                        <xsl:with-param name="string">
+                            <xsl:value-of select="$name"/>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
+    </xsl:template>
+    
+    
+    <!-- ***************** SPLIT CAMEL CASE *****************-->
+    
+    <xsl:template name="breakIntoWords">
+        <xsl:param name="string" />
+        <xsl:choose>
+            <xsl:when test="string-length($string) &lt; 2">
+                <xsl:value-of select="$string" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="breakIntoWordsHelper">
+                    <xsl:with-param name="string" select="$string" />
+                    <xsl:with-param name="token" select="substring($string, 1, 1)" />
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="breakIntoWordsHelper">
+        <xsl:param name="string" select="''" />
+        <xsl:param name="token" select="''" />
+        <xsl:choose>
+            <xsl:when test="string-length($string) = 0" />
+            <xsl:when test="string-length($token) = 0" />
+            <xsl:when test="string-length($string) = string-length($token)">
+                <xsl:value-of select="$token" />
+            </xsl:when>
+            <xsl:when test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ',substring($string, string-length($token) + 1, 1))">
+                <xsl:value-of select="concat($token, ' ')" />
+                <xsl:call-template name="breakIntoWordsHelper">
+                    <xsl:with-param name="string" select="substring-after($string, $token)" />
+                    <xsl:with-param name="token" select="substring($string, string-length($token), 1)" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="breakIntoWordsHelper">
+                    <xsl:with-param name="string" select="$string" />
+                    <xsl:with-param name="token" select="substring($string, 1, string-length($token) + 1)" />
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
 </xsl:stylesheet>

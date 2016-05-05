@@ -242,6 +242,18 @@
         <Change from="_2DigitYear" to="TwoDigitYear"/>
         <Change from="_4WDispositionGridParametersType" to="FourWhiskeyDispositionGridParametersType"/>
         <Change from="_4WDispositionGridParameters" to="FourWhiskeyDispositionGridParameters"/>
+        <Change from="_4WGridSegmentType" to="FourWhiskeySegmentType"/>
+        <Change from="_4WGridSegmentType" to="FourWhiskeySegment"/>
+        <Change from="_4WGridColumn" to="FourWhiskeyGridColumnType"/>
+        <Change from="_4WGridColumn" to="FourWhiskeyGridColumn"/>
+        <Change from="_4WGridRow" to="FourWhiskeyGridRowType"/>
+        <Change from="_4WGridRow" to="FourWhiskeyGridRow"/>
+        <Change from="_4WGridSquareType" to="FourWhiskeyGridSquareType"/>
+        <Change from="_4WGridSquareType" to="FourWhiskeyGridSquare"/>
+        <Change from="_4WLaneAlphabeticType" to="FourWhiskeyLaneAlphabeticType"/>
+        <Change from="_4WLaneAlphabeticType" to="FourWhiskeyLaneAlphabetic"/>
+        <Change from="_4WLaneNumeric" to="FourWhiskeyLaneNumericType"/>
+        <Change from="_4WLaneNumericType" to="FourWhiskeyLaneNumeric"/>
     </xsl:variable>
     <xsl:template name="nodoc">
         <xsd:annotation>
@@ -339,4 +351,47 @@
     <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>-->
+    
+    <!-- ***************** SPLIT CAMEL CASE *****************-->
+    
+    <xsl:template name="breakIntoWords">
+        <xsl:param name="string" />
+        <xsl:choose>
+            <xsl:when test="string-length($string) &lt; 2">
+                <xsl:value-of select="$string" />
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="breakIntoWordsHelper">
+                    <xsl:with-param name="string" select="$string" />
+                    <xsl:with-param name="token" select="substring($string, 1, 1)" />
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="breakIntoWordsHelper">
+        <xsl:param name="string" select="''" />
+        <xsl:param name="token" select="''" />
+        <xsl:choose>
+            <xsl:when test="string-length($string) = 0" />
+            <xsl:when test="string-length($token) = 0" />
+            <xsl:when test="string-length($string) = string-length($token)">
+                <xsl:value-of select="$token" />
+            </xsl:when>
+            <xsl:when test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ',substring($string, string-length($token) + 1, 1))">
+                <xsl:value-of select="concat($token, ' ')" />
+                <xsl:call-template name="breakIntoWordsHelper">
+                    <xsl:with-param name="string" select="substring-after($string, $token)" />
+                    <xsl:with-param name="token" select="substring($string, string-length($token), 1)" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="breakIntoWordsHelper">
+                    <xsl:with-param name="string" select="$string" />
+                    <xsl:with-param name="token" select="substring($string, 1, string-length($token) + 1)" />
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
 </xsl:stylesheet>
