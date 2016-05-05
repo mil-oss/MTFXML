@@ -108,6 +108,11 @@
                 <xsd:documentation>Blank Space Character</xsd:documentation>
             </xsd:annotation>
         </xsd:element>
+        <xsd:element name="FreeText" type="FreeTextType" nillable="true">
+            <xsd:annotation>
+                <xsd:documentation>Free Text</xsd:documentation>
+            </xsd:annotation>
+        </xsd:element>
     </xsl:variable>
 
     <!--    OUTPUT RESULT-->

@@ -267,6 +267,12 @@
         <Change from="_4WLaneAlphabetic" to="FourWhiskeyLaneAlphabetic"/>
         <Change from="_4WLaneNumericType" to="FourWhiskeyLaneNumericType"/>
         <Change from="_4WLaneNumeric" to="FourWhiskeyLaneNumeric"/>
+        <Change from="_4WGridAssignmentType" to="FourWhiskeyGridAssignmentType"/>
+        <Change from="_4WGridAssignment" to="FourWhiskeyGridAssignment"/>
+        <Change from="_4WDispositionGridDetails" to="FourWhiskeyDispositionGridDetails"/>
+        <Change from="_4WDispositionGridDetailsType" to="FourWhiskeyDispositionGridDetailsType"/>
+        <Change from="_4WDispositionPosition" to="FourWhiskeyDispositionPosition"/>
+        <Change from="_4WDispositionPositionType" to="FourWhiskeyDispositionPositionType"/>
     </xsl:variable>
     
     <xsl:template name="nodoc">
@@ -329,6 +335,7 @@
 
     <!-- ***************** SETS *****************-->
     <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
+    <xsl:template match="*:FieldFormatStructure" mode="attr"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:SetFormatExample" mode="attr"/>
     <xsl:template match="*:SetFormatRelatedDocuments" mode="attr"/>
@@ -390,7 +397,7 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsd:documentation>
-                        <xsl:choose>
+                        <xsl:choose>               
                             <xsl:when test="string-length(xsd:appinfo[1]/*:FudExplanation/text())&gt;0">
                                 <xsl:value-of select="xsd:appinfo/*:FudExplanation"/>
                             </xsl:when>
@@ -402,6 +409,18 @@
                             </xsl:when>
                             <xsl:when test="xsd:appinfo/*:Field/@name">
                                 <xsl:value-of select="xsd:appinfo/*:Field/@name"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatIdentifier/text())&gt;0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatDescription/text())&gt;0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatDescription"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatRemark/text())&gt;0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatRemark"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatName/text())&gt;0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatName"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:call-template name="breakIntoWords">

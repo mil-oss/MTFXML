@@ -26,49 +26,28 @@
     consolidate fields, composites and segments as global elements in the "Fields" XML Schema for the GoE refactor.
     type references are converted to local.-->
     <!--Baseline Fields XML Schema document-->
-    <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
-    <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
+    <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/sets.xsd')"/>
+    <xsl:variable name="goe_fields_xsd" select="document('../../XSD/APP-11C-GoE/natomtf_goe_fields.xsd')"/>
     <!--Set deconfliction and annotation changes-->
-    <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
+    <xsl:variable name="output" select="'../../XSD/APP-11C-GoE/natomtf_goe_sets.xsd'"/>
     <xsl:variable name="set_field_Changes" select="document('../../XSD/Deconflicted/Set_Field_Name_Changes.xml')/SetElements"/>
     <!--*****************************************************-->
-    <xsl:variable name="output" select="'../../XSD/GoE_Schema/GoE_sets.xsd'"/>
+
     <!--Root level complexTypes-->
     <xsl:variable name="complex_types">
         <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')]">
-            <xsl:variable name="n">
-                <xsl:apply-templates select="@name" mode="fromtype"/>
+            <xsl:variable name="nm">
+                <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:variable>
             <xsl:variable name="elname">
-                <xsl:value-of select="concat($n, 'Set')"/>
+                <xsl:value-of select="concat(translate(substring($nm, 0, string-length($nm) - 3), '-', ''), 'Set')"/>
             </xsl:variable>
-            <xsl:variable name="setid">
-                <xsl:value-of select="xsd:annotation/xsd:appinfo/*:SetFormatIdentifier/text()"/>
-            </xsl:variable>
-            <xsl:variable name="newname">
-                <xsl:choose>
-                    <xsl:when test="$setid = '1APHIB'">
-                        <xsl:text>AmphibiousForcesSituationSet</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="$setid = 'MARACT'">
-                        <xsl:text>MaritimeActivitySet</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="exists($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0])">
-                        <xsl:value-of select="concat(translate($set_Changes/Set[@SETNAMESHORT = $setid and string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-().', ''), 'Set')"
-                        />
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$elname"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
-            <xsd:complexType name="{concat($newname, 'Type')}">
+            <xsd:complexType name="{concat($elname, 'Type')}">
                 <xsl:apply-templates select="*"/>
             </xsd:complexType>
         </xsl:for-each>
     </xsl:variable>
     <!--New complexTypes from not global elements-->
-
     <xsl:variable name="all_global_names">
         <xsl:for-each select="$complex_types/xsd:element">
             <el name="{@name}"/>
@@ -99,6 +78,9 @@
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="nn">
                 <xsl:choose>
+                    <xsl:when test="@name = 'FreeText'">
+                        <xsl:value-of select="$n"/>
+                    </xsl:when>
                     <xsl:when test="count($all_global_names//*[@name = $n]) &gt; 1">
                         <xsl:value-of select="concat($parent, $n)"/>
                     </xsl:when>
@@ -122,12 +104,33 @@
             </xsd:element>
         </xsl:for-each>
         <xsl:for-each select="$complex_types//xsd:element[@name][@type]">
-            <xsl:variable name="n" select="@name"/>
+            <xsl:variable name="n">
+                <xsl:apply-templates select="@name" mode="txt"/>
+            </xsl:variable>
             <xsl:variable name="t" select="@type"/>
+            <xsl:variable name="p">
+                <xsl:value-of select="ancestor::xsd:complexType[@name][1]/@name"/>
+            </xsl:variable>
+            <xsl:variable name="parent">
+                <xsl:choose>
+                    <xsl:when test="contains($p, 'GroupOfFields')">
+                        <xsl:value-of select="substring-before($p, 'GroupOfFields')"/>
+                    </xsl:when>
+                    <xsl:when test="ends-with($p, 'SetType')">
+                        <xsl:value-of select="replace($p, 'SetType', '')"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="replace($p, 'Type', '')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:variable name="nn">
                 <xsl:choose>
                     <xsl:when test="$set_field_Changes/*[@name = $n][@type = $t]">
                         <xsl:value-of select="$set_field_Changes/*[@name = $n][@type = $t]/@changeto"/>
+                    </xsl:when>
+                    <xsl:when test="count($all_global_names//*[@name = $n]) &gt; 1">
+                        <xsl:value-of select="concat($parent, $n)"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="@name"/>
@@ -152,14 +155,7 @@
                 <xsl:value-of select="xsd:annotation/xsd:appinfo/*:Set/@id"/>
             </xsl:variable>
             <xsl:variable name="newname">
-                <xsl:choose>
-                    <xsl:when test="exists($set_Changes/*/*[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0])">
-                        <xsl:value-of select="concat(translate($set_Changes/Set[@SETNAMESHORT = $setid][string-length(@ProposedSetFormatName) > 0][1]/@ProposedSetFormatName, ' ,/-().', ''), 'Set')"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="$elname"/>
-                    </xsl:otherwise>
-                </xsl:choose>
+                <xsl:value-of select="$elname"/>
             </xsl:variable>
             <xsd:element>
                 <xsl:attribute name="name">
@@ -168,9 +164,7 @@
                 <xsl:attribute name="type">
                     <xsl:value-of select="concat($newname, 'Type')"/>
                 </xsl:attribute>
-                <xsd:annotation>
-                    <xsl:apply-templates select="xsd:annotation/xsd:documentation"/>
-                </xsd:annotation>
+                <xsl:apply-templates select="xsd:annotation"/>
             </xsd:element>
         </xsl:for-each>
         <xsl:for-each select="$new_globals/xsd:element">
@@ -192,12 +186,11 @@
     <!--*****************************************************-->
     <xsl:template name="main">
         <xsl:result-document href="{$output}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2"
-                targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
-                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
-                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+            <xsd:schema xmlns="urn:int:nato:mtf:app-11(c):goe:sets" xmlns:field="urn:int:nato:mtf:app-11(c):goe:elementals" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:mtf:app-11(c):goe:sets" xml:lang="en-GB" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+                <xsd:import namespace="urn:int:nato:mtf:app-11(c):goe:elementals" schemaLocation="natomtf_goe_fields.xsd"/>
                 <xsd:annotation>
-                    <xsd:documentation>XML Schema for USMTF Message Text Format Sets</xsd:documentation>
+                    <xsd:documentation>XML Schema for NATO Message Text Format Sets</xsd:documentation>
                 </xsd:annotation>
                 <xsd:complexType name="SetBaseType">
                     <xsd:annotation>
@@ -207,9 +200,8 @@
                         <xsd:extension base="field:CompositeType">
                             <xsd:sequence>
                                 <xsd:element ref="AmplificationSet" minOccurs="0" maxOccurs="1"/>
-                                <xsd:element ref="NarrativeInformationSet" minOccurs="0" maxOccurs="1"/>
+                                <xsd:element ref="NarrativeSet" minOccurs="0" maxOccurs="1"/>
                             </xsd:sequence>
-                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsd:complexType>
@@ -305,9 +297,7 @@
                     <xsl:attribute name="type">
                         <xsl:value-of select="concat('field:', $baseortype)"/>
                     </xsl:attribute>
-                    <xsl:call-template name="Annotation">
-                        <xsl:with-param name="node" select="."/>
-                    </xsl:call-template>
+                    <xsl:apply-templates select="xsd:annotation"/>
                 </xsl:copy>
             </xsl:when>
             <xsl:when test="$goe_fields_xsd/xsd:schema/xsd:element[@name = $baseortype]//xsd:restriction">
@@ -338,7 +328,7 @@
                     <xsl:call-template name="Annotation">
                         <xsl:with-param name="node" select="."/>
                     </xsl:call-template>
-                    <xsl:apply-templates select="*[not(name()='xsd:annotation')]"/>
+                    <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]"/>
                 </xsl:copy>
             </xsl:otherwise>
         </xsl:choose>
@@ -394,14 +384,13 @@
             </xsd:choice>
         </xsd:sequence>
     </xsl:template>
-    
     <xsl:template name="Annotation">
         <xsl:param name="node"/>
         <xsl:choose>
             <xsl:when test="$node/xsd:annotation">
                 <xsl:apply-templates select="$node/xsd:annotation"/>
             </xsl:when>
-            <xsl:when test="contains($node/@name,'GroupOfFields')">
+            <xsl:when test="contains($node/@name, 'GroupOfFields')">
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:text>A repeatable group of fields</xsl:text>
@@ -415,80 +404,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
-    <xsl:template match="xsd:annotation">
-        <xsl:variable name="setid">
-            <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier/text()"/>
-        </xsl:variable>
-        <xsl:variable name="doc">
-            <xsl:value-of select="normalize-space(xsd:documentation/text())"/>
-        </xsl:variable>
-        <xsl:variable name="desc">
-            <xsl:apply-templates select="xsd:appinfo/*:SetFormatDescription/text()"/>
-            <xsl:apply-templates select="xsd:appinfo/*:FieldFormatDefinition/text()"/>
-        </xsl:variable>
-        <xsl:variable name="remark">
-            <xsl:apply-templates select="xsd:appinfo/*:SetFormatRemark/text()"/>
-        </xsl:variable>
-        <xsl:variable name="name">
-            <xsl:apply-templates select="xsd:appinfo/*:SetFormatName/text()"/>
-        </xsl:variable>
-        <xsl:variable name="newdesc">
-            <xsl:value-of select="normalize-space($set_Changes/*[@SETNAMESHORT = $setid][@ProposedSetFormatDescription][1]/@ProposedSetFormatDescription)"/>
-        </xsl:variable>
-        <xsl:variable name="doc">
-            <xsl:choose>
-                <xsl:when test="string-length($newdesc) > 0">
-                    <xsl:value-of select="$newdesc"/>
-                </xsl:when>
-                <xsl:when test="string-length($doc) > 0">
-                    <xsl:value-of select="$doc"/>
-                </xsl:when>
-                <xsl:when test="string-length($desc) > 0">
-                    <xsl:value-of select="$desc"/>
-                </xsl:when>
-                <xsl:when test="string-length($remark) > 0">
-                    <xsl:value-of select="$remark"/>
-                </xsl:when>
-                <xsl:when test="string-length($name) > 0">
-                    <xsl:value-of select="$name"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:text>Data definition required</xsl:text>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:copy copy-namespaces="no">
-            <xsl:choose>
-                <xsl:when test="xsd:documentation">
-                    <xsl:apply-templates select="*">
-                        <xsl:with-param name="doc" select="$doc"/>
-                    </xsl:apply-templates>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsd:documentation>
-                        <xsl:value-of select="$doc"/>
-                    </xsd:documentation>
-                    <xsl:apply-templates select="*"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:copy>
-    </xsl:template>
-    <xsl:template match="xsd:documentation">
-        <xsl:param name="doc"/>
-        <xsl:choose>
-            <xsl:when test="string-length(normalize-space($doc)) &gt; 0">
-                <xsl:copy copy-namespaces="no">
-                    <xsl:value-of select="$doc"/>
-                </xsl:copy>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy copy-namespaces="no">
-                    <xsl:apply-templates select="text()"/>
-                </xsl:copy>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
+
     <!--Copy element and use template mode to convert elements to attributes in SET element-->
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
         <xsl:param name="doc"/>
@@ -499,9 +415,6 @@
             <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:goe:sets">
                 <xsl:apply-templates select="@*"/>
                 <xsl:apply-templates select="*" mode="attr">
-                    <xsl:with-param name="doc" select="$doc"/>
-                </xsl:apply-templates>
-                <xsl:apply-templates select="$set_Changes/*[@SETNAMESHORT = $setid]/@*[string-length(.) > 0][1]" mode="chg">
                     <xsl:with-param name="doc" select="$doc"/>
                 </xsl:apply-templates>
                 <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
@@ -600,7 +513,7 @@
             </xsd:complexContent>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="*[@name = 'NarrativeInformationSetType']" mode="copyCTypes">
+    <xsl:template match="*[@name = 'NarrativeSetType']" mode="copyCTypes">
         <xsl:copy>
             <xsl:apply-templates select="@*" mode="copyCTypes"/>
             <xsl:apply-templates select="xsd:annotation" mode="copyCTypes"/>
@@ -643,14 +556,6 @@
             </xsd:annotation>
         </xsd:element>
     </xsl:template>
-    <!--<xsl:template match="xsd:sequence[preceding-sibling::xsd:element][count(xsd:element) &gt; 1]" mode="copyCTypes">
-        <xsl:variable name="seqname">
-            <xsl:value-of select="concat(substring-before(ancestor::xsd:complexType[@name]/@name, 'SetType'), 'Subsequence')"/>
-        </xsl:variable>
-        <!-\-<xsd:element ref="{$seqname}">
-            <xsl:copy-of select="$subsequences/*[@name = $seqname]/xsd:annotation"/>
-        </xsd:element>-\->
-    </xsl:template>-->
     <xsl:template match="@*" mode="copyCTypes">
         <xsl:copy-of select="."/>
     </xsl:template>
@@ -674,8 +579,14 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+        <xsl:variable name="p">
+            <xsl:value-of select="ancestor::xsd:complexType[@name][1]/@name"/>
+        </xsl:variable>
         <xsl:variable name="nr">
             <xsl:choose>
+                <xsl:when test="count($all_global_names//*[@name = $r]) &gt; 1">
+                    <xsl:value-of select="concat($parent, $r)"/>
+                </xsl:when>
                 <xsl:when test="starts-with($r, 'field:')">
                     <xsl:value-of select="$r"/>
                 </xsl:when>
@@ -694,9 +605,7 @@
     <xsl:template match="text()" mode="copyCTypes">
         <xsl:value-of select="."/>
     </xsl:template>
-
     <!--*****************************************************-->
-
     <xsl:template match="@nillable"/>
     <xsl:template match="@*" mode="chg"/>
     <!--Replace Data Specified in Deconfliction XML Document-->
@@ -707,7 +616,7 @@
     </xsl:template>
     <xsl:template match="@ProposedSetFormatName" mode="chg">
         <xsl:attribute name="name">
-            <xsl:value-of select="translate(.,' ,/-().', '')"/>
+            <xsl:value-of select="translate(., ' ,/-().', '')"/>
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="@ProposedSetFormatDescription" mode="chg">
