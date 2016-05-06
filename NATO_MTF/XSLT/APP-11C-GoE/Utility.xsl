@@ -159,13 +159,26 @@
         </xsl:choose>
     </xsl:template>
     <xsl:template match="@type" mode="txt">
+        <xsl:variable name="refName">
+            <xsl:value-of select="substring-before(., '_')"/>
+        </xsl:variable>
+        <xsl:variable name="n">
+            <xsl:choose>
+                <xsl:when test="string-length($refName)&gt;0">
+                    <xsl:value-of select="$refName"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:variable name="t">
             <xsl:choose>
-                <xsl:when test="starts-with(., 'f:')">
-                    <xsl:value-of select="substring-after(., 'f:')"/>
+                <xsl:when test="starts-with($n, 'f:')">
+                    <xsl:value-of select="substring-after($n, 'f:')"/>
                 </xsl:when>
-                <xsl:when test="starts-with(., 'c:')">
-                    <xsl:value-of select="substring-after(., 'c:')"/>
+                <xsl:when test="starts-with($n, 'c:')">
+                    <xsl:value-of select="substring-after($n, 'c:')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="."/>

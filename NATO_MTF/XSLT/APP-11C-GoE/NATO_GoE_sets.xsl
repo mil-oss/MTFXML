@@ -61,6 +61,8 @@
         </xsd:element>
     </xsl:variable>
     <xsl:template match="xsd:element" mode="baseline">
+        <xsl:variable name="fn" select="@name"/>
+        <xsl:variable name="p" select="ancestor::*[@name][1]/@name"/>
         <xsl:variable name="n">
             <xsl:apply-templates select="@name" mode="txt"/>
         </xsl:variable>
@@ -87,6 +89,18 @@
         <xsl:variable name="basel" select="substring($baseortype, 0, string-length($baseortype) - 3)"/>
         <xsl:choose>
             <xsl:when test="@name = 'Amplification'"/>
+            <xsl:when test="$set_field_Changes/*[@name = $fn][@type=$bt][@parent=$p]">
+                <xsl:copy copy-namespaces="no">
+                    <xsl:attribute name="name">
+                        <xsl:value-of select="$set_field_Changes/*[@name = $fn][@type=$bt][@parent=$p]/@changeto"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="concat('field:',$bt)"/>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="@*[not(name() = 'name')]" mode="baseline"/>
+                    <xsl:apply-templates select="xsd:annotation"/>
+                </xsl:copy>
+            </xsl:when>
             <xsl:when test="$n = $basel and $goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]">
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="ref">
