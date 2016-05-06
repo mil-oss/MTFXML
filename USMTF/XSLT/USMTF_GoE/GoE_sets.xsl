@@ -394,7 +394,6 @@
             </xsd:choice>
         </xsd:sequence>
     </xsl:template>
-    
     <xsl:template name="Annotation">
         <xsl:param name="node"/>
         <xsl:choose>
@@ -414,8 +413,7 @@
                 </xsd:annotation>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
-    
+    </xsl:template>   
     <xsl:template match="xsd:annotation">
         <xsl:variable name="setid">
             <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier/text()"/>
@@ -643,14 +641,6 @@
             </xsd:annotation>
         </xsd:element>
     </xsl:template>
-    <!--<xsl:template match="xsd:sequence[preceding-sibling::xsd:element][count(xsd:element) &gt; 1]" mode="copyCTypes">
-        <xsl:variable name="seqname">
-            <xsl:value-of select="concat(substring-before(ancestor::xsd:complexType[@name]/@name, 'SetType'), 'Subsequence')"/>
-        </xsl:variable>
-        <!-\-<xsd:element ref="{$seqname}">
-            <xsl:copy-of select="$subsequences/*[@name = $seqname]/xsd:annotation"/>
-        </xsd:element>-\->
-    </xsl:template>-->
     <xsl:template match="@*" mode="copyCTypes">
         <xsl:copy-of select="."/>
     </xsl:template>
@@ -682,8 +672,11 @@
                 <xsl:when test="$global_elements/xsd:element[@name = $r]">
                     <xsl:value-of select="$r"/>
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="count($all_global_names/*[@name = $r])&gt;1">
                     <xsl:value-of select="concat($parent, $r)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$r"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>

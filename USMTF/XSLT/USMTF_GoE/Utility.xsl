@@ -113,16 +113,32 @@
         <xsl:value-of select="translate(substring($nm, 0, string-length($nm) - 3), '-.', '')"/>
     </xsl:template>
     <xsl:template match="@name" mode="txt">
-        <xsl:variable name="t">
+        <xsl:variable name="refName">
+            <xsl:value-of select="substring-before(., '_')"/>
+        </xsl:variable>
+        <xsl:variable name="n">
             <xsl:choose>
-                <xsl:when test="starts-with(., 'f:')">
-                    <xsl:value-of select="substring-after(., 'f:')"/>
-                </xsl:when>
-                <xsl:when test="starts-with(., 's:')">
-                    <xsl:value-of select="substring-after(., 's:')"/>
+                <xsl:when test="string-length($refName)&gt;0">
+                    <xsl:value-of select="$refName"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="t">
+            <xsl:choose>
+                <xsl:when test="starts-with($n, 'f:')">
+                    <xsl:value-of select="substring-after($n, 'f:')"/>
+                </xsl:when>
+                <xsl:when test="starts-with($n, 'c:')">
+                    <xsl:value-of select="substring-after($n, 'c:')"/>
+                </xsl:when>
+                <xsl:when test="starts-with($n, 's:')">
+                    <xsl:value-of select="substring-after($n, 's:')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$n"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -254,6 +270,8 @@
         <Change from="_4WLaneAlphabeticType" to="FourWhiskeyLaneAlphabetic"/>
         <Change from="_4WLaneNumeric" to="FourWhiskeyLaneNumericType"/>
         <Change from="_4WLaneNumericType" to="FourWhiskeyLaneNumeric"/>
+        <Change from="_4WGridPoint" to="FourWhiskeyGridPoint"/>
+        <Change from="_4WGridPointType" to="FourWhiskeyGridPointType"/>
     </xsl:variable>
     <xsl:template name="nodoc">
         <xsd:annotation>
