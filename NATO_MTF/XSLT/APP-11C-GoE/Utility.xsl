@@ -90,6 +90,7 @@
         <Change from="FieldFormatPositionConcept" to="concept"/>
         <Change from="FieldFormatPositionName" to="positionName"/>
         <Change from="FieldFormatRemark" to="remark"/>
+        <Change from="FieldFormatSponsor" to="sponsor"/>
         <Change from="FudExplanation" to="explanation"/>
         <Change from="FudName" to="name"/>
         <Change from="SetFormatIdentifier" to="setid"/>
@@ -110,6 +111,7 @@
         <Change from="MtfPurpose" to="purpose"/>
         <Change from="MtfNote" to="note"/>
         <Change from="VersionIndicator" to="version"/>
+        <Change from="AssignedFfirnFudUseDescription" to="usage"/>
     </xsl:variable>
 
     <!-- *************** NODE NAME CHANGES ****************-->
@@ -328,6 +330,7 @@
     <xsl:template match="*:ffirnFudn" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
+    <xsl:template match="*:FieldFormatRelatedDocuments" mode="attr"/>
     <xsl:template match="*:FudExplanation"/>
     <xsl:template match="*:FudNumber"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
@@ -364,7 +367,7 @@
     <xsl:template match="*:FieldFormatRelatedDocument" mode="attr"/>
     <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>
     <xsl:template match="*:ColumnarIndicator" mode="attr"/>
-    <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>
+    <!--<xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>-->
     <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="xsd:attributeGroup"/>
     <xsl:template match="xsd:attribute[@name = 'ffSeq']"/>
@@ -430,9 +433,6 @@
                             <xsl:when test="xsd:appinfo/*:Field/@name">
                                 <xsl:value-of select="xsd:appinfo/*:Field/@name"/>
                             </xsl:when>
-                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatIdentifier/text())&gt;0">
-                                <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier"/>
-                            </xsl:when>
                             <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatDescription/text())&gt;0">
                                 <xsl:value-of select="xsd:appinfo/*:SetFormatDescription"/>
                             </xsl:when>
@@ -441,6 +441,9 @@
                             </xsl:when>
                             <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatName/text())&gt;0">
                                 <xsl:value-of select="xsd:appinfo/*:SetFormatName"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatIdentifier/text())&gt;0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:call-template name="breakIntoWords">
@@ -453,7 +456,7 @@
                     </xsd:documentation>
                 </xsl:otherwise>
             </xsl:choose>
-             <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
+             <xsl:apply-templates select="xsd:appinfo"/>
         </xsl:copy>
     </xsl:template>
     
@@ -497,6 +500,61 @@
         </xsl:copy>
     </xsl:template>
     
+    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Field" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*" mode="attr">
+                </xsl:apply-templates>
+                <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr">
+                </xsl:apply-templates>
+                <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
+        <xsl:variable name="setid">
+            <xsl:value-of select="*:SetFormatIdentifier/text()"/>
+        </xsl:variable>
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Set" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
+                <xsl:apply-templates select="*" mode="attr"/>
+                <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
+                <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
+            <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
+                <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                    <xsl:value-of select="normalize-space(text())"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
+                    <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:SetFormatExample" mode="examples">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
+                <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                    <xsl:value-of select="normalize-space(text())"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:SetFormatExample">
+                    <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
     
     <!-- ***************** SPLIT CAMEL CASE *****************-->
     
