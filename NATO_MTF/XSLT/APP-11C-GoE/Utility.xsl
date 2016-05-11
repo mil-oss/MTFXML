@@ -125,7 +125,7 @@
         </xsl:variable>
         <xsl:variable name="n">
             <xsl:choose>
-                <xsl:when test="string-length($refName)&gt;0">
+                <xsl:when test="string-length($refName) &gt; 0">
                     <xsl:value-of select="$refName"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -164,7 +164,7 @@
         </xsl:variable>
         <xsl:variable name="n">
             <xsl:choose>
-                <xsl:when test="string-length($refName)&gt;0">
+                <xsl:when test="string-length($refName) &gt; 0">
                     <xsl:value-of select="$refName"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -309,7 +309,7 @@
         <Change from="_4WGridPoint" to="FourWhiskeyGridPoint"/>
         <Change from="_4WGridPointType" to="FourWhiskeyGridPointType"/>
     </xsl:variable>
-    
+
     <xsl:template name="nodoc">
         <xsd:annotation>
             <xsd:documentation>Data definition required</xsd:documentation>
@@ -367,8 +367,9 @@
     <xsl:template match="*:Type" mode="attr"/>
     <xsl:template match="*:UnitOfMeasure"/>
     <xsl:template match="*:UnitOfMeasure" mode="attr"/>
+    <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:VersionIndicator"/>
-
+    
     <!-- ***************** SETS *****************-->
     <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
     <xsl:template match="*:FieldFormatStructure" mode="attr"/>
@@ -392,7 +393,7 @@
 
     <!-- ***************** MSGS *****************-->
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
-<!--    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
+    <!--    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
     <xsl:template match="*:SegmentStructureName" mode="attr"/>
     <xsl:template match="*:SegmentStructureConcept" mode="attr"/>
     <xsl:template match="*:SegmentStructureUseDescription" mode="attr"/>
@@ -409,14 +410,14 @@
     <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>-->
-    
-    
+
+
     <!-- ***************** Data Definitions *****************-->
     <xsl:template match="xsd:annotation">
         <xsl:param name="nm"/>
         <xsl:variable name="name">
             <xsl:choose>
-                <xsl:when test="string-length($nm)&gt;0">
+                <xsl:when test="string-length($nm) &gt; 0">
                     <xsl:value-of select="$nm"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -433,11 +434,11 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsd:documentation>
-                        <xsl:choose>               
-                            <xsl:when test="string-length(xsd:appinfo[1]/*:FudExplanation/text())&gt;0">
+                        <xsl:choose>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:FudExplanation/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:FudExplanation"/>
                             </xsl:when>
-                            <xsl:when test="string-length(xsd:appinfo[1]/*:FudName/text())&gt;0">
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:FudName/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:FudName"/>
                             </xsl:when>
                             <xsl:when test="xsd:appinfo/*:Field/@explanation">
@@ -446,16 +447,16 @@
                             <xsl:when test="xsd:appinfo/*:Field/@name">
                                 <xsl:value-of select="xsd:appinfo/*:Field/@name"/>
                             </xsl:when>
-                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatDescription/text())&gt;0">
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatDescription/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:SetFormatDescription"/>
                             </xsl:when>
-                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatRemark/text())&gt;0">
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatRemark/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:SetFormatRemark"/>
                             </xsl:when>
-                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatName/text())&gt;0">
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatName/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:SetFormatName"/>
                             </xsl:when>
-                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatIdentifier/text())&gt;0">
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatIdentifier/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier"/>
                             </xsl:when>
                             <xsl:otherwise>
@@ -469,15 +470,15 @@
                     </xsd:documentation>
                 </xsl:otherwise>
             </xsl:choose>
-             <xsl:apply-templates select="xsd:appinfo"/>
+            <xsl:apply-templates select="xsd:appinfo"/>
         </xsl:copy>
     </xsl:template>
-    
+
     <xsl:template match="xsd:documentation">
         <xsl:param name="nm"/>
         <xsl:variable name="name">
             <xsl:choose>
-                <xsl:when test="string-length($nm)&gt;0">
+                <xsl:when test="string-length($nm) &gt; 0">
                     <xsl:value-of select="$nm"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -512,33 +513,42 @@
             </xsl:choose>
         </xsl:copy>
     </xsl:template>
-    
+
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Field" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
-                <xsl:apply-templates select="@*"/>
-                <xsl:apply-templates select="*" mode="attr">
-                </xsl:apply-templates>
-                <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr">
-                </xsl:apply-templates>
-                <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
-            </xsl:element>
+            <xsl:choose>
+                <xsl:when test="not(*:Field)">
+                    <xsl:element name="Field" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:apply-templates select="@*"/>
+                        <xsl:apply-templates select="*" mode="attr"> </xsl:apply-templates>
+                        <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/> 
+                        <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="*:Field" copy-namespaces="no"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:copy>
     </xsl:template>
-    
+
     <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
-        <xsl:variable name="setid">
-            <xsl:value-of select="*:SetFormatIdentifier/text()"/>
-        </xsl:variable>
         <xsl:copy copy-namespaces="no">
-            <xsl:element name="Set" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
-                <xsl:apply-templates select="*" mode="attr"/>
-                <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
-                <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
-            </xsl:element>
+            <xsl:choose>
+                <xsl:when test="not(*:Set)">
+                    <xsl:element name="Set" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:apply-templates select="*" mode="attr"/>
+                        <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="*:Set" copy-namespaces="no"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:copy>
     </xsl:template>
-    
+
     <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
@@ -553,7 +563,7 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="*:SetFormatExample" mode="examples">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
@@ -568,47 +578,47 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- ***************** SPLIT CAMEL CASE *****************-->
-    
+
     <xsl:template name="breakIntoWords">
-        <xsl:param name="string" />
+        <xsl:param name="string"/>
         <xsl:choose>
             <xsl:when test="string-length($string) &lt; 2">
-                <xsl:value-of select="$string" />
+                <xsl:value-of select="$string"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="breakIntoWordsHelper">
-                    <xsl:with-param name="string" select="$string" />
-                    <xsl:with-param name="token" select="substring($string, 1, 1)" />
+                    <xsl:with-param name="string" select="$string"/>
+                    <xsl:with-param name="token" select="substring($string, 1, 1)"/>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="breakIntoWordsHelper">
-        <xsl:param name="string" select="''" />
-        <xsl:param name="token" select="''" />
+        <xsl:param name="string" select="''"/>
+        <xsl:param name="token" select="''"/>
         <xsl:choose>
-            <xsl:when test="string-length($string) = 0" />
-            <xsl:when test="string-length($token) = 0" />
+            <xsl:when test="string-length($string) = 0"/>
+            <xsl:when test="string-length($token) = 0"/>
             <xsl:when test="string-length($string) = string-length($token)">
-                <xsl:value-of select="$token" />
+                <xsl:value-of select="$token"/>
             </xsl:when>
-            <xsl:when test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ',substring($string, string-length($token) + 1, 1))">
-                <xsl:value-of select="concat($token, ' ')" />
+            <xsl:when test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($string, string-length($token) + 1, 1))">
+                <xsl:value-of select="concat($token, ' ')"/>
                 <xsl:call-template name="breakIntoWordsHelper">
-                    <xsl:with-param name="string" select="substring-after($string, $token)" />
-                    <xsl:with-param name="token" select="substring($string, string-length($token), 1)" />
+                    <xsl:with-param name="string" select="substring-after($string, $token)"/>
+                    <xsl:with-param name="token" select="substring($string, string-length($token), 1)"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="breakIntoWordsHelper">
-                    <xsl:with-param name="string" select="$string" />
-                    <xsl:with-param name="token" select="substring($string, 1, string-length($token) + 1)" />
+                    <xsl:with-param name="string" select="$string"/>
+                    <xsl:with-param name="token" select="substring($string, 1, string-length($token) + 1)"/>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
 </xsl:stylesheet>

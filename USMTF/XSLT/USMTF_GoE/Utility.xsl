@@ -370,6 +370,173 @@
     <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>-->
     
+    <!-- ***************** Data Definitions *****************-->
+    <xsl:template match="xsd:annotation">
+        <xsl:param name="nm"/>
+        <xsl:variable name="name">
+            <xsl:choose>
+                <xsl:when test="string-length($nm) &gt; 0">
+                    <xsl:value-of select="$nm"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="ancestor::*[@name][1]/@name" mode="txt"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="xsd:documentation">
+                    <xsl:apply-templates select="xsd:documentation">
+                        <xsl:with-param name="nm" select="$name"/>
+                    </xsl:apply-templates>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsd:documentation>
+                        <xsl:choose>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:FudExplanation/text()) &gt; 0">
+                                <xsl:value-of select="xsd:appinfo/*:FudExplanation"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:FudName/text()) &gt; 0">
+                                <xsl:value-of select="xsd:appinfo/*:FudName"/>
+                            </xsl:when>
+                            <xsl:when test="xsd:appinfo/*:Field/@explanation">
+                                <xsl:value-of select="xsd:appinfo/*:Field/@explanation"/>
+                            </xsl:when>
+                            <xsl:when test="xsd:appinfo/*:Field/@name">
+                                <xsl:value-of select="xsd:appinfo/*:Field/@name"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatDescription/text()) &gt; 0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatDescription"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatRemark/text()) &gt; 0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatRemark"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatName/text()) &gt; 0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatName"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatIdentifier/text()) &gt; 0">
+                                <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:call-template name="breakIntoWords">
+                                    <xsl:with-param name="string">
+                                        <xsl:value-of select="$name"/>
+                                    </xsl:with-param>
+                                </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsd:documentation>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:apply-templates select="xsd:appinfo"/>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="xsd:documentation">
+        <xsl:param name="nm"/>
+        <xsl:variable name="name">
+            <xsl:choose>
+                <xsl:when test="string-length($nm) &gt; 0">
+                    <xsl:value-of select="$nm"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="ancestor::*[@name][1]/@name" mode="txt"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="text() and not(text() = 'Data definition required')">
+                    <xsl:apply-templates select="text()"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FudExplanation">
+                    <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation)"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FudName">
+                    <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudName)"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:Field/@explanation">
+                    <xsl:value-of select="parent::*/xsd:appinfo/*:Field/@explanation"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:Field/@name">
+                    <xsl:value-of select="parent::*/xsd:appinfo/*:Field/@name"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:call-template name="breakIntoWords">
+                        <xsl:with-param name="string">
+                            <xsl:value-of select="$name"/>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="not(*:Field)">
+                    <xsl:element name="Field" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:apply-templates select="@*"/>
+                        <xsl:apply-templates select="*" mode="attr"> </xsl:apply-templates>
+                        <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/> 
+                        <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="*:Field" copy-namespaces="no"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
+        <xsl:copy copy-namespaces="no">
+            <xsl:choose>
+                <xsl:when test="not(*:Set)">
+                    <xsl:element name="Set" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:apply-templates select="*" mode="attr"/>
+                        <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="*:Set" copy-namespaces="no"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:copy>
+    </xsl:template>
+    
+    <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
+            <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
+                <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                    <xsl:value-of select="normalize-space(text())"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
+                    <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    
+    <xsl:template match="*:SetFormatExample" mode="examples">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+            <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
+                <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                    <xsl:value-of select="normalize-space(text())"/>
+                </xsl:element>
+                <xsl:for-each select="following-sibling::*:SetFormatExample">
+                    <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                        <xsl:value-of select="normalize-space(text())"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:if>
+        </xsl:if>
+    </xsl:template>
+    
     <!-- ***************** SPLIT CAMEL CASE *****************-->
     
     <xsl:template name="breakIntoWords">
