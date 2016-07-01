@@ -1326,7 +1326,7 @@
       <sch:assert
         test="
           some $ref in resolve-QName(@ref, .)
-            satisfies ($ref = xs:QName('structures:SimpleObjectAttributeGroup') or namespace-uri-from-QName($ref) = (xs:anyURI('urn:us:gov:ic:ism'), xs:anyURI('urn:us:gov:ic:ntk')))"
+            satisfies ($ref = xs:QName('structures:SimpleObjectAttributeGroup') or namespace-uri-from-QName($ref) = (xs:anyURI('urn:us:gov:ic:ism:v2'), xs:anyURI('urn:us:gov:ic:ntk')))"
         >Rule 11-24: An attribute group reference MUST be structures:SimpleObjectAttributeGroup or have the IC-ISM or IC-NTK namespace.</sch:assert>
     </sch:rule>
   </sch:pattern>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    exclude-result-prefixes="xsd" version="2.0">
 
     <!-- ************ Identity Transform ***********-->
     <!-- This will allow application of any templates without mode qualifier -->
@@ -25,6 +27,11 @@
             <xsl:apply-templates select="." mode="txt"/>
         </xsl:attribute>
     </xsl:template>
+    <xsl:template match="@base">
+        <xsl:attribute name="base">
+            <xsl:apply-templates select="." mode="txt"/>
+        </xsl:attribute>
+    </xsl:template>
     <xsl:template match="text()">
         <xsl:value-of select="normalize-space(translate(., '&#34;&#xA;', ''))"/>
     </xsl:template>
@@ -32,14 +39,14 @@
     <!-- ************** Copy ***************-->
     <!-- This will NOT allow application of templates that don't use mode="copy" -->
     <xsl:template match="*" mode="copy">
-        <xsl:copy copy-namespaces="no">
+        <xsl:copy  inherit-namespaces="yes">
             <xsl:apply-templates select="@*" mode="copy"/>
             <xsl:apply-templates select="text()"/>
             <xsl:apply-templates select="*" mode="copy"/>
         </xsl:copy>
     </xsl:template>
     <xsl:template match="@*" mode="copy">
-        <xsl:copy copy-namespaces="no">
+        <xsl:copy inherit-namespaces="yes">
             <xsl:value-of select="replace(., '&#34;', '')"/>
         </xsl:copy>
     </xsl:template>
@@ -85,6 +92,7 @@
         <Change from="FieldFormatPositionConcept" to="concept"/>
         <Change from="FieldFormatPositionName" to="positionName"/>
         <Change from="FieldFormatRemark" to="remark"/>
+        <Change from="FieldFormatSponsor" to="sponsor"/>
         <Change from="FudExplanation" to="explanation"/>
         <Change from="FudName" to="name"/>
         <Change from="SetFormatIdentifier" to="setid"/>
@@ -105,12 +113,21 @@
         <Change from="MtfPurpose" to="purpose"/>
         <Change from="MtfNote" to="note"/>
         <Change from="VersionIndicator" to="version"/>
+        <Change from="AssignedFfirnFudUseDescription" to="usage"/>
     </xsl:variable>
 
     <!-- *************** NODE NAME CHANGES ****************-->
     <xsl:template match="@name" mode="fromtype">
-        <xsl:variable name="nm" select="."/>
-        <xsl:value-of select="translate(substring($nm, 0, string-length($nm) - 3), '-.', '')"/>
+        <xsl:variable name="n">
+            <xsl:apply-templates select="." mode="txt"/>
+        </xsl:variable>
+        <xsl:value-of select="translate(substring($n, 0, string-length($n) - 3), '-.', '')"/>
+    </xsl:template>
+    <xsl:template match="@type" mode="fromtype">
+        <xsl:variable name="n">
+            <xsl:apply-templates select="." mode="txt"/>
+        </xsl:variable>
+        <xsl:value-of select="translate(substring($n, 0, string-length($n) - 3), '-.', '')"/>
     </xsl:template>
     <xsl:template match="@name" mode="txt">
         <xsl:variable name="refName">
@@ -118,7 +135,7 @@
         </xsl:variable>
         <xsl:variable name="n">
             <xsl:choose>
-                <xsl:when test="string-length($refName)&gt;0">
+                <xsl:when test="string-length($refName) &gt; 0">
                     <xsl:value-of select="$refName"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -152,13 +169,29 @@
         </xsl:choose>
     </xsl:template>
     <xsl:template match="@type" mode="txt">
-        <xsl:variable name="t">
+        <xsl:variable name="refName">
+            <xsl:value-of select="substring-before(., '_')"/>
+        </xsl:variable>
+        <xsl:variable name="n">
             <xsl:choose>
-                <xsl:when test="starts-with(., 'f:')">
-                    <xsl:value-of select="substring-after(., 'f:')"/>
+                <xsl:when test="string-length($refName) &gt; 0">
+                    <xsl:value-of select="$refName"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="t">
+            <xsl:choose>
+                <xsl:when test="starts-with($n, 'f:')">
+                    <xsl:value-of select="substring-after($n, 'f:')"/>
+                </xsl:when>
+                <xsl:when test="starts-with($n, 'c:')">
+                    <xsl:value-of select="substring-after($n, 'c:')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$n"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -176,6 +209,9 @@
             <xsl:choose>
                 <xsl:when test="starts-with(., 'f:')">
                     <xsl:value-of select="substring-after(., 'f:')"/>
+                </xsl:when>
+                <xsl:when test="starts-with(., 'c:')">
+                    <xsl:value-of select="substring-after(., 'c:')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="."/>
@@ -246,6 +282,7 @@
     <!-- ***************** NODE NAME CHANGES *****************-->
 
     <xsl:variable name="NodeNameChanges">
+        <Change from="BlankSpaceCharacter" to="BlankSpace"/>
         <Change from="_100000MeterSquareColumn" to="HundredKMSquareColumn"/>
         <Change from="_100000MeterSquareColumnType" to="HundredKMSquareColumnType"/>
         <Change from="_100000MeterSquareRow" to="HundredKMSquareRow"/>
@@ -259,25 +296,30 @@
         <Change from="_4WDispositionGridParametersType" to="FourWhiskeyDispositionGridParametersType"/>
         <Change from="_4WDispositionGridParameters" to="FourWhiskeyDispositionGridParameters"/>
         <Change from="_4WGridSegmentType" to="FourWhiskeySegmentType"/>
-        <Change from="_4WGridSegmentType" to="FourWhiskeySegment"/>
-        <Change from="_4WGridColumn" to="FourWhiskeyGridColumnType"/>
+        <Change from="_4WGridSegment" to="FourWhiskeySegment"/>
+        <Change from="_4WGridColumnType" to="FourWhiskeyGridColumnType"/>
         <Change from="_4WGridColumn" to="FourWhiskeyGridColumn"/>
-        <Change from="_4WGridRow" to="FourWhiskeyGridRowType"/>
+        <Change from="_4WGridColumn_1" to="FourWhiskeyGridColumn"/>
+        <Change from="_4WGridColumn_2" to="FourWhiskeyGridColumn"/>
+        <Change from="_4WGridRowType" to="FourWhiskeyGridRowType"/>
         <Change from="_4WGridRow" to="FourWhiskeyGridRow"/>
+        <Change from="_4WGridRow_1" to="FourWhiskeyGridRow"/>
+        <Change from="_4WGridRow_2" to="FourWhiskeyGridRow"/>
         <Change from="_4WGridSquareType" to="FourWhiskeyGridSquareType"/>
-        <Change from="_4WGridSquareType" to="FourWhiskeyGridSquare"/>
+        <Change from="_4WGridSquare" to="FourWhiskeyGridSquare"/>
         <Change from="_4WLaneAlphabeticType" to="FourWhiskeyLaneAlphabeticType"/>
-        <Change from="_4WLaneAlphabeticType" to="FourWhiskeyLaneAlphabetic"/>
-        <Change from="_4WLaneNumeric" to="FourWhiskeyLaneNumericType"/>
-        <Change from="_4WLaneNumericType" to="FourWhiskeyLaneNumeric"/>
+        <Change from="_4WLaneAlphabetic" to="FourWhiskeyLaneAlphabetic"/>
+        <Change from="_4WLaneNumericType" to="FourWhiskeyLaneNumericType"/>
+        <Change from="_4WLaneNumeric" to="FourWhiskeyLaneNumeric"/>
+        <Change from="_4WGridAssignmentType" to="FourWhiskeyGridAssignmentType"/>
+        <Change from="_4WGridAssignment" to="FourWhiskeyGridAssignment"/>
+        <Change from="_4WDispositionGridDetails" to="FourWhiskeyDispositionGridDetails"/>
+        <Change from="_4WDispositionGridDetailsType" to="FourWhiskeyDispositionGridDetailsType"/>
+        <Change from="_4WDispositionPosition" to="FourWhiskeyDispositionPosition"/>
+        <Change from="_4WDispositionPositionType" to="FourWhiskeyDispositionPositionType"/>
         <Change from="_4WGridPoint" to="FourWhiskeyGridPoint"/>
         <Change from="_4WGridPointType" to="FourWhiskeyGridPointType"/>
     </xsl:variable>
-    <xsl:template name="nodoc">
-        <xsd:annotation>
-            <xsd:documentation>Data definition required</xsd:documentation>
-        </xsd:annotation>
-    </xsl:template>
 
     <!-- ***************** FILTERS *****************-->
     <xsl:template match="*[@name = 'BlankSpaceCharacterType']"/>
@@ -298,6 +340,7 @@
     <xsl:template match="*:DataItemSequenceNumber" mode="attr"/>
     <xsl:template match="*:DataType"/>
     <xsl:template match="*:DataType" mode="attr"/>
+    <xsl:template match="*:ElementalFfirnFudnSequence" mode="attr"/>
     <xsl:template match="*:EntryType"/>
     <xsl:template match="*:EntryType" mode="attr"/>
     <xsl:template match="*:Explanation"/>
@@ -305,6 +348,7 @@
     <xsl:template match="*:ffirnFudn" mode="attr"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber"/>
     <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
+    <xsl:template match="*:FieldFormatRelatedDocuments" mode="attr"/>
     <xsl:template match="*:FudExplanation"/>
     <xsl:template match="*:FudNumber"/>
     <xsl:template match="*:FudNumber" mode="attr"/>
@@ -328,10 +372,12 @@
     <xsl:template match="*:Type" mode="attr"/>
     <xsl:template match="*:UnitOfMeasure"/>
     <xsl:template match="*:UnitOfMeasure" mode="attr"/>
+    <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:VersionIndicator"/>
-
+    
     <!-- ***************** SETS *****************-->
     <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
+    <xsl:template match="*:FieldFormatStructure" mode="attr"/>
     <xsl:template match="*:OccurrenceCategory" mode="attr"/>
     <xsl:template match="*:SetFormatExample" mode="attr"/>
     <xsl:template match="*:SetFormatRelatedDocuments" mode="attr"/>
@@ -340,7 +386,7 @@
     <xsl:template match="*:FieldFormatRelatedDocument" mode="attr"/>
     <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>
     <xsl:template match="*:ColumnarIndicator" mode="attr"/>
-    <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>
+    <!--<xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>-->
     <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="xsd:attributeGroup"/>
     <xsl:template match="xsd:attribute[@name = 'ffSeq']"/>
@@ -352,7 +398,7 @@
 
     <!-- ***************** MSGS *****************-->
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
-<!--    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
+    <!--    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
     <xsl:template match="*:SegmentStructureName" mode="attr"/>
     <xsl:template match="*:SegmentStructureConcept" mode="attr"/>
     <xsl:template match="*:SegmentStructureUseDescription" mode="attr"/>
@@ -369,7 +415,8 @@
     <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>-->
-    
+
+
     <!-- ***************** Data Definitions *****************-->
     <xsl:template match="xsd:annotation">
         <xsl:param name="nm"/>
@@ -391,8 +438,11 @@
                     </xsl:apply-templates>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsd:documentation>
+                    <xsl:variable name="doctxt">
                         <xsl:choose>
+                            <xsl:when test="ancestor::xsd:enumeration">
+                                <xsl:value-of select="normalize-space(parent::xsd:annotation/xsd:appinfo/*:DataItem/text())"/>
+                            </xsl:when>
                             <xsl:when test="string-length(xsd:appinfo[1]/*:FudExplanation/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:FudExplanation"/>
                             </xsl:when>
@@ -425,6 +475,22 @@
                                 </xsl:call-template>
                             </xsl:otherwise>
                         </xsl:choose>
+                    </xsl:variable>
+                    <xsd:documentation>
+                        <xsl:choose>
+                            <xsl:when test="starts-with($doctxt,'A data type for')">
+                                <xsl:value-of select="."/>
+                            </xsl:when>
+                            <xsl:when test="ends-with($doctxt,'Simple Type')">
+                                <xsl:value-of select="concat('A data type for ',lower-case(substring-before($doctxt,'Simple Type')))"/>
+                            </xsl:when>
+                            <xsl:when test="ends-with($doctxt,'Type')">
+                                <xsl:value-of select="concat('A data type for ',lower-case(substring-before($doctxt,'Type')))"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="concat('A data type for ',lower-case($doctxt))"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsd:documentation>
                 </xsl:otherwise>
             </xsl:choose>
@@ -432,6 +498,12 @@
         </xsl:copy>
     </xsl:template>
     
+    <xsl:template match="xsd:annotation" mode="doc">
+        <xsd:annotation>
+            <xsl:apply-templates select="xsd:documentation"/>
+        </xsd:annotation>
+    </xsl:template>
+
     <xsl:template match="xsd:documentation">
         <xsl:param name="nm"/>
         <xsl:variable name="name">
@@ -444,10 +516,13 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:copy copy-namespaces="no">
+        <xsl:variable name="doctxt">
             <xsl:choose>
                 <xsl:when test="text() and not(text() = 'Data definition required')">
                     <xsl:apply-templates select="text()"/>
+                </xsl:when>
+                <xsl:when test="ancestor::xsd:enumeration">
+                    <xsl:value-of select="normalize-space(parent::xsd:annotation/xsd:appinfo/*:DataItem/text())"/>
                 </xsl:when>
                 <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FudExplanation">
                     <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation)"/>
@@ -469,76 +544,107 @@
                     </xsl:call-template>
                 </xsl:otherwise>
             </xsl:choose>
-        </xsl:copy>
+        </xsl:variable>
+        <xsd:documentation>
+            <xsl:choose>
+                <xsl:when test="starts-with($doctxt,'A data type for')">
+                    <xsl:value-of select="."/>
+                </xsl:when>
+                <xsl:when test="ends-with($doctxt,'Simple Type')">
+                    <xsl:value-of select="concat('A data type for ',lower-case(substring-before($doctxt,'Simple Type')))"/>
+                </xsl:when>
+                <xsl:when test="ends-with($doctxt,'Type')">
+                    <xsl:value-of select="concat('A data type for ',lower-case(substring-before($doctxt,'Type')))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat('A data type for ',lower-case($doctxt))"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsd:documentation>
     </xsl:template>
     
-    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
-        <xsl:copy copy-namespaces="no">
+    <xsl:template match="xsd:appinfo">
+        <xsd:appinfo>
             <xsl:choose>
-                <xsl:when test="not(*:Field)">
-                    <xsl:element name="Field" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
+                <xsl:when test="*:Enum">
+                    <xsl:copy-of select="*:Enum"/>
+                </xsl:when>
+                <xsl:when test="*:Field">
+                    <xsl:copy-of select="*:Field"/>
+                </xsl:when>
+                <xsl:when test="*:Set">
+                    <xsl:copy-of select="*:Set"/>
+                </xsl:when>
+                <xsl:when test="child::*[starts-with(name(), 'Field')]">
+                    <xsl:element name="Field">
                         <xsl:apply-templates select="@*"/>
-                        <xsl:apply-templates select="*" mode="attr"> </xsl:apply-templates>
+                        <xsl:apply-templates select="*" mode="attr"/> 
                         <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/> 
                         <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
                     </xsl:element>
                 </xsl:when>
-                <xsl:otherwise>
-                    <xsl:copy-of select="*:Field" copy-namespaces="no"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:copy>
-    </xsl:template>
-    
-    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
-        <xsl:copy copy-namespaces="no">
-            <xsl:choose>
-                <xsl:when test="not(*:Set)">
-                    <xsl:element name="Set" xmlns="urn:int:nato:mtf:app-11(c):goe:sets">
+                <xsl:when test="child::*[starts-with(name(), 'Set')]">
+                    <xsl:element name="Set">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
                         <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
                     </xsl:element>
                 </xsl:when>
-                <xsl:otherwise>
-                    <xsl:copy-of select="*:Set" copy-namespaces="no"/>
-                </xsl:otherwise>
             </xsl:choose>
-        </xsl:copy>
+        </xsd:appinfo>
+    </xsl:template>
+    
+    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Elemental')]]"/>
+           
+    <xsl:template match="xsd:enumeration/xsd:annotation">
+        <xsd:annotation>
+            <xsl:element name="xsd:documentation">
+                <xsl:value-of select="normalize-space(xsd:appinfo/*:DataItem/text())"/>
+            </xsl:element>
+            <xsl:apply-templates select="xsd:appinfo"/>
+        </xsd:annotation>
+    </xsl:template>
+    
+    <xsl:template match="xsd:enumeration/xsd:annotation/xsd:appinfo">
+        <xsd:appinfo>
+            <xsl:element name="Enum">
+                <xsl:apply-templates select="*" mode="attr"/>
+            </xsl:element>
+        </xsd:appinfo>
     </xsl:template>
     
     <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
-                <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                <xsl:element name="Document" inherit-namespaces="yes">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
-                    <xsl:element name="Document" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                    <xsl:element name="Document" inherit-namespaces="yes">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
             </xsl:if>
         </xsl:if>
     </xsl:template>
-    
+
     <xsl:template match="*:SetFormatExample" mode="examples">
         <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
-                <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                <xsl:element name="Example" inherit-namespaces="yes">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:SetFormatExample">
-                    <xsl:element name="Example" namespace="urn:int:nato:mtf:app-11(c):goe:sets">
+                    <xsl:element name="Example"  inherit-namespaces="yes">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
             </xsl:if>
         </xsl:if>
     </xsl:template>
-    
+
     <!-- ***************** SPLIT CAMEL CASE *****************-->
-    
+
     <xsl:template name="breakIntoWords">
         <xsl:param name="string" />
         <xsl:choose>
@@ -553,7 +659,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="breakIntoWordsHelper">
         <xsl:param name="string" select="''" />
         <xsl:param name="token" select="''" />
