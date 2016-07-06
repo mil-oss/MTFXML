@@ -31,6 +31,8 @@
     
     <xsl:variable name="outputdoc" select="'../../XSD/Normalized/Strings.xsd'"/>
     
+    <xsl:variable name="stringchanges" select="'../../XSD/Normalized/StringTypeChanges.xml'"/>
+    
     <!--A normalized list of xsd:string types with common REGEX patterns without length qualifiers for re-use globally-->
     <xsl:variable name="normalizedstrtypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
     
@@ -49,10 +51,12 @@
                 <!--Compare unadjusted pattern-->
                 <xsl:when test="$normalizedstrtypes/xsd:restriction/xsd:pattern/@value = $pattern">
                     <!--Will use normalized type .. don't process-->
+                    <Change name="{@name}" changeto="{concat(substring-before($normalizedstrtypes[xsd:restriction/xsd:pattern/@value = $pattern]/@name,'SimpleType'),'Type')}"/>
                 </xsl:when>
                 <!-- Compare with normalized types-->
                 <xsl:when test="$normalizedstrtypes/xsd:restriction/xsd:pattern/@value = $patternvalue">
                     <!--Will use normalized type .. don't process-->
+                    <Change name="{@name}" changeto="{concat(substring-before($normalizedstrtypes[xsd:restriction/xsd:pattern/@value = $patternvalue]/@name,'SimpleType'),'Type')}"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:apply-templates select="." mode="stypes"/>
@@ -94,7 +98,7 @@
                 </xsd:restriction>
             </xsd:simpleType>
         </xsl:for-each>
-        <xsl:for-each select="$str_types/*">
+        <xsl:for-each select="$str_types/xsd:simpleType">
             <xsl:copy-of select="."/>
         </xsl:for-each>
         <xsl:for-each select="$globals/xsd:simpleType">
@@ -120,6 +124,13 @@
                     </xsl:choose>
                 </xsl:for-each>
             </xsd:schema>
+        </xsl:result-document>
+        <xsl:result-document href="{$stringchanges}">
+            <StringChanges>
+                <xsl:for-each select="$str_types/Change">
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+            </StringChanges>
         </xsl:result-document>
     </xsl:template>
     

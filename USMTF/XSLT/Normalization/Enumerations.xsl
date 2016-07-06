@@ -31,6 +31,9 @@
     <!--Output-->
     <xsl:variable name="enumerationsoutdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
     
+    <xsl:variable name="enumerationchanges" select="'../../XSD/Normalized/EnumerationTypeChanges.xml'"/>
+    
+    
     <xsl:variable name="normenumerationtypes" select="$normalized_fields_xsd/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
     
     <!--xsd:simpleTypes with Enumerations-->
@@ -58,6 +61,7 @@
                         </xsd:annotation>
                         <xsl:copy-of select="$normenumerationtypes[deep-equal(xsd:restriction, $restr)]/xsd:restriction"/>
                     </xsd:simpleType>
+                    <Change name="{@name}" changeto="{$normenumerationtypes[deep-equal(xsd:restriction, $restr)]/@name}"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
@@ -67,7 +71,7 @@
     </xsl:variable>
     
     <xsl:variable name="enumtypes">
-        <xsl:for-each select="$normenumtypes/*">
+        <xsl:for-each select="$normenumtypes/xsd:simpleType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="codename">
@@ -108,6 +112,13 @@
                     </xsl:choose>
                 </xsl:for-each>
             </xsd:schema>
+        </xsl:result-document>
+        <xsl:result-document href="{$enumerationchanges}">
+            <EnumerationChanges>
+                <xsl:for-each select="$normenumtypes/Change">
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+            </EnumerationChanges>
         </xsl:result-document>
     </xsl:template>
 </xsl:stylesheet>
