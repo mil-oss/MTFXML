@@ -26,8 +26,8 @@
     
     <xsl:variable name="baseline_sets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
     <xsl:variable name="baseline_msgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
-    <xsl:variable name="goe_sets_xsd" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
-    <xsl:variable name="goe_fields_xsd" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
+    <xsl:variable name="goe_sets_xsd" select="document('../../XSD/NIEM_Schema/NIEM_sets.xsd')"/>
+    <xsl:variable name="goe_fields_xsd" select="document('../../XSD/NIEM_Schema/NIEM_fields.xsd')"/>
     <xsl:variable name="new_segment_names" select="document('../../XSD/Deconflicted/Segment_Name_Changes.xml')"/>
     <xsl:variable name="new_set_names" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')"/>
     <!-- ***********************  Segment Elements  ************************-->
@@ -211,7 +211,7 @@
             <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = $newSetName">
                 <xsl:element name="xsd:element">
                     <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('set:', $newSetName)"/>
+                        <xsl:value-of select="concat('s:', $newSetName)"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="@minOccurs" mode="global"/>
                     <xsl:apply-templates select="@maxOccurs" mode="global"/>
@@ -221,7 +221,7 @@
             <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:element/@name = concat($elname, 'Set')">
                 <xsl:element name="xsd:element">
                     <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('set:', $elname, 'Set')"/>
+                        <xsl:value-of select="concat('s:', $elname, 'Set')"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="@minOccurs" mode="global"/>
                     <xsl:apply-templates select="@maxOccurs" mode="global"/>
@@ -243,10 +243,10 @@
                 <xsl:variable name="t">
                     <xsl:choose>
                         <xsl:when test="starts-with($b, 's:')">
-                            <xsl:value-of select="concat('set:', concat(substring-after(substring($b, 0, string-length($b) - 3), 's:'), 'SetType'))"/>
+                            <xsl:value-of select="concat('s:', concat(substring-after(substring($b, 0, string-length($b) - 3), 's:'), 'SetType'))"/>
                         </xsl:when>
                         <xsl:when test="starts-with($b, 'f:')">
-                            <xsl:value-of select="concat('field:', substring-after($b, 'f:'))"/>
+                            <xsl:value-of select="concat('f:', substring-after($b, 'f:'))"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="$b"/>
@@ -303,16 +303,16 @@
             <xsl:copy-of select="xsd:annotation"/>
             <xsd:complexType>
                 <xsd:complexContent>
-                    <xsd:extension base="set:GeneralTextSetType">
+                    <xsd:extension base="s:GeneralTextSetType">
                         <xsd:sequence>
-                            <xsd:element name="{concat($n,'Indicator')}" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{replace($TextInd,$apos,'')}">
+                            <xsd:element name="{concat($n,'Indicator')}" type="f:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{replace($TextInd,$apos,'')}">
                                 <xsd:annotation>
                                     <xsd:documentation>
                                         <xsl:value-of select="@fixed"/>
                                     </xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>
-                            <xsd:element ref="field:FreeTextField" minOccurs="1"/>
+                            <xsd:element ref="f:FreeTextField" minOccurs="1"/>
                         </xsd:sequence>
                     </xsd:extension>
                 </xsd:complexContent>
@@ -350,16 +350,16 @@
             <xsl:copy-of select="xsd:annotation"/>
             <xsd:complexType>
                 <xsd:complexContent>
-                    <xsd:extension base="set:HeadingInformationSetType">
+                    <xsd:extension base="s:HeadingInformationSetType">
                         <xsd:sequence>
-                            <xsd:element name="{concat($n,'HeadingText')}" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
+                            <xsd:element name="{concat($n,'HeadingText')}" type="f:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
                                 <xsd:annotation>
                                     <xsd:documentation>
                                         <xsl:value-of select="$fixed"/>
                                     </xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>
-                            <xsd:element ref="field:FreeTextField" minOccurs="1"/>
+                            <xsd:element ref="f:FreeTextField" minOccurs="1"/>
                         </xsd:sequence>
                     </xsd:extension>
                 </xsd:complexContent>
@@ -391,10 +391,10 @@
             <xsl:attribute name="base">
                 <xsl:choose>
                     <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:complexType[@name = $match_new_name_set]">
-                        <xsl:value-of select="concat('set:', $match_new_name_set)"/>
+                        <xsl:value-of select="concat('s:', $match_new_name_set)"/>
                     </xsl:when>
                     <xsl:when test="$goe_sets_xsd/xsd:schema/xsd:simpleType[@name = $match_new_name_set]">
-                        <xsl:value-of select="concat('set:', $match_new_name_set)"/>
+                        <xsl:value-of select="concat('s:', $match_new_name_set)"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="$match_new_name_set"/>
@@ -411,7 +411,7 @@
             <xsl:variable name="nm" select="@name"/>
             <xsl:choose>
                 <xsl:when test="ends-with($nm, 'Indicator')">
-                    <xsd:element name="{$nm}" type="field:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
+                    <xsd:element name="{$nm}" type="f:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
                                 <xsl:value-of select="concat('Text Indicator Field with fixed value ', @fixed)"/>
@@ -420,7 +420,7 @@
                     </xsd:element>
                 </xsl:when>
                 <xsl:when test="ends-with($nm, 'HeadingText')">
-                    <xsd:element name="{$nm}" type="field:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
+                    <xsd:element name="{$nm}" type="f:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
                                 <xsl:value-of select="concat('Heading fixed value ', @fixed)"/>
@@ -533,7 +533,7 @@
     </xsl:template>
 
  <!-- ************** Unique Particle Attribution Mitigation ***********************-->
-    <xsl:template match="xsd:element[@ref = 'set:TimeAndPositionSet'][preceding-sibling::*[1]/@ref = 'set:ReactionSet']" mode="globalize">
+    <xsl:template match="xsd:element[@ref = 's:TimeAndPositionSet'][preceding-sibling::*[1]/@ref = 's:ReactionSet']" mode="globalize">
         <xsd:element ref="ReactionTimeAndPositionSet">
             <xsd:annotation>
                 <xsd:documentation>The Reaction TMPOS set indicates the loss of visual contact or last pass of the of the aircraft or ship</xsd:documentation>
@@ -544,7 +544,7 @@
             </xsd:annotation>
         </xsd:element>
     </xsl:template>
-    <xsl:template match="xsd:element[@ref = 'set:DefenseMessageSystemSet'][preceding-sibling::*[1]/@ref = 'set:TaskCommanderAddressRoutingSet']" mode="globalize">
+    <xsl:template match="xsd:element[@ref = 's:DefenseMessageSystemSet'][preceding-sibling::*[1]/@ref = 's:TaskCommanderAddressRoutingSet']" mode="globalize">
         <xsd:element ref="TaskCommanderDefenseMessageSystemSet">
             <xsd:annotation>
                 <xsd:documentation>The DMSINFO set provides information necessary to maintain correct routing information in the DMS community.</xsd:documentation>
@@ -574,7 +574,7 @@
         <xsl:for-each select="$global_types/xsd:element">
             <xsl:copy-of select="."/>
         </xsl:for-each>
-        <xsd:element name="ReactionTimeAndPositionSet" type="set:TimeAndPositionSetType">
+        <xsd:element name="ReactionTimeAndPositionSet" type="s:TimeAndPositionSetType">
             <xsd:annotation>
                 <xsd:documentation>The Reaction TMPOS set indicates the loss of visual contact or last pass of the of the aircraft or ship</xsd:documentation>
                 <xsd:appinfo>
@@ -583,7 +583,7 @@
                 </xsd:appinfo>
             </xsd:annotation>
         </xsd:element>
-        <xsd:element name="TaskCommanderDefenseMessageSystemSet" type="set:DefenseMessageSystemSetType">
+        <xsd:element name="TaskCommanderDefenseMessageSystemSet" type="s:DefenseMessageSystemSetType">
             <xsd:annotation>
                 <xsd:documentation>The DMSINFO set provides information necessary to maintain correct routing information in the DMS community.</xsd:documentation>
                 <xsd:appinfo>
@@ -651,9 +651,14 @@
     <!-- ************************************************************-->
     <!--Build XML Schema and add Global Elements and Complex Types -->
     <xsl:template name="main">
-        <xsl:result-document href="../../XSD/GoE_Schema/GoE_segments.xsd">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:segments" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:field="urn:mtf:mil:6040b:goe:fields" xmlns:set="urn:mtf:mil:6040b:goe:sets"
-                xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:segments" version="0.1">
+        <xsl:result-document href="../../XSD/NIEM_Schema/NIEM_segments.xsd">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:segments" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:mtf="urn:mtf:mil:6040b:goe"
+                xmlns:f="urn:mtf:mil:6040b:goe:fields" 
+                xmlns:s="urn:mtf:mil:6040b:goe:sets"
+                xmlns:ism="urn:us:gov:ic:ism:v2" 
+                targetNamespace="urn:mtf:mil:6040b:goe:segments" version="0.1">
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="GoE_sets.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
@@ -665,7 +670,7 @@
                         <xsd:documentation>Base type for Segments which add security tagging.</xsd:documentation>
                     </xsd:annotation>
                     <xsd:complexContent>
-                        <xsd:extension base="field:CompositeType">
+                        <xsd:extension base="f:CompositeType">
                             <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         </xsd:extension>
                     </xsd:complexContent>
@@ -953,7 +958,7 @@
         <xsd:complexType name="{concat(@name,'Type')}">
             <xsl:copy-of select="xsd:annotation"/>
             <xsd:simpleContent>
-                <xsd:restriction base="field:FieldEnumeratedBaseType">
+                <xsd:restriction base="f:FieldEnumeratedBaseType">
                     <xsd:enumeration value="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
