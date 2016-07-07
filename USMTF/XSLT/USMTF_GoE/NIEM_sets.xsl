@@ -41,7 +41,6 @@
 
     <!--Root level complexTypes-->
     <xsl:variable name="complex_types">
-        <!--<xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')][position() &lt; 200]">-->
         <xsl:for-each select="$baseline_sets_xsd/xsd:schema/xsd:complexType[not(@name = 'SetBaseType')]">
             <xsl:variable name="n">
                 <xsl:apply-templates select="@name" mode="fromtype"/>
@@ -198,8 +197,12 @@
 
     <xsl:template name="main">
         <xsl:result-document href="{$output}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:f="urn:mtf:mil:6040b:goe:fields" xmlns:c="urn:mtf:mil:6040b:goe:composites"
-                xmlns:structures="http://release.niem.gov/niem/structures/3.0/" xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:mtf="urn:mtf:mil:6040b:goe"
+                xmlns:f="urn:mtf:mil:6040b:goe:fields" 
+                xmlns:c="urn:mtf:mil:6040b:goe:composites"
+                xmlns:structures="http://release.niem.gov/niem/structures/3.0/" 
+                xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="NIEM_fields.xsd"/>
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:composites" schemaLocation="NIEM_composites.xsd"/>
@@ -493,9 +496,16 @@
                 <xsl:apply-templates select="$node/xsd:annotation"/>
             </xsl:when>
             <xsl:when test="contains($node/@name, 'GroupOfFields')">
+                <xsl:variable name="nametext">
+                    <xsl:call-template name="breakIntoWords">
+                        <xsl:with-param name="string">
+                            <xsl:value-of select="ancestor::xsd:complexType[@name][1]/@name"/>
+                        </xsl:with-param>
+                    </xsl:call-template>
+                </xsl:variable>
                 <xsd:annotation>
                     <xsd:documentation>
-                        <xsl:text>A repeatable group of fields</xsl:text>
+                        <xsl:value-of select="concat('A data type for the ',$nametext,' repeatable group of fields')"/>
                     </xsd:documentation>
                 </xsd:annotation>
             </xsl:when>

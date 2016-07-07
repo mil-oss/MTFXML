@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    exclude-result-prefixes="xsd" version="2.0">
+    xmlns:mtf="urn:mtf:mil:6040b:goe" 
+    exclude-result-prefixes="xsd" 
+    version="2.0">
 
     <!-- ************ Identity Transform ***********-->
     <!-- This will allow application of any templates without mode qualifier -->
@@ -443,6 +445,12 @@
                             <xsl:when test="ancestor::xsd:enumeration">
                                 <xsl:value-of select="normalize-space(parent::xsd:annotation/xsd:appinfo/*:DataItem/text())"/>
                             </xsl:when>
+                            <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FieldFormatDefinition">
+                                <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FieldFormatDefinition)"/>
+                            </xsl:when>
+                            <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FieldFormatPositionConcept">
+                                <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FieldFormatPositionConcept)"/>
+                            </xsl:when>
                             <xsl:when test="string-length(xsd:appinfo[1]/*:FudExplanation/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:FudExplanation"/>
                             </xsl:when>
@@ -524,6 +532,12 @@
                 <xsl:when test="ancestor::xsd:enumeration">
                     <xsl:value-of select="normalize-space(parent::xsd:annotation/xsd:appinfo/*:DataItem/text())"/>
                 </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FieldFormatDefinition">
+                    <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FieldFormatDefinition)"/>
+                </xsl:when>
+                <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FieldFormatPositionConcept">
+                    <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FieldFormatPositionConcept)"/>
+                </xsl:when>
                 <xsl:when test="parent::xsd:annotation/xsd:appinfo/*:FudExplanation">
                     <xsl:value-of select="normalize-space(xsd:appinfo[1]/*:FudExplanation)"/>
                 </xsl:when>
@@ -576,7 +590,7 @@
                     <xsl:copy-of select="*:Set"/>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Field')]">
-                    <xsl:element name="Field">
+                    <xsl:element name="mtf:Field">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/> 
                         <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/> 
@@ -584,7 +598,7 @@
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Set')]">
-                    <xsl:element name="Set">
+                    <xsl:element name="mtf:Set">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
                         <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
