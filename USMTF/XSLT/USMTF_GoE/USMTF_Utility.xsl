@@ -162,8 +162,8 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="$t = $NodeNameChanges/*/@from">
-                <xsl:value-of select="$NodeNameChanges/*[@from = $t]/@to"/>
+            <xsl:when test="$t = $NodeNameChanges/Change/@from">
+                <xsl:value-of select="$NodeNameChanges/Change[@from = $t]/@to"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:value-of select="$t"/>
@@ -285,6 +285,7 @@
 
     <xsl:variable name="NodeNameChanges">
         <Change from="BlankSpaceCharacter" to="BlankSpace"/>
+        <Change from="BlankSpaceCharacterBaseType" to="BlankSpaceType"/>
         <Change from="_100000MeterSquareColumn" to="HundredKMSquareColumn"/>
         <Change from="_100000MeterSquareColumnType" to="HundredKMSquareColumnType"/>
         <Change from="_100000MeterSquareRow" to="HundredKMSquareRow"/>
@@ -388,7 +389,7 @@
     <xsl:template match="*:FieldFormatRelatedDocument" mode="attr"/>
     <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>
     <xsl:template match="*:ColumnarIndicator" mode="attr"/>
-    <!--<xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>-->
+    <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>
     <xsl:template match="*:Repeatability" mode="attr"/>
     <xsl:template match="xsd:attributeGroup"/>
     <xsl:template match="xsd:attribute[@name = 'ffSeq']"/>
@@ -397,26 +398,10 @@
     <xsl:template match="xsd:restriction[@base = 'xsd:integer']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:string']/xsd:annotation"/>
     <xsl:template match="xsd:restriction[@base = 'xsd:decimal']/xsd:annotation"/>
-
+    <!-- ***************** SEGMENTS *****************-->
+    <xsl:template match="*:AlternativeType" mode="attr"/>
     <!-- ***************** MSGS *****************-->
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
-    <!--    <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
-    <xsl:template match="*:SegmentStructureName" mode="attr"/>
-    <xsl:template match="*:SegmentStructureConcept" mode="attr"/>
-    <xsl:template match="*:SegmentStructureUseDescription" mode="attr"/>
-    <xsl:template match="*:SetFormatPositionUseDescription" mode="attr"/>
-    <xsl:template match="*:SetFormatPositionName" mode="attr"/>
-    <xsl:template match="*:SetFormatPositionNumber" mode="attr"/>
-    <xsl:template match="*:SetFormatPositionConcept" mode="attr"/>
-    <xsl:template match="*:MtfName" mode="attr"/>
-    <xsl:template match="*:MtfIdentifier" mode="attr"/>
-    <xsl:template match="*:MtfSponsor" mode="attr"/>
-    <xsl:template match="*:MtfPurpose" mode="attr"/>
-    <xsl:template match="*:VersionIndicator" mode="attr"/>
-    <xsl:template match="*:MtfNote" mode="attr"/>        
-    <xsl:template match="*:MtfRelatedDocument" mode="attr"/>
-    <xsl:template match="*:Repeatability" mode="attr"/>
-    <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>-->
 
 
     <!-- ***************** Data Definitions *****************-->
@@ -589,6 +574,9 @@
                 <xsl:when test="*:Set">
                     <xsl:copy-of select="*:Set"/>
                 </xsl:when>
+                <xsl:when test="*:Segment">
+                    <xsl:copy-of select="*:Segment"/>
+                </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Field')]">
                     <xsl:element name="mtf:Field">
                         <xsl:apply-templates select="@*"/>
@@ -599,6 +587,13 @@
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Set')]">
                     <xsl:element name="mtf:Set">
+                        <xsl:apply-templates select="*" mode="attr"/>
+                        <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:when test="child::*[starts-with(name(), 'Segment')]">
+                    <xsl:element name="mtf:Segment">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
                         <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>

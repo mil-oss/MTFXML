@@ -17,16 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    xmlns:mtf="urn:mtf:mil:6040b:goe" 
-    xmlns:segment="urn:mtf:mil:6040b:goe:segments" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:set="urn:mtf:mil:6040b:goe:sets" xmlns:segment="urn:mtf:mil:6040b:goe:segments"
+    exclude-result-prefixes="xsd" version="2.0">
     <xsl:output encoding="UTF-8" method="xml" indent="yes"/>
-    <xsl:include href="USMTF_Utility.xsl"/>
     <!--This Transform produces a "Garden of Eden" style global elements XML Schema for Segments in the USMTF Military Message Standard.-->
     <!--The Resulting Global Elements will be included in the "usmtf_fields" XML Schema per proposed changes of September 2014-->
     <!--Duplicate Segment Names are deconflicted using an XML document containing affected messages, elements and approved changes-->
-
+    
     <xsl:variable name="baseline_sets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
     <xsl:variable name="baseline_msgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
     <xsl:variable name="goe_sets_xsd" select="document('../../XSD/NIEM_Schema/NIEM_sets.xsd')"/>
@@ -34,7 +31,7 @@
     <xsl:variable name="new_segment_names" select="document('../../XSD/Deconflicted/Segment_Name_Changes.xml')"/>
     <xsl:variable name="new_set_names" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')"/>
     <xsl:variable name="segment_output" select="'../../XSD/NIEM_Schema/NIEM_segments.xsd'"/>
-
+    
     <!-- ***********************  Segment Elements  ************************-->
     <!-- Extract all Segments from Baseline XML Schema for messages-->
     <!-- Copy every Segment Element and make global.  Populates segment_elements variable which includes duplicates -->
@@ -80,10 +77,74 @@
                     <xsl:text>.</xsl:text>
                     <xsl:value-of select="@name"/>
                 </xsl:attribute>
-                <xsl:apply-templates select="*"/>
+                <xsl:apply-templates select="*">
+                    <xsl:with-param name="SegChange" select="$SegChange"/>
+                </xsl:apply-templates>
             </xsl:copy>
         </xsl:for-each>
     </xsl:variable>
+    <xsl:template match="*">
+        <xsl:param name="SegChange"/>
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*">
+            </xsl:apply-templates>
+            <xsl:apply-templates select="*">
+                <xsl:with-param name="SegChange" select="$SegChange"/>
+            </xsl:apply-templates>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="@*">
+        <xsl:copy-of select="." copy-namespaces="no"/>
+    </xsl:template>
+    <!--Normalize extra whitespace and linefeeds in text-->
+    <xsl:template match="text()">
+        <xsl:value-of select="normalize-space(.)"/>
+    </xsl:template>
+    <!--Copy documentation only it has text content-->
+    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Segment')]]">
+        <xsl:param name="SegChange"/>
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Segment" xmlns="urn:mtf:mil:6040b:goe:segments">
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*" mode="attr"/>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Set')]]">
+        <xsl:param name="doc"/>
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Set" xmlns="urn:mtf:mil:6040b:goe:segments">
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*" mode="attr"/>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
+    <xsl:template match="xsd:appinfo[child::*[starts-with(name(), 'Field')]]">
+        <xsl:param name="doc"/>
+        <xsl:copy copy-namespaces="no">
+            <xsl:element name="Field" xmlns="urn:mtf:mil:6040b:goe:segments">
+                <xsl:apply-templates select="@*"/>
+                <xsl:apply-templates select="*" mode="attr"/>
+            </xsl:element>
+        </xsl:copy>
+    </xsl:template>
+    <!--Convert elements in xsd:appinfo to attributes-->
+    <xsl:template match="*" mode="attr">
+        <xsl:variable name="nm" select="name()"/>
+        <xsl:variable name="txt" select="normalize-space(text())"/>
+        <xsl:choose>
+            <xsl:when test="preceding-sibling::*[name() = $nm] and not($txt = ' ') and not(*) and not($txt = '')">
+                <xsl:attribute name="{concat(name(),count(preceding-sibling::*[name()=$nm]))}">
+                    <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                </xsl:attribute>
+            </xsl:when>
+            <xsl:when test="not($txt = ' ') and not(*) and not($txt = '')">
+                <xsl:attribute name="{name()}">
+                    <xsl:value-of select="replace(normalize-space(text()), '&#34;', '')"/>
+                </xsl:attribute>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
     <!-- ***********************  Complex Types  ************************-->
     <xsl:variable name="complex_types">
         <xsl:for-each select="$segment_elements/*">
@@ -111,7 +172,12 @@
     </xsl:template>
     <xsl:template match="xsd:choice/xsd:annotation" mode="global"/>
     <xsl:template match="xsd:annotation" mode="global">
-        <xsl:apply-templates select="."/>
+        <xsl:copy>
+            <xsd:documentation>
+                <xsl:value-of select="xsd:appinfo/*:Segment/@name"/>
+                <xsl:value-of select="xsd:appinfo/*:Set/@name"/>
+            </xsd:documentation>
+        </xsl:copy>
     </xsl:template>
     <xsl:template match="@position" mode="global"/>
     <xsl:template match="@*" mode="global">
@@ -123,10 +189,10 @@
     <xsl:template match="xsd:element[not(starts-with(@name, 'GeneralText'))][not(starts-with(@name, 'HeadingInformation'))]" mode="global">
         <xsl:variable name="elname">
             <xsl:choose>
-                <xsl:when test="@name = 'SurveillanceAreaSegment_1'">
+               <xsl:when test="@name= 'SurveillanceAreaSegment_1'">
                     <xsl:text>C2SurveillanceArea</xsl:text>
                 </xsl:when>
-                <xsl:when test="@name = 'SurveillanceAreaSegment_2'">
+                <xsl:when test="@name= 'SurveillanceAreaSegment_2'">
                     <xsl:text>AirborneC2SurveillanceArea</xsl:text>
                 </xsl:when>
                 <xsl:when test="contains(@name, '_')">
@@ -248,7 +314,7 @@
                                     </xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>
-                            <xsd:element ref="f:FreeText" minOccurs="1"/>
+                            <xsd:element ref="f:FreeTextField" minOccurs="1"/>
                         </xsd:sequence>
                     </xsd:extension>
                 </xsd:complexContent>
@@ -295,7 +361,7 @@
                                     </xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>
-                            <xsd:element ref="f:FreeText" minOccurs="1"/>
+                            <xsd:element ref="f:FreeTextField" minOccurs="1"/>
                         </xsd:sequence>
                     </xsd:extension>
                 </xsd:complexContent>
@@ -340,7 +406,7 @@
             <xsl:apply-templates select="*" mode="global"/>
         </xsl:copy>
     </xsl:template>
-
+    
     <!-- ***********************  Global Types  ************************-->
     <xsl:variable name="global_types">
         <xsl:for-each select="$complex_types//*/*//xsd:element[@name]">
@@ -350,7 +416,7 @@
                     <xsd:element name="{$nm}" type="f:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <xsl:value-of select="concat('A data type for a Text Indicator Field with fixed value ', @fixed)"/>
+                                <xsl:value-of select="concat('Text Indicator Field with fixed value ', @fixed)"/>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -359,7 +425,7 @@
                     <xsd:element name="{$nm}" type="f:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <xsl:value-of select="concat('A data type for a Heading with a fixed value of ', @fixed)"/>
+                                <xsl:value-of select="concat('Heading fixed value ', @fixed)"/>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -369,8 +435,12 @@
                         <xsl:attribute name="name">
                             <xsl:value-of select="concat($nm, 'Type')"/>
                         </xsl:attribute>
-                        <xsl:apply-templates select="xsd:annotation" mode="globalize"/>
-                        <xsl:apply-templates select="xsd:complexType/*" mode="globalize"/>
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="xsd:annotation/xsd:appinfo/*/@positionName"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                        <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
                     </xsd:complexType>
                 </xsl:when>
                 <xsl:when test="ends-with($nm, 'GenText')">
@@ -378,21 +448,12 @@
                         <xsl:attribute name="name">
                             <xsl:value-of select="concat($nm, 'Type')"/>
                         </xsl:attribute>
-                        <xsl:apply-templates select="xsd:annotation" mode="globalize"/>
-                        <xsl:apply-templates select="xsd:complexType/*" mode="globalize"/>
-                    </xsd:complexType>
-                </xsl:when>
-                <xsl:when test="$nm = 'SurveillanceAreaSegment'">
-                    <xsd:complexType>
-                        <xsl:attribute name="name">
-                            <xsl:value-of select="concat($nm, 'Type')"/>
-                        </xsl:attribute>
-                        <xsl:apply-templates select="xsd:annotation" mode="globalize"/>
-                        <xsd:complexContent>
-                            <xsd:extension base="SegmentBaseType">
-                                <xsl:apply-templates select="xsd:complexType/*" mode="globalize"/>
-                            </xsd:extension>
-                        </xsd:complexContent>
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="xsd:annotation/xsd:appinfo/*/@positionName"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                        <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
                     </xsd:complexType>
                 </xsl:when>
                 <xsl:otherwise>
@@ -400,14 +461,16 @@
                         <xsl:attribute name="name">
                             <xsl:value-of select="concat($nm, 'Type')"/>
                         </xsl:attribute>
-                        <xsl:apply-templates select="*" mode="globalize"/>
+                        <xsl:apply-templates select="xsd:annotation" mode="globalize"/>
+                        <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
                     </xsd:complexType>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
         <xsl:for-each select="$complex_types/*">
             <xsd:complexType name="{@name}">
-                <xsl:apply-templates select="*" mode="globalize"/>
+                <xsl:copy-of select="xsd:annotation"/>
+                <xsl:apply-templates select="xsd:complexContent" mode="globalize"/>
             </xsd:complexType>
         </xsl:for-each>
     </xsl:variable>
@@ -426,7 +489,7 @@
                     <xsl:apply-templates select="@*" mode="globalize"/>
                     <xsd:annotation>
                         <xsd:documentation>
-                            <xsl:value-of select="concat('A data type for a Text Indicator Field with value ', @fixed)"/>
+                            <xsl:value-of select="concat('Text Indicator Field with value ', @fixed)"/>
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:element>
@@ -470,9 +533,8 @@
     <xsl:template match="text()" mode="globalize">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
-    <xsl:template match="xsd:attribute[@name='segSeq']" mode="globalize"/>
 
-    <!-- ************** Unique Particle Attribution Mitigation ***********************-->
+ <!-- ************** Unique Particle Attribution Mitigation ***********************-->
     <xsl:template match="xsd:element[@ref = 's:TimeAndPositionSet'][preceding-sibling::*[1]/@ref = 's:ReactionSet']" mode="globalize">
         <xsd:element ref="ReactionTimeAndPositionSet">
             <xsd:annotation>
@@ -574,9 +636,9 @@
             </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
-
+    
     <!--Apply Workaround to avoid fixed values prohibited by NIEM-->
-    <xsl:variable name="NIEMNoFixedFix">
+    <xsl:variable name="final">
         <xsl:for-each select="$dedup_global_types/xsd:complexType">
             <xsl:sort select="@name"/>
             <xsl:apply-templates select="." mode="ncopy"/>
@@ -586,7 +648,7 @@
             <xsl:apply-templates select="." mode="ncopy"/>
         </xsl:for-each>
     </xsl:variable>
-
+   
 
     <!-- ************************************************************-->
     <!--Build XML Schema and add Global Elements and Complex Types -->
@@ -594,38 +656,32 @@
         <xsl:result-document href="{$segment_output}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:goe:segments" 
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:mtf="urn:mtf:mil:6040b:goe" 
-                xmlns:f="urn:mtf:mil:6040b:goe:fields"
-                xmlns:s="urn:mtf:mil:6040b:goe:sets" 
-                xmlns:structures="http://release.niem.gov/niem/structures/3.0/" 
-                xmlns:ism="urn:us:gov:ic:ism:v2"
+                xmlns:mtf="urn:mtf:mil:6040b:goe"
+                xmlns:f="urn:mtf:mil:6040b:goe:fields" 
+                xmlns:s="urn:mtf:mil:6040b:goe:sets"
+                xmlns:ism="urn:us:gov:ic:ism:v2" 
                 targetNamespace="urn:mtf:mil:6040b:goe:segments" version="0.1">
-                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="NIEM_fields.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="NIEM_sets.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="GoE_sets.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/structures/3.0/" schemaLocation="structures.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>Message Text Format Segments</xsd:documentation>
                 </xsd:annotation>
                 <xsd:complexType name="SegmentBaseType">
                     <xsd:annotation>
-                        <xsd:documentation>A data type for Segments which add security tagging.</xsd:documentation>
+                        <xsd:documentation>Base type for Segments which add security tagging.</xsd:documentation>
                     </xsd:annotation>
                     <xsd:complexContent>
-                        <xsd:extension base="structures:ObjectType">
+                        <xsd:extension base="f:CompositeType">
                             <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsd:complexType>
-                <xsl:for-each select="$NIEMNoFixedFix/xsd:complexType">
+                <xsl:for-each select="$final/xsd:complexType">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
-                <xsl:for-each select="$NIEMNoFixedFix/xsd:simpleType">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-                <xsl:for-each select="$NIEMNoFixedFix/xsd:element">
+                <xsl:for-each select="$final/xsd:element">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
@@ -633,7 +689,7 @@
         </xsl:result-document>
     </xsl:template>
     <!-- **************************************-->
-
+    
     <xsl:template name="matchChange">
         <xsl:param name="matchEl"/>
         <xsl:variable name="match">
@@ -692,9 +748,20 @@
         <xsl:value-of select="translate(substring($text, 2, string-length($text) - 1), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
     </xsl:template>
     <xsl:template match="xsd:documentation" mode="global">
-        <xsl:apply-templates select="."/>
+        <xsl:if test="string-length(normalize-space(text())) > 0">
+            <xsl:copy copy-namespaces="no">
+                <xsl:apply-templates select="text()"/>
+            </xsl:copy>
+        </xsl:if>
     </xsl:template>
-
+    <xsl:template match="xsd:documentation">
+        <xsl:if test="string-length(normalize-space(text())) > 0">
+            <xsl:copy copy-namespaces="no">
+                <xsl:apply-templates select="text()"/>
+            </xsl:copy>
+        </xsl:if>
+    </xsl:template>
+    
     <!--Convert appinfo items-->
     <!--InitialSetFormatPosition only applies in context of containing message-->
     <xsl:template match="*:InitialSetFormatPosition" mode="attr"/>
@@ -870,9 +937,9 @@
             </xsl:if>
         </xsl:if>
     </xsl:template>
-
-    <!--************* Replaced Fixed Value with one item Enumeration instead of fixed value so NIEM can accomodate non-compliant XML processors*****************-->
-
+    
+    <!--************* Replaced Fixed Value with one item Enumeratoin for NIEM *****************-->
+    
     <xsl:template match="*" mode="ncopy">
         <xsl:copy>
             <xsl:apply-templates select="@*" mode="ncopy"/>
@@ -880,52 +947,58 @@
             <xsl:apply-templates select="*" mode="ncopy"/>
         </xsl:copy>
     </xsl:template>
-
+    
     <xsl:template match="@*" mode="ncopy">
         <xsl:copy-of select="."/>
     </xsl:template>
-
+    
     <xsl:template match="text()" mode="ncopy">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
-
+    
     <xsl:template match="xsd:element[@fixed]" mode="ncopy">
-        <xsd:simpleType name="{concat(@name,'SimpleType')}">
-            <xsl:copy-of select="xsd:annotation"/>
-            <xsd:restriction base="xsd:string">
-                <xsd:enumeration value="{@fixed}">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:value-of select="concat(@fixed, ' fixed value')"/>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:enumeration>
-            </xsd:restriction>
-        </xsd:simpleType>
         <xsd:complexType name="{concat(@name,'Type')}">
             <xsl:copy-of select="xsd:annotation"/>
             <xsd:simpleContent>
-                <xsd:extension base="{concat(@name,'SimpleType')}">
-                    <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-                    <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
-                </xsd:extension>
+                <xsd:restriction base="f:FieldEnumeratedBaseType">
+                    <xsd:enumeration value="{@fixed}">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                <xsl:value-of select="concat(@fixed,' fixed value')"/>
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:enumeration>
+                </xsd:restriction>
             </xsd:simpleContent>
         </xsd:complexType>
         <xsd:element name="{@name}" type="{concat(@name,'Type')}">
             <xsd:annotation>
                 <xsl:copy-of select="xsd:annotation/xsd:documentation"/>
                 <xsd:appinfo>
-                    <mtf:Field fixed="{@fixed}"/>
+                    <Field fixed="{@fixed}"/>
                 </xsd:appinfo>
             </xsd:annotation>
         </xsd:element>
     </xsl:template>
-
+    
+    
+    <xsl:template match="*:FieldFormatPositionNumber" mode="attr"/>
+    <xsl:template match="*:AlternativeType" mode="attr"/>
     <xsl:template match="*:AlternativeType" mode="global"/>
-
+    <xsl:template match="*:OccurrenceCategory" mode="attr"/>
+    <xsl:template match="*:SetFormatExample" mode="attr"/>
+    <xsl:template match="*:SetFormatRelatedDocuments" mode="attr"/>
+    <xsl:template match="*:RepeatabilityForGroupOfFields" mode="attr"/>
+    <xsl:template match="*:SetFormatDescription" mode="attr"/>
+    <xsl:template match="*:FieldFormatRelatedDocument" mode="attr"/>
+    <xsl:template match="*:Repeatability" mode="attr"/>
     <!--Filter unneeded nodes-->
     <xsl:template match="xsd:attribute[@name = 'setSeq']"/>
     <xsl:template match="xsd:attributeGroup[@ref = 'ism:SecurityAttributesGroup']"/>
+    <xsl:template match="*:GroupOfFieldsIndicator" mode="attr"/>
+    <xsl:template match="*:ColumnarIndicator" mode="attr"/>
+    <xsl:template match="*:FieldFormatIndexReferenceNumber" mode="attr"/>
+    <xsl:template match="*:AssignedFfirnFudUseDescription" mode="attr"/>
     <xsl:template match="xsd:attribute[@name = 'ffSeq']"/>
     <xsl:template match="xsd:attribute[@name = 'ffirnFudn']"/>
     <!--Filter empty xsd:annotations-->

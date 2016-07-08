@@ -32,8 +32,8 @@
     <!--Set deconfliction and annotation changes-->
     <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
     <xsl:variable name="set_field_Changes" select="document('../../XSD/Deconflicted/Set_Field_Name_Changes.xml')/SetElements"/>
-    <xsl:variable name="string_type_changes" select="document('../../XSD/Normalized/StringTypeChanges.xml')/SetElements"/>
-    <xsl:variable name="enumeration_type_changes" select="document('../../XSD/Normalized/EnumerationTypeChanges.xml')/SetElements"/>
+    <xsl:variable name="string_type_changes" select="document('../../XSD/Normalized/StringTypeChanges.xml')/StringChanges"/>
+    <xsl:variable name="enumeration_type_changes" select="document('../../XSD/Normalized/EnumerationTypeChanges.xml')/EnumerationChanges"/>
 
     <!--*****************************************************-->
 
@@ -437,11 +437,11 @@
         </xsl:variable>
         <xsl:variable name="basel" select="substring($basetype, 0, string-length($basetype) - 3)"/>
         <xsl:choose>
-            <xsl:when test="$string_type_changes/StringChanges/Change/@name = $basetype">
-                <xsd:extension base="{$string_type_changes/StringChanges/Change[@name=$basetype]/@changeto}"/>
+            <xsl:when test="$string_type_changes/Change/@name = $basetype">
+                <xsd:extension base="{$string_type_changes/Change[@name=$basetype]/@changeto}"/>
             </xsl:when>
-            <xsl:when test="$enumeration_type_changes/StringChanges/Change/@name = $basetype">
-                <xsd:extension base="{$enumeration_type_changes/StringChanges/Change[@name=$basetype]/@changeto}"/>
+            <xsl:when test="$enumeration_type_changes/Change/@name = $basetype">
+                <xsd:extension base="{$enumeration_type_changes/Change[@name=$basetype]/@changeto}"/>
             </xsl:when>
             <xsl:when test="starts-with($b, 'f:')">
                 <xsl:choose>
@@ -579,7 +579,7 @@
                 <xsl:value-of select="$nn"/>
             </xsl:attribute>
             <xsl:apply-templates select="@*[not(name() = 'name') and not(name() = 'type')]"/>
-            <xsl:apply-templates select="xsd:annotation" mode="globals"/>
+            <xsl:apply-templates select="xsd:annotation"/>
         </xsl:copy>
     </xsl:template>
 

@@ -25,12 +25,10 @@
     <xsl:variable name="decimals_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:decimal']]"/>
     <!--Output-->
     <xsl:variable name="integersoutputdoc" select="'../../XSD/Normalized/Integers.xsd'"/>
-    <xsl:variable name="decimalsoutputdoc" select="'../../XSD/Normalized/Decimals.xsd'"/>
-    
+    <xsl:variable name="decimalsoutputdoc" select="'../../XSD/Normalized/Decimals.xsd'"/>   
     <xsl:variable name="integers">
         <xsl:apply-templates select="$integers_xsd" mode="int"/>
     </xsl:variable>
-    
     <xsl:variable name="decimals">
         <xsl:apply-templates select="$decimals_xsd" mode="dec"/>
     </xsl:variable>

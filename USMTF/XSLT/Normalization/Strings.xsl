@@ -64,14 +64,8 @@
             </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
-    
-    <xsl:variable name="globals">
-        <xsl:apply-templates select="$mtf_str" mode="el">
-            <xsl:sort select="@name"/>
-        </xsl:apply-templates>
-    </xsl:variable>
-    
-    
+   
+
     <!-- Contains a list of all baseline and normalized xsd:simpleTypes for sorting on output.-->
     <xsl:variable name="alltypes">
         <xsl:for-each select="$normalizedstrtypes">
@@ -101,15 +95,16 @@
         <xsl:for-each select="$str_types/xsd:simpleType">
             <xsl:copy-of select="."/>
         </xsl:for-each>
-        <xsl:for-each select="$globals/xsd:simpleType">
-            <xsl:copy-of select="."/>
-        </xsl:for-each>
     </xsl:variable>
     
     <!--    OUTPUT RESULT-->
     <xsl:template name="main">
         <xsl:result-document href="{$outputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:ism="urn:us:gov:ic:ism:v2" 
+                targetNamespace="urn:mtf:mil:6040b:goe:fields" 
+                xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsl:for-each select="$alltypes/xsd:simpleType">
@@ -212,83 +207,7 @@
     
     <!-- _______________________________________________________ -->
     
-    <!-- ******************** SIMPLE TYPE STR ELEMENTS ********************  -->
-    
-    <!--Compare REGEX to create Elements using normalized SimpleTypes-->
-    <xsl:template match="xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern][not(@name = 'FreeTextBaseType')][not(@name = 'BlankSpaceCharacterBaseType')]" mode="el">
-        <xsl:variable name="n">
-            <xsl:apply-templates select="@name" mode="txt"/>
-        </xsl:variable>
-        <xsl:variable name="pattern" select="xsd:restriction/xsd:pattern/@value"/>
-        <!--TEST FOR MIN MAX IN REGEX-->
-        <xsl:variable name="patternvalue">
-            <xsl:call-template name="patternValue">
-                <xsl:with-param name="pattern">
-                    <xsl:value-of select="$pattern"/>
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="type">
-            <xsl:choose>
-                <!--If there is is a match - use it-->
-                <xsl:when test="$normalizedstrtypes/xsd:restriction/xsd:pattern/@value = $pattern">
-                    <xsl:apply-templates select="$normalizedstrtypes[xsd:restriction/xsd:pattern/@value = $pattern]/@name" mode="txt"/>
-                </xsl:when>
-                <xsl:when test="$normalizedstrtypes/xsd:restriction/xsd:pattern/@value = $patternvalue">
-                    <xsl:apply-templates select="$normalizedstrtypes[xsd:restriction/xsd:pattern/@value = $patternvalue]/@name" mode="txt"/>
-                </xsl:when>
-                <!--If there is is no match - will use current type-->
-                <xsl:otherwise/>
-            </xsl:choose>
-        </xsl:variable>
-        <xsd:simpleType>
-            <xsl:attribute name="name">
-                <xsl:value-of select="concat(substring($n, 0, string-length($n) - 3), 'SimpleType')"/>
-            </xsl:attribute>
-            <xsl:apply-templates select="xsd:annotation"/>
-            <xsl:choose>
-                <xsl:when test="string-length($type) > 0">
-                    <xsd:restriction>
-                        <xsl:attribute name="base">
-                            <xsl:value-of select="$type"/>
-                        </xsl:attribute>
-                        <xsl:apply-templates select="xsd:restriction/*[not(name() = 'xsd:pattern')]"/>
-                    </xsd:restriction>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsd:restriction>
-                        <xsl:attribute name="base">
-                            <xsl:value-of select="@name"/>
-                        </xsl:attribute>
-                        <xsl:apply-templates select="xsd:restriction/*[not(name() = 'xsd:pattern')]"/>
-                    </xsd:restriction>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsd:simpleType>
-    </xsl:template>
-    
-    <!-- _______________________________________________________ -->
-    
-    <xsl:template match="*" mode="el">
-        <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*" mode="el"/>
-            <xsl:apply-templates select="*" mode="el"/>
-        </xsl:copy>
-    </xsl:template>
-    
-    <xsl:template match="@*" mode="el">
-        <xsl:copy copy-namespaces="no">
-            <xsl:value-of select="replace(., '&#34;', '')"/>
-        </xsl:copy>
-    </xsl:template>
-    
-    <!-- _______________________________________________________ -->
-    
     <!-- ******************** FILTERS ******************** -->
-    <xsl:template match="xsd:simpleType[@name = 'FreeTextBaseType']" mode="el"/>
-    <xsl:template match="xsd:simpleType[@name = 'BlankSpaceCharacterBaseType']" mode="el"/>
-    <!--- Remove Pattern for element generation-->
-    <xsl:template match="xsd:pattern" mode="el"/>
     <!--- Remove Pattern from type containing base of xsd:integer -->
     <xsl:template match="xsd:pattern[parent::xsd:restriction/@base = 'xsd:integer']"/>
     <!--- Remove Pattern from type containing base of xsd:decimal -->

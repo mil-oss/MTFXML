@@ -61,7 +61,7 @@
                         </xsd:annotation>
                         <xsl:copy-of select="$normenumerationtypes[deep-equal(xsd:restriction, $restr)]/xsd:restriction"/>
                     </xsd:simpleType>
-                    <Change name="{@name}" changeto="{$normenumerationtypes[deep-equal(xsd:restriction, $restr)]/@name}"/>
+                    <Change name="{@name}" changeto="{replace($normenumerationtypes[deep-equal(xsd:restriction, $restr)]/@name,'SimpleType','Type')}"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
@@ -97,7 +97,11 @@
     
     <xsl:template name="main">
         <xsl:result-document href="{$enumerationsoutdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:goe:fields" xml:lang="en-US"
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:fields" 
+                xmlns:ism="urn:us:gov:ic:ism:v2" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                targetNamespace="urn:mtf:mil:6040b:goe:fields" 
+                xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <!--<xsl:for-each select="$enumtypes/*">-->

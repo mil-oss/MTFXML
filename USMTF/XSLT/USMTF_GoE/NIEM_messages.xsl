@@ -19,16 +19,16 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:include href="Utility.xsl"/>
+    <xsl:include href="USMTF_Utility.xsl"/>
     <xsl:variable name="mtfmsgs" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
     <xsl:variable name="mtfsets" select="document('../../XSD/Baseline_Schema/sets.xsd')"/>
-    <xsl:variable name="fields" select="document('../../XSD/GoE_Schema/GoE_fields.xsd')"/>
-    <xsl:variable name="sets" select="document('../../XSD/GoE_Schema/GoE_sets.xsd')"/>
-    <xsl:variable name="segments" select="document('../../XSD/GoE_Schema/GoE_segments.xsd')"/>
+    <xsl:variable name="fields" select="document('../../XSD/NIEM_Schema/NIEM_fields.xsd')"/>
+    <xsl:variable name="sets" select="document('../../XSD/NIEM_Schema/NIEM_sets.xsd')"/>
+    <xsl:variable name="segments" select="document('../../XSD/NIEM_Schema/NIEM_segments.xsd')"/>
     <xsl:variable name="set_Changes" select="document('../../XSD/Deconflicted/Set_Name_Changes.xml')/USMTF_Sets"/>
     <xsl:variable name="segment_Changes" select="document('../../XSD/Deconflicted/Segment_Name_Changes.xml')/USMTF_Segments"/>
-    <xsl:variable name="outputdoc" select="'../../XSD/GoE_Schema/GoE_messages.xsd'"/>
-    <xsl:variable name="rulesdoc" select="'../../XSD/GoE_Schema/GoE_message_rules.xsd'"/>
+    <xsl:variable name="outputdoc" select="'../../XSD/NIEM_Schema/NIEM_messages.xsd'"/>
+    <xsl:variable name="rulesdoc" select="'../../XSD/NIEM_Schema/NIEM_message_rules.xsd'"/>
     <!--*****************************************************-->
     <xsl:variable name="msgs">
         <xsl:apply-templates select="$mtfmsgs/xsd:schema/xsd:element" mode="el">
@@ -82,7 +82,7 @@
     <!--Include Rules as attribute strings.  Replace double quotes with single quotes-->
     <xsl:template match="*[name() = 'MtfStructuralRelationship']" mode="el">
         <!--OMIT RULES ENFORCED BY ASSIGNED FIXED VALUES-->
-        <!--<xsl:choose>
+        <xsl:choose>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F1')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F2')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F3')"/>
@@ -94,11 +94,11 @@
             <xsl:when test="starts-with(*:MtfStructuralRelationshipExplanation/text(), 'Field 1 in HEADING')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipExplanation/text(), 'Field 1 of HEADING')"/>
             <xsl:otherwise>
-                <!-\-<xsl:element name="MsgRule">-\->
+                <xsl:element name="MsgRule">
                     <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
-                <!-\-</xsl:element>-\->
+                </xsl:element>
             </xsl:otherwise>
-        </xsl:choose>-->
+        </xsl:choose>
         <xsl:element name="Msg">
             <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
         </xsl:element>
@@ -140,7 +140,7 @@
             <xsl:apply-templates select="." mode="txt"/>
         </xsl:variable>
         <xsl:attribute name="base">
-            <xsl:value-of select="concat('set:', $b)"/>
+            <xsl:value-of select="concat('s:', $b)"/>
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="xsd:schema/xsd:element/@name" mode="ctype"/>
@@ -193,7 +193,7 @@
                         <xsl:text>ShipPositionAndMovementArrivalSet</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:text>set:ShipPositionAndMovementSetType</xsl:text>
+                        <xsl:text>s:ShipPositionAndMovementSetType</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')][not(name() = 'type')]" mode="ctype"/>
                 </xsl:copy>
@@ -204,7 +204,7 @@
                         <xsl:text>ShipPositionAndMovementDepartureSet</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:text>set:ShipPositionAndMovementSetType</xsl:text>
+                        <xsl:text>s:ShipPositionAndMovementSetType</xsl:text>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')][not(name() = 'type')]" mode="ctype"/>
                 </xsl:copy>
@@ -212,7 +212,7 @@
             <xsl:when test="exists($sets/xsd:schema/xsd:element[@name = $newname])">
                 <xsl:copy copy-namespaces="no">
                     <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('set:', $newname)"/>
+                        <xsl:value-of select="concat('s:', $newname)"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')]" mode="ctype"/>
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
@@ -228,7 +228,7 @@
                         <xsl:value-of select="$newname"/>
                     </xsl:attribute>
                     <xsl:attribute name="type">
-                        <xsl:value-of select="replace($bsettype, 's:', 'set:')"/>
+                        <xsl:value-of select="$bsettype"/>
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')]" mode="ctype"/>
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
@@ -341,7 +341,7 @@
             <xsl:variable name="nm" select="@name"/>
             <xsl:choose>
                 <xsl:when test="ends-with($nm, 'Indicator')">
-                    <xsd:element name="{$nm}" type="field:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
+                    <xsd:element name="{$nm}" type="f:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
                                 <xsl:value-of select="concat('Text Indicator Field with fixed value ', @fixed)"/>
@@ -350,7 +350,7 @@
                     </xsd:element>
                 </xsl:when>
                 <xsl:when test="ends-with($nm, 'HeadingText')">
-                    <xsd:element name="{$nm}" type="field:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
+                    <xsd:element name="{$nm}" type="f:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
                                 <xsl:value-of select="concat('Heading fixed value ', @fixed)"/>
@@ -384,8 +384,8 @@
                         <xsl:apply-templates select="xsd:complexType/xsd:complexContent" mode="globalize"/>
                     </xsd:complexType>
                 </xsl:when>
-                <xsl:when test="$nm='ShipPositionAndMovementArrivalSet'">
-                    <xsd:element name="ShipPositionAndMovementArrivalSet" type="set:ShipPositionAndMovementSetType">
+                <xsl:when test="$nm = 'ShipPositionAndMovementArrivalSet'">
+                    <xsd:element name="ShipPositionAndMovementArrivalSet" type="s:ShipPositionAndMovementSetType">
                         <xsd:annotation>
                             <xsd:documentation>The 9SHIP set reports the location and movement of the ships reported in the 1SHIPARR set.</xsd:documentation>
                             <xsd:appinfo>
@@ -394,8 +394,8 @@
                         </xsd:annotation>
                     </xsd:element>
                 </xsl:when>
-                <xsl:when test="$nm='ShipPositionAndMovementDepartureSet'">
-                    <xsd:element name="ShipPositionAndMovementDepartureSet" type="set:ShipPositionAndMovementSetType">
+                <xsl:when test="$nm = 'ShipPositionAndMovementDepartureSet'">
+                    <xsd:element name="ShipPositionAndMovementDepartureSet" type="s:ShipPositionAndMovementSetType">
                         <xsd:annotation>
                             <xsd:documentation>The 9SHIP set reports the location and movement of the ships reported in the 1SHIPDEP set.</xsd:documentation>
                             <xsd:appinfo>
@@ -412,10 +412,10 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-        <xsl:for-each select="$ctypes//xsd:element[@ref = 'set:MessageIdentifierSet']">
+        <xsl:for-each select="$ctypes//xsd:element[@ref = 's:MessageIdentifierSet']">
             <xsl:variable name="msgnm" select="ancestor::xsd:complexType[@name][1]/@name"/>
             <xsl:call-template name="MSGidSet">
-                <xsl:with-param name="msgnode" select="substring($msgnm,0,string-length($msgnm)-3)"/>
+                <xsl:with-param name="msgnode" select="substring($msgnm, 0, string-length($msgnm) - 3)"/>
                 <xsl:with-param name="appinfo">
                     <xsl:copy-of select="ancestor::xsd:complexType[@name][1]/xsd:annotation/xsd:appinfo"/>
                 </xsl:with-param>
@@ -475,13 +475,13 @@
             </xsl:element>
         </xsl:copy>
     </xsl:template>
-    <xsl:template match="@ref[.='set:MessageIdentifierSet']" mode="globalize">
+    <xsl:template match="@ref[. = 's:MessageIdentifierSet']" mode="globalize">
         <xsl:variable name="msgnode" select="ancestor::xsd:complexType[@name][1]/@name"/>
         <xsl:variable name="msgnoderef">
-            <xsl:value-of select="substring($msgnode,0,string-length($msgnode)-3)"/>
+            <xsl:value-of select="substring($msgnode, 0, string-length($msgnode) - 3)"/>
         </xsl:variable>
         <xsl:attribute name="ref">
-            <xsl:value-of select="concat($msgnoderef,'MessageIdentifierSet')"/>
+            <xsl:value-of select="concat($msgnoderef, 'MessageIdentifierSet')"/>
         </xsl:attribute>
     </xsl:template>
     <xsl:template match="@type" mode="globalize"/>
@@ -537,7 +537,6 @@
                 <xsl:when test="count($global_ctypes/xsd:complexType[@name = $n]) &gt; 1">
                     <xsl:choose>
                         <xsl:when test="not(preceding-sibling::xsd:complexType[@name = $n])">
-                            <!--<xsl:copy-of select="."/>-->
                             <xsl:copy-of select="."/>
                         </xsl:when>
                         <xsl:otherwise/>
@@ -559,7 +558,6 @@
                 <xsl:when test="count($global_elements/xsd:element[@name = $n]) &gt; 1">
                     <xsl:choose>
                         <xsl:when test="not(preceding-sibling::xsd:element[@name = $n])">
-                            <!--<xsl:copy-of select="."/>-->
                             <xsl:apply-templates select="." mode="ncopy"/>
                         </xsl:when>
                         <xsl:otherwise/>
@@ -571,9 +569,11 @@
             </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
-    
     <xsl:variable name="niem_ctypes">
         <xsl:copy-of select="$deconfl_ctypes"/>
+        <xsl:for-each select="$deconfl_gels/xsd:simpleType">
+            <xsl:copy-of select="."/>
+        </xsl:for-each>
         <xsl:for-each select="$deconfl_gels/xsd:complexType">
             <xsl:copy-of select="."/>
         </xsl:for-each>
@@ -588,12 +588,13 @@
     <xsl:template name="main">
         <xsl:result-document href="{$outputdoc}">
             <xsd:schema xml:lang="en-US" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:mtf:mil:6040b:goe:mtf" targetNamespace="urn:mtf:mil:6040b:goe:mtf"
-                xmlns:field="urn:mtf:mil:6040b:goe:fields" xmlns:set="urn:mtf:mil:6040b:goe:sets" xmlns:seg="urn:mtf:mil:6040b:goe:segments" xmlns:ism="urn:us:gov:ic:ism:v2"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
-                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="GoE_fields.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="GoE_sets.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:goe:segments" schemaLocation="GoE_segments.xsd"/>
+                xmlns:f="urn:mtf:mil:6040b:goe:fields" xmlns:s="urn:mtf:mil:6040b:goe:sets" xmlns:seg="urn:mtf:mil:6040b:goe:segments" xmlns:ism="urn:us:gov:ic:ism:v2"
+                xmlns:structures="http://release.niem.gov/niem/structures/3.0/" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="NIEM_fields.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:sets" schemaLocation="NIEM_sets.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:segments" schemaLocation="NIEM_segments.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/structures/3.0/" schemaLocation="structures.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>XML Schema for MTF Messages</xsd:documentation>
                 </xsd:annotation>
@@ -602,7 +603,7 @@
                         <xsd:documentation>Base type for Messages which add security tagging.</xsd:documentation>
                     </xsd:annotation>
                     <xsd:complexContent>
-                        <xsd:extension base="field:CompositeType">
+                        <xsd:extension base="structures:ObjectType">
                             <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         </xsd:extension>
                     </xsd:complexContent>
@@ -618,6 +619,10 @@
                 <xsl:text>&#10;</xsl:text>
                 <xsl:comment> ************** GLOBAL TYPES **************</xsl:comment>
                 <xsl:text>&#10;</xsl:text>
+                <xsl:for-each select="$niem_ctypes/xsd:simpleType">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
                 <xsl:for-each select="$niem_ctypes/xsd:complexType">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
@@ -694,16 +699,16 @@
             </xsl:element>
             <xsd:complexType>
                 <xsd:complexContent>
-                    <xsd:extension base="set:GeneralTextSetType">
+                    <xsd:extension base="s:GeneralTextSetType">
                         <xsd:sequence>
-                            <xsd:element name="{concat($n,'Indicator')}" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
+                            <xsd:element name="{concat($n,'Indicator')}" type="f:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
                                 <xsd:annotation>
                                     <xsd:documentation>
                                         <xsl:value-of select="$fixed"/>
                                     </xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>
-                            <xsd:element ref="field:FreeTextField" minOccurs="1"/>
+                            <xsd:element ref="f:FreeText" minOccurs="1"/>
                         </xsd:sequence>
                     </xsd:extension>
                 </xsd:complexContent>
@@ -744,16 +749,16 @@
             </xsl:element>
             <xsd:complexType>
                 <xsd:complexContent>
-                    <xsd:extension base="set:HeadingInformationSetType">
+                    <xsd:extension base="s:HeadingInformationSetType">
                         <xsd:sequence>
-                            <xsd:element name="{concat($n,'HeadingText')}" type="field:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
+                            <xsd:element name="{concat($n,'HeadingText')}" type="f:AlphaNumericBlankSpecialTextType" minOccurs="1" fixed="{$fixed}">
                                 <xsd:annotation>
                                     <xsd:documentation>
                                         <xsl:value-of select="$fixed"/>
                                     </xsd:documentation>
                                 </xsd:annotation>
                             </xsd:element>
-                            <xsd:element ref="field:FreeTextField" minOccurs="1"/>
+                            <xsd:element ref="f:FreeText" minOccurs="1"/>
                         </xsd:sequence>
                     </xsd:extension>
                 </xsd:complexContent>
@@ -786,7 +791,7 @@
                 <xsl:copy-of select="$appinfo"/>
             </xsd:annotation>
             <xsd:complexContent>
-                <xsd:extension base="set:SetBaseType">
+                <xsd:extension base="s:SetBaseType">
                     <xsd:sequence>
                         <xsd:element ref="{concat($msgnode,'MessageIdentifier')}">
                             <xsd:annotation>
@@ -818,7 +823,7 @@
                                 </xsd:appinfo>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element ref="field:Originator" minOccurs="1" maxOccurs="1">
+                        <xsd:element ref="f:Originator" minOccurs="1" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>The identifier of the originator of the message.</xsd:documentation>
                                 <xsd:appinfo>
@@ -827,7 +832,7 @@
                                 </xsd:appinfo>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element ref="field:MessageSerialNumber" minOccurs="0" maxOccurs="1">
+                        <xsd:element ref="f:MessageSerialNumber" minOccurs="0" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>The serial number assigned to a specific message. The originating command may develop the message serial number by any method.</xsd:documentation>
                                 <xsd:appinfo>
@@ -837,7 +842,7 @@
                                 </xsd:appinfo>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element ref="set:ReferenceTimeOfPublication" minOccurs="1" maxOccurs="1">
+                        <xsd:element ref="s:ReferenceTimeOfPublication" minOccurs="1" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>The reference time of publication using either the ISO 8601 standardized date-time or the abbreviated month name.</xsd:documentation>
                                 <xsd:appinfo>
@@ -846,7 +851,7 @@
                                 </xsd:appinfo>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element ref="field:Qualifier" minOccurs="0" maxOccurs="1">
+                        <xsd:element ref="f:Qualifier" minOccurs="0" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>A qualifier which caveats a message status.</xsd:documentation>
                                 <xsd:appinfo>
@@ -855,7 +860,7 @@
                                 </xsd:appinfo>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element ref="field:SerialNumberOfQualifier" minOccurs="0" maxOccurs="1">
+                        <xsd:element ref="f:SerialNumberOfQualifier" minOccurs="0" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>A number assigned serially to identify the sequential version of a message qualifier for a basic message.</xsd:documentation>
                                 <xsd:appinfo>
@@ -864,7 +869,7 @@
                                 </xsd:appinfo>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element ref="field:MessageSecurityPolicy" minOccurs="1" maxOccurs="1">
+                        <xsd:element ref="f:MessageSecurityPolicy" minOccurs="1" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>The security policy that applies to the information contained in a message text format.</xsd:documentation>
                                 <xsd:appinfo>
@@ -873,7 +878,7 @@
                                 </xsd:appinfo>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element ref="set:MessageSecurityClassification" minOccurs="1" maxOccurs="1">
+                        <xsd:element ref="s:MessageSecurityClassification" minOccurs="1" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>The security classification of the message.</xsd:documentation>
                                 <xsd:appinfo>
@@ -881,7 +886,7 @@
                                 </xsd:appinfo>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element ref="field:MessageSecurityCategory" minOccurs="0" maxOccurs="1">
+                        <xsd:element ref="f:MessageSecurityCategory" minOccurs="0" maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>The security category that applies to the information contained in a message text format.</xsd:documentation>
                                 <xsd:appinfo>
@@ -894,7 +899,7 @@
                 </xsd:extension>
             </xsd:complexContent>
         </xsd:complexType>
-        <xsd:element name="{concat($msgnode,'MessageIdentifier')}" type="field:MessageTextFormatIdentifierType" fixed="MSGID">
+        <xsd:element name="{concat($msgnode,'MessageIdentifier')}" type="f:MessageTextFormatIdentifierType" fixed="MSGID">
             <xsd:annotation>
                 <xsd:documentation>
                     <xsl:value-of select="concat($appinfo/*/*:Msg/@name, ' MESSAGE IDENTIFIER')"/>
@@ -908,7 +913,7 @@
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:element>
-        <xsd:element name="{concat($msgnode,'MessageIdentifier')}" type="field:MessageTextFormatIdentifierType" fixed="MSGID">
+        <xsd:element name="{concat($msgnode,'MessageIdentifier')}" type="f:MessageTextFormatIdentifierType" fixed="MSGID">
             <xsd:annotation>
                 <xsd:documentation>
                     <xsl:value-of select="concat($appinfo/*:Msg/@name, ' MESSAGE IDENTIFIER')"/>
@@ -919,12 +924,12 @@
 
     <xsl:template name="MsgStdandVersion">
 
-        <xsd:element name="MessageTextFormatStandard" type="field:StandardOfMessageTextFormatType" fixed="MIL-STD-6040(SERIES)">
+        <xsd:element name="MessageTextFormatStandard" type="f:StandardOfMessageTextFormatType" fixed="MIL-STD-6040(SERIES)">
             <xsd:annotation>
                 <xsd:documentation>The military standard that contains the message format rules.</xsd:documentation>
             </xsd:annotation>
         </xsd:element>
-        <xsd:element name="MessageTextFormatVersion" type="field:VersionOfMessageTextFormatType" fixed="B.1.01.12">
+        <xsd:element name="MessageTextFormatVersion" type="f:VersionOfMessageTextFormatType" fixed="B.1.01.12">
             <xsd:annotation>
                 <xsd:documentation>The version of the message text format. The message version consists of four parts: Part 1 is the edition letter of MIL-STD-6040(SERIES), e.g., A, B, C through Z,
                     Part 2 is the change number of the edition (0-5), Part 3 is the major change for the message, e.g., 01-99, and Part 4 is the minor change for the message, e.g.,
@@ -962,14 +967,15 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
+
     <xsl:template name="CamelCaseWord">
         <xsl:param name="text"/>
         <xsl:value-of select="translate(substring($text, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
         <xsl:value-of select="translate(substring($text, 2, string-length($text) - 1), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
     </xsl:template>
-    
+
     <!--************* Replaced Fixed Value with one item Enumeratoin for NIEM *****************-->
-    
+
     <xsl:template match="*" mode="ncopy">
         <xsl:copy>
             <xsl:apply-templates select="@*" mode="ncopy"/>
@@ -977,30 +983,37 @@
             <xsl:apply-templates select="*" mode="ncopy"/>
         </xsl:copy>
     </xsl:template>
-    
+
     <xsl:template match="@*" mode="ncopy">
         <xsl:copy-of select="."/>
     </xsl:template>
-    
+
     <xsl:template match="text()" mode="ncopy">
         <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
-    
+
     <xsl:template match="xsd:element[@fixed]" mode="ncopy">
+        <xsd:simpleType name="{concat(@name,'SimpleType')}">
+            <xsl:copy-of select="xsd:annotation"/>
+            <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="{@fixed}">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <xsl:value-of select="concat(@fixed, ' fixed value')"/>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:enumeration>
+            </xsd:restriction>
+        </xsd:simpleType>
         <xsd:complexType name="{concat(@name,'Type')}">
             <xsl:copy-of select="xsd:annotation"/>
             <xsd:simpleContent>
-                <xsd:restriction base="field:FieldEnumeratedBaseType">
-                    <xsd:enumeration value="{@fixed}">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <xsl:value-of select="concat(@fixed,' fixed value')"/>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:enumeration>
-                </xsd:restriction>
+                <xsd:extension base="{concat(@name,'SimpleType')}">
+                    <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                    <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
+                </xsd:extension>
             </xsd:simpleContent>
-        </xsd:complexType>
+        </xsd:complexType> 
         <xsd:element name="{@name}" type="{concat(@name,'Type')}">
             <xsd:annotation>
                 <xsl:copy-of select="xsd:annotation/xsd:documentation"/>

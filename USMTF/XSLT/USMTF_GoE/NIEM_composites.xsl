@@ -36,6 +36,8 @@
     <!--Normalized xsd:simpleTypes-->
     <xsl:variable name="normalizedsimpletypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
     <xsl:variable name="normenumerationtypes" select="$normalizedsimpletypes/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
+    <xsl:variable name="string_type_changes" select="document('../../XSD/Normalized/StringTypeChanges.xml')/StringChanges"/>
+    <xsl:variable name="enumeration_type_changes" select="document('../../XSD/Normalized/EnumerationTypeChanges.xml')/EnumerationChanges"/>
     <!--Output Document-->
     <xsl:variable name="output_fields_xsd" select="'../../XSD/NIEM_Schema/NIEM_composites.xsd'"/>
     <!--Consolidated xsd:simpleTypes and xsd:elements for local referenece by xsd:complexTypes-->
@@ -45,27 +47,42 @@
         <xsl:apply-templates select="$composites_xsd/xsd:schema/xsd:complexType" mode="composite"/>
     </xsl:variable>
     <xsl:variable name="complex_elements">
-        <xsl:apply-templates select="$complex_types_xsd/*" mode="el"/>
+        <xsl:for-each select="$composites_xsd/xsd:schema/xsd:complexType">
+            <xsl:variable name="nn">
+                <xsl:apply-templates select="@name" mode="fromtype"/>
+            </xsl:variable>
+            <xsl:variable name="typ">
+                <xsl:choose>
+                    <xsl:when test="@name = 'BeaconType'">
+                        <xsl:text>BeaconSignalType</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="@name"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsd:element name="{$nn}" type="{$typ}" nillable="true">
+                <xsl:apply-templates select="xsd:annotation"/>
+            </xsd:element>
+        </xsl:for-each>
     </xsl:variable>
     <!--*****************************************************-->
     <xsl:template name="main">
         <xsl:result-document href="{$output_fields_xsd}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:composites" 
-                xmlns:ism="urn:us:gov:ic:ism:v2" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                xmlns:f="urn:mtf:mil:6040b:goe:fields"
-                xmlns:structures="http://release.niem.gov/niem/structures/3.0/" 
-                targetNamespace="urn:mtf:mil:6040b:goe:composites" 
-                xml:lang="en-US" 
-                elementFormDefault="unqualified"
-                attributeFormDefault="unqualified" version="0.1">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:composites" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mtf="urn:mtf:mil:6040b:goe"
+                xmlns:f="urn:mtf:mil:6040b:goe:fields" xmlns:structures="http://release.niem.gov/niem/structures/3.0/" targetNamespace="urn:mtf:mil:6040b:goe:composites" xml:lang="en-US"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
                 <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="NIEM_fields.xsd"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:import namespace="http://release.niem.gov/niem/structures/3.0/" schemaLocation="structures.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>NIEM XML Schema for MTF Composite Fields.</xsd:documentation>
                 </xsd:annotation>
-                <xsl:for-each select="$complex_types_xsd/*">
+                <xsl:for-each select="$complex_types_xsd/xsd:complexType">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+                <xsl:for-each select="$complex_elements/xsd:element">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
@@ -107,29 +124,27 @@
                 <xsd:extension base="structures:ObjectType">
                     <xsd:sequence>
                         <xsl:apply-templates select="xsd:sequence/*"/>
-                        <!--<xsd:element ref="{concat(substring($n,0,string-length($n)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>-->
                     </xsd:sequence>
                 </xsd:extension>
             </xsd:complexContent>
         </xsl:copy>
-      <!--  <xsd:element name="{concat(substring($n,0,string-length($n)-3),'AugmentationPoint')}" abstract="true">
-            <xsd:annotation>
-                <xsd:documentation>
-                    <xsl:value-of select="concat('An augmentation point for ', $n)"/>
-                </xsd:documentation>
-            </xsd:annotation>
-        </xsd:element>-->
-        <xsd:element name="{substring($n, 0, string-length($n) - 3)}" type="{$n}" nillable="true">
+        <xsl:if test="not($n = @name)">
+            <Change name="{@name}" changeto="{$n}"/>
+        </xsl:if>
+        <!--<xsd:element name="{substring($n, 0, string-length($n) - 3)}" type="{$n}" nillable="true">
             <xsd:annotation>
                 <xsd:documentation>
                     <xsl:value-of select="$eldoc"/>
                 </xsd:documentation>
             </xsd:annotation>
-        </xsd:element>
+        </xsd:element>-->
     </xsl:template>
 
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->
     <xsl:template match="xsd:element[@type]">
+        <xsl:variable name="typ">
+            <xsl:value-of select="substring-after(@type, ':')"/>
+        </xsl:variable>
         <xsl:variable name="t">
             <xsl:apply-templates select="@type" mode="fromtype"/>
         </xsl:variable>
@@ -141,10 +156,16 @@
         <xsl:variable name="fldref">
             <xsl:choose>
                 <xsl:when test="$niem_fields_xsd/xsd:schema/xsd:element[@name = $t]">
-                    <xsl:value-of select="concat('f:',$t)"/>
+                    <xsl:value-of select="concat('f:', $t)"/>
                 </xsl:when>
                 <xsl:when test="$niem_fields_xsd/xsd:schema/xsd:element[@name = $nm]">
-                    <xsl:value-of select="concat('f:',$nm)"/>
+                    <xsl:value-of select="concat('f:', $nm)"/>
+                </xsl:when>
+                <xsl:when test="$string_type_changes/Change/@name = $typ">
+                    <xsl:value-of select="concat('f:', substring-before($string_type_changes/Change[@name = $typ]/@changeto, 'SimpleType'))"/>
+                </xsl:when>
+                <xsl:when test="$enumeration_type_changes/Change/@name = $typ">
+                    <xsl:value-of select="concat('f:', substring-before($enumeration_type_changes/Change[@name = $typ]/@changeto, 'SimpleType'))"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="typepattern">

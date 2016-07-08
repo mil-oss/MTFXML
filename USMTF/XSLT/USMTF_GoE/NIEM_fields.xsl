@@ -28,36 +28,24 @@
     consolidate fields and composites as global elements in the "Fields" XML Schema for the GoE refactor.
     type references are converted to local.-->
     <!--Normalized Fields XML Schema documents-->
+    <!--Simple Fields Baseline XML Schema document-->
+    <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
     <xsl:variable name="string_fields_xsd" select="document('../../XSD/Normalized/Strings.xsd')"/>
     <xsl:variable name="integer_fields_xsd" select="document('../../XSD/Normalized/Integers.xsd')"/>
     <xsl:variable name="decimal_fields_xsd" select="document('../../XSD/Normalized/Decimals.xsd')"/>
     <xsl:variable name="enumerated_fields_xsd" select="document('../../XSD/Normalized/Enumerations.xsd')"/>
-    <!--Composite Fields Baseline XML Schema document-->
-<!--    <xsl:variable name="composites_xsd" select="document('../../XSD/Baseline_Schema/composites.xsd')"/>-->
-    <!--Simple Fields Baseline XML Schema document-->
-    <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
-    <!--Normalized xsd:simpleTypes-->
-    <xsl:variable name="normalizedsimpletypes" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
-    <xsl:variable name="normenumerationtypes" select="$normalizedsimpletypes/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
+    <xsl:variable name="string_type_changes" select="document('../../XSD/Normalized/StringTypeChanges.xml')/StringChanges"/>
+    <xsl:variable name="enumeration_type_changes" select="document('../../XSD/Normalized/EnumerationTypeChanges.xml')/EnumerationChanges"/>
     <!--Output Document-->
     <xsl:variable name="output_fields_xsd" select="'../../XSD/NIEM_Schema/NIEM_fields.xsd'"/>
     <!--Consolidated xsd:simpleTypes and xsd:elements for local referenece by xsd:complexTypes-->
-    <xsl:variable name="refactor_fields_xsd">
-        <xsl:text>&#10;</xsl:text>
-        <xsl:comment> ************** STRING FIELDS **************</xsl:comment>
-        <xsl:text>&#10;</xsl:text>
+    <xsl:variable name="refactor_field_types_xsd">
         <xsl:for-each select="$string_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
             <xsl:variable name="basename" select="substring-before(@name, 'SimpleType')"/>
             <xsl:variable name="annot">
                 <xsl:apply-templates select="xsd:annotation"/>
             </xsl:variable>
-            <xsl:variable name="doc">
-                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
-            </xsl:variable>
-            <xsl:variable name="eldoc">
-                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
-            </xsl:variable>
             <xsd:complexType name="{concat($basename,'Type')}">
                 <xsl:copy-of select="xsd:annotation"/>
                 <xsd:simpleContent>
@@ -67,29 +55,26 @@
                     </xsd:extension>
                 </xsd:simpleContent>
             </xsd:complexType>
-            <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
+            <!--<xsl:variable name="doc">
+                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
+            </xsl:variable>
+            <xsl:variable name="eldoc">
+                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
+            </xsl:variable>-->
+           <!-- <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:value-of select="$eldoc"/>
                     </xsd:documentation>
                 </xsd:annotation>
-            </xsd:element>
+            </xsd:element>-->
         </xsl:for-each>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:comment>************** INTEGER FIELDS **************</xsl:comment>
-        <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$integer_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
             <xsl:variable name="basename" select="substring-before(@name, 'SimpleType')"/>
             <xsl:variable name="annot">
                 <xsl:apply-templates select="xsd:annotation"/>
             </xsl:variable>
-            <xsl:variable name="doc">
-                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
-            </xsl:variable>
-            <xsl:variable name="eldoc">
-                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
-            </xsl:variable>
             <xsd:complexType name="{concat($basename,'Type')}">
                 <xsl:copy-of select="xsd:annotation"/>
                 <xsd:simpleContent>
@@ -99,29 +84,26 @@
                     </xsd:extension>
                 </xsd:simpleContent>
             </xsd:complexType>
-            <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
+         <!--   <xsl:variable name="doc">
+                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
+            </xsl:variable>
+            <xsl:variable name="eldoc">
+                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
+            </xsl:variable>-->
+           <!-- <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:value-of select="$eldoc"/>
                     </xsd:documentation>
                 </xsd:annotation>
-            </xsd:element>
+            </xsd:element>-->
         </xsl:for-each>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:comment>*************** DECIMAL FIELDS **************</xsl:comment>
-        <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$decimal_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
             <xsl:variable name="basename" select="substring-before(@name, 'SimpleType')"/>
             <xsl:variable name="annot">
                 <xsl:apply-templates select="xsd:annotation"/>
             </xsl:variable>
-            <xsl:variable name="doc">
-                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
-            </xsl:variable>
-            <xsl:variable name="eldoc">
-                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
-            </xsl:variable>
             <xsd:complexType name="{concat($basename,'Type')}">
                 <xsl:copy-of select="xsd:annotation"/>
                 <xsd:simpleContent>
@@ -131,29 +113,26 @@
                     </xsd:extension>
                 </xsd:simpleContent>
             </xsd:complexType>
-            <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
+          <!--  <xsl:variable name="doc">
+                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
+            </xsl:variable>
+            <xsl:variable name="eldoc">
+                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
+            </xsl:variable>-->
+          <!--  <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:value-of select="$eldoc"/>
                     </xsd:documentation>
                 </xsd:annotation>
-            </xsd:element>
+            </xsd:element>-->
         </xsl:for-each>
-        <xsl:text>&#10;</xsl:text>
-        <xsl:comment>************* ENUMERATED FIELDS *************</xsl:comment>
-        <xsl:text>&#10;</xsl:text>
         <xsl:for-each select="$enumerated_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
             <xsl:variable name="basename" select="substring-before(@name, 'SimpleType')"/>
             <xsl:variable name="annot">
                 <xsl:apply-templates select="xsd:annotation"/>
             </xsl:variable>
-            <xsl:variable name="doc">
-                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
-            </xsl:variable>
-            <xsl:variable name="eldoc">
-                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
-            </xsl:variable>
             <xsd:complexType name="{concat($basename,'Type')}">
                 <xsl:copy-of select="xsd:annotation"/>
                 <xsd:simpleContent>
@@ -163,23 +142,50 @@
                     </xsd:extension>
                 </xsd:simpleContent>
             </xsd:complexType>
-            <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
+            <!--<xsl:variable name="doc">
+                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
+            </xsl:variable>
+            <xsl:variable name="eldoc">
+                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
+            </xsl:variable>-->
+           <!-- <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:value-of select="$eldoc"/>
                     </xsd:documentation>
                 </xsd:annotation>
+            </xsd:element>-->
+        </xsl:for-each>
+    </xsl:variable>
+    <xsl:variable name="field_elements">
+        <xsl:for-each select="$fields_xsd/xsd:schema/xsd:simpleType">
+            <xsl:variable name="t">
+                <xsl:value-of select="@name"/>
+            </xsl:variable>
+            <xsl:variable name="nn">
+                <xsl:apply-templates select="@name" mode="fromtype"/>
+            </xsl:variable>
+            <xsl:variable name="typ">
+                <xsl:choose>
+                    <xsl:when test="$t='_2DigitYearType'">
+                        <xsl:text>TwoDigitYearType</xsl:text>
+                    </xsl:when>
+                    <xsl:when test="$string_type_changes/Change[@name=$t]">
+                        <xsl:value-of select="$string_type_changes/Change[@name=$t]/@changeto"/>
+                    </xsl:when>
+                    <xsl:when test="$enumeration_type_changes/Change[@name=$t]">
+                        <xsl:value-of select="$enumeration_type_changes/Change[@name=$t]/@changeto"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="replace($t,'SimpleType','Type')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsd:element name="{$nn}" type="{$typ}" nillable="true">
+                <xsl:apply-templates select="xsd:annotation"/>
             </xsd:element>
         </xsl:for-each>
     </xsl:variable>
-    <!--*****************************************************-->
-    <!--Build re-factored xsd:complexTypes using GoE schema design and references-->
-<!--    <xsl:variable name="complex_types_xsd">
-        <xsl:apply-templates select="$composites_xsd/xsd:schema/xsd:complexType" mode="composite"/>
-    </xsl:variable>
-    <xsl:variable name="complex_elements">
-        <xsl:apply-templates select="$complex_types_xsd/*" mode="el"/>
-    </xsl:variable>-->
     <!--*****************************************************-->
     <xsl:template name="main">
         <xsl:result-document href="{$output_fields_xsd}">
@@ -196,7 +202,18 @@
                 <xsd:annotation>
                     <xsd:documentation>XML Schema for MTF Fields.</xsd:documentation>
                 </xsd:annotation>
-                <xsl:copy-of select="$refactor_fields_xsd"/>
+                <xsl:for-each select="$refactor_field_types_xsd/xsd:simpleType">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+                <xsl:for-each select="$refactor_field_types_xsd/xsd:complexType">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+                <xsl:for-each select="$field_elements/*">
+                    <xsl:sort select="@name"/>
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
             </xsd:schema>
         </xsl:result-document>
     </xsl:template>
