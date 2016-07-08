@@ -402,7 +402,8 @@
     <xsl:template match="*:AlternativeType" mode="attr"/>
     <!-- ***************** MSGS *****************-->
     <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
-
+    <xsl:template match="*:MtfStructuralRelationship" mode="attr"/>
+    <xsl:template match="*:MtfStructuralRelationshipExplanation" mode="attr"/>
 
     <!-- ***************** Data Definitions *****************-->
     <xsl:template match="xsd:annotation">
@@ -577,6 +578,12 @@
                 <xsl:when test="*:Segment">
                     <xsl:copy-of select="*:Segment"/>
                 </xsl:when>
+                <xsl:when test="*:Segment">
+                    <xsl:copy-of select="*:Segment"/>
+                </xsl:when>
+                <xsl:when test="*:Msg">
+                    <xsl:copy-of select="*:Msg"/>
+                </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Field')]">
                     <xsl:element name="mtf:Field">
                         <xsl:apply-templates select="@*"/>
@@ -596,7 +603,12 @@
                     <xsl:element name="mtf:Segment">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
-                        <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
+                    </xsl:element>
+                </xsl:when>
+                <xsl:when test="child::*[starts-with(name(), 'Mtf')]">
+                    <xsl:element name="mtf:Msg">
+                        <xsl:apply-templates select="*" mode="attr"/>
+                        <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
                     </xsl:element>
                 </xsl:when>
             </xsl:choose>
