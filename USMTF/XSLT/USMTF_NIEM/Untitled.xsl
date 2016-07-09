@@ -40,7 +40,7 @@
             <xsd:element name="{concat(@name,'Rules')}">
                 <xsd:annotation>
                     <xsd:appinfo>
-                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*[name() = 'MtfStructuralRelationship']" mode="rules"/>
+                        <xsl:apply-templates select="xsd:annotation/xsd:appinfo/*[name() = 'MtfStructuralRelationship']" mode="el"/>
                     </xsd:appinfo>
                 </xsd:annotation>
             </xsd:element>
@@ -80,9 +80,9 @@
         </xsl:copy>
     </xsl:template>
     <!--Include Rules as attribute strings.  Replace double quotes with single quotes-->
-    <xsl:template match="*[name() = 'MtfStructuralRelationship']" mode="rules">
+    <xsl:template match="*[name() = 'MtfStructuralRelationship']" mode="el">
         <!--OMIT RULES ENFORCED BY ASSIGNED FIXED VALUES-->
-<!--        <xsl:choose>
+        <xsl:choose>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F1')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F2')"/>
             <xsl:when test="starts-with(*:MtfStructuralRelationshipRule/text(), '[3]F3')"/>
@@ -98,8 +98,8 @@
                     <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
                 </xsl:element>
             </xsl:otherwise>
-        </xsl:choose>-->
-        <xsl:element name="MsgRule">
+        </xsl:choose>
+        <xsl:element name="Msg">
             <xsl:apply-templates select="*[string-length(text()[1]) > 0]" mode="trimattr"/>
         </xsl:element>
     </xsl:template>
@@ -218,15 +218,6 @@
                     <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
                 </xsl:copy>
             </xsl:when>
-            <xsl:when test="exists($segments/xsd:schema/xsd:element[@name = $newname])">
-                <xsl:copy copy-namespaces="no">
-                    <xsl:attribute name="ref">
-                        <xsl:value-of select="concat('seg:', $newname)"/>
-                    </xsl:attribute>
-                    <xsl:apply-templates select="@*[not(name() = 'name')]" mode="ctype"/>
-                    <xsl:apply-templates select="xsd:annotation" mode="ctype"/>
-                </xsl:copy>
-            </xsl:when>
             <xsl:when test="starts-with(./xsd:complexType/xsd:complexContent/xsd:extension/@base, 's:')">
                 <xsl:variable name="b" select="./xsd:complexType/xsd:complexContent/xsd:extension/@base"/>
                 <xsl:variable name="bsettype">
@@ -256,12 +247,12 @@
             <xsl:value-of select="@name"/>
         </xsl:variable>
         <xsl:variable name="mtfid">
-            <xsl:value-of select="ancestor::xsd:element[parent::xsd:schema][1]//xsd:attribute[@name='mtfid']/@fixed"/>
+            <xsl:value-of select="ancestor::xsd:element[parent::xsd:schema]/xsd:annotation/xsd:appinfo/*:MtfIdentifier"/>
         </xsl:variable>
         <xsl:variable name="newname">
             <xsl:choose>
-                <xsl:when test="exists($segment_Changes/Segment[@MSGIDENTIFIER = $mtfid and @SegmentElement = $elname])">
-                    <xsl:value-of select="concat($segment_Changes/Segment[@MSGIDENTIFIER = $mtfid and @SegmentElement = $elname]/@ProposedElementName,'Segment')"/>
+                <xsl:when test="exists($segment_Changes/Segment[@MTF_NAME = $mtfid and @SegmentElement = $elname])">
+                    <xsl:value-of select="$segment_Changes/Segment[@MTF_NAME = $mtfid and @SegmentElement = $elname]/@ProposedSegmentElement"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$elname"/>
@@ -353,7 +344,7 @@
                     <xsd:element name="{$nm}" type="f:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <xsl:value-of select="concat('A data type for a Text Indicator Field with a fixed value of ', @fixed)"/>
+                                <xsl:value-of select="concat('Text Indicator Field with fixed value ', @fixed)"/>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -362,7 +353,7 @@
                     <xsd:element name="{$nm}" type="f:AlphaNumericBlankSpecialTextType" fixed="{@fixed}">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <xsl:value-of select="concat('A data type for a Heading with a fixed value of ', @fixed)"/>
+                                <xsl:value-of select="concat('Heading fixed value ', @fixed)"/>
                             </xsd:documentation>
                         </xsd:annotation>
                     </xsd:element>
@@ -458,7 +449,7 @@
                     <xsl:apply-templates select="@minOccurs" mode="global"/>
                     <xsd:annotation>
                         <xsd:documentation>
-                            <xsl:value-of select="concat('A data type for a Heading with fixed value of ', @fixed)"/>
+                            <xsl:value-of select="concat('Heading with fixed value ', @fixed)"/>
                         </xsd:documentation>
                     </xsd:annotation>
                 </xsd:element>
@@ -1022,7 +1013,7 @@
                     <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
                 </xsd:extension>
             </xsd:simpleContent>
-        </xsd:complexType>
+        </xsd:complexType> 
         <xsd:element name="{@name}" type="{concat(@name,'Type')}">
             <xsd:annotation>
                 <xsl:copy-of select="xsd:annotation/xsd:documentation"/>

@@ -68,7 +68,7 @@
                             <xsl:text>C2SurveillanceArea</xsl:text>
                         </xsl:when>
                         <xsl:when test="$new_segment_names/USMTF_Segments/Segment[@MSGIDENTIFIER = $mtfid and @SegmentElement = $baseline_name and @ProposedElementName]">
-                            <xsl:value-of select="$new_segment_names/USMTF_Segments/Segment[@MSGIDENTIFIER = $mtfid and @SegmentElement = $baseline_name]/@ProposedElementName"/>
+                            <xsl:value-of select="concat($new_segment_names/USMTF_Segments/Segment[@MSGIDENTIFIER = $mtfid and @SegmentElement = $baseline_name]/@ProposedElementName,'Segment')"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="$baseline_name"/>
@@ -706,7 +706,7 @@
                 <xsl:when test="$SegChange">
                     <xsl:choose>
                         <xsl:when test="$SegChange/* and string-length($SegChange/@ProposedSegmentName) > 0">
-                            <xsl:value-of select="$SegChange/@ProposedSegmentName"/>
+                            <xsl:value-of select="concat($SegChange/@ProposedSegmentName,'Segment')"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">

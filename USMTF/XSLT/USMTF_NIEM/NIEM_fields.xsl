@@ -55,19 +55,6 @@
                     </xsd:extension>
                 </xsd:simpleContent>
             </xsd:complexType>
-            <!--<xsl:variable name="doc">
-                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
-            </xsl:variable>
-            <xsl:variable name="eldoc">
-                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
-            </xsl:variable>-->
-           <!-- <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:value-of select="$eldoc"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>-->
         </xsl:for-each>
         <xsl:for-each select="$integer_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
@@ -84,19 +71,6 @@
                     </xsd:extension>
                 </xsd:simpleContent>
             </xsd:complexType>
-         <!--   <xsl:variable name="doc">
-                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
-            </xsl:variable>
-            <xsl:variable name="eldoc">
-                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
-            </xsl:variable>-->
-           <!-- <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:value-of select="$eldoc"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>-->
         </xsl:for-each>
         <xsl:for-each select="$decimal_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
@@ -113,19 +87,6 @@
                     </xsd:extension>
                 </xsd:simpleContent>
             </xsd:complexType>
-          <!--  <xsl:variable name="doc">
-                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
-            </xsl:variable>
-            <xsl:variable name="eldoc">
-                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
-            </xsl:variable>-->
-          <!--  <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:value-of select="$eldoc"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>-->
         </xsl:for-each>
         <xsl:for-each select="$enumerated_fields_xsd/xsd:schema/*[not(name() = 'xsd:import')]">
             <xsl:copy-of select="."/>
@@ -142,19 +103,6 @@
                     </xsd:extension>
                 </xsd:simpleContent>
             </xsd:complexType>
-            <!--<xsl:variable name="doc">
-                <xsl:value-of select="substring-after($annot/*/xsd:documentation, 'A data type for ')"/>
-            </xsl:variable>
-            <xsl:variable name="eldoc">
-                <xsl:value-of select="concat(upper-case(substring($doc, 1, 1)), substring($doc, 2))"/>
-            </xsl:variable>-->
-           <!-- <xsd:element name="{$basename}" type="{concat($basename,'Type')}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:value-of select="$eldoc"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>-->
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="field_elements">

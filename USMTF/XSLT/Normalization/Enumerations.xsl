@@ -20,7 +20,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:strip-space elements="*"/>
     <xsl:output method="xml" indent="yes"/>
-    <xsl:include href="../USMTF_GoE/USMTF_Utility.xsl"/>
+    <xsl:include href="../USMTF_NIEM/USMTF_Utility.xsl"/>
     
     <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
     <xsl:variable name="normalized_fields_xsd" select="document('../../XSD/Normalized/NormalizedSimpleTypes.xsd')"/>
@@ -31,8 +31,7 @@
     <!--Output-->
     <xsl:variable name="enumerationsoutdoc" select="'../../XSD/Normalized/Enumerations.xsd'"/>
     
-    <xsl:variable name="enumerationchanges" select="'../../XSD/Normalized/EnumerationTypeChanges.xml'"/>
-    
+    <xsl:variable name="enumerationchanges" select="'../../XSD/Normalized/EnumerationTypeChanges.xml'"/>  
     
     <xsl:variable name="normenumerationtypes" select="$normalized_fields_xsd/*/xsd:simpleType[xsd:restriction/xsd:enumeration]"/>
     
@@ -74,7 +73,7 @@
         <xsl:for-each select="$normenumtypes/xsd:simpleType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:variable name="codename">
+            <xsl:variable name="enumname">
                 <xsl:choose>
                     <xsl:when test="ends-with($n,'SimpleType')">
                         <xsl:value-of select="$n"/>
@@ -87,7 +86,7 @@
             <xsl:choose>
                 <xsl:when test="ends-with($n, 'SimpleType') and preceding-sibling::*/@name = $n"/>
                 <xsl:otherwise>
-                    <xsd:simpleType name="{$codename}">
+                    <xsd:simpleType name="{$enumname}">
                         <xsl:apply-templates select="*" mode="copy"/>
                     </xsd:simpleType>
                 </xsl:otherwise>

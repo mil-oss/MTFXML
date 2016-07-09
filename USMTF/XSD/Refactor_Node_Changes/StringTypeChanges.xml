@@ -1,0 +1,2415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StringChanges>
+   <Change name="FreeTextBaseType" changeto="FreeTextType"/>
+   <Change name="MissionNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CollectorMissionNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SortieNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CoordinatedReconnaissanceMissionNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="AmcMissionNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="SupportingUnitMissionNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReconnaissanceMissionNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="MissionVerificationIndexNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LegMissionNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="MissionIdentificationNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="RendezvousAircraftMissionNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NextMissionNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="PreviousMissionNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TankerReceiverLegMissionIdentificationNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="MissionNumberSupportedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SurfaceToAirWeaponSawMissionNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ImagerySortieNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PointOfContactCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecificCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SarObjectiveCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TransmitCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReceivingCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BroadcastCallSignType" changeto="AlphaNumericTextType"/>
+   <Change name="AlternateRadioCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InternationalRadioCallSignType" changeto="AlphaNumericTextType"/>
+   <Change name="OtherPlatformCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecificAircraftCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BroadcastDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="ContactCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ImageryReceiverCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TankerCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReceiverCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DiplomaticCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ConvoyCommodoreCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ConvoyViceCommodoreCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OtcCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AlternateOtcCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RendezvousCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NavalForceCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="Link16AbbreviatedCallSignType" changeto="AlphaNumericTextType"/>
+   <Change name="CallSignBookType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EscortedCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CallSignOfControlAgencyType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CallSignOfSarUnitType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EwCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmitterCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CallSignSystemNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GroundsiteCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AntiAirWarfareCallSignType" changeto="AlphaTextType"/>
+   <Change name="NadgeStationCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ScrambleAgencyCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SavowCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UserCallSignType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PrimaryBroadcastType" changeto="AlphaTextType"/>
+   <Change name="SecondaryBroadcastType" changeto="AlphaTextType"/>
+   <Change name="CommonBroadcastType" changeto="AlphaTextType"/>
+   <Change name="BroadcastChannelType" changeto="AlphaTextType"/>
+   <Change name="ChannelNameType" changeto="AlphaTextType"/>
+   <Change name="RendezvousContactCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReceiverAircraftCallSignType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RequestNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StandardAirRequestNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RequestNumberOfLegType" changeto="AlphaNumericTextType"/>
+   <Change name="PrimaryResourceCategoryType" changeto="AlphaNumericTextType"/>
+   <Change name="SecondaryResourceCategoryType" changeto="AlphaNumericTextType"/>
+   <Change name="TertiaryResourceCategoryType" changeto="AlphaNumericTextType"/>
+   <Change name="GuardRequirementsType" changeto="AlphaTextType"/>
+   <Change name="TypeOfCommandAndControlAgencyOtherType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetTypeOtherType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OperationalTaskingMessageNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReconnaissanceReportRequestType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeFireSupportReportType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MessageTextFormatIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubmarineRangeAreaType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EntityOperatingAreaType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LocalityOfBirthType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CombatNetRadioOperatingAreaNameType"
+           changeto="AlphaNumericBlankSpecialIDType"/>
+   <Change name="WeatherAreaType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetOrInstallationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaNameEstimatedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetAreaNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ManeuverAreaNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaAndSegmentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RadiusType" changeto="RadiusType"/>
+   <Change name="EquipmentNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CollectionEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EncryptionDeviceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SupportEquipmentRequiredType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VehicleNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentNomenclatureType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeEwSystemType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CalibrationEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MalfunctioningEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ObEquipmentNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationsEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OnloadSupportEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecificEquipmentTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OffloadSupportEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationsSecurityEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ModemEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentIdCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="SpecificEndItemEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UhfSatelliteAntennaEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GroundEntryPointTerminationEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GroundEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeOfCryptographicEquipmentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentNameCommonType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="ToneKeyTypeType" changeto="AlphaNumericTextType"/>
+   <Change name="FrequencyShiftConverterTypeType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SecureVoiceEquipmentTypeType" changeto="AlphaNumericTextType"/>
+   <Change name="MaritimeRadiationHazardEquipmentDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MaritimeEquipmentDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeOfEquipmentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AffectedEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeOfMaintenanceEquipmentRequiredType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommonIdentifierType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MaritimeSensorOtherThanRadarSonarAndEsmType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MaritimeTacticalDataSystemDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SurfaceShipSubmarineSonarDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineCountermeasureEquipmentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="JammerEquipmentTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FuelStoresPodsJettisonedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameIndividualType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="NameOfPersonType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="SurnameType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="AircraftCommanderSNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LastNameOfCrewCommanderOrMissionCrewDirectorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfDeceasedType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SurnameOfPersonType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="AliasType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="NameOfShipSCommandingOfficerType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FirstGivenNameOfAPersonType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="SecondGivenNameOfAPersonType"
+           changeto="AlphaBlankSpecialTextType"/>
+   <Change name="ThirdGivenNameOfAPersonType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="NameOfEscortingPersonnelType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ActionAddresseeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InfoAddresseeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfIndividualType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="PhoneticSpellingOfSurnameType"
+           changeto="AlphaBlankSpecialTextType"/>
+   <Change name="NameOfFirstLastNumberCoordinatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfMissingNumberCoordinatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfCrewCommanderOrMissionCrewDirectorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PersonalIdentificationNumberType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="PersonalIdNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AddressResidentialType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AddressType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StreetAddressType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OccupationType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RankOrPositionType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DutiesAndExperienceType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PocLinkFunctionType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MapOrChartScaleType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ExtendedUnitNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ParentExtendedUnitNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HazardTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MessageSecurityPolicyType" changeto="AlphaBlankTextType"/>
+   <Change name="MessageSecurityCategoryType" changeto="AlphaBlankTextType"/>
+   <Change name="MessageSecurityClassificationOtherType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitMissionType" changeto="AlphaTextType"/>
+   <Change name="AirdropTypeOtherType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmitterDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmitterNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmitterNicknameType" changeto="AlphaBlankTextType"/>
+   <Change name="EmitterEvaluationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmitterDesignationSpecialType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RadioFrequencyType" changeto="ShortRadioFrequencyType"/>
+   <Change name="LowerRadioFrequencyType" changeto="ShortRadioFrequencyType"/>
+   <Change name="UpperRadioFrequencyType" changeto="ShortRadioFrequencyType"/>
+   <Change name="IntelligenceProductTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ItemDesignationCartographicType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SheetType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SeriesDesignatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MapOrChartSeriesDesignatorType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="OperatorPositionEquipmentAffectedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipTypeType" changeto="AlphaTextType"/>
+   <Change name="ShipTypeNavalType" changeto="AlphaTextType"/>
+   <Change name="SubmarineTypeType" changeto="AlphaTextType"/>
+   <Change name="ShipTypeIdentificationType" changeto="AlphaTextType"/>
+   <Change name="SurfaceShipTypeType" changeto="AlphaTextType"/>
+   <Change name="SpecificShipTypeType" changeto="AlphaNumericTextType"/>
+   <Change name="MilitaryDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="MilitaryDayTimeEtroType" changeto="DayTimeNumericType"/>
+   <Change name="MilitaryDayTimeAtroType" changeto="DayTimeNumericType"/>
+   <Change name="HighTideMilitaryDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="LowTideMilitaryDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="EstimatedOnTargetMilitaryDayTimeType"
+           changeto="DayTimeNumericType"/>
+   <Change name="ActualOnTargetMilitaryDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="ActualDepartureDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="EstimatedArrivalDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="EstimatedStrikeDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="LaunchDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="ActualArrivalDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="EstimatedDepartureDayTimeType" changeto="DayTimeNumericType"/>
+   <Change name="OriginatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AgencyType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TumOriginatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissionVerificationIndexOriginatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TlamMissionDataUpdateOriginatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OriginatorOfDiplomaticMissionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PlanOriginatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CodeForOriginatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MessageSerialNumberType"
+           changeto="AlphaNumericSpecialFileCodeType"/>
+   <Change name="TargetElementSerialNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="RequisitionSerialNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="DataTransportDeviceSerialNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EteppSerialNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="TwoCharacterProducerCodeType" changeto="AlphaTextType"/>
+   <Change name="OneCharacterProducerCodeSequenceNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentSerialNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CalibrationEquipmentSerialNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommentsType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="TrackAmplificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmbarkCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetAndOrInstallationDescriptionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetActivityRemarksType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetDefensesSecurityCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissionDesignatorCommentsType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="AttgNbrgCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ObEquipmentCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ImageryReferenceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetDescriptionCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="_5UnitCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactInstructionsType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="MissionSupportRequirementsCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ProperShippingNameCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RequestCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FriendlyTroopsCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RecceMissionCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeliveryCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReportCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirdropCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RefuelingCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GuidanceCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HostTableRemarksType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EwCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ChaffCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LandingSiteCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RendezvousCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RouteCommentType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="SpecialCargoCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AllocationCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FrequencyCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ForceAllotmentCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ExcessAircraftCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VipCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NetUsageOrAmplifyingInstructionsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RemarksType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="LandingSiteContactCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SamStatusCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OtherSarMissionActivityCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OtherSarUnitCommentsType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="WeatherCommentsType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="ShipTargetCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipPositionAndMovementCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MovementAndAawAxisCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ArrestingGearCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirliftCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RadioCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TimeAmplificationCommentType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="SamUnitLocationCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactInformationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MessageTrafficCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RendezvousLocationCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LaunchCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissionHighlightsSummaryOrAnalysisType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VdsMovingHavenCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RelatedDataEntryCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SarMissionReportCommentType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="GroundTargetCommentsType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="PalletCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RepairCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecialTrackNumberDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="MissionObjectiveType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="IntelligenceProblemNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SortieCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DesiredMeanPointOfImpactCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentStatusReportCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FreehandStaffCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PostStrikeAssessmentCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirliftScheduleCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftStatusReportCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CrossReferenceCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RunwayCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SecurityClearanceCommentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InstructionsForAcknowledgingType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="ScheduleCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LegCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftLimitationsType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="ReasonForDueHomeDateType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="_9UnitCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ObstacleCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CrewCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PersonnelCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeOfResponseOrReactionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="SpecialInterestCargoCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MessageSubjectType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MessageSubjectContinuedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SarObjectCommentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentTrackingCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PartsTrackingCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AdditionalSymbolInformationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GeneralMessageSubjectTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InternalUseCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MaintenanceResponseTeamTrackingCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ScheduleRequestCommentsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ObjectCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentModelType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationsElectronicsEquipmentModelType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentModelCommonType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="ModelType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RadarAntennaModelType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaControlCenterCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="LatitudeAndLongitudeMinutes04DecimalPlacesType"
+           changeto="LatitudeAndLongitudeMinutes04DecimalPlacesType"/>
+   <Change name="CulvertTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TunnelTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VulnerablePointTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UtmGridZoneRowType" changeto="AlphaSubsetRowDesignationType"/>
+   <Change name="MgrsUtmGridZoneRowType" changeto="AlphaSubsetRowDesignationType"/>
+   <Change name="_100000MeterSquareColumnType"
+           changeto="AlphaSubsetSequentialCodeType"/>
+   <Change name="_100000MeterSquareRowType"
+           changeto="AlphaSubsetRowDesignatorTextType"/>
+   <Change name="AntennaGainType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="AlphamonthYearType" changeto="AlphaMonthYearType"/>
+   <Change name="VersionOfMessageTextFormatType"
+           changeto="VersionOfMessageTextFormatType"/>
+   <Change name="NetworkProtocolStandardAndVersionType"
+           changeto="AlphaNumericNetworkProtocolTextType"/>
+   <Change name="UserMessageFormatOtherType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StanagAndEditionType"
+           changeto="AlphaSubsetNumericStanagDesignatorType"/>
+   <Change name="MilstdAndSeriesType" changeto="AlphaNumericMilStdTextType"/>
+   <Change name="HeaderStandardVersionAndSeriesType"
+           changeto="AlphaNumericVersionSeriesTextType"/>
+   <Change name="ReconnaissanceTargetCategoryEeiType" changeto="AlphaTextType"/>
+   <Change name="TargetGroupNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TargetSeriesNameType" changeto="AlphaNumericTextType"/>
+   <Change name="NuclearWarheadMarkModelNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="NuclearWeaponModelYNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="ShipNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CooperatingForcesNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SupplyingShipNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OtcShipNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ViceCommodoreSShipNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AlternateOtcShipNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommodoreSShipNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfShipBeingJoinedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfJoiningShipType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipNameToProvideHelosType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipNameOfAgencyAssumingControlType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipNameToProvideHelosFuelingCapacityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipNameSpecificType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactShipTaskedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubmarineNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CustomerShipNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NetControlStationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftIdentificationNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BlankSpaceCharacterBaseType" changeto="BlankSpaceType"/>
+   <Change name="CountryCodeType" changeto="AlphaTextType"/>
+   <Change name="AirMissionOrdnanceCodeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PrimaryConfigurationCodeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SecondaryConfigurationCodeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AtlanticCityOperatingAreaType" changeto="NumericBaseTenTextType"/>
+   <Change name="CherryPointOperatingAreaType" changeto="AlphaNumericTextType"/>
+   <Change name="StraitOfJuanDeFucaOperatingAreaType"
+           changeto="AlphaSubsetTwoCharType"/>
+   <Change name="AmendmentSetIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="FlightClearanceTripNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DateTimeGroupZuluType" changeto="DateTimeGroupZuluType"/>
+   <Change name="ReadingDateTimeGroupZuluType" changeto="DateTimeGroupZuluType"/>
+   <Change name="DateTimeGroupContaminationDetectedZuluType"
+           changeto="DateTimeGroupZuluType"/>
+   <Change name="AutomatedTacticalTargetGraphicType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ActivityType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ActivityTextType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContinuityCodeLinkType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TrackLinkType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitReferenceNumberBlockAssignmentType"
+           changeto="UnitReferenceNumberBlockAssignmentType"/>
+   <Change name="SupportRequestTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PersonnelSkillTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirForceCodeOrSpecialtyShopCodeRequiredType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SkillsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissionOperationsTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MethodOfOperationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UserIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WorksheetIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ImageChipIdentificationType" changeto="AlphaNumericTextType"/>
+   <Change name="CommercialImageChipIdentificationType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="HawaiianOperationsAreaGridAxisIndicatorPrefixType"
+           changeto="AlphaSubsetAToYTextType"/>
+   <Change name="UplinkOrDownlinkFrequencyInMegahertzType"
+           changeto="UplinkOrDownlinkFrequencyInMegahertzType"/>
+   <Change name="TrpDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="LengthInNauticalMilesType" changeto="LengthInNauticalMilesType"/>
+   <Change name="RadiusInNauticalMilesType" changeto="LengthInNauticalMilesType"/>
+   <Change name="SectorHalfWidthDistanceInNauticalMilesType"
+           changeto="LengthInNauticalMilesType"/>
+   <Change name="HullToEmitterCorrelationNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="TrackChangeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CollectorDigraphType" changeto="AlphaNumericTextType"/>
+   <Change name="MilitaryTimeType" changeto="MilitaryTimeType"/>
+   <Change name="ElectronicSiteNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TargetIdentifierPinNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TargetIdentifierAlternatePinNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="MobilePlaDesignatorType" changeto="AlphaTextType"/>
+   <Change name="RoutingIndicatorType" changeto="AlphaTextType"/>
+   <Change name="HighPrecedenceRoutingIndicatorType" changeto="AlphaTextType"/>
+   <Change name="LowPrecedenceRoutingIndicatorType" changeto="AlphaTextType"/>
+   <Change name="RoutingIdentifierType" changeto="RoutingIdentifierType"/>
+   <Change name="CaseNotationType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="IdentifyingInformationType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="MgrsUtm1MeterType" changeto="MgrsUtm1MeterType"/>
+   <Change name="DestinationLocationMgrsUtm1MeterType"
+           changeto="MgrsUtm1MeterType"/>
+   <Change name="StrikeLocationMgrsUtm1MeterType" changeto="MgrsUtm1MeterType"/>
+   <Change name="SicCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="ExerciseNicknameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ExerciseAdditionalNicknameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ProjectOrExerciseNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ParentExerciseNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReceiverExerciseNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OperationCodewordType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CollectorTrigraphType" changeto="AlphaNumericTextType"/>
+   <Change name="CollectorProjectNameType" changeto="AlphaBlankTextType"/>
+   <Change name="VisualCharacteristicType" changeto="AlphaTextType"/>
+   <Change name="OperatingMomentType" changeto="AlphaNumericTextType"/>
+   <Change name="BuildType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="DatabaseKeyType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ParentMasterKeyType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EnemyMasterKeyType" changeto="AlphaNumericTextType"/>
+   <Change name="FrequencyChannelType" changeto="FrequencyChannelType"/>
+   <Change name="GentextTextIndicatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HeadingInformationType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="AngularMeasurementInDegreesType"
+           changeto="AngularMeasurementInDegreesType"/>
+   <Change name="AngularMeasurementInMilsType"
+           changeto="AngularMeasurementInMilsType"/>
+   <Change name="DirectionInDegreesType" changeto="DirectionInDegreesType"/>
+   <Change name="MaxReleaseDirectionInDegreesType"
+           changeto="DirectionInDegreesType"/>
+   <Change name="MinReleaseDirectionInDegreesType"
+           changeto="DirectionInDegreesType"/>
+   <Change name="DirectionInMilsType" changeto="DirectionInMilsType"/>
+   <Change name="MaxReleaseDirectionInMilsType" changeto="DirectionInMilsType"/>
+   <Change name="MinReleaseDirectionInMilsType" changeto="DirectionInMilsType"/>
+   <Change name="SpeedAndUnitOfMeasurementType"
+           changeto="SpeedAndUnitOfMeasurementType"/>
+   <Change name="TlamMissileIdentificationSystemCodeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="SortsOrganizationIdentifierType"
+           changeto="AlphaSubsetNumericSortsIDType"/>
+   <Change name="OtherType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TacticalBattleManagementFunctionType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="PlaceFunctionType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DayTimeType" changeto="DayTimeType"/>
+   <Change name="NetUsageFunctionType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TrackNumberBlockAssignmentType"
+           changeto="TrackNumberBlockAssignmentType"/>
+   <Change name="IdSetRangeType" changeto="IdSetRangeType"/>
+   <Change name="AdditionalSpaceSystemIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="KqIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="TerminalAreaModelIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TowlineIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CapStationIdentifierType" changeto="AlphaTextType"/>
+   <Change name="NetInUseIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="SetInUseIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="CompositeAirOperationsComaoIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="InitialPointIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="MissileShortRangeAirDefenseEngagementZoneIdentifierType"
+           changeto="AlphaNumericBlankTextType"/>
+   <Change name="MotionImageryStreamIdType"
+           changeto="AlphaSubsetNumericAToFTextType"/>
+   <Change name="GeneralIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CnrNetworkIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PacingItemUnitIndicatorType" changeto="AlphaTextType"/>
+   <Change name="TpsnIdentifierCodeType" changeto="AlphaTextType"/>
+   <Change name="NatoReadinessCodeType" changeto="AlphaTextType"/>
+   <Change name="AviationUnitIndicatorType" changeto="AlphaTextType"/>
+   <Change name="ReserveCommandAssignmentCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="TheArmyReportingInstallationForstatType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="DepartmentOfTheArmyMasterPriorityListType"
+           changeto="NumericBaseTenTextType"/>
+   <Change name="TargetSystemType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SadlNetShapeType" changeto="SadlNetShapeType"/>
+   <Change name="PrefixAToFType" changeto="AlphaSubsetAToFTextType"/>
+   <Change name="PrefixAToZType" changeto="AlphaTextType"/>
+   <Change name="AimpointSuffixType" changeto="AlphaNumericTextType"/>
+   <Change name="TlamAimpointSuffixType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SectorGeometryWithOuterRangeType"
+           changeto="SectorGeometryWithOuterRangeType"/>
+   <Change name="SectorGeometryWithInnerAndOuterRangeType"
+           changeto="SectorGeometryWithInnerAndOuterRangeType"/>
+   <Change name="MissileAssignmentType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="QuantityAndUnitOfWeightMassMeasurementType"
+           changeto="QuantityAndUnitOfMassType"/>
+   <Change name="MaximumQuantityAndUnitOfWeightMassMeasurementType"
+           changeto="QuantityAndUnitOfMassType"/>
+   <Change name="MinimumQuantityAndUnitOfWeightMassMeasurementType"
+           changeto="QuantityAndUnitOfMassType"/>
+   <Change name="SpecificHullNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="MissionRelationshipType" changeto="AlphaSpecialTextType"/>
+   <Change name="SubmarineReadingRoutineSlotType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TailNumberAircraftType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftTailLettersAndSideNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="TransportAircraftTailNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="DonorTailNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="FirePlanDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationsPlanDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FrequencyPlanDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationPlanDesignatorType" changeto="AlphaTextType"/>
+   <Change name="MilitaryCommandAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TacticalCommandAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EngagementAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MajorArmyCommandType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DefendedAssetNominatingAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NavalFireSupportAreaType" changeto="AlphaTextType"/>
+   <Change name="NavalFireSupportStationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AnnexNumberType" changeto="AlphaSubsetNumericIDType"/>
+   <Change name="AppendixNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TabNumberType" changeto="AlphaSubsetNumericIDType"/>
+   <Change name="EnclosureNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="PageNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ParagraphNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="MasintRequirementsSystemNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetMaterialReferenceIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ObserverNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="OperationOrderNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="PrimaryTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SecondaryTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirbillControlNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipmentControlNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ChannelNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="FilingNumberType" changeto="AlphaNumericSpecialFileCodeType"/>
+   <Change name="DesignatedAreaNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CrewNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="NatoDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="CommercialManufacturerSPartNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeploymentTaskNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="ReceiverCoordinationIdentifierType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="MainSupplyRouteNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirTaskingOrderNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BureauNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="SpaceObjectNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="DepartureControlNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CodeDayNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="NbcStrikeSerialNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SensorNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="PennantNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="IntelligenceProblemNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="LinealPrecedenceNumberType" changeto="NumericSpecialTextType"/>
+   <Change name="AllowancePartsListNumberType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="LosingFacilityNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="GainingFacilityNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="MovementControlNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LineItemNumberAlphabeticType" changeto="AlphaTextType"/>
+   <Change name="RoadNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TargetReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TelexNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ServiceNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CommunicationsEquipmentIdentifierType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="CircuitLineNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TroopProgramSequenceNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="SocialSecurityNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="PackageIdentificationType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="CommunicationLineNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="ScreenStationSectorNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="IcdbApprovedNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TacanChannelSpecialType" changeto="AlphaNumericTextType"/>
+   <Change name="TransmitLineNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="ElintNotationType" changeto="AlphaNumericTextType"/>
+   <Change name="SortingCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="SpaceObjectIdentifierType" changeto="NumericBaseTenTextType"/>
+   <Change name="DesignationOfTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ZipApoType" changeto="NumericBaseTenTextType"/>
+   <Change name="NonsecureTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SecureTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunitySequenceNumberType"
+           changeto="AlphaSubsetNumericSequenceNumberType"/>
+   <Change name="InterceptSerialNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="ExerciseInterceptSerialNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ExercisePlatformEmittingSignalSerialNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="PlatformEmittingSignalSerialNumberType"
+           changeto="NumericBaseTenTextType"/>
+   <Change name="PlanIdentificationNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="AllowanceEquipageListNumberType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="LayingReferenceNumberLrnType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="MapOrChartSheetNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="TaskNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="MapOrChartEditionNumberType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="MineReferenceNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ContactPlotDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="NavalAmphibiousCommunicationsNetLineNumberType"
+           changeto="NumericBaseTenTextType"/>
+   <Change name="SerialNumberOfWayPointType" changeto="AlphaNumericTextType"/>
+   <Change name="ComponentTargetIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaCodeAndCommercialTelephoneNumberType"
+           changeto="NumericBaseTenTextType"/>
+   <Change name="ExerciseAircraftEventNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="FacilitySuffixNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="DscsOperationalSupportSoftwareNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommercialFaxExtensionType" changeto="NumericBaseTenTextType"/>
+   <Change name="ComponentIdNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="JobControlNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReceiveLineNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CommercialStuIiiExtensionType" changeto="NumericBaseTenTextType"/>
+   <Change name="PacingItemLineItemNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CriticalCodeAEquipmentLineItemNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="Category4EquipmentLineItemNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ShortfallNbcEquipmentLineItemNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentLineItemNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentCodeType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="CommandAndControlNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CourseIdNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ShipPennantNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NonSecureFacsimileFaxNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SecureFacsimileFaxNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MediaReferenceNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="OperationPlanNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommonGroundStationNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="AircraftVariantType" changeto="AlphaSubsetSequentialIDType"/>
+   <Change name="LineDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="CognizanceSymbolType" changeto="AlphaNumericTextType"/>
+   <Change name="NatoTrackNumberRootType"
+           changeto="AlphaSubsetLink1UnitOrTrackNumberType"/>
+   <Change name="DsnNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitLineNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CommercialAndGovernmentEntityType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="DsnFaxExtensionType" changeto="NumericBaseTenTextType"/>
+   <Change name="ForceRequirementNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentPlanIdentificationNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="DeploymentControlNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="DesignedOperationalCapabilityNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="NonreportableLineItemNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="MtoeIdentificationNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TdaIdentificationNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TransferStationIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="DsnStuIiiExtensionType" changeto="NumericBaseTenTextType"/>
+   <Change name="ReferenceSerialNumberType"
+           changeto="AlphaNumericSpecialFileCodeType"/>
+   <Change name="BatchNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="LotNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="LastCLevelType" changeto="NumericBaseTenTextType"/>
+   <Change name="TelephoneNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirRefuelingEventKeyType" changeto="AlphaNumericTextType"/>
+   <Change name="TransportationControlNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="DiplomaticNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DiscrepancyJobControlNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SensorChannelNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="NetworkParticipantIdentificationType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="RelayReceiveChannelNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="RelayInboundTransmitChannelNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="RelayOutboundTransmitChannelNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="MissionIdentificationWildcardType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SequenceSortKeyNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="OperatorAssistedExtensionType" changeto="NumericBaseTenTextType"/>
+   <Change name="PrimaryRemarkKeyType" changeto="AlphaNumericTextType"/>
+   <Change name="ReceiversPackageIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="TankerCoordinationIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="ExtendedOperationalParamaterSettingsEopsNumberType"
+           changeto="AlphaNumericParameterCodeType"/>
+   <Change name="DataLinkLayerAddressDladType"
+           changeto="AlphaSubsetNumericSpecialType"/>
+   <Change name="NonsecureCellularTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DropScoreType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="UlnAssignedType" changeto="AlphaNumericTextType"/>
+   <Change name="ElintNotationPrimaryType" changeto="AlphaNumericTextType"/>
+   <Change name="ElintNotationSecondaryType" changeto="AlphaNumericTextType"/>
+   <Change name="RequirementNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OnloadLegReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OffloadLegReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PersonnelIncrementNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="Link22NetNumberType"
+           changeto="AlphaSubsetNumericAToFLink22NumberTextType"/>
+   <Change name="CargoIncrementNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="IdNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UscgOrForeignCountryDocumentationNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="USStateOrForeignCountryRegistrationNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ForeignCountryOfficialNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LloydsRegistryNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="InternationalMaritimeSatelliteCommunicationsNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OfficialDecalNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TreasuryEnforcementCommunicationsSystemIiNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NarcoticsAndDangerousDrugsInformationSystemNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CoastGuardLookoutNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WeaponSerialNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VehicleIdentificationNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VehicleYearType" changeto="NumericBaseTenTextType"/>
+   <Change name="VehicleLicenseNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NationalSecureTelephoneSystemType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OplanNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContractNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ServiceOrderNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ContractItemNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="AmcMissionUniqueKeyType" changeto="AlphaNumericTextType"/>
+   <Change name="PointOfContactPhoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OnloadLegStopNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="OffloadLegStopNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="CrewIdentificationNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="BattalionLogicalChannelNumberType"
+           changeto="LogicalChannelNumberType"/>
+   <Change name="UhfAccessOverrideControlNumberType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SequenceNumberAlfaType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NonsecureTacticalTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SecureTacticalTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NonsecureTelephoneNumberInternationalType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ExploitationRequirementIdentificationNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="SecureTelephoneNumberInternationalType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecialSymbolIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UniqueSymbolDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ExploitationRequirementIdentificationNumberTerType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="XAxisGridReferenceType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="YAxisGridReferenceType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SeasonalTimeRangeType" changeto="NumericCommaType"/>
+   <Change name="AlphanumericUniqueItemIdentifier3DigitType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="AlphanumericUniqueItemIdentifier4DigitType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="DataTransportDeviceVersionNumberType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SoftwareReleaseType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RevisionCycleNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="VolumeNumberType" changeto="AlphaSpecialTextType"/>
+   <Change name="EteppVersionType" changeto="NumericSpecialTextType"/>
+   <Change name="BrigadeLogicalChannelNumberType"
+           changeto="LogicalChannelNumberType"/>
+   <Change name="CoursesOfActionNumberType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="CoursesOfActionPlanIdentificationNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PartNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PartNumberSubAssemblyType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirToAirTacanSettingsType" changeto="NumericBaseTenTextType"/>
+   <Change name="PersonnelIdentificationNumberOfDeceasedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FusionSourceMineReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FusionSourceContactReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SadlAirKeyType" changeto="SadlAirKeyType"/>
+   <Change name="WaypointContactReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RouteSurveyContactNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GatewayAccessPhoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DrsnNumberType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="AirToAirRefuelingAarTrackAreaType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmergencyTelephoneNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PagerNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AlphanumericIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NavalTaskOrganizationEchelonNumberType"
+           changeto="NumericDecimalTextType"/>
+   <Change name="NavalOrganizationNumericalDesignatorType"
+           changeto="NumericDecimalTextType"/>
+   <Change name="OrdnanceLoadCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="NameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReferenceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OperationOrEquipmentNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NavigationalAidNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DetonationLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HandoverLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AimPointNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EvacuationDestinationPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LocationOfEventPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OperationalControlNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfAreaType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="DamageAvoidanceAreaNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HourNameType" changeto="AlphaTextType"/>
+   <Change name="StationDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissionLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PointOfContactNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RendezvousLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StrikeLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RadiationReadingLocationPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RoutePointNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReportInPointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BaseNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StationNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeparturePointType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaDesignatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OnloadPlaceNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RelocationFuturePlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CurrentPlaceNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpaceSystemNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOrIdentificationOfControllingAgencyType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OffloadPlaceNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OnloadPointNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OffloadPointNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ActivityLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BattlefieldGeometryTypeNameType"
+           changeto="AlphaNumericBlankTextType"/>
+   <Change name="DesignatedAreaNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AlertLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EnRouteStopLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PetroleumFacilityIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DestinationPointType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SystemCircuitOrFacilityDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitLocationNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AdministrativeControlNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmitterLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GridNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VesselNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PassoverNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ObserverSLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpaceMissionNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BeaconNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ZoneIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OperatingAgencyNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SourceNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SupplyPointNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReferencePointNameExpandedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PlaceNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EntryExitPointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmergencyActionPlanNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirCorridorNameType" changeto="AlphaNumericTextType"/>
+   <Change name="FileExtensionNameType" changeto="AlphaSpecialTextType"/>
+   <Change name="OperatingSystemNameType" changeto="AlphaNumericTextType"/>
+   <Change name="FileNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NetworkIdentifierType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="PortOfDestinationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FriendlyForceLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PortNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfAreaOfValidityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TrackNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitDesignationNameType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="Link1SystemCoordinateCenterNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ControlMeasuresNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AnnexNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HomeBaseNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeploymentBaseNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirfieldNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubmarineTransitLaneType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ConvoyTitleType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LaneDesignatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MinefieldDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FacilityLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GainingFacilityLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LosingLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EquipmentLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirCommandAndControlSystemAccsDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VulnerablePointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FerryNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CemeteryNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RoadNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TownNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LocationNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GeographicAreaType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TlamEventType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HigherFormationNameType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="TunnelNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StartLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StopLocationNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PolDeliveryPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnexplodedOrdnanceLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WorksheetVersionType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LocationOfEventGeopoliticalPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SystemDesignationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AlternateRelocationPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AlternateShipNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DestinationMedicalTreatmentElementType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReportingMedicalTreatmentElementType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetNicknameType" changeto="AlphaNumericTextType"/>
+   <Change name="BridgeNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CulvertNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfNavigationLightType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeliveryPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShortTitleType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="PrimarySortsMonitorNameType" changeto="AlphaBlankTextType"/>
+   <Change name="AlternateSortsMonitorNameType" changeto="AlphaBlankTextType"/>
+   <Change name="OperatingLocationType" changeto="AlphaNumericTextType"/>
+   <Change name="WeaponSystemShortNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationsCircuitNameType" changeto="AlphaBlankTextType"/>
+   <Change name="ReferencePointNameAbbreviatedType" changeto="AlphaBlankTextType"/>
+   <Change name="GmfSatelliteNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ControlPointNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AbbreviatedOrganizationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PointNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirRefuelingControlPointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="IncidentLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfAssetsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GmfSatelliteTerminalLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RegisteredOwnerType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BeaconLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfApproverType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfAirRefuelingTrackType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfCountryType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="IngressRouteIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PositionOrPointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EgressRouteIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CoordinatingMeasureNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SectorReferenceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RequiredItemEquipmentShortTitleType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="RadarStationNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BearingDistanceReferencePointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaOfValidityType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SatelliteTerminalLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GroundEntryPointLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameSOfReportSRequiredType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RendezvousPositionPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfLeadShipInGroupType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeparturePlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ArrivalPlaceNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubjectIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SensorDiscriminationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OriginPlaceNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationChannelType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PlainLanguageAddressType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TurnSystemType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RadiationStatusIndicatorType" changeto="AlphaNumericTextType"/>
+   <Change name="TacticalUnitTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmbarkationHarborType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineDangerAreaNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineCountermeasureAreaNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeOfMineZoneType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommonUserNameAndPkiCredentialsType"
+           changeto="CommonUserNameAndPkiCredentialsType"/>
+   <Change name="TypeVesselType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RegionalSpaceSupportCenterPointOfContactType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StrikeLocationNameDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EnRouteLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BaseOfDeploymentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DestinationLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OwnLocationNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SourceIdType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NatoEmitterNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecificReferencePointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ClassTypeNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TrackRegionType" changeto="AlphaNumericTextType"/>
+   <Change name="PacingItemNounDescriptionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TransportationRequirementIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HoldingPointIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShoreBatteryNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DatabaseSystemNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FormationGuideNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StationAssignmentNameType" changeto="AlphaNumericTextType"/>
+   <Change name="ThreatNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SegmentNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DiversionPositionNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CodeNameOfStartPositionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CodeNameOfStopPositionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AewSurveillanceAreaNameType" changeto="AlphaBlankTextType"/>
+   <Change name="ReferencePointDesignationType" changeto="AlphaBlankTextType"/>
+   <Change name="SectorAntiAirWarfareCoordinatorSaawcType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitCommanderEmbarkedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GeometryPointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LinkManagementCodeWordType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LinkManagementCodeWordMeaningType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HimezDesignatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="IdentificationGateNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipNameOrAgencyAssumingControlType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CheckpointNameType" changeto="AlphaTextType"/>
+   <Change name="BullseyePointNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DefendedAssetNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TacticalBattleManagementFunctionTbmfAreaDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GroundsiteNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WebsiteNameOrTitleType"
+           changeto="AlphaNumericSpecialNameOrAddressTextType"/>
+   <Change name="SpecialC2HeadquartersType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PointIdentifierType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetPositionNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissionPlaceNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EpwHoldingLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TrafficControlPointLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ProtectedIndividualSNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReceiverLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TransLoadLocationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MasterNodeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NextFinalPositionNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ChildNodeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommandNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HostNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CstChannelNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GeographicPlaceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="XrefCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="OrganizationTitleType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MasterNodeNameType" changeto="AlphaNumericTextType"/>
+   <Change name="FilterNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FilterDescriptionType" changeto="AlphaNumericTextType"/>
+   <Change name="OverlayShapeNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OrganizationLongNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LocalCommandType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="FotcCtCommandType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BcstHeaderFromType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BcstHeaderToType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RouteNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DestinationType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubmarineLaneNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BrandType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SarMissionCoordinatorUnitNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OnSceneCommanderUnitNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AntijamPolicyNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AntiSpoofingPolicyNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CircuitNameInOrderOfPrioritiesType"
+           changeto="AlphaNumericBlankTextType"/>
+   <Change name="TrpLocationNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeVehicleType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactPointNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ArrivalPlaceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommercialOwnerType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeparturePlaceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DestinationPlaceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InportPlaceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HomeportType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PreviousNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PortOfRegistrationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NoiAreaNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubmarineGridSystemAreaDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EntryPointNameType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ExitPointNameType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="TargetFacilityNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OverlayNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissionLaunchRegionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PlatformIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SymbolAirCorridorNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CircuitNomenclatureType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineWarfareCountermeasuresUnitNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EnvironmentProvinceNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="QRouteNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NeutralizingUnitNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactAreaNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactOriginatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BroadcastSystemNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineCountermeasurePlanNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WorksheetNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GroupNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RouteOriginNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RouteDestinationNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SatelliteSystemNameOrDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PlaceNameExtendedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CtiNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MachineNameType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="AircraftConfigurationType" changeto="AlphaNumericTextType"/>
+   <Change name="CommunicationsNetDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationsCircuitDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="UhfCircuitLineDesignatorPrimaryType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="HfCircuitLineDesignatorPrimaryType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="MaritimeRearLinkDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="PrimaryCommunicationsNetDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AlternateCommunicationsNetDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="VhfCircuitLineDesignatorPrimaryType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="CargoClassificationType" changeto="AlphaTextType"/>
+   <Change name="AircraftTypeAndModelOtherType" changeto="AlphaNumericTextType"/>
+   <Change name="UnitIdentificationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="ReportingOrganizationType" changeto="AlphaNumericTextType"/>
+   <Change name="ReportingUnitCodeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UniqueIdentifierUidType" changeto="AlphaNumericTextType"/>
+   <Change name="TrackUniqueIdentifierNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="OriginatingUnitIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="UnitIdentificationCodeSpecificType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ShipClassNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ShipclassNavalType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfShipClassType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UniqueNameOfShipType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubmarineClassDesignatorType" changeto="AlphaSpecialTextType"/>
+   <Change name="IcaoLocationIndicatorType" changeto="AlphaNumericTextType"/>
+   <Change name="TargetMaterialPageType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OneDegreeQuadrilateralGeorefType"
+           changeto="AlphaSubsetQuadGeoRefTextType"/>
+   <Change name="FifteenDegreeQuadrilateralGeorefType"
+           changeto="AlphaSubsetQuadGeoRefCodeType"/>
+   <Change name="PolTypeNameType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="OilTypeType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="AircraftAlertReadinessStateType"
+           changeto="AlphaSubsetReadinessStateTextType"/>
+   <Change name="RunwayDesignatorType" changeto="AlphaSubsetNumericDesignatorType"/>
+   <Change name="GlobalAreaReferenceSystemType"
+           changeto="GlobalAreaReferenceSystemType"/>
+   <Change name="DataRateOfACommunicationsSatelliteAccessType"
+           changeto="DataRateOfACommunicationsSatelliteAccessType"/>
+   <Change name="IndexNumberType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ExpansionItemType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ProducerCodeType" changeto="AlphaTextType"/>
+   <Change name="SpecificRadioFrequencyType" changeto="RadioFrequencyType"/>
+   <Change name="AssignedRadioFrequencyType" changeto="RadioFrequencyType"/>
+   <Change name="WindowRadioFrequencyType" changeto="RadioFrequencyType"/>
+   <Change name="ControlPointDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecialCaveatsType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="NavigationHazardWarningType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubjectContinuityCodeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EllipticalAreaType" changeto="EllipticalAreaType"/>
+   <Change name="DescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="ControlPointDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="MarkerDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="TargetAreaDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="TargetDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="TargetElementDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="CollateralDamageDescriptionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TrpDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="NavigationAidDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="MickeyNetControllerType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="InitialPointDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="AdditionalGroupInstructionsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DesiredMeanPointOfImpactDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="StaffCommentsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DiscrepancyDescriptionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PeriodDiplomaticClearanceValidType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EventDescriptionType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="GeneralDescriptionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ComintNotationType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="ProjectIdentifierCodeType" changeto="AlphaTextType"/>
+   <Change name="TopicReportProductCodeType" changeto="AlphaTextType"/>
+   <Change name="OptionNicknameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SecondaryOptionNicknameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NewNicknameType" changeto="AlphaBlankTextType"/>
+   <Change name="OldNicknameType" changeto="AlphaBlankTextType"/>
+   <Change name="MissionNicknameType" changeto="AlphaBlankTextType"/>
+   <Change name="TheaterTargetCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="IntratheaterTargetNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="SubstanceReleaseHeightType"
+           changeto="LinearMeasurementAndUnitType"/>
+   <Change name="MaxSubstanceReleaseHeightType"
+           changeto="LinearMeasurementAndUnitType"/>
+   <Change name="MinSubstanceReleaseHeightType"
+           changeto="LinearMeasurementAndUnitType"/>
+   <Change name="AircraftStartingUnitType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="NavigationalAidIdentifierType" changeto="AlphaTextType"/>
+   <Change name="AudioIdentifierType" changeto="AlphaTextType"/>
+   <Change name="NavigationAidIdentifierCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="TacanIdentifierType" changeto="AlphaTextType"/>
+   <Change name="TrackNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="AirRefuelingShortTrackIdentifierType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="AirRefuelingTrackIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="ReconnaissanceOperatingAreaType" changeto="AlphaNumericTextType"/>
+   <Change name="ReconnaissanceTrackNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="MaritimeTrackNumberType" changeto="NumericBaseTenTextType"/>
+   <Change name="TrackIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="TrueBearingAndDistanceInNmFromReferencePointType"
+           changeto="TrueBearingAndDistanceInNmFromReferencePointType"/>
+   <Change name="SpecificTypeOfTrackType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="IffSifCodeOrConditionType" changeto="AlphaNumericTextType"/>
+   <Change name="SerialIdentifierType" changeto="AlphaTextType"/>
+   <Change name="SerialLetterType" changeto="AlphaTextType"/>
+   <Change name="AewBarrierDesignatorType" changeto="AlphaTextType"/>
+   <Change name="SearchEffortIdentifierType" changeto="AlphaTextType"/>
+   <Change name="ContactSequential2LetterIdentifierType"
+           changeto="AlphaSubsetSequentialCodeType"/>
+   <Change name="NetIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="ReferenceSetSerialLetterType" changeto="AlphaTextType"/>
+   <Change name="MineMarkModType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="LandMineTypeOtherType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="DateTimeGroupType" changeto="DateTimeGroupType"/>
+   <Change name="DateTimeGroupAsapaftType" changeto="DateTimeGroupType"/>
+   <Change name="DateTimeGroupAsapnltType" changeto="DateTimeGroupType"/>
+   <Change name="DateTimeGroupNetType" changeto="DateTimeGroupType"/>
+   <Change name="DateTimeGroupNltType" changeto="DateTimeGroupType"/>
+   <Change name="DateTimeGroupReleaseType" changeto="DateTimeGroupType"/>
+   <Change name="DateTimeGroupDurationType" changeto="DateTimeGroupDurationType"/>
+   <Change name="UsageType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DateDdmmmyyyyType" changeto="DateDdmmmyyyyType"/>
+   <Change name="UnitSubtypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MajorEquipmentTypeCodeType"
+           changeto="AlphaNumericMajorEquipmentCodeType"/>
+   <Change name="PlanMajorEquipmentTypeCodeType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="CommunicationsEquipmentTypeCodeType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ZoneOfFireResponsibilityType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ActionCodeType" changeto="AlphaBlankTextType"/>
+   <Change name="BodyOfWaterType" changeto="AlphaNumericTextType"/>
+   <Change name="TypeOfChaffType" changeto="AlphaNumericTextType"/>
+   <Change name="ReferenceNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RendezvousAircraftReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RelatedSetDataLineReferenceNumberType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EscapeWarningReferenceNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BeaconCodeType" changeto="AlphaSubsetAToFTextType"/>
+   <Change name="DerivativeSourceForClassificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeclassificationInstructionsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OriginalClassificationAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DowngradeInstructionsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FrequencyDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="PrimaryFrequencyDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="SecondaryFrequencyDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="FrequencyJammedDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LandingSitePrimaryFrequencyDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="LandingSiteSecondaryFrequencyDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="AgencyContactFrequencyDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ImageryDataLinkDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="DatalinkFrequencyCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="CasFrequencyType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NavigationalAidFrequencyDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ForceMarshallerFrequencyDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="GuidanceFrequencyDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="RadioFrequencyCodeLowerLimitType" changeto="AlphaNumericTextType"/>
+   <Change name="RadioFrequencyCodeUpperLimitType" changeto="AlphaNumericTextType"/>
+   <Change name="GeorefCentiminuteType" changeto="GeorefCentiminuteType"/>
+   <Change name="EmissionControlPlanType" changeto="AlphaTextType"/>
+   <Change name="EmissionControlPlanIdentifierType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EmissionControlPlanDesignationType" changeto="AlphaBlankTextType"/>
+   <Change name="AngleInDegreesTrueMagneticOrRelativeType"
+           changeto="AngleInDegreesTrueMagneticOrRelativeType"/>
+   <Change name="SegmentParameterType" changeto="AlphaNumericTextType"/>
+   <Change name="VelocityInMetersPerSecondType"
+           changeto="VelocityInMetersPerSecondType"/>
+   <Change name="AltitudeInFeetOrMetersType" changeto="AltitudeInFeetOrMetersType"/>
+   <Change name="DateTimeIsoType" changeto="DateTimeIsoType"/>
+   <Change name="EmissionsDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="DistanceInNauticalMilesMetersOrKilometersType"
+           changeto="DistanceInNauticalMilesMetersOrKilometersType"/>
+   <Change name="SizeAndUnitOfMeasurementType"
+           changeto="SizeAndUnitOfMeasurementType"/>
+   <Change name="MaxSizeAndUnitOfMeasurementType"
+           changeto="SizeAndUnitOfMeasurementType"/>
+   <Change name="MinSizeAndUnitOfMeasurementType"
+           changeto="SizeAndUnitOfMeasurementType"/>
+   <Change name="AverageApproachGradientType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LeftFlankApproachGradientType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CenterFlankApproachGradientType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RightFlankApproachGradientType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MapProducerType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="Link1ReportingUnitNumberType"
+           changeto="Link1ReportingUnitNumberType"/>
+   <Change name="AnnotationType" changeto="AlphaTextType"/>
+   <Change name="NationalRoeNumberType" changeto="AlphaBlankTextType"/>
+   <Change name="USRoeNumberType" changeto="AlphaBlankTextType"/>
+   <Change name="CityType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CityOfOwnerRegistrationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StateOrProvinceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InternationalPostalZipCodeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ManufacturerType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LocationAmplificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WeaponCaliberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InformationSourceType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DataSourceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TrackDataSourceOtherType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ExpandedPlatformTypeDescriptionType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="Link16TrackNumberReferenceType"
+           changeto="Link16TrackNumberReferenceType"/>
+   <Change name="TargetObjectiveType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ElectronicDataType"
+           changeto="AlphaNumericSpecialElectronicDescriptionType"/>
+   <Change name="StorageCapacityType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="Link1TrackNumberBlockType" changeto="Link1TrackNumberBlockType"/>
+   <Change name="Atdl1SupportingUnitSuAddressType"
+           changeto="Atdl1SupportingUnitSuAddressType"/>
+   <Change name="Atdl1TrackNumberBlockType" changeto="Atdl1TrackNumberBlockType"/>
+   <Change name="AltitudeOrAltitudeBandInMslOrFlType"
+           changeto="AltitudeOrAltitudeBandInMslOrFlType"/>
+   <Change name="ValidationCodeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RadiusAndUnitOfMeasurementType"
+           changeto="RadiusAndUnitOfMeasurementType"/>
+   <Change name="LevelOfContaminationAndUnitOfMeasurementType"
+           changeto="LevelOfContaminationAndUnitOfMeasurementType"/>
+   <Change name="LevelOfDoseAndUnitOfMeasurementType"
+           changeto="LevelOfDoseAndUnitOfMeasurementType"/>
+   <Change name="LevelOfDoseRateDosageAndUnitOfMeasurementType"
+           changeto="LevelOfDoseRateDosageAndUnitOfMeasurementType"/>
+   <Change name="AirliftRequestPriorityType" changeto="AlphaNumericTextType"/>
+   <Change name="LevelOfHazardType" changeto="LevelOfHazardType"/>
+   <Change name="TargetOriginatorAndTargetClassificationType"
+           changeto="AlphaSubsetSequentialCodeType"/>
+   <Change name="AircraftIdentificationProceduresType" changeto="AlphaTextType"/>
+   <Change name="CargoCategoryTypeCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="CategoryOfSpecialInterestCargoType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirEvacuationMissionPriorityType" changeto="AlphaNumericTextType"/>
+   <Change name="TargetPriorityType" changeto="AlphaNumericTextType"/>
+   <Change name="AirMissionPriorityType" changeto="AlphaNumericTextType"/>
+   <Change name="SpaceObjectPriorityType" changeto="AlphaNumericTextType"/>
+   <Change name="TaskingPriorityType" changeto="AlphaTextType"/>
+   <Change name="VipCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="ImageryMissionNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NomenclatureType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PartNomenclatureType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TacanNomenclatureType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FrequencyNumericAndModeType"
+           changeto="FrequencyNumericAndModeType"/>
+   <Change name="NicsLocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="NicsRelocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="NicsAlternateRelocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="ImageNumberType" changeto="AlphaNumericImageNumberTextType"/>
+   <Change name="AdditionalImageNumberSType"
+           changeto="AlphaNumericImageNumberTextType"/>
+   <Change name="NationalBasicReferenceGraphicNumberType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="UnitIdentifierType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FriendlyUnitDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfUnitCreatingTrackType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeliveryAddressType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitDesignatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ParentUnitDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HigherEchelonDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EnemyUnitDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfUnitSchedulingTrackType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EmergencyDisablementEvacuationUnitType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StayBackUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EvacuatedToUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MinelayingUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AuthorizationUnitType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ParentUnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MinefieldMaintenanceUnitType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ComponentCommandType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RequestingComponentCommandType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ComplyingComponentCommandOrUnitType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TaskedUnitDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TaskOrganizationNumericalDesignatorType"
+           changeto="NumericSpecialTaskDesignatorTextType"/>
+   <Change name="RequestingUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitIdType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineCountermeasureUnitType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CapturingUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ArbitraryUnitIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AirTaskUnitIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FireUnitDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RequestingAgencyDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CollectionUnitDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GuardUnitNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CoordinatingEstablishingAuthorityIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StandbyUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitIdentityType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitDesignationType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitAffectedType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SupportingUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CoordinatingUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ParentUnitOneType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ParentUnitTwoType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OriginalReportingCommandType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReportingUnitNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EnemyUnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TacticalControlAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="JtidsPlatformTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DesignationOfEnemyUnitType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="AircraftUnitDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DirectionFindingFacilityDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RequestingUnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RequestingAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitNameAmcType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ResponsibleCommandType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ForceOrUnitRequiredToAcknowledgeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReportingUnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AgencyDesignatorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitBeingJoinedOrDetachedFromType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ObUnitIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="TaskedUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitDesignatorNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitSupportedType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReceivingAgencyType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SearchAndRescueSarUnitSruIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LosingOperationalAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GainingOperationalAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DeliveryUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RightAdjacentUnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="LeftAdjacentUnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SubOrganizationIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitOrShopResponsibleForMaintenanceType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="SatelliteAccessAuthorizationAgencyDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitIdentifierOfMaintenanceRecoveryTeamType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FriendlyUnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitIdentityExpandedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HonorificEntityNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReportingUnitType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ControlUnitDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="EnemyParentUnitDesignatorType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ParentUnitHonorificEntityNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AvailableUnitsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OrganizationIdentifierType" changeto="AlphaTextType"/>
+   <Change name="MovingUnitIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NextOfKinBookHolderType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OperationalCommandType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReserveComponentRoundoutUnitNameAbbreviatedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OrganizationType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineCountermeasureUnitIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AssignedWingAndOrGroupType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="SquadronNumberType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="UnitOperatingMissionType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="MineCountermeasureOfficerInTacticalCommandOtcType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HigherFormationType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SupportingUnitNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NameOfUnitInCommandType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SectionDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="PlatoonDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="BatteryCompanyDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="BattalionRegimentDesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="RegimentBrigadeDivisionDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ReplyToOfficeSymbolType" changeto="AlphaNumericTextType"/>
+   <Change name="HazardousCargoDesignatorType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="HazardousCargoLoadingAndStorageGroupNumberType"
+           changeto="NumericBaseTenTextType"/>
+   <Change name="LoadTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CargoTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CargoNameTypeOrNomenclatureType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissionPayloadType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SolidCargoAmmunitionTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StoresTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeOfContainerType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftSideNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="SigintSpotReportSerialType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SigintElectrigramReportSerialType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SurfaceActionPlanType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BdaResultsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AuthenticationSystemType" changeto="AlphaNumericTextType"/>
+   <Change name="OrdnanceFuzeTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HarmonicType" changeto="NumericNegativeTextType"/>
+   <Change name="PlatformTypeSymbolType" changeto="AlphaNumericTextType"/>
+   <Change name="TaskPlatformTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ImageryPlatformTypeType" changeto="AlphaNumericTextType"/>
+   <Change name="SubmarineEngineTypeType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SensorAssetType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TmdSensorAssetType" changeto="AlphaNumericBlankSpecialIDType"/>
+   <Change name="ShipPennantPrefixType" changeto="AlphaTextType"/>
+   <Change name="AcousticSourceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecialConfigurationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HardwareConfigurationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SoftwareVersionType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="TemperatureInDegreesCelsiusOrFahrenheitType"
+           changeto="TemperatureInDegreesType"/>
+   <Change name="MaxInitialTemperatureInDegreesCelsiusOrFahrenheitType"
+           changeto="TemperatureInDegreesType"/>
+   <Change name="MinInitialTemperatureInDegreesCelsiusOrFahrenheitType"
+           changeto="TemperatureInDegreesType"/>
+   <Change name="TargetIdentifierType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TrademarkType" changeto="AlphaNumericSpecialTrademarkTextType"/>
+   <Change name="JointDesiredPointOfImpactJdpiType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="HfdfTargetSetIdentifierType" changeto="AlphaTextType"/>
+   <Change name="TrackUniqueIdentifierType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="DesiredMeanPointOfImpactDmpiIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetTheaterIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BeachDesignatorType" changeto="AlphaBlankTextType"/>
+   <Change name="UprightSequenceType" changeto="AlphaSubsetSequenceTextType"/>
+   <Change name="TowedArraySystemTasContactInvestigationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AltitudeQualifiedType" changeto="AltitudeQualifiedType"/>
+   <Change name="FlightLevelQualifiedType" changeto="FlightLevelQualifiedType"/>
+   <Change name="CorrelationIndexType" changeto="AlphaNumericTextType"/>
+   <Change name="ReferencePointIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="QRoutePointDesignatorType" changeto="AlphaTextType"/>
+   <Change name="HfdfTaskerUnitDigraphType" changeto="AlphaNumericTextType"/>
+   <Change name="MilitaryRankRatingOrGradeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RankOrGradeOfDeceasedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PersonnelGradeType" changeto="AlphaNumericTextType"/>
+   <Change name="RankOfCommanderType" changeto="AlphaNumericTextType"/>
+   <Change name="PrimarySortsMonitorGradeOrRankType" changeto="AlphaTextType"/>
+   <Change name="AlternateSortsMonitorGradeOrRankType" changeto="AlphaTextType"/>
+   <Change name="CommunicationsCodeType" changeto="AlphaNumericBlankTextType"/>
+   <Change name="ChannelizationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="CodesCryptoInUseType" changeto="AlphaNumericTextType"/>
+   <Change name="NonNatoAircraftTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftNameNatoType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AswExerciseCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="DepthDeterminationMeansType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AlphabeticIndicatorType" changeto="AlphaTextType"/>
+   <Change name="MunitionsItemAlternateIdentificationCodeType"
+           changeto="AlphaSubsetSequentialIDType"/>
+   <Change name="AlphabeticIdentifierFrequencyBandType"
+           changeto="AlphaSubsetAToMTextType"/>
+   <Change name="FormatIndexLetterType" changeto="AlphaTextType"/>
+   <Change name="McmOperationSuffixType" changeto="AlphaTextType"/>
+   <Change name="MinefieldSegmentIdentifierType" changeto="AlphaTextType"/>
+   <Change name="McmBuoySequentialIdentifierType"
+           changeto="AlphaSubsetSequentialIDType"/>
+   <Change name="ShipAlphabeticIdentifierType" changeto="AlphaTextType"/>
+   <Change name="PointAlphabeticIdentifierType" changeto="AlphaTextType"/>
+   <Change name="ColumnAlphabeticIndicatorType"
+           changeto="AlphaSubsetSequentialColumnCodeType"/>
+   <Change name="ContactSequential1LetterIdentifierType"
+           changeto="AlphaSubsetSequentialCodeType"/>
+   <Change name="BroadcastGeographicalAreaType"
+           changeto="BroadcastGeographicalAreaType"/>
+   <Change name="MineCountermeasureOperationSuffixType" changeto="AlphaTextType"/>
+   <Change name="SectorLetterType" changeto="AlphaSubsetSequentialIDType"/>
+   <Change name="RemarkIdentificationType" changeto="AlphaSubsetSequentialIDType"/>
+   <Change name="AlphabeticIdentifierType" changeto="AlphaSubsetSequentialIDType"/>
+   <Change name="AlphabeticIdentifierSpecialType" changeto="AlphaBlankTextType"/>
+   <Change name="AppendixIdentifierType" changeto="AlphaSubsetAToDTextType"/>
+   <Change name="InitialLetterType" changeto="AlphaTextType"/>
+   <Change name="TrackStartDesignatorType"
+           changeto="AlphaSubsetTrackStartDesignatorType"/>
+   <Change name="TrackEndDesignatorType"
+           changeto="AlphaSubsetTrackEndDesignatorType"/>
+   <Change name="RequisitionSerialNumberSuffixType" changeto="AlphaTextType"/>
+   <Change name="DutyOtherType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="Link16UnitAddressBlockAssignmentType"
+           changeto="UnitAddressBlockAssignmentType"/>
+   <Change name="JtidsUnitAddressBlockAssignmentType"
+           changeto="UnitAddressBlockAssignmentType"/>
+   <Change name="LaunchModeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SeekerPatternType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TargetItemCategoryType" changeto="NumericBaseTenTextType"/>
+   <Change name="SigintNumericalTaskingRegisterSnutrType"
+           changeto="NumericBaseTenTextType"/>
+   <Change name="SpecialOperationalElintRequirementSpoerType"
+           changeto="NumericSpecialTextType"/>
+   <Change name="NationalSigintRequirementsListNsrlType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="LocalCommanderCollectionRequirementType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ReconnaissanceMissionAssessmentType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="FirstSequenceOfEventsEnteringOrbitType" changeto="AlphaTextType"/>
+   <Change name="SecondSequenceOfEventsExitingOrbitType" changeto="AlphaTextType"/>
+   <Change name="ReconnaissanceSequenceOfEventsType" changeto="AlphaTextType"/>
+   <Change name="LogisticsRoutingIndicatorType" changeto="AlphaNumericTextType"/>
+   <Change name="ProjectCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="RequisitionStatusType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DataElementLabelType" changeto="AlphaNumericTextType"/>
+   <Change name="StatusOfAviatorTrainingType" changeto="NumericBaseTenTextType"/>
+   <Change name="UnitTypeCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="PlanUnitTypeCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="SpecialMaterialIdentificationCodeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="SpecifiedGeolocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="DestinationGeolocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="HomeGeolocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="PresentGeolocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="PersonnelGeolocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="TemporaryEquipmentCrewGeolocationCodeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentTemporaryGeolocationCodeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ExtendedActiveDutyGeolocationCodeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="CommunicationsEquipmentGeolocationCodeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentRelocationGeolocationCodeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentGeolocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="PlannedGeolocationCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="HierarchyForCommunicationsUnitsOrganizationalCodeType"
+           changeto="AlphaTextType"/>
+   <Change name="RequirementObjectiveCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="AssignmentCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="InstallationTheArmyAuthorizationDocumentsType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="StandardRequirementCodeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SymbolIdentificationCodeSidcType"
+           changeto="SymbolIdentificationCodeSidcType"/>
+   <Change name="DurationOfHazardAndUnitOfMeasurementType"
+           changeto="DurationOfHazardAndUnitOfMeasurementType"/>
+   <Change name="ElectronicMailAddressType" changeto="EmailAddressType"/>
+   <Change name="SecureElectronicMailAddressType" changeto="EmailAddressType"/>
+   <Change name="NiprnetEMailAddressType" changeto="EmailAddressType"/>
+   <Change name="SiprnetEMailAddressType" changeto="EmailAddressType"/>
+   <Change name="JwicsEMailAddressType" changeto="EmailAddressType"/>
+   <Change name="AlternateEMailAddressType" changeto="EmailAddressType"/>
+   <Change name="EMailDistributionListType" changeto="EmailAddressType"/>
+   <Change name="EcmResistantVoiceErvChannelNumberType"
+           changeto="EcmResistantVoiceErvChannelNumberType"/>
+   <Change name="Priority1ATo4ZType" changeto="Priority1ATo4ZType"/>
+   <Change name="SonobuoyOrSatelliteChannelSettingType"
+           changeto="SonobuoyOrSatelliteChannelSettingType"/>
+   <Change name="TlamEngineVariantType" changeto="NumericBaseTenTextType"/>
+   <Change name="ContactShapeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AssemblyAreaTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PostalFootnoteCodesType" changeto="AlphaNumericTextType"/>
+   <Change name="UniqueBoundaryDesignation1Type"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UniqueBoundaryDesignation2Type"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UniqueDesignationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UniqueDesignation2Type"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CommunicationsCenterType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="RecordOriginatorBeNumberType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ProgramCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="ProductNumberType" changeto="AlphaSubsetNumericAToFTextType"/>
+   <Change name="ProducerSerialNumberType"
+           changeto="AlphaSubsetNumericAToFTextType"/>
+   <Change name="ProductionDateTimeType" changeto="AlphaSubsetNumericAToFTextType"/>
+   <Change name="UnexplodedOrdnanceInformationType" changeto="AlphaBlankTextType"/>
+   <Change name="BearingAndDistanceFromRefPointType"
+           changeto="BearingAndDistanceFromRefPointType"/>
+   <Change name="ElevationInFeetOrMetersQualifiedType"
+           changeto="ElevationInFeetOrMetersQualifiedType"/>
+   <Change name="WorkUnitCodeStandardReferenceDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="EquipmentMalfunctionCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="ProbableCoordinateErrorInFeetOrMetersType"
+           changeto="ProbableCoordinateErrorInFeetOrMetersType"/>
+   <Change name="NatoStockNumberType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NationalShortCodeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NationalStockNumberType" changeto="NumericSpecialTextType"/>
+   <Change name="StockNumberOfPartType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="StockNumberOfSubAssemblyType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DepartmentOfDefenseIdentificationCodeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="ControlPositionReadinessStatusType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaWeaponControlSurfaceToAirWeaponsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AreaWeaponControlAircraftType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WeaponControlAncillaryInformationType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="CountermeasuresTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CountermeasureProgramType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PersonalTitleType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CircuitTitleType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CoordinationCircuitTitleType"
+           changeto="AlphaNumericBlankTextType"/>
+   <Change name="TitleOfDocumentType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MilitaryLoadClassificationType" changeto="AlphaNumericTextType"/>
+   <Change name="ApproachType" changeto="AlphaTextType"/>
+   <Change name="HandlingInstructionsType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="IntelligenceType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="MentalStateType" changeto="AlphaBlankSpecialTextType"/>
+   <Change name="StandardNetworkSettingsSnsTableType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InternetProtocolAddressIpv4Type"
+           changeto="InternetProtocolAddressIpv4Type"/>
+   <Change name="InternetProtocolAddressIpv6Type"
+           changeto="AlphaSubsetNumericIpv6TextType"/>
+   <Change name="SpaceMissionTaskingType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PlaceLocationIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="KillBoxType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MinefieldIdentifierType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GridCenterIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="TimeSeparationOperatingAreaOffsetParameterType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReportableItemCodeRicType" changeto="AlphaNumericSpecialTextType"/>
+   <Change name="SpecificAreaTypeType" changeto="AlphaTextType"/>
+   <Change name="MilitaryAssetTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PoliticalAssetTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="BirthplaceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SecurityClearanceGrantingAgencyType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftRoleGeneralType" changeto="AlphaNumericTextType"/>
+   <Change name="DocIdentifierCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="SecondaryOrSubordinateDocidType" changeto="AlphaNumericTextType"/>
+   <Change name="MilitaryOccupationalSpecialtyType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="AuthorizedLanguageIndicatorCodeType" changeto="AlphaTextType"/>
+   <Change name="LanguageIndicatorCodeMilitaryOccupationalSpecialtyType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="AdditionalSkillIdentifierType" changeto="AlphaNumericTextType"/>
+   <Change name="AngleInDegreesTrueGridMagneticOrRelativeType"
+           changeto="AngleInDegreesTrueGridMagneticOrRelativeType"/>
+   <Change name="SatelliteAccessSupportSegmentIndicatorType"
+           changeto="AlphaTextType"/>
+   <Change name="OtherSourceSOfGainType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpeedType" changeto="SpeedType"/>
+   <Change name="CommunicationsEmitterNotationType"
+           changeto="AlphaNumericBlankTextType"/>
+   <Change name="CodewordType" changeto="AlphaBlankSpecialCodeType"/>
+   <Change name="CodewordMeaningType" changeto="AlphaNumericBlankSpecialCodeType"/>
+   <Change name="CodeNameType" changeto="AlphaNumericBlankSpecialCodeType"/>
+   <Change name="CodewordContractedType"
+           changeto="AlphaNumericBlankSpecialCodeType"/>
+   <Change name="DesiredMeanPointOfImpactType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AngleInDegreesTrueType" changeto="AngleInDegreesTrueType"/>
+   <Change name="CombatNetRadioInitializationDataLoadIdType"
+           changeto="AlphaNumericBlankSpecialInitDataLoadIDType"/>
+   <Change name="DesignatorType" changeto="AlphaNumericTextType"/>
+   <Change name="PortCodeType" changeto="AlphaTextType"/>
+   <Change name="DocumentOrPublicationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CallsignLineNumberDocumentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnitLineNumberDocumentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TechnicalPubIdType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DocumentNumberOfOrderedPartType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TechnicalOrderForPartType" changeto="AlphaNumericTextType"/>
+   <Change name="TechnicalOrderVolumeNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TechnicalOrderIndexNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="TechnicalOrderFigureNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="CircuitCallsignUseType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OrdnanceWeaponTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MaritimeWeaponsEquipmentType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SurfaceShipGunnerySystemType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WeaponSystemType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NuclearWeaponTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EnemyWeaponType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissileTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AswWeaponTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="AircraftWeaponLoadType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="UnexplodedOrdnanceWeaponIdentificationOrTypeType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="OrdnanceWeaponTypeBySclCodeType" changeto="AlphaNumericTextType"/>
+   <Change name="OrdnanceWeaponTypeLiteralType" changeto="AlphaNumericTextType"/>
+   <Change name="WeaponTypeExpendedType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OrdnanceWeaponTypeNameNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OrdnanceWeaponSystemTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OwnWeaponsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="WeaponTypeGenericType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MixOfWeaponsType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MissileOrderType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SurfaceToAirWeaponSystemTypeOtherType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SurfaceToAirMissileTypeType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeOfNetworkEnabledWeaponOtherType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SpecificDeliverySystemIdentificationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="InterceptorTypeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="CoordinatingMeasureDesignatorType"
+           changeto="AlphaNumericTextType"/>
+   <Change name="DamageCategoryType" changeto="AlphaAToGTextType"/>
+   <Change name="DamageConfidenceType" changeto="AlphaSubsetAToLTextType"/>
+   <Change name="QRoutePositionType" changeto="QRoutePositionType"/>
+   <Change name="OperationalControlAuthorityType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ContactStatusType" changeto="AlphaBlankTextType"/>
+   <Change name="MineFiringSystemType" changeto="AlphaTextType"/>
+   <Change name="KeymatAndCodesType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="TypeOfCodingType" changeto="TypeOfCodingType"/>
+   <Change name="PeriodInForceType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="FrequencyPlanType" changeto="AlphaTextType"/>
+   <Change name="Link22FreqPlanType" changeto="AlphaSubsetNumericAToFTextType"/>
+   <Change name="CommanderNavalTaskDesignatorNameType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SearchAttackUnitOrSurfaceActionGroupCommanderType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="SearchAttackUnitCommanderType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MineCountermeasureEquipmentModeConfigurationType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="GmfSatelliteTerminalIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="GmfHubTerminalIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="GmfSpokeTerminalIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="GmfNodeTerminalIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="TransmittingTerminalIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="ReceivingTerminalIdentifierType"
+           changeto="AlphaNumericSpecialTextType"/>
+   <Change name="MethodOfPassingTargetInformationType"
+           changeto="AlphaBlankTextType"/>
+   <Change name="PersinsProcessingActivityType" changeto="AlphaNumericTextType"/>
+   <Change name="ReasonForCancellationOfSatelliteAccessType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReasonForTerminationOfSatelliteAccessType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ReasonForChangeOfSatelliteAccessType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NavyCodedReasonUnitNotC1Type" changeto="AlphaTextType"/>
+   <Change name="NavyCodedReasonEquipmentConditionNotC1Type"
+           changeto="AlphaTextType"/>
+   <Change name="NavyCodedReasonEquipmentSuppliesNotC1Type"
+           changeto="AlphaTextType"/>
+   <Change name="NavyCodedSecondaryReasonUnitNotC1Type" changeto="AlphaTextType"/>
+   <Change name="NavyCodedTertiaryReasonUnitNotC1Type" changeto="AlphaTextType"/>
+   <Change name="NavyCodedReasonPersonnelNotC1Type" changeto="AlphaTextType"/>
+   <Change name="NavyPrimaryResourceCategoryType" changeto="AlphaTextType"/>
+   <Change name="NavySecondaryResourceCategoryType" changeto="AlphaTextType"/>
+   <Change name="NavyTertiaryResourceCategoryType" changeto="AlphaTextType"/>
+   <Change name="NavyCodedReasonReservePersonnelNotC1Type"
+           changeto="AlphaTextType"/>
+   <Change name="NavyCodedReasonTrainingNotC1Type" changeto="AlphaTextType"/>
+   <Change name="LinearDistanceAndUnitOfMeasurementType"
+           changeto="LinearMeasurementAndUnitType"/>
+   <Change name="AirTaskingOrderType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="IntegratedTaskingOrderType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MasterAirAttackPlanType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="MasterAttackPlanType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="OtherTaskingSourceType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ClassAndPennantNumberType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="PolarizationType" changeto="AlphaTextType"/>
+   <Change name="SignalStrengthType" changeto="AlphaNumericTextType"/>
+   <Change name="TypeOfSubjectType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NatoHullNumberType" changeto="AlphaNumericTextType"/>
+   <Change name="SensorQualifierType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NumberAndTypeOfOrderOfBattleType"
+           changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="EventType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="DayCodeToEventType" changeto="DayCodeToEventType"/>
+   <Change name="RoeConstraintsType"
+           changeto="AlphaNumericBlankSpecialDescriptionTextType"/>
+   <Change name="BoundarySpeedType" changeto="BoundarySpeedType"/>
+   <Change name="Link1111BTrackNumberBlockType" changeto="TrackNumberGroupType"/>
+   <Change name="Link11TrackNumberPoolType" changeto="TrackNumberGroupType"/>
+   <Change name="LowerTrackBlockLimitType" changeto="AlphaOctantTextType"/>
+   <Change name="UpperTrackBlockLimitType" changeto="AlphaOctantTextType"/>
+   <Change name="JtidsUnitAddressType" changeto="UnitAddressType"/>
+   <Change name="Link22UnitNuAddressType" changeto="UnitAddressType"/>
+   <Change name="ChatPurposeType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ChatMembersType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ChatModeratorType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="ChatRoomNameType" changeto="AlphaNumericBlankSpecialTextType"/>
+   <Change name="NetNumberRangeType" changeto="NetNumberRangeType"/>
+   <Change name="NetworkEnabledWeaponAddressBlockType"
+           changeto="NetworkEnabledWeaponAddressBlockType"/>
+   <Change name="SurfaceToSurfaceNetworkEnabledWeaponAddressBlockType"
+           changeto="NetworkEnabledWeaponAddressBlockType"/>
+   <Change name="WebsiteAddressType"
+           changeto="AlphaNumericSpecialNameOrAddressTextType"/>
+   <Change name="NationalGridSystemCoordinatesType"
+           changeto="NationalGridSystemCoordinatesType"/>
+</StringChanges>
