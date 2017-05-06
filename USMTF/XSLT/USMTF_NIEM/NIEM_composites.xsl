@@ -26,7 +26,7 @@
     consolidate fields and composites as global elements in the "Fields" XML Schema for the GoE refactor.
     type references are converted to local.-->
     <!--Normalized Fields XML Schema documents-->
-
+    
     <!--Composite Fields Baseline XML Schema document-->
     <xsl:variable name="composites_xsd" select="document('../../XSD/Baseline_Schema/composites.xsd')"/>
     <!--Simple Fields Baseline XML Schema document-->
@@ -139,7 +139,7 @@
             </xsd:annotation>
         </xsd:element>-->
     </xsl:template>
-
+    
     <!-- Replace type names with normalized type names for xsd:element nodes used in xsd:complexTypes-->
     <xsl:template match="xsd:element[@type]">
         <xsl:variable name="typ">
@@ -152,7 +152,7 @@
             <xsl:apply-templates select="@name" mode="txt"/>
         </xsl:variable>
         <xsl:variable name="n" select="@name"/>
-
+        
         <xsl:variable name="fldref">
             <xsl:choose>
                 <xsl:when test="$niem_fields_xsd/xsd:schema/xsd:element[@name = $t]">
@@ -236,7 +236,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
+    
     <xsl:template match="*" mode="el">
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*" mode="el"/>
@@ -258,6 +258,6 @@
             <xsl:apply-templates select="." mode="txt"/>
         </xsl:copy>
     </xsl:template>
-
+    
     <!-- _______________________________________________________ -->
 </xsl:stylesheet>

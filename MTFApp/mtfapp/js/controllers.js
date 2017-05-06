@@ -245,6 +245,7 @@ mtfApp.controller('fldCtl', function ($scope) {
         return fref;
     };
 });
+
 mtfApp.controller('setCtl', function ($scope) {
     var setctl = this;
     setctl.setvw = "templates/set.html";

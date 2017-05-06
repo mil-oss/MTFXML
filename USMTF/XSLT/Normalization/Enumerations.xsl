@@ -41,7 +41,7 @@
             <xsl:variable name="n">
                 <xsl:apply-templates select="@name" mode="txt"/>
             </xsl:variable>
-            <xsd:simpleType name="{$n}">
+            <xsd:simpleType name="{replace($n,'SimpleType','CodeSimpleType')}">
                 <xsl:apply-templates select="*"/>
             </xsd:simpleType>
         </xsl:for-each>
@@ -75,16 +75,16 @@
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="enumname">
                 <xsl:choose>
-                    <xsl:when test="ends-with($n,'SimpleType')">
+                    <xsl:when test="ends-with($n,'CodeSimpleType')">
                         <xsl:value-of select="$n"/>
                     </xsl:when>
                     <xsl:when test="ends-with($n,'Type')">
-                        <xsl:value-of select="concat(substring($n,0,string-length($n)-3),'SimpleType')"/>
+                        <xsl:value-of select="concat(substring($n,0,string-length($n)-3),'CodeSimpleType')"/>
                     </xsl:when>
                 </xsl:choose>
             </xsl:variable>
             <xsl:choose>
-                <xsl:when test="ends-with($n, 'SimpleType') and preceding-sibling::*/@name = $n"/>
+                <xsl:when test="ends-with($n, 'CodeSimpleType') and preceding-sibling::*/@name = $n"/>
                 <xsl:otherwise>
                     <xsd:simpleType name="{$enumname}">
                         <xsl:apply-templates select="*" mode="copy"/>

@@ -19,7 +19,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:include href="../USMTF_GoE/USMTF_Utility.xsl"/>
+    <xsl:include href="../USMTF_NIEM/USMTF_Utility.xsl"/>
     <!--Baseline xsd:simpleTypes-->
     <xsl:variable name="integers_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:integer']]"/>
     <xsl:variable name="decimals_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:decimal']]"/>

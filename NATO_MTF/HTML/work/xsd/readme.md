@@ -1,1 +1,0 @@
-Target directory for compressed XML Schema files.  The web applcation used LZ compression.  Files are not to be edited diectly.

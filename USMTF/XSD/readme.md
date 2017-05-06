@@ -1,1 +1,0 @@
-This is the source folder for baseline USMTF XML Schema documents.  Expected files are messages.xsd, sets.xsd, composites.xsd, fields.xsd, and IC-ISM-v2.xsd.

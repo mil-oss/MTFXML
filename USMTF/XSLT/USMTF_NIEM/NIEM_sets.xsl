@@ -37,7 +37,7 @@
     <xsl:variable name="enumeration_type_changes" select="document('../../XSD/Normalized/EnumerationTypeChanges.xml')/EnumerationChanges"/>
 
     <!--*****************************************************-->
-
+    
     <xsl:variable name="output" select="'../../XSD/NIEM_Schema/NIEM_sets.xsd'"/>
 
     <!--Root level complexTypes-->
@@ -249,10 +249,58 @@
                 </xsl:for-each>
             </xsd:schema>
         </xsl:result-document>
+        <xsl:result-document href="../../XSD/NIEM_Schema/NIEM_sets_complex_types.xsd">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:goe:sets" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:mtf="urn:mtf:mil:6040b:goe"
+                xmlns:f="urn:mtf:mil:6040b:goe:fields" 
+                xmlns:c="urn:mtf:mil:6040b:goe:composites"
+                xmlns:structures="http://release.niem.gov/niem/structures/3.0/" 
+                xmlns:ism="urn:us:gov:ic:ism:v2" targetNamespace="urn:mtf:mil:6040b:goe:sets" xml:lang="en-US"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="0.1">
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:fields" schemaLocation="NIEM_fields.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:goe:composites" schemaLocation="NIEM_composites.xsd"/>
+                <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/structures/3.0/" schemaLocation="structures.xsd"/>
+                <xsd:annotation>
+                    <xsd:documentation>XML Schema for USMTF Message Text Format Sets</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType name="SetBaseType">
+                    <xsd:annotation>
+                        <xsd:documentation>A data type for all sets which adds AMPN, NARR and security tagging.</xsd:documentation>
+                    </xsd:annotation>
+                    <xsd:complexContent>
+                        <xsd:extension base="structures:ObjectType">
+                            <xsd:sequence>
+                                <xsd:element ref="AmplificationSet" minOccurs="0" maxOccurs="1"/>
+                                <xsd:element ref="NarrativeInformationSet" minOccurs="0" maxOccurs="1"/>
+                            </xsd:sequence>
+                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+                <xsl:for-each select="$complex_types/*">
+                <xsl:sort select="@name"/>
+                <xsl:choose>
+                    <xsl:when test="deep-equal(preceding-sibling::xsd:complexType/xsd:complexContent, ./xsd:complexContent)"/>
+                    <xsl:otherwise>
+                        <xsl:copy-of select="." copy-namespaces="no"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+            </xsd:schema>
+        </xsl:result-document>
     </xsl:template>
 
     <!--*****************************************************-->
 
+    <xsl:template match="xsd:element[@ref]">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*"/>
+            <xsl:call-template name="Annotation">
+                <xsl:with-param name="node" select="."/>
+            </xsl:call-template>
+        </xsl:copy>
+    </xsl:template>
     <xsl:template match="xsd:element">
         <xsl:variable name="n">
             <xsl:apply-templates select="@name" mode="txt"/>
@@ -299,6 +347,18 @@
                     </xsl:attribute>
                     <xsl:apply-templates select="@*[not(name() = 'name')]"/>
                     <xsl:apply-templates select="xsd:annotation"/>
+                </xsl:copy>
+            </xsl:when>
+            <xsl:when test="@name = 'GroupOfFields'">
+                <xsl:copy copy-namespaces="no">
+                    <xsl:attribute name="name">
+                        <xsl:text>FieldGroup</xsl:text>
+                    </xsl:attribute>
+                    <xsl:apply-templates select="@*[not(name() = 'name')]"/>
+                    <xsl:call-template name="Annotation">
+                        <xsl:with-param name="node" select="."/>
+                    </xsl:call-template>
+                    <xsl:apply-templates select="*[not(name()='xsd:annotation')]"/>
                 </xsl:copy>
             </xsl:when>
             <xsl:when test="starts-with($bt, 'f:')">
@@ -472,7 +532,9 @@
                         <!--<xsl:copy-of select="$goe_fields_xsd/xsd:schema/xsd:element[@name = $basel]//xsd:restriction"/>-->
                     </xsl:when>
                     <xsl:when test="$goe_composites_xsd/xsd:schema/xsd:element[@name = $basel]/@type">
-                        <xsd:extension base="{concat('c:',$goe_composites_xsd/xsd:schema/xsd:element[@name = $basel]/@type)}"/>
+                        <xsd:extension base="{concat('c:',$goe_composites_xsd/xsd:schema/xsd:element[@name = $basel]/@type)}">
+                            
+                        </xsd:extension>
                     </xsl:when>
                 </xsl:choose>
             </xsl:when>
@@ -535,7 +597,7 @@
                     <xsl:apply-templates select="xsd:annotation"/>
                     <xsd:complexContent>
                             <xsd:extension base="structures:ObjectType">
-                        <xsl:apply-templates select="*[not(name()='xsd:annotation')]" mode="globals"/>
+                                <xsl:apply-templates select="*[not(name()='xsd:annotation')]" mode="globals"/>
                             </xsd:extension>
                     </xsd:complexContent>
                 </xsl:copy>
@@ -579,7 +641,7 @@
             <xsl:attribute name="ref">
                 <xsl:value-of select="$nn"/>
             </xsl:attribute>
-            <xsl:apply-templates select="@*[not(name() = 'name') and not(name() = 'type')]"/>
+            <xsl:apply-templates select="@*[not(name() = 'name') and not(name() = 'type')]"/>           
             <xsl:apply-templates select="xsd:annotation"/>
         </xsl:copy>
     </xsl:template>
@@ -690,6 +752,9 @@
                 </xsl:when>
                 <xsl:when test="$global_elements/xsd:element[@name = $r]">
                     <xsl:value-of select="$r"/>
+                </xsl:when>
+                <xsl:when test="ends-with($parent,'FieldGroup')">
+                    <xsl:value-of select="concat(substring-before($parent,'FieldGroup'), $r)"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="concat($parent, $r)"/>
