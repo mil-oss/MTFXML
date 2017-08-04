@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<schema
+   targetNamespace="http://purl.oclc.org/dsdl/schematron"
+   xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+   xmlns="http://www.w3.org/2001/XMLSchema">
+
+  <element name="pattern"/>
+  <element name="ns"/>
+
+</schema>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <uri name="http://release.niem.gov/niem/appinfo/3.0/" uri="niem/appinfo/3.0/appinfo.xsd"/>
+  <uri name="http://release.niem.gov/niem/codes/ansi_d20/3.0/" uri="niem/codes/ansi_d20/3.0/ansi_d20.xsd"/>
+  <uri name="http://release.niem.gov/niem/codes/fbi_ncic/3.0/" uri="niem/codes/fbi_ncic/3.0/fbi_ncic.xsd"/>
+  <uri name="http://release.niem.gov/niem/conformanceTargets/3.0/" uri="niem/conformanceTargets/3.0/conformanceTargets.xsd"/>
+  <uri name="http://release.niem.gov/niem/domains/jxdm/5.0/" uri="niem/domains/jxdm/5.0/jxdm.xsd"/>
+  <uri name="http://release.niem.gov/niem/domains/screening/3.0/" uri="niem/domains/screening/3.0/screening.xsd"/>
+  <uri name="http://release.niem.gov/niem/localTerminology/3.0/" uri="niem/localTerminology/3.0/localTerminology.xsd"/>
+  <uri name="http://release.niem.gov/niem/niem-core/3.0/" uri="niem/niem-core/3.0/niem-core.xsd"/>
+  <uri name="http://release.niem.gov/niem/proxy/xsd/3.0/" uri="niem/proxy/xsd/3.0/xs.xsd"/>
+  <uri name="http://release.niem.gov/niem/structures/3.0/" uri="niem/structures/3.0/structures.xsd"/>
+</catalog>
