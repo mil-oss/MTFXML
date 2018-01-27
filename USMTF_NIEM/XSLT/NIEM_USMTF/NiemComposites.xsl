@@ -22,8 +22,8 @@
     <xsl:include href="NiemMap.xsl"/>
 
     <!--Outputs-->
-    <xsl:variable name="compositeoutputdoc" select="concat($srcdir, 'NIEM_MTF_Composites.xsd')"/>
-    <xsl:variable name="compositemapoutputdoc" select="concat($srcdir, 'Maps/NIEM_MTF_Compositemaps.xml')"/>
+    <xsl:variable name="compositeoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Composites.xsd')"/>
+    <xsl:variable name="compositemapoutputdoc" select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Compositemaps.xml')"/>
 
     <xsl:variable name="elementsxsd">
         <xsl:for-each select="$all_composite_elements_map/*">

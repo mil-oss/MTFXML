@@ -1,0 +1,713 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>MTFXML REFACTOR</title>
+<style type="text/css">
+    body {}
+li { list-style: none;  margin: 0; }
+p { margin: 0; }
+
+span.foldopened, span.foldclosed  {
+    font-size: xx-small;
+    border-width: 1;
+    font-family: monospace;
+    padding: 0em 0.25em 0em 0.25em;
+    background: #e0e0e0;
+    cursor:pointer;
+}
+span.foldopened  {
+    color: white;
+    VISIBILITY: visible;
+}
+span.foldclosed {
+    color: #666666;
+    VISIBILITY: hidden;
+}
+span.foldspecial {
+    color: #666666;
+    font-size: xx-small;
+    border-style: none solid solid none;
+    border-color: #CCCCCC;
+    border-width: 1;
+    font-family: sans-serif;
+    padding: 0em 0.1em 0em 0.1em;
+    background: #e0e0e0;
+    cursor:pointer;
+}
+span.l { color: red; font-weight: bold; }
+
+a.mapnode:link,
+a.mapnode:visited,
+a.mapnode:active,
+a.mapnode:hover {
+    text-decoration: none; color: black;
+}
+a.mapnode:hover { background: #eeeee0; }
+
+
+</style>
+<!-- ^ Position is not set to relative / absolute here because of Mozilla -->
+</head>
+<body>
+<p>MTFXML REFACTOR</span>
+<ul><li>Background</span>
+<ul><li><p>The current XML Schema for US and NATO MTF are designed for piecemeal implementation of messages based on commonly defined XML nodes which are maintained in relational databases.  This makes normalization, re-use, and configuration management difficult.</span>
+<p>Because the current XML Schema design does not support implementation of the entire standard, there are persistent mismatches of messages implemented and versions across systems.</span>
+<p>The re-factor of these standards to a Garden of Eden XML Schema Design model allows provisioning of consolidated XML Schema files with a manageable sizes to allow complete implementation of every message using a uniform and re-usable methodology.</span>
+<p>Alignment with the US National Information Exchange Model (NIEM) methodology will allow the development and re-use of stndardized Information Exchange Product Documentation (IEPD) resources which will support valid implementations and promote interoperability with external specifications.</span>
+</li>
+</ul>
+</li>
+<li>Goals</span>
+<ul><li><p>This project will use the Extensible Stylesheet Language for Transformation (XSLT) to convert existing XML Schema products to Garden of Eden design pattern, and will reduce file sizes by normalizing Types, using attributes in annotation elements, and applying fixed values where appropriate to reduce ambiguity and eliminate rules which specify required content.</span>
+<p>The resulting XML Schema products will support all requirements for the text based slash delimited MTF format, and will avoid alteration of XML element names except where absolutely necessary for naming deconfliction of global nodes.  Except for a few cases, XML instances from the current standard will validate against the re-factored XML Schemas if common namespaces are assigned.</span>
+<p>This project is intended to support holistic implementation of the standards in order to facilitate use in web services, allow conversion between US and NATO specification, conversion between message versions, and interoperability with other standard formats.</span>
+</li>
+</ul>
+</li>
+<li>Usage</span>
+<ul><li><p>The process for converting from current standard formats is provided for purposes of integrity, testing and verification.  For most use cases, the generated XML Schemas can be used without repeating this conversion.</span>
+<p>Reference implementation products are intended for re-use and distribution in order to promote interoperability and uniformity in implementations.  These products should load the provided re-factored XML Schemas and provide intended MTF messaging functionality for every message and message component.</span>
+</li>
+</ul>
+</li>
+<li>Caveats</span>
+<ul><li><p>All data resources are restricted for distribution.  This requires complete separation of presentation and data.  No implementations may retain data from the XML Schema resources in code.</span>
+<p>Alteration or further re-factoring of the provided XML Schema must implement new namespace assignments.</span>
+<p>Because US and NATO specifications are closely aligned, all products are very similar and can often be re-used interchangeably.  Minor differences will occur, so For purposes of clarity and distribution they are provided separately with each standard.</span>
+</li>
+</ul>
+</li>
+<li>USMTF</span>
+<ul><li>XML Schema Design</span>
+<ul><li><p>Adjustments are made to the format of all XML Schemas in order to reduce size, and eliminate redundant or unnecessary information.</span>
+<p>Annotations</span>
+<ul><li><p>Content of xsd:annotations is converted from elements to attributes in order to reduce size caused by closing tags.  Names are changed to plain language terms instead of database field names.  Elements are used for multiple items.</span>
+<p>When xsd:documentation and asd:appinfo items are duplicative, the information is retained in the xsd:documentation node and removed from the xsd;appinfo node.</span>
+<p>The names of the items in xsd:appinfo nodes are changed as follows:</span>
+<ul><li>Fields</span>
+<ul><li>Baseline</span>
+<ul><li><FudName/></span>
+
+</li>
+<li><FudExplanation/></span>
+
+</li>
+<li><FieldFormatIndexReferenceNumber/></span>
+
+</li>
+<li><FudNumber/></span>
+
+</li>
+<li><VersionIndicator/></span>
+
+</li>
+<li><MinimumLength/></span>
+
+</li>
+<li><MaximumLength/></span>
+
+</li>
+<li><LengthLimitation/></span>
+
+</li>
+<li><UnitOfMeasure/></span>
+
+</li>
+<li><Type/></span>
+
+</li>
+<li><FudSponsor/></span>
+
+</li>
+<li><FudRelatedDocument/></span>
+
+</li>
+<li><EntryType/></span>
+
+</li>
+<li><DataType/></span>
+
+</li>
+<li><Explanation/></span>
+
+</li>
+<li><MtfRegularExpression/></span>
+
+</li>
+<li><MinimumInclusiveValue/></span>
+
+</li>
+<li><MaximumInclusiveValue/></span>
+
+</li>
+<li><LengthVariable/></span>
+
+</li>
+<li><DataCode/></span>
+
+</li>
+<li><DataItem/></span>
+
+</li>
+<li><DataItemSequenceNumber/></span>
+
+</li>
+<li><DataItemSponsor/></span>
+
+</li>
+<li><MinimumDecimalPlaces/></span>
+
+</li>
+<li><MaximumDecimalPlaces/></span>
+
+</li>
+<li><ElementalFfirnFudnSequence/></span>
+
+</li>
+
+</ul>
+</li>
+<li>Refactor</span>
+<ul><li><p><Field name="FudName" explanation="FudExplanation or Explanation" version="VersionIndicator" sponsor="FudSponsor"></span>
+<ul><li><Document>FudRelatedDocument1</Document></span>
+
+</li>
+<li><Document>FudRelatedDocument2</Document></span>
+
+</li>
+
+</ul><p></Field></span>
+<p><Enum dataItem="DataItem"/></span>
+</li>
+</ul>
+</li>
+<li>Removed</span>
+<ul><li><FieldFormatIndexReferenceNumber/></span>
+
+</li>
+<li><FudNumber/></span>
+
+</li>
+<li><MinimumLength/></span>
+
+</li>
+<li><MaximumLength/></span>
+
+</li>
+<li><LengthLimitation/></span>
+
+</li>
+<li><UnitOfMeasure/></span>
+
+</li>
+<li><Type/></span>
+
+</li>
+<li><EntryType/></span>
+
+</li>
+<li><DataType/></span>
+
+</li>
+<li><MtfRegularExpression/></span>
+
+</li>
+<li><MinimumInclusiveValue/></span>
+
+</li>
+<li><MaximumInclusiveValue/></span>
+
+</li>
+<li><LengthVariable/></span>
+
+</li>
+<li><DataItem/></span>
+
+</li>
+<li><DataItemSequenceNumber/></span>
+
+</li>
+<li><DataItemSponsor/></span>
+
+</li>
+<li><MinimumDecimalPlaces/></span>
+
+</li>
+<li><MaximumDecimalPlaces/></span>
+
+</li>
+<li><ElementalFfirnFudnSequence/></span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Sets</span>
+<ul><li>Baseline</span>
+<ul><li><SetFormatName/></span>
+
+</li>
+<li><SetFormatIdentifier/></span>
+
+</li>
+<li><ColumnarIndicator/></span>
+
+</li>
+<li><GroupOfFieldsIndicator/></span>
+
+</li>
+<li><RepeatabilityForGroupOfFields/></span>
+
+</li>
+<li><SetFormatNote/></span>
+
+</li>
+<li><SetFormatExample/></span>
+
+</li>
+<li><SetFormatRemark/></span>
+
+</li>
+<li><SetFormatSponsor/></span>
+
+</li>
+<li><SetFormatRelatedDocuments/></span>
+
+</li>
+<li><VersionIndicator/></span>
+
+</li>
+<li><FieldFormatPositionName/></span>
+
+</li>
+<li><FieldFormatPositionNumber/></span>
+
+</li>
+<li><OccurrenceCategory/></span>
+
+</li>
+<li><FieldFormatPositionConcept/></span>
+
+</li>
+<li><ColumnHeader/></span>
+
+</li>
+<li><AlphabeticIdentifier/></span>
+
+</li>
+<li><Justification/></span>
+
+</li>
+<li><FieldDescriptor/></span>
+
+</li>
+<li><AssignedFfirnFudUseDescription/></span>
+
+</li>
+<li><FieldFormatIndexReferenceNumber/></span>
+
+</li>
+<li><FieldFormatName/></span>
+
+</li>
+<li><FieldFormatStructure/></span>
+
+</li>
+<li><FieldFormatDefinition/></span>
+
+</li>
+<li><FieldFormatRemark/></span>
+
+</li>
+<li><FieldFormatRelatedDocument/></span>
+
+</li>
+<li><FieldFormatSponsor/></span>
+
+</li>
+
+</ul>
+</li>
+<li>ReFactor</span>
+<ul><li><p><Set name="SetFormatName" id="SetFormatIdentifier" column="ColumnarIndicator" note="SetFormatNote" remark="SetFormatRemark"</span>
+<ul><li>sponsor="SetFormatSponsor" version="VersionIndicator"></span>
+
+</li>
+<li><Example>SetFormatExample1</Example></span>
+
+</li>
+<li><Example>SetFormatExample2</Example></span>
+
+</li>
+<li><Document>SetFormatRelatedDocuments1</Document></span>
+
+</li>
+<li><Document>SetFormatRelatedDocuments2</Document></span>
+
+</li>
+
+</ul><p></Set></span>
+<p><Field name="FieldFormatName or FieldDescriptor" positionName="FieldFormatPositionName" position="FieldFormatPositionNumber"</span>
+<ul><li><p>concept="FieldFormatPositionConcept" columnHeader="ColumnHeader" identifier="AlphabeticIdentifier" alignment="Justification"</span>
+<p>usage="AssignedFfirnFudUseDescription" remark="FieldFormatRemark" sponsor="FieldFormatSponsor"></span>
+<p><Example>SetFormatExample1</Example></span>
+<p><Example>SetFormatExample2</Example></span>
+<p><Document>FieldFormatRelatedDocument1</Document></span>
+<p><Document>FieldFormatRelatedDocument2</Document></span>
+</li>
+</ul><p></Field></span>
+</li>
+</ul>
+</li>
+<li>Removed</span>
+<ul><li><GroupOfFieldsIndicator/></span>
+
+</li>
+<li><RepeatabilityForGroupOfFields/></span>
+
+</li>
+<li><OccurrenceCategory/></span>
+
+</li>
+<li><FieldFormatIndexReferenceNumber/></span>
+
+</li>
+<li><FieldFormatStructure/></span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Messages</span>
+<ul><li>Baseline</span>
+<ul><li><MtfName/></span>
+
+</li>
+<li><MtfIdentifier/></span>
+
+</li>
+<li><MtfIndexReferenceNumber/></span>
+
+</li>
+<li><MtfSponsor/></span>
+
+</li>
+<li><MtfPurpose/></span>
+
+</li>
+<li><MtfRelatedDocument/></span>
+
+</li>
+<li><MtfRemark/></span>
+
+</li>
+<li><MtfNote/></span>
+
+</li>
+<li><MtfStructuralRelationship/></span>
+
+</li>
+<li><VersionIndicator/></span>
+
+</li>
+<li><AlternativeType/></span>
+
+</li>
+<li><SetFormatPositionName/></span>
+
+</li>
+<li><SetFormatPositionNumber/></span>
+
+</li>
+<li><SetFormatPositionConcept/></span>
+
+</li>
+<li><SetFormatPositionUseDescription/></span>
+
+</li>
+<li><OccurrenceCategory/></span>
+
+</li>
+<li><Repeatability/></span>
+
+</li>
+<li><SegmentStructureName/></span>
+
+</li>
+<li><SegmentStructureConcept/></span>
+
+</li>
+<li><SegmentStructureUseDescription/></span>
+
+</li>
+
+</ul>
+</li>
+<li>Refactor</span>
+<ul><li><p><Msg name="MtfName" identifier="MtfIdentifier" sponsor="MtfSponsor" purpose="MtfPurpose" remark="MtfRemark" note="MtfNote"</span>
+<ul><li>version="VersionIndicator"></span>
+
+</li>
+<li><Document>MtfRelatedDocument1</Document></span>
+
+</li>
+<li><Document>MtfRelatedDocument2</Document></span>
+
+</li>
+
+</ul><p></Msg></span>
+<p><Segment name="SegmentStructureName" concept="SegmentStructureConcept" usage="SegmentStructureUseDescription"/></span>
+<p><Set positionName="SetFormatPositionName" position="SetFormatPositionNumber" concept="SetFormatPositionConcept"</span>
+<ul><li>usage="SetFormatPositionUseDescription"/></span>
+
+</li>
+
+</ul></li>
+</ul>
+</li>
+<li>Removed</span>
+<ul><li><MtfIndexReferenceNumber/></span>
+
+</li>
+<li><MtfStructuralRelationship/></span>
+
+</li>
+<li><AlternativeType/></span>
+
+</li>
+<li><OccurrenceCategory/></span>
+
+</li>
+<li><Repeatability/></span>
+
+</li>
+<li><InitialSetFormatPosition/></span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul></li>
+</ul><p>Field Base Types</span>
+<ul><li><p>The requirement to apply security markings to every field is currently accomplished by extending xsd:simpleType fields at the Set level to add the ICM attribute group.  This reduces the ability to reference fields at the Set level and causes unnecessary repetition in the XML Schema design.</span>
+<p>The Re-Factor approach is to create FieldBaseTypes which carry the ICM attribute group and can be used to add other field level extensions.  All fields are provided as xsd:complexTypes which extend the base types.  This typing methodology separates FIelds into data categories that have respectively uniform processing requirements and can be extended or restricted accordingly.</span>
+<ul><li>FieldStringBaseType</span>
+<ul><li><p><xsd:complexType name="FieldStringBaseType">&#xa;      <xsd:simpleContent>&#xa;         <xsd:extension base="xsd:string">&#xa;            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>&#xa;         </xsd:extension>&#xa;      </xsd:simpleContent>&#xa;   </xsd:complexType></span>
+</li>
+</ul>
+</li>
+<li>FieldEnumeratedBaseType</span>
+<ul><li><p><xsd:complexType name="FieldEnumeratedBaseType">&#xa;      <xsd:simpleContent>&#xa;         <xsd:extension base="xsd:string">&#xa;            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>&#xa;         </xsd:extension>&#xa; </xsd:simpleContent></span>
+</li>
+</ul>
+</li>
+<li>FieldIntegerBaseType</span>
+<ul><li><p><xsd:complexType name="FieldIntegerBaseType">&#xa;      <xsd:simpleContent>&#xa;         <xsd:extension base="xsd:integer">&#xa;            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>&#xa;         </xsd:extension>&#xa;      </xsd:simpleContent>&#xa;   </xsd:complexType></span>
+</li>
+</ul>
+</li>
+<li>FieldDecimalBaseType</span>
+<ul><li><p><xsd:complexType name="FieldIntegerBaseType">&#xa;      <xsd:simpleContent>&#xa;         <xsd:extension base="xsd:integer">&#xa;            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>&#xa;         </xsd:extension>&#xa;      </xsd:simpleContent>&#xa;   </xsd:complexType></span>
+</li>
+</ul>
+</li>
+
+</ul></li>
+</ul><p>Fields Refactor</span>
+<ul><li>Strings</span>
+<ul><li><p>By comparing Regular Expressions the number of types extended by FieldStringBase Type is  reduced.  Types which include length and value restrictions in the Regular Expression are removed.  String types are defined using xsd:pattern for content, and XML Schema nodes to specify lengths at the element level.  For example, the field:AlphaNumericBlankSpecialTextType is re-used 877 times, thereby eliminating and re-using this duplicative definition.</span>
+<p>Baseline</span>
+<ul><li><p><simpleType name="MissionNumberType">&#xa;       <annotation/>&#xa;              <restriction base="string">&#xa;                      <annotation/>&#xa;                          <minLength value="1"/>&#xa;                          <maxLength value="8"/>&#xa;                          <pattern value="[\-\.,\(\)\?A-Z0-9&#x20;]{1,8}"/>&#xa;                  </restriction>&#xa;</simpleType>&#xa;<element name="MissionNumber" type="MissionNumberType"/></span>
+</li>
+</ul><p>Refactor</span>
+<ul><li><p><complexType name="AlphaNumericBlankSpecialTextType">&#xa;         <simpleContent>&#xa;                 <restriction base="FieldStringBaseType">&#xa;                        <pattern value="[\-\.,\(\)\?A-Z0-9 ]+"/>&#xa;                 </restriction>&#xa;         </simpleContent>&#xa;</complexType>&#xa;<element name="MissionNumber">&#xa;       <annotation/>&#xa;       <complexType>&#xa;                <simpleContent>&#xa;                         <restriction base="AlphaNumericBlankSpecialTextType">&#xa;                                <minLength value="1"/>&#xa;                                <maxLength value="8"/>&#xa;                        </restriction>&#xa;                </simpleContent>&#xa;       </complexType>&#xa;</element></span>
+</li>
+</ul></li>
+</ul>
+</li>
+<li>Enumerations</span>
+<ul><li>Enumerations are normalized using common code lists.</span>
+
+</li>
+<li>Baseline</span>
+<ul><li><p><simpleType name="PersistentIndicatorType">&#xa;          <annotation/>&#xa;            <restriction base="string">&#xa;                    <enumeration value="YES">&#xa;                            <annotation>&#xa;                    </enumeration>&#xa;                    <enumeration value="NO">&#xa;                            <annotation/>&#xa;                     </enumeration>&#xa;           </restriction>&#xa;</simpleType> &#xa;<element name="PersistentIndicator" type="YesNoType"/></span>
+</li>
+</ul>
+</li>
+<li>Refactor</span>
+<ul><li><p> complexType name="YesNoType">&#xa;         <simpleContent>&#xa;                   <restriction base="FieldEnumeratedBaseType">&#xa;                            <enumeration value="YES">&#xa;                                <annotation>&#xa;                                    <appinfo>&#xa;                                        <Enum dataItem="AFFIRMATIVE INDICATOR"/>&#xa;                                    </appinfo>&#xa;                                </annotation>&#xa;                            </enumeration>&#xa;                            <enumeration value="NO">&#xa;                                <annotation>&#xa;                                    <appinfo>&#xa;                                        <Enum dataItem="NEGATIVE INDICATOR"/>&#xa;                                    </appinfo>&#xa;                                </annotation>&#xa;                            </enumeration>&#xa;                     </restriction>&#xa;           </simpleContent>&#xa;</complexType>&#xa;<element name="PersistentIndicator" type="YesNoType">&#xa;      <annotation/>&#xa;</element></span>
+</li>
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Integers</span>
+<ul><li><p>Integers do not require Regular Expressions or types.  the XML Schema xsd:integer is extended by FieldIntegerBaseType to include security markings, and each Integer field restricts FieldIntegerBaseType to add value restrictions.</span>
+<p>Baseline</span>
+<ul><li><p> <simpleType name="ElevationMslType">&#xa;         <restriction base="xsd:integer">&#xa;                <minInclusive value="-9999"/>&#xa;                <maxInclusive value="99999"/>&#xa;                <pattern value="[\-0-9]{5}"/>&#xa;         </restriction>&#xa;</simpleType>&#xa;<element name="ElevationMsl" type="ElevationMslType"/></span>
+</li>
+</ul><p>Refactor</span>
+<ul><li><p><element name="ElevationMsl">&#xa;        <complexType>&#xa;               <simpleContent>&#xa;                     <restriction base="FieldIntegerBaseType">&#xa;                           <minInclusive value="-9999"/>&#xa;                           <maxInclusive value="99999"/>&#xa;                            </restriction>&#xa;               </simpleContent>&#xa;        </complexType>&#xa;</element></span>
+</li>
+</ul></li>
+</ul>
+</li>
+<li>Decimals</span>
+<ul><li><p>Decimals do not require Regular Expressions or types.  the XML Schema xsd:decimal is extended by FieldIntegerBaseType to include security markings, and each Decimal field restricts FieldDecimalBaseType to add value restrictions.</span>
+<p>Baseline</span>
+<ul><li><p> <simpleType name="FlightTimeType">&#xa;        <restriction base="xsd:decimal">&#xa;               <minInclusive value="0.1"/>&#xa;               <xmaxInclusive value="24"/>&#xa;                    <pattern value="[\-0-9]{2}\.[0-9]{1}"/>&#xa;        </restriction>&#xa;</simpleType>&#xa;<element name="FlightTime" type="FlightTimeType"/></span>
+</li>
+</ul><p>Refactor</span>
+<ul><li><p><element name="FlightTime">&#xa;         <complexType>&#xa;                <simpleContent>&#xa;                       <restriction base="FieldDecimalBaseType">&#xa;                             <minInclusive value="0.1"/>&#xa;                             <maxInclusive value="24"/>&#xa;                              <fractionDigits value="1"/>&#xa;                              <totalDigits value="3"/>&#xa;                       </restriction>&#xa;                </simpleContent>&#xa;        </complexType>&#xa;</element></span>
+</li>
+</ul></li>
+</ul>
+</li>
+
+</ul><p>Sets Refactor</span>
+<ul><li><p>Sets extend the BaseSetType in order to add the security attribute group at the set level.  Because fields types are now also extended, they do not need to be extended in the Sets Schema, but can be directly referenced or typed.   Because nillable elements cannot be referenced, they are extended.</span>
+<p>Baseline</span>
+<ul><li></span>
+
+</li>
+
+</ul><p>Refactor</span>
+<ul><li></span>
+
+</li>
+
+</ul></li>
+</ul></li>
+</ul>
+</li>
+<li>XML Schema Re-Factor Process</span>
+<ul><li><p>This process is retained for purposes of verification, testing and maintenance.  It is not necessary for implementers to repeat this effort.</span>
+<p>FIELDS</span>
+<ul><li>Normalization</span>
+<ul><li>Rationale</span>
+<ul><li><p>The creation of a "Type" for every field in MTF simply by adding "Type" or "SimpleType" to each field name does not leverage the concept of Typing appropriately.  Many fields have identical content restrictions.</span>
+<p>By comparing regular expressions, numerical content, and enumerations the number of xsd:simpleTypes are significantly reduced and the XML implementation of the MIL STDs employs reuse, extension and restriction effectively.</span>
+<p>BaseTypes are implemented at the field level to serve the requirement to be able to add security markings at the field level.  The Baseline XML Schema accomplish this at the Set level which requires extension for every field each time it is used.</span>
+<p>The implementation of FieldStringBaseType, Field EnumerationBaseType, FieldIntegerBaseType, and FieldIntegerBaseType allow fields to be re-used by referencing instead of extension except where they have the nillable attribute.  This significantly reduces the size of the XML Schema files.</span>
+<p>BaseTypes also provide the opportunity for additional extensions which can be applied at the field level when they are re-used externally or when the MIL STD requirements dictates such an adjustment.</span>
+</li>
+</ul>
+</li>
+<li>Strings</span>
+<ul><li>Regular Expression Comparison</span>
+<ul><li><p>Fields with identical regular expresssions (REGEX) exclusive of length can be assigend common xsd:simpleTypes.  Length restrictions are applied at the element level.</span>
+<p>The NormlizedSimpleTypes.xsd has been created based on analysis to determine common REGEX categories for re-use.  The Stingse.xsl applies these types to simpleTypes with min and max length restrictions removed in order to generate Elements with common types.  Min and max are assigned at the element level.</span>
+</li>
+</ul>
+</li>
+<li>FreeText simplification</span>
+<ul><li><p>The baseline XML Schema defines field:FreeTextType using an xsd:complexType which extends a xsd:simpleType in order to include the xsd:space attribute which can be used or preserve whitespace or not.  This is not used anywhere in the standard.  If it were to be used - it can be applied by extension in that case.</span>
+<p>The Strings.xsl replaces all uses of FreeTextType with the normalized AlphaNumericSpecialFreeTextSimpleType, and generates the FreeText element which has this type.</span>
+</li>
+</ul>
+</li>
+<li>BlankSpace simplification</span>
+<ul><li><p>The baseline XML Schema defines BlankSpaceCharacterType using a complexType which extends a simpleType in order to include the xsd:space attribute which can be used or preserve whitespace or not.  This is not used anywhere in the standard.  If it were to be used - it can be applied by extension in that case.</span>
+<p>The Strings.xsl replaces all uses of BlankSpaceCharacterType with a BlankSpaceSimpleType, and generates the BlankSpace element which has this type.</span>
+</li>
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Enumerations</span>
+<ul><li><p>Common Enumerations.</span>
+<p>The NormlizedSimpleTypes.xsd has been created based on analysis to determine reusable enumeration sets.  The Enumerations.xsl applies these types to elements when content is equivalent, and include annotations at the element level.</span>
+</li>
+</ul>
+</li>
+<li>Numerics</span>
+<ul><li>Integers</span>
+<ul><li><p>(The use of xsd:simpleTypes for integers serves no purpose since XML Schema provides all means necessary to describe and validate integer content.</span>
+<p>Numerics.xsl converts all xsd:simpleTypes with xsd:decimal restrictions to elements.</span>
+</li>
+</ul>
+</li>
+<li>Decimals</span>
+<ul><li><p>The use of xsd:simpleTypes for decimals serves no purpose since XML Schema provides all means necessary to describe and validate decimal content.</span>
+<p>Numerics.xsl converts all xsd:simpleTypes with xsd:integer restrictions to elements.</span>
+</li>
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Summary.</span>
+<ul><li><p>String type normalization reduces the number of string xsd:simpleTypes from 1624 to 153 without impacting message content.</span>
+<p>Enumeration normalization reduces the number of enumerated xsd:simpleTypes from 1766 to 1473 without impacting message content.</span>
+<p>Numeric normalization eliminates 1337 integer xsd:simpleTypes and 245 decimal xsd:simpleTypes.</span>
+</li>
+</ul>
+</li>
+
+</ul>
+</li>
+<li>Process</span>
+<ul><li><p>The NormalizedSimpleTypes.xd file was created using a variety of methods which analyse and compare Regular Expressions.  This required subjective decisions which may be adjusted.  The XSLT scripts to accomplish this are in the USMTF/XSLT/Normalization/work directory.</span>
+<p>The XSLT scripts to generate the normalized xsd:simpleTypes are located in the USMTF/XSLT/Normalization directory.  Data products are located in the USMTF/XSD/Normlaized/work directory.</span>
+<p>The Strings.xsl, Numerics.xsl, and Enumerations.xsl scripts can be executed in any order.  Results are written to the USMTF/XSD/Normlaized directory.</span>
+<p>The GoE_Fields.xsl script consolidates the Strings.xsd, Integers.xsd, Decimals.xsd and Enumerations.xsd files into the GoE_field.xsd document which is stored in the USMTF/XSD/GoE_Schema directory.</span>
+</li>
+</ul>
+</li>
+
+</ul></li>
+</ul>
+</li>
+<li>Testing</span>
+
+</li>
+<li>Reference Implementations</span>
+
+</li>
+
+</ul>
+</li>
+<li>NATO MTF</span>
+<ul><li>Element Name Changes</span>
+<ul><li>composite: DutyOther</span>
+<ul><li>name='DutyOtherCode'</span>
+
+</li>
+<li>type='DutyOtherCodeType'</span>
+
+</li>
+
+</ul>
+</li>
+<li>composite: QRoutePointDesignatorType</span>
+<ul><li>name='DQRoutePointCode'</span>
+
+</li>
+<li>type='QRoutePointCodeType'</span>
+
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul>
+</li>
+
+</ul></body>
+</html>

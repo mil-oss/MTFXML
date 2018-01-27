@@ -25,8 +25,8 @@
 
     <!--Set deconfliction and annotation changes-->
     <!--Outputs-->
-    <xsl:variable name="segmentmapsoutput" select="concat($srcdir, 'Maps/NIEM_MTF_Sgmntmaps.xml')"/>
-    <xsl:variable name="segmentsxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF_Segments.xsd')"/>
+    <xsl:variable name="segmentmapsoutput" select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Segmntmaps.xml')"/>
+    <xsl:variable name="segmentsxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Segments.xsd')"/>
     <!-- _________________________________________ -->
 
     <!--XSD GENERATION-->
@@ -69,7 +69,6 @@
                         </xsl:if>
                         <xsd:annotation>
                             <xsd:documentation>
-                                <xsl:text>FUCK</xsl:text>
                                 <xsl:choose>
                                     <xsl:when test="@niemtype = 'GeneralTextType'">
                                         <xsl:value-of select="@niemelementdoc"/>
@@ -227,8 +226,13 @@
                                     <xsl:when test="string-length(@niemtypedoc) &gt; 0">
                                         <xsl:value-of select="@niemtypedoc"/>
                                     </xsl:when>
-                                    <xsl:otherwise>
+                                    <xsl:when test="string-length(@mtfdoc) &gt; 0">
                                         <xsl:value-of select="@mtfdoc"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:call-template name="breakIntoWords">
+                                            <xsl:with-param name="string" select="@niemelementname"/>
+                                        </xsl:call-template>
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xsd:documentation>
@@ -286,6 +290,12 @@
                                     <xsd:annotation>
                                         <xsd:documentation>
                                             <xsl:choose>
+                                                <xsl:when test="string-length(@substgrpdoc) &gt; 0">
+                                                    <xsl:value-of select="@substgrpdoc"/>
+                                                </xsl:when>
+                                                <xsl:when test="string-length(Choice/@substgrpdoc) &gt; 0">
+                                                    <xsl:value-of select="Choice/@substgrpdoc"/>
+                                                </xsl:when>
                                                 <xsl:when test="string-length(@mtfdoc) &gt; 0">
                                                     <xsl:value-of select="replace(@mtfdoc, 'A data type', 'A data item')"/>
                                                 </xsl:when>
@@ -376,10 +386,12 @@
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="pre1" select="preceding-sibling::xsd:complexType[@name = $n][1]"/>
             <xsl:variable name="pre2" select="preceding-sibling::xsd:complexType[@name = $n][2]"/>
+            <xsl:variable name="pre3" select="preceding-sibling::xsd:complexType[@name = $n][3]"/>
             <xsl:choose>
                 <xsl:when test="$n = $pre1/@name"/>
                 <xsl:when test="deep-equal(., $pre2)"/>
                 <xsl:when test="deep-equal(., $pre2)"/>
+                <xsl:when test="deep-equal(., $pre3)"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>

@@ -23,8 +23,8 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NiemMap.xsl"/>
     <!--Outputs-->
-    <xsl:variable name="setxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF_Sets.xsd')"/>
-    <xsl:variable name="setmapsoutput" select="concat($srcdir, 'Maps/NIEM_MTF_Setmaps.xml')"/>
+    <xsl:variable name="setxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Sets.xsd')"/>
+    <xsl:variable name="setmapsoutput" select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Setmaps.xml')"/>
 
     <!-- XSD GENERATION-->
     <!-- _______________________________________________________ -->
@@ -369,6 +369,9 @@
                                                 <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                                     <xsl:value-of select="@substgrpdoc"/>
                                                 </xsl:when>
+                                                <xsl:when test="string-length(Choice/@substgrpdoc) &gt; 0">
+                                                    <xsl:value-of select="Choice/@substgrpdoc"/>
+                                                </xsl:when>
                                                 <xsl:when test="string-length(Element[1]/@substgrpdoc) &gt; 0">
                                                     <xsl:value-of select="Element[1]/@substgrpdoc"/>
                                                 </xsl:when>
@@ -378,11 +381,19 @@
                                                 <xsl:when test="string-length(Element[1]/@niemelementdoc) &gt; 0">
                                                     <xsl:value-of select="Element[1]/@niemelementdoc"/>
                                                 </xsl:when>
+                                                <xsl:when test="string-length(@niemtypedoc) &gt; 0">
+                                                    <xsl:value-of select="@niemtypedoc"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:call-template name="breakIntoWords">
+                                                        <xsl:with-param name="string" select="$refname"/>
+                                                    </xsl:call-template>
+                                                </xsl:otherwise>
                                             </xsl:choose>
                                         </xsd:documentation>
                                         <xsl:for-each select="appinfo/*">
                                             <xsd:appinfo>
-                                                <xsl:copy-of select="."/>
+                                                <xsl:copy-of select="." copy-namespaces="no"/>
                                             </xsd:appinfo>
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
@@ -447,16 +458,17 @@
         <!--Set Elements with Choice to Substitution Groups-->
         <xsl:for-each select="$all_set_elements_map//Element[@niemelementname][Choice]">
             <xsl:variable name="substgrp" select="Choice/@substgrpname"/>
+            <xsl:variable name="substgrpdoc" select="Choice/@substgrpdoc"/>
             <xsl:variable name="setname" select="@setname"/>
             <xsl:variable name="n" select="@niemelementname"/>
             <xsd:complexType name="{concat(@niemelementname,'Type')}">
                 <xsd:annotation>
                     <xsd:documentation>
-                        <xsl:value-of select="@niemtypedoc"/>
+                        <xsl:value-of select="$substgrpdoc"/>
                     </xsd:documentation>
                     <xsl:for-each select="appinfo/*">
                         <xsd:appinfo>
-                            <xsl:copy-of select="."/>
+                            <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsd:appinfo>
                     </xsl:for-each>
                 </xsd:annotation>
@@ -466,7 +478,7 @@
                             <xsd:element ref="{Choice/@substgrpname}">
                                 <xsd:annotation>
                                     <xsd:documentation>
-                                        <xsl:value-of select="@substgrpdoc"/>
+                                        <xsl:value-of select="$substgrpdoc"/>
                                     </xsd:documentation>
                                     <xsd:appinfo>
                                         <mtfappinfo:Choice substitutionGroup="{Choice/@substgrpname}">
@@ -489,9 +501,9 @@
                         <xsl:value-of select="@niemelementdoc"/>
                     </xsd:documentation>
                     <xsl:choose>
-                        <xsl:when test="@substgrpname">
+                        <xsl:when test="Choice/@substgrpname">
                             <xsd:appinfo>
-                                <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                <mtfappinfo:Choice substitutionGroup="{Choice/@substgrpname}">
                                     <xsl:for-each select="Choice/Element">
                                         <xsl:sort select="@name"/>
                                         <mtfappinfo:Element name="{@niemelementname}" type="{@niemtype}"/>
@@ -604,7 +616,7 @@
         </xsl:result-document>
         <xsl:result-document href="{$setmapsoutput}">
             <Sets>
-                <xsl:copy-of select="$mtf_sets_xsd"/>
+                <xsl:copy-of select="$niem_sets_map"/>
             </Sets>
         </xsl:result-document>
     </xsl:template>

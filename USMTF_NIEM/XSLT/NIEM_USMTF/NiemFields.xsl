@@ -25,8 +25,8 @@
     <!--MTF XML Baseline Composites Schema-->
     <xsl:variable name="fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')"/>
     <!--Outputs-->
-    <xsl:variable name="fieldoutputdoc" select="concat($srcdir, 'NIEM_MTF_Fields.xsd')"/>
-    <xsl:variable name="fieldmapoutputdoc" select="concat($srcdir, 'Maps/NIEM_MTF_Fieldmaps.xml')"/>
+    <xsl:variable name="fieldoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Fields.xsd')"/>
+    <xsl:variable name="fieldmapoutputdoc" select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Fieldmaps.xml')"/>
     <xsl:variable name="fieldsxsd">
         <xsl:for-each select="$stringsxsd/xsd:simpleType">
             <xsl:sort select="@name"/>
