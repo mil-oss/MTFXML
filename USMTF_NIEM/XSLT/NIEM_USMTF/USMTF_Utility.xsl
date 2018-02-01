@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:appinfo="http://release.niem.gov/niem/appinfo/3.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+    exclude-result-prefixes="xsd" version="2.0">
 
     <!-- ************ Identity Transform ***********-->
     <!-- This will allow application of any templates without mode qualifier -->
@@ -85,28 +87,29 @@
         <Change from="Justification" to="justification"/>
         <Change from="DataItem" to="dataItem"/>
         <Change from="FieldFormatDefinition" to="definition"/>
-        <Change from="FieldDescriptor" to="name"/>
+        <!-- <Change from="FieldFormatName" to="fieldname"/>-->
+        <Change from="FieldDescriptor" to="fieldid"/>
         <Change from="FieldFormatPositionConcept" to="concept"/>
         <Change from="FieldFormatPositionName" to="positionName"/>
         <Change from="FieldFormatRemark" to="remark"/>
         <Change from="FieldFormatSponsor" to="sponsor"/>
         <Change from="FudExplanation" to="explanation"/>
-        <Change from="FudName" to="name"/>
+        <Change from="FudName" to="typename"/>
         <Change from="InitialSetFormatPosition" to="initialPosition"/>
         <Change from="SetFormatIdentifier" to="setid"/>
-        <Change from="SetFormatName" to="name"/>
+        <Change from="SetFormatName" to="setname"/>
         <Change from="SetFormatNote" to="note"/>
         <Change from="SetFormatPositionConcept" to="concept"/>
         <Change from="SetFormatPositionName" to="positionName"/>
         <Change from="SetFormatRemark" to="remark"/>
         <Change from="SetFormatSponsor" to="sponsor"/>
-        <Change from="SegmentStructureName" to="name"/>
+        <Change from="SegmentStructureName" to="segmentname"/>
         <Change from="SegmentStructureConcept" to="concept"/>
         <Change from="SegmentStructureUseDescription" to="usage"/>
         <Change from="SetFormatPositionUseDescription" to="usage"/>
         <Change from="SetFormatPositionNumber" to="position"/>
-        <Change from="MtfName" to="name"/>
-        <Change from="MtfIdentifier" to="identifier"/>
+        <Change from="MtfName" to="mtfname"/>
+        <Change from="MtfIdentifier" to="mtfid"/>
         <Change from="MtfSponsor" to="sponsor"/>
         <Change from="MtfPurpose" to="purpose"/>
         <Change from="MtfNote" to="note"/>
@@ -587,7 +590,7 @@
                 <xsl:when test="*:Msg">
                     <xsl:copy-of select="*:Msg"/>
                 </xsl:when>
-                <xsl:when test="child::*[starts-with(name(), 'Field')] and starts-with(ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/@base,'c:')">
+                <xsl:when test="child::*[starts-with(name(), 'Field')] and starts-with(ancestor::xsd:element[1]/xsd:complexType/*/xsd:extension/@base, 'c:')">
                     <xsl:element name="mtfappinfo:Composite">
                         <!--<xsl:apply-templates select="@*[not(name()='name')]"/>-->
                         <xsl:apply-templates select="*" mode="attr"/>
@@ -696,7 +699,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template name="CamelCaseWord">
         <xsl:param name="text"/>
         <xsl:value-of select="translate(substring($text, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
@@ -793,10 +796,37 @@
             <term:LocalTerm term="SIC" literal="Subject Identifier Code"/>
             <term:LocalTerm term="UTM" literal="Universal Transverse Mercator"/>
             <ddms:security ism:classification="U" ism:ownerProducer="USA" ism:nonICmarkings="DIST_STMT_C"/>
-            <appinfo:Distro statement="DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22, U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties.  Disseminate in accordance with provisions of DOD Directive 5230.25."/>
+            <appinfo:Distro
+                statement="DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22, U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties.  Disseminate in accordance with provisions of DOD Directive 5230.25."
+            />
         </xsd:appinfo>
     </xsl:variable>
 
     <!-- ***************** ********** *****************-->
 
+    <xsl:template name="removeStrings">
+        <xsl:param name="targetStr"/>
+        <xsl:param name="strings"/>
+        <xsl:variable name="str">
+            <xsl:choose>
+                <xsl:when test="contains($strings, ',')">
+                    <xsl:value-of select="normalize-space(substring-before($strings, ','))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="$strings"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="string-length($str)&gt;0">
+                <xsl:call-template name="removeStrings">
+                    <xsl:with-param name="targetStr" select="replace($targetStr, $str,'')"/>
+                    <xsl:with-param name="strings" select="substring-after($strings, ',')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$targetStr"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 </xsl:stylesheet>
