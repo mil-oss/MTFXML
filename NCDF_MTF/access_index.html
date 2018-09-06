@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2015 James D. Neushul, USMC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html>
+    <head>
+        <title>NATO MTF XML</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="HTML/css/jquery-ui.theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="HTML/css/jquery-ui.structure.min.css" />
+        <link rel="stylesheet" type="text/css" href="HTML/css/jquery-ui.min.css" />
+    </head>
+    <body>
+        <h3 style="text-align:center; font-size:28px;">NATO MESSAGE TEXT FORMAT</h3>
+        <h3 style="text-align:center; font-size:18px;">XML IMPLEMENTATION SUPPORT TOOL</h3>
+
+
+        <div id="notice" style="font-size:18px; width:75%; margin-left:auto; margin-right:auto;">
+            This site contains information regarding the NATO Message Text Format (NATO MTF) standard (ADAT-P3).
+            All NATO MTF posted data and any extracts thereof, to include any portion of all message, set, field formats/tables & XML-MTF Schemas are not releasable to non NATO members without authorization.
+        </div>
+        <div id="warning" style="margin-top:40px;font-size:18px; width:75%; margin-left:auto; margin-right:auto;">
+            Use of this site does not constitute permission to distribute or implement NATO XML products.  To obtain permission for authorized use in support of US DoD please contact (NAME) at:
+        </div>
+        <div style="margin-top:20px; width:100%; text-align:center;"><a href="raymond.f.ford4.civ@mail.mil">name.name@nato.ext</a></div>
+        <div style="margin-top:40px;font-size:18px; width:75%; margin-left:auto; margin-right:auto;">
+        </div>
+        <div id="dialog" style="display:none; padding-top:60px;">
+            By accessing this site I understand that responsibility to respect all required directives and that my information may be used to ensure compliance.
+        </div>
+        <div style="width:75%; margin-left:auto; margin-right:auto; text-align:center;">
+            <button id="proceed" style="height:30px; width:200px; font-size:18px; text-align:center; margin-top: 40px;" onclick="showDialog()">PROCEED</button>
+        </div>
+        <script type="text/javascript" src="HTML/js/lib/jquery/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="HTML/js/lib/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="HTML/js/lib/jquery/jquery.layout.min.js"></script>
+        <script type="text/javascript">
+                $(document).ready(function () {
+                    $(function () {
+                        $('procees').click(function () {
+                            showDialog();
+                        });
+                    });
+                });
+                function showDialog() {
+                    $("#dialog").dialog({
+                        dialogClass: "no-close",
+                        title: "NATO MTF ACCESS NOTIFICATION AND ACCEPTANCE",
+                        modal: true,
+                        draggable: false,
+                        height: 400,
+                        width: 600,
+                        buttons: [{
+                                text: "Cancel",
+                                click: function () {
+                                    $(this).dialog("close");
+                                }
+                            }, {
+                                text: "ACCEPT",
+                                click: function () {
+                                    $(this).dialog("close");
+                                    window.open("HTML/MTFXMLViewer.html","_self");
+                                }
+                            }]
+                    });
+                }
+        </script>
+    </body>
+</html>
