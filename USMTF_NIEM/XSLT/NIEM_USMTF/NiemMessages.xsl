@@ -25,7 +25,7 @@
 
     <!--Outputs-->
     <xsl:variable name="messagemapsoutput" select="concat($srcdir, 'Maps/NIEM_MTF_Msgsmaps.xml')"/>
-    <xsl:variable name="messagesxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF_Messages.xsd')"/>
+    <xsl:variable name="messagesxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Messages.xsd')"/>
 
 <!-- _______________________________________________________ -->
 

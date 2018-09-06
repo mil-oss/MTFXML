@@ -21,19 +21,28 @@
     xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
     exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-
+    <!--<xsl:include href="USMTF_Utility.xsl"/>-->
     <xsl:variable name="enumerations_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema//xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]"/>
     <xsl:variable name="sdir" select="'../../XSD/'"/>
     <xsl:variable name="cfld_changes" select="document(concat($sdir, 'Refactor_Changes/FieldChanges.xml'))/FieldChanges"/>
+    <xsl:variable name="norm_enum_types" select="document(concat($sdir, 'Refactor_Changes/M201804C0IF-EnumerationSimpleTypes.xml'))/EnumerationTypes"/>
+    <xsl:variable name="norm_enums" select="document(concat($sdir, 'Refactor_Changes/M201804C0IF-Enumerations.xml'))/Enumerations"/>
     <!--Output-->
-    <xsl:variable name="codelistout" select="'../../XSD/Analysis/NIEM_CodeLists.xml'"/>
-    <xsl:variable name="codelistxsdout" select="'../../XSD/Analysis/NormalizedCodeLists.xsd'"/>
-
+    <xsl:variable name="codelistout" select="'../../XSD/Analysis/Normalized/NIEM_CodeLists.xml'"/>
+    <xsl:variable name="codelistxsdout" select="'../../XSD/Analysis//Normalized/NormalizedCodeLists.xsd'"/>
+    <!--Map Original Enumerated SimpleTypes to an XML fragment-->
     <xsl:variable name="codelists">
         <xsl:for-each select="$enumerations_xsd">
             <xsl:sort select="@name"/>
             <xsl:variable name="mtfname" select="@name"/>
+            <xsl:variable name="ffirn">
+                <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FieldFormatIndexReferenceNumber"/>
+            </xsl:variable>
+            <xsl:variable name="fud">
+                <xsl:value-of select="xsd:annotation/xsd:appinfo/*:FudNumber"/>
+            </xsl:variable>
             <xsl:variable name="changeto" select="$cfld_changes/CodeList[@name = $mtfname]/@changeto"/>
+            <xsl:variable name="etype" select="$norm_enum_types/EnumerationType[@ffirn = $ffirn][@fud = $fud]"/>
             <xsl:variable name="n">
                 <xsl:choose>
                     <xsl:when test="$cfld_changes/CodeList[@name = $mtfname]/@changeto">
@@ -65,6 +74,9 @@
             </xsl:variable>
             <xsl:variable name="niemsimpletype">
                 <xsl:choose>
+                    <xsl:when test="$etype/@niemname">
+                        <xsl:value-of select="$etype/@niemname"/>
+                    </xsl:when>
                     <xsl:when test="$cfld_changes/CodeList/@name = $n">
                         <xsl:value-of select="concat(substring($changeto, 0, string-length($changeto) - 3), 'CodeSimpleType')"/>
                     </xsl:when>
@@ -114,15 +126,13 @@
             <xsl:variable name="niemelementdoc">
                 <xsl:value-of select="replace($niemtypedoc, 'A data type', 'A data item')"/>
             </xsl:variable>
-            <xsl:variable name="ffirn" select="xsd:annotation/xsd:appinfo/*:FieldFormatIndexReferenceNumber"/>
-            <xsl:variable name="fud" select="xsd:annotation/xsd:appinfo/*:FudNumber"/>
-            <xsl:variable name="appinfo">
+            <xsl:variable name="fappinfo">
                 <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
             </xsl:variable>
             <Field niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletype}" niemtype="{$niemcomplextype}" niemtypedoc="{$niemtypedoc}" niemelementdoc="{$niemelementdoc}"
                 mtftype="{@name}" ffirn="{$ffirn}" fud="{$fud}">
                 <appinfo>
-                    <xsl:for-each select="$appinfo/*">
+                    <xsl:for-each select="$fappinfo/*">
                         <xsl:copy-of select="mtfappinfo:Field" copy-namespaces="no"/>
                     </xsl:for-each>
                 </appinfo>
@@ -136,7 +146,7 @@
         </xsl:for-each>
     </xsl:variable>
 
-    <xsl:variable name="normcodelisttypes">
+    <!--  <xsl:variable name="normcodelisttypes">
         <xsl:for-each select="$cfld_changes/CodeList">
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="ch" select="@changeto"/>
@@ -192,124 +202,54 @@
             </xsl:if>
         </xsl:for-each>
     </xsl:variable>
-
+-->
     <xsl:variable name="codelisttypes">
         <xsl:for-each select="$codelists/*">
-            <xsl:variable name="n" select="@name"/>
+            <xsl:variable name="n" select="@niemelementname"/>
             <xsl:variable name="codes" select="Codes"/>
-            <xsl:choose>
-                <!-- If codelist has normalized type, create simpleType and complexType only-->
-                <xsl:when test="@changeto">
-                    <xsd:simpleType name="{@niemsimpletype}">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <xsl:value-of select="@niemtypedoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
-                                <xsl:for-each select="appinfo/*">
-                                    <xsl:copy-of select="." copy-namespaces="no"/>
-                                </xsl:for-each>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:restriction base="xsd:string">
-                            <xsl:for-each select="$codes/Code">
-                                <xsd:enumeration value="{@value}">
-                                    <xsd:annotation>
-                                        <xsd:documentation>
-                                            <xsl:value-of select="@doc"/>
-                                        </xsd:documentation>
-                                        <xsd:appinfo>
-                                            <Code dataItem="{@dataItem}"/>
-                                        </xsd:appinfo>
-                                    </xsd:annotation>
-                                </xsd:enumeration>
-                            </xsl:for-each>
-                        </xsd:restriction>
-                    </xsd:simpleType>
-                    <xsd:complexType name="{@niemtype}">
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <xsl:value-of select="@niemtypedoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
-                                <xsl:for-each select="appinfo/*">
-                                    <xsl:copy-of select="." copy-namespaces="no"/>
-                                </xsl:for-each>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:simpleContent>
-                            <xsd:extension base="{@niemsimpletype}">
-                                <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-                                <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
-                            </xsd:extension>
-                        </xsd:simpleContent>
-                    </xsd:complexType>
-                </xsl:when>
-                <!-- Otherwise, create simpleType if not already in normalized types,complexType-->
-                <xsl:otherwise>
-                    <xsl:if test="not($normcodelisttypes/xsd:simpleType[@name = @niemsimpletype])">
-                        <xsd:simpleType name="{@niemsimpletype}">
-                            <xsd:annotation>
-                                <xsd:documentation>
-                                    <xsl:value-of select="@niemtypedoc"/>
-                                </xsd:documentation>
-                                <xsd:appinfo>
-                                    <xsl:for-each select="appinfo/*">
-                                        <xsl:copy-of select="." copy-namespaces="no"/>
-                                    </xsl:for-each>
-                                </xsd:appinfo>
-                            </xsd:annotation>
-                            <xsd:restriction base="xsd:string">
-                                <xsl:for-each select="$codes/Code">
-                                    <xsd:enumeration value="{@value}">
-                                        <xsd:annotation>
-                                            <xsd:documentation>
-                                                <xsl:value-of select="@doc"/>
-                                            </xsd:documentation>
-                                        </xsd:annotation>
-                                    </xsd:enumeration>
-                                </xsl:for-each>
-                            </xsd:restriction>
-                        </xsd:simpleType>
-                    </xsl:if>
-                    <xsl:if test="not($normcodelisttypes/xsd:complexType[@name = @niemtype])">
-                        <xsd:complexType name="{@niemtype}">
-                            <xsd:annotation>
-                                <xsd:documentation>
-                                    <xsl:value-of select="@niemtypedoc"/>
-                                </xsd:documentation>
-                                <xsd:appinfo>
-                                    <xsl:for-each select="appinfo/*">
-                                        <xsl:copy-of select="." copy-namespaces="no"/>
-                                    </xsl:for-each>
-                                </xsd:appinfo>
-                            </xsd:annotation>
-                            <xsd:simpleContent>
-                                <xsd:extension base="{@niemsimpletype}">
-                                    <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
-                                    <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
-                                </xsd:extension>
-                            </xsd:simpleContent>
-                        </xsd:complexType>
-                    </xsl:if>
-                </xsl:otherwise>
-            </xsl:choose>
-            <!--<xsd:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
+            <xsd:simpleType name="{@niemsimpletype}">
                 <xsd:annotation>
                     <xsd:documentation>
-                        <xsl:value-of select="@niemelementdoc"/>
+                        <xsl:value-of select="@niemtypedoc"/>
                     </xsd:documentation>
                     <xsd:appinfo>
                         <xsl:for-each select="appinfo/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
                     </xsd:appinfo>
-                    <!-\-<xsd:appinfo>
-                        <mtfappinfo:Field name="{appinfo/Field/@name}" explanation="{appinfo/Field/@explanation}" version="{appinfo/Field/@version}"/>
-                    </xsd:appinfo>-\->
                 </xsd:annotation>
-            </xsd:element>-->
+                <xsd:restriction base="xsd:string">
+                    <xsl:for-each select="$codes/Code">
+                        <xsd:enumeration value="{@value}">
+                            <xsd:annotation>
+                                <xsd:documentation>
+                                    <xsl:value-of select="@doc"/>
+                                </xsd:documentation>
+                            </xsd:annotation>
+                        </xsd:enumeration>
+                    </xsl:for-each>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:complexType name="{@niemtype}">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <xsl:value-of select="@niemtypedoc"/>
+                    </xsd:documentation>
+                    <xsd:appinfo>
+                        <xsl:for-each select="appinfo/*">
+                            <xsl:copy-of select="." copy-namespaces="no"/>
+                        </xsl:for-each>
+                    </xsd:appinfo>
+                </xsd:annotation>
+                <xsd:simpleContent>
+                    <xsd:extension base="{@niemsimpletype}">
+                        <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
+                        <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
+                    </xsd:extension>
+                </xsd:simpleContent>
+            </xsd:complexType>
         </xsl:for-each>
+        <xsl:apply-templates select="$norm_enum_types/*" mode="makeCodeSimpleType"/>
     </xsl:variable>
 
     <xsl:variable name="codelistxsd">
@@ -326,6 +266,52 @@
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
+
+    <!--Create SimpleType from Normalized SimpleTypes -->
+    <xsl:template match="*" mode="makeCodeSimpleType">
+        <xsl:variable name="n" select="translate(@niemname, ',()', '')"/>
+        <xsl:choose>
+            <xsl:when test="$n = ''"/>
+            <xsl:when test="$n = '.'"/>
+            <xsl:otherwise>
+                <xsd:simpleType name="{$n}">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <xsl:value-of select="@comment"/>
+                        </xsd:documentation>
+                        <xsd:appinfo>
+                            <mtfappinfo:SimpleType>
+                                <xsl:apply-templates select="@*[name() != 'fudexp']" mode="copy"/>
+                            </mtfappinfo:SimpleType>
+                        </xsd:appinfo>
+                    </xsd:annotation>
+                    <xsd:restriction base="xsd:string">
+                        <xsl:apply-templates select="$norm_enums/Enumeration[@niemtype = $n]" mode="enum">
+                            <xsl:sort select="@seq"/>
+                        </xsl:apply-templates>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <!-- <xsl:template match="@*" mode="copy">
+        <xsl:if test=". != '.'">
+            <xsl:attribute name="{name()}">
+                <xsl:value-of select="."/>
+            </xsl:attribute>
+        </xsl:if>
+    </xsl:template>-->
+
+    <xsl:template match="*" mode="enum">
+        <xsd:enumeration value="{@datacode}">
+            <xsd:annotation>
+                <xsd:documentation>
+                    <xsl:value-of select="@doc"/>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:enumeration>
+    </xsl:template>
 
     <xsl:template name="codelistmain">
         <xsl:result-document href="{$codelistxsdout}">
