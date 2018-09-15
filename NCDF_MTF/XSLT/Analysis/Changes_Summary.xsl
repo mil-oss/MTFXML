@@ -2,16 +2,16 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="CalcChangeAnalysis.xsl"/>
-    <xsl:include href="../NIEM_IEPD/MapJson.xsl"/>
-    <xsl:variable name="all_field_map" select="document('../../XSD/NIEM_MTF_1_NS/Maps/NIEM_MTF_Fieldmaps.xml')"/>
-    <xsl:variable name="all_composite_map" select="document('../../XSD/NIEM_MTF_1_NS/Maps/NIEM_MTF_Compositemaps.xml')"/>
-    <xsl:variable name="all_set_map" select="document('../../XSD/NIEM_MTF_1_NS/Maps/NIEM_MTF_Setmaps.xml')"/>
-    <xsl:variable name="all_segment_map" select="document('../../XSD/NIEM_MTF_1_NS/Maps/NIEM_MTF_Sgmntmaps.xml')"/>
-    <xsl:variable name="all_message_map" select="document('../../XSD/NIEM_MTF_1_NS/Maps/NIEM_MTF_Msgsmaps.xml')"/>
+   <!--<xsl:include href="../NCDF_IEPD/JSON/MapJson.xsl"/>-->
+    <xsl:variable name="all_field_map" select="document('../../XSD/NCDF_MTF/Maps/NCDF_MTF_Fieldmaps.xml')"/>
+    <xsl:variable name="all_composite_map" select="document('../../XSD/NCDF_MTF/Maps/NCDF_MTF_Compositemaps.xml')"/>
+    <xsl:variable name="all_set_map" select="document('../../XSD/NCDF_MTF/Maps/NCDF_MTF_Setmaps.xml')"/>
+    <xsl:variable name="all_segment_map" select="document('../../XSD/NCDF_MTF/Maps/NCDF_MTF_Segmntmaps.xml')"/>
+    <xsl:variable name="all_message_map" select="document('../../XSD/NCDF_MTF/Maps/NCDF_MTF_Msgsmaps.xml')"/>
 
-    <xsl:variable name="sepxsdPath" select="'../../XSD/NIEM_MTF_1_NS/SepMsgs_1_NS/'"/>
-    <xsl:variable name="output" select="'../../XSD/Analysis/ChangeCounts_1_NS.xml'"/>
-    <xsl:variable name="outputjson" select="'../../XSD/Analysis/ChangeCounts_1_NS.json'"/>
+    <xsl:variable name="sepxsdPath" select="'../../XSD/NCDF_MTF/SepMsgs/'"/>
+    <xsl:variable name="output" select="'../../XSD/Analysis/ChangeCounts.xml'"/>
+    <!--<xsl:variable name="outputjson" select="'../../XSD/Analysis/ChangeCounts_1_NS.json'"/>-->
 
     <xsl:template name="main">
         <xsl:variable name="globalchanges">
@@ -123,17 +123,17 @@
                 </MessageElementChanges>
             </MTFChanges>
         </xsl:variable>
-        <xsl:variable name="jsonchangesout">
+       <!-- <xsl:variable name="jsonchangesout">
             <xsl:call-template name="toJson">
                 <xsl:with-param name="xdoc" select="$changesout"/>
             </xsl:call-template>
-        </xsl:variable>
+        </xsl:variable>-->
         <xsl:result-document href="{$output}">
             <xsl:copy-of select="$changesout"/>
         </xsl:result-document>
-        <xsl:result-document href="{$outputjson}">
+      <!--  <xsl:result-document href="{$outputjson}">
             <xsl:copy-of select="$jsonchangesout"/>
-        </xsl:result-document>
+        </xsl:result-document>-->
     </xsl:template>
 
 <!--    <xsl:template name="calcChanges">

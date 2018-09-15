@@ -11,6 +11,7 @@
 
     <xsl:template name="main">
         <xsl:for-each select="$ALLMTF/xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
+            <xsl:sort select="@name"/>
             <xsl:call-template name="ExtractMessageSchema">
                 <xsl:with-param name="message" select="."/>
                 <xsl:with-param name="outdir" select="$OutDir"/>
@@ -32,17 +33,22 @@
             <!--<xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$schtron" disable-output-escaping="yes"/>
             <xsl:text>&#10;</xsl:text>-->
-            <xsd:schema xmlns="urn:mtf:mil:6040b:ncdf:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:ct="http://release.ncdf.gov/ncdf/conformanceTargets/3.0/"
-                xmlns:structures="http://release.ncdf.gov/ncdf/structures/4.0/" xmlns:term="http://release.ncdf.gov/ncdf/localTerminology/3.0/"
-                xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:ncdf:mtf"
-                ct:conformanceTargets="http://reference.ncdf.gov/ncdf/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
-                attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="../IC-ISM.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/structures/4.0/" schemaLocation="../../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/localTerminology/3.0/" schemaLocation="../../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/appinfo/4.0/" schemaLocation="../../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../../NCDF/mtfappinfo.xsd"/>
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
+                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:int:nato:ncdf:mtf" 
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
+                xml:lang="en-US"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:value-of select="concat($message/xsd:annotation/xsd:appinfo/*:Msg/@mtfname, ' MESSAGE SCHEMA')"/>
@@ -58,7 +64,7 @@
                         <xsl:variable name="n" select="@ref | @base | @type"/>
                         <xsl:call-template name="iterateNode">
                             <xsl:with-param name="node" select="$ALLMTF/*[@name = $n]"/>
-                            <xsl:with-param name="iteration" select="18"/>
+                            <xsl:with-param name="iteration" select="9"/>
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:variable>
@@ -67,7 +73,7 @@
                         <xsl:variable name="n" select="@name"/>
                         <xsl:call-template name="iterateNode">
                             <xsl:with-param name="node" select="$ALLMTF/*[@substitutionGroup = $n]"/>
-                            <xsl:with-param name="iteration" select="10"/>
+                            <xsl:with-param name="iteration" select="5"/>
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:variable>

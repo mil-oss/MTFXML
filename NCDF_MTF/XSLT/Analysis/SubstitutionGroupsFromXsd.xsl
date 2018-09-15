@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:include href="../NIEM_USMTF_1_NS/NiemMap.xsl"/>
+    <xsl:include href="../NCDF_MTF/NcdfMap.xsl"/>
 
-    <xsl:variable name="XSDPath" select="'../../XSD/Baseline_Schema/'"/>
+    <xsl:variable name="XSDPath" select="'../../XSD/APP-11C-ch1/Consolidated/'"/>
     <xsl:variable name="choices_out" select="'../../XSD/Analysis/ChoiceMaps.xml'"/>
 
     <xsl:variable name="norm_choices_out" select="'../../XSD/Analysis/NormChoiceMaps.xml'"/>
@@ -12,7 +13,8 @@
     <xsl:variable name="chce_elements_out" select="'../../XSD/Analysis/ChoiceElements.xml'"/>
 
     <xsl:variable name="niem_map_choices">
-        <xsl:for-each select="document(concat($XSDPath, 'sets.xsd'))//xsd:element[xsd:complexType/xsd:choice]">
+        <xsl:for-each
+            select="document(concat($XSDPath, 'sets.xsd'))//xsd:element[xsd:complexType/xsd:choice]">
             <xsl:sort select="@name"/>
             <xsl:apply-templates select="."/>
         </xsl:for-each>
@@ -40,7 +42,8 @@
                                 <xsl:copy-of select="@niemelementname"/>
                                 <xsl:copy-of select="@mtftype"/>
                                 <xsl:copy-of select="@niemtype"/>
-                                <xsl:for-each select="$niem_map_choices/*[Choice/Element[@niemelementname = $n][@niemtype = $t]]">
+                                <xsl:for-each
+                                    select="$niem_map_choices/*[Choice/Element[@niemelementname = $n][@niemtype = $t]]">
                                     <SubGrp>
                                         <xsl:copy-of select="@substgrpname"/>
                                         <xsl:copy-of select="@parentname"/>
@@ -58,7 +61,8 @@
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@substgrpname"/>
             <xsl:variable name="c" select="Choice"/>
-            <xsl:variable name="precnt" select="count(preceding-sibling::Element[@substgrpname = $n][deep-equal(Choice, $c)])"/>
+            <xsl:variable name="precnt"
+                select="count(preceding-sibling::Element[@substgrpname = $n][deep-equal(Choice, $c)])"/>
             <xsl:if test="$precnt = 0">
                 <xsl:copy-of select="." copy-namespaces="no"/>
             </xsl:if>
@@ -97,7 +101,8 @@
                 <xsl:variable name="s" select="@substitutiongroup"/>
                 <xsl:variable name="sg">
                     <Subgrp name="{@substitutiongroup}"/>
-                    <xsl:for-each select="$chce_elements/*[@name = $n][@mtftype = $t][not(@substitutiongroup = $s)]">
+                    <xsl:for-each
+                        select="$chce_elements/*[@name = $n][@mtftype = $t][not(@substitutiongroup = $s)]">
                         <Subgrp name="{@substitutiongroup}" elname="{$n}"/>
                     </xsl:for-each>
                 </xsl:variable>
@@ -120,7 +125,8 @@
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@mtftype"/>
             <xsl:variable name="sg" select="Subgrps"/>
-            <xsl:variable name="dups" select="count($elist/Element[deep-equal(*:Subgrps, $sg)][@name = $n])"/>
+            <xsl:variable name="dups"
+                select="count($elist/Element[deep-equal(*:Subgrps, $sg)][@name = $n])"/>
             <xsl:copy>
                 <xsl:for-each select="@*">
                     <xsl:copy-of select="."/>
@@ -134,7 +140,8 @@
                         <xsl:value-of select="count($sg/*)"/>
                     </xsl:attribute>
                     <xsl:for-each select="$sg/*">
-                        <substitutionGroup parentmtfname="{@name}" substgrpname="{@name}" setname=""/>
+                        <substitutionGroup parentmtfname="{@name}" substgrpname="{@name}" setname=""
+                        />
                     </xsl:for-each>
                 </Subgrps>
             </xsl:copy>
@@ -271,7 +278,8 @@
                         </xsl:for-each>
                         <xsl:if test="count($norm_niem_map_choices/*[@substgrpname = $n]) &gt; 1">
                             <xsl:attribute name="count">
-                                <xsl:value-of select="count($norm_niem_map_choices/*[@substgrpname = $n])"/>
+                                <xsl:value-of
+                                    select="count($norm_niem_map_choices/*[@substgrpname = $n])"/>
                             </xsl:attribute>
                         </xsl:if>
                         <xsl:for-each select="Choice">
@@ -314,14 +322,15 @@
             </ChoiceElements>
         </xsl:result-document>
 
-        <!--<xsl:result-document href="{$subgrps_out}">
+        <xsl:result-document href="{$subgrps_out}">
             <SubstitutionGroups>
                 <xsl:for-each select="$chce_elements/*">
+                    <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
             </SubstitutionGroups>
         </xsl:result-document>
-        <xsl:result-document href="{$chce_elements_out}">
+        <!--<xsl:result-document href="{$chce_elements_out}">
             <ChoiceElements>
                 <xsl:for-each select="$elist_subgrps/*">
                     <xsl:sort select="@name"/>

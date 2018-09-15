@@ -17,15 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-
-    <xsl:include href="USMTF_Utility.xsl"/>
     
-    <xsl:template name="main">
-        <xsl:copy-of select="$numerics"/>
-    </xsl:template>
-
     <!--Test Output-->
     <xsl:variable name="xsdoutputdoc" select="'../../XSD/Analysis/Normalized/Numerics_NCDF.xsd'"/>
     <xsl:variable name="numericsout" select="'../../XSD/Test/MTF_XML_Maps/NCDF_Numerics_NCDF.xml'"/>
@@ -66,7 +60,7 @@
                     <xsl:when test="$numchange/@ncdfelementname">
                         <xsl:value-of select="$numchange/@ncdfelementname"/>
                     </xsl:when>
-                    <!--<xsl:when test="ends-with($e, 'Number')">
+                    <xsl:when test="ends-with($e, 'Number')">
                         <xsl:value-of select="concat(substring($e, 0, string-length($e) - 5), 'Numeric')"/>
                     </xsl:when>
                     <xsl:when test="$e = 'TargetIdentification'">
@@ -77,9 +71,12 @@
                     </xsl:when>
                     <xsl:when test="ends-with($e, 'Code')">
                         <xsl:value-of select="replace($e, 'Code', 'Numeric')"/>
-                    </xsl:when>-->
-                    <xsl:otherwise>
+                    </xsl:when>
+                    <xsl:when test="ends-with($e, 'Numeric')">
                         <xsl:value-of select="$e"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($e,'Numeric')"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -358,7 +355,6 @@
                 </xsd:annotation>
                 <xsd:simpleContent>
                     <xsd:extension base="{@ncdfsimpletype}">
-                        <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
                     </xsd:extension>
                 </xsd:simpleContent>
@@ -483,16 +479,16 @@
 
 <!--    <xsl:template name="main">
         <xsl:result-document href="{$xsdoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:ncdf:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.ncdf.gov/ncdf/conformanceTargets/3.0/"
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.ncdf.gov/ncdf/conformanceTargets/3.0/"
                 xmlns:structures="http://release.ncdf.gov/ncdf/structures/4.0/" xmlns:term="http://release.ncdf.gov/ncdf/localTerminology/3.0/"
-                xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:ncdf:mtf" ct:conformanceTargets="http://reference.ncdf.gov/ncdf/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
+                xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:int:nato:ncdf:mtf" ct:conformanceTargets="http://reference.ncdf.gov/ncdf/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
                 <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
                 <xsd:import namespace="http://release.ncdf.gov/ncdf/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
                 <xsd:import namespace="http://release.ncdf.gov/ncdf/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
                 <xsd:import namespace="http://release.ncdf.gov/ncdf/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:text>Numeric Fields for MTF Messages</xsl:text>

@@ -18,10 +18,10 @@
  */
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.ncdf.gov/ncdf/localTerminology/3.0/"
-    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo"
     exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <!--<xsl:include href="USMTF_Utility.xsl"/>-->
+
     <xsl:variable name="enumerations_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/xsd:schema//xsd:simpleType[xsd:restriction[@base = 'xsd:string'][xsd:enumeration]]"/>
     <xsl:variable name="sdir" select="'../../XSD/'"/>
     <xsl:variable name="cfld_changes" select="document(concat($sdir, 'Refactor_Changes/FieldChanges.xml'))/FieldChanges"/>
@@ -55,22 +55,14 @@
             </xsl:variable>
             <xsl:variable name="ncdfelementname">
                 <xsl:choose>
-                    <xsl:when test="$mtfname = 'WaterTypeType'">
-                        <xsl:text>WaterCategoryCode</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="$mtfname = 'MissionStatusType'">
-                        <xsl:text>StatusOfMissionCode</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="$mtfname = 'TargetCategoryCodeType'">
-                        <xsl:text>TargetNumberCode</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="$mtfname = 'IndicatorOnOrOffType'">
-                        <xsl:text>OnOffUnknownCode</xsl:text>
+                    <xsl:when test="ends-with($n,'Code')">
+                        <xsl:value-of select="$n"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="$n"/>
+                        <xsl:value-of select="concat($n,'Code')"/>
                     </xsl:otherwise>
                 </xsl:choose>
+
             </xsl:variable>
             <xsl:variable name="ncdfsimpletype">
                 <xsl:choose>
@@ -111,7 +103,7 @@
                 </xsl:choose>
             </xsl:variable>
             <xsl:variable name="doc">
-                <xsl:apply-templates select="xsd:annotation/xsd:documentation"/>
+                <xsl:apply-templates select="xsd:annotation"/>
             </xsl:variable>
             <xsl:variable name="ncdftypedoc">
                 <xsl:choose>
@@ -139,7 +131,20 @@
                 <Codes>
                     <xsl:for-each select="xsd:restriction/xsd:enumeration">
                         <xsl:sort select="@value"/>
-                        <Code value="{@value}" dataItem="{xsd:annotation/xsd:appinfo/*:DataItem}" doc="{normalize-space(xsd:annotation/xsd:documentation/text())}"/>
+                        <xsl:variable name="d">
+                            <xsl:choose>
+                                <xsl:when test="xsd:annotation/xsd:documentation/text()">
+                                    <xsl:value-of select="xsd:annotation/xsd:documentation/text()"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="xsd:annotation/xsd:appinfo/*:DataItem"/>
+                                    <!--<xsl:call-template name="SentenceCase">
+                                        <xsl:with-param name="str" select="c"/>
+                                    </xsl:call-template>-->
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <Code value="{@value}" dataItem="{xsd:annotation/xsd:appinfo/*:DataItem}" doc="{$d}"/>
                     </xsl:for-each>
                 </Codes>
             </Field>
@@ -194,7 +199,6 @@
                     </xsd:annotation>
                     <xsd:simpleContent>
                         <xsd:extension base="{$stype}">
-                            <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                             <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
                         </xsd:extension>
                     </xsd:simpleContent>
@@ -243,7 +247,6 @@
                 </xsd:annotation>
                 <xsd:simpleContent>
                     <xsd:extension base="{@ncdfsimpletype}">
-                        <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
                     </xsd:extension>
                 </xsd:simpleContent>
@@ -302,6 +305,10 @@
             </xsl:attribute>
         </xsl:if>
     </xsl:template>-->
+    <xsl:template name="SentenceCase">
+        <xsl:param name="str"/>
+        <xsl:value-of select="concat(upper-case(substring($str,1,1)),lower-case(substring($str,2)))"/>
+    </xsl:template>
 
     <xsl:template match="*" mode="enum">
         <xsd:enumeration value="{@datacode}">
@@ -315,17 +322,22 @@
 
     <xsl:template name="codelistmain">
         <xsl:result-document href="{$codelistxsdout}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:ncdf:mtf:fields" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                xmlns:ct="http://release.ncdf.gov/ncdf/conformanceTargets/3.0/" xmlns:structures="http://release.ncdf.gov/ncdf/structures/4.0/"
-                xmlns:term="http://release.ncdf.gov/ncdf/localTerminology/3.0/" xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" targetNamespace="urn:mtf:mil:6040b:ncdf:mtf:fields"
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
+                xmlns:ism="urn:us:gov:ic:ism" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" 
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/ncdf/localTerminology/3.0/" 
+                xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" 
+                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" targetNamespace="urn:int:nato:ncdf:mtf:fields"
                 ct:conformanceTargets="http://reference.ncdf.gov/ncdf/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified" version="1.0">
                 <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
                 <xsd:import namespace="http://release.ncdf.gov/ncdf/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
                 <xsd:import namespace="http://release.ncdf.gov/ncdf/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
                 <xsd:import namespace="http://release.ncdf.gov/ncdf/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:text>Code Lists for MTF Messages</xsl:text>

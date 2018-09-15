@@ -17,16 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NcdfMap.xsl"/>
 
     <!--Inputs-->
     <!--MTF XML Baseline Composites Schema-->
-    <xsl:variable name="fields_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')"/>
+    <xsl:variable name="fields_xsd" select="document($fieldspath)"/>
     <!--Outputs-->
-    <xsl:variable name="fieldoutputdoc" select="'../../NCDF_MTF/NCDF_MTF_Fields.xsd'"/>
-    <xsl:variable name="fieldmapoutputdoc" select="'../../NCDF_MTF/Maps/NCDF_MTF_Fieldmaps.xml'"/>
     <xsl:variable name="fieldsxsd">
         <xsl:for-each select="$stringsxsd/xsd:simpleType">
             <xsl:sort select="@name"/>
@@ -149,7 +149,7 @@
             </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
-    <xsl:variable name="mtf_fields_xsd">
+    <xsl:variable name="mtf_fields_xsd">        
         <xsl:for-each select="$fieldsxsd/xsd:simpleType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
@@ -183,7 +183,7 @@
                 </xsl:if>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$all_field_elements_map/*">
+       <xsl:for-each select="$all_field_elements_map/*">
             <xsl:sort select="@ncdfelementname"/>
             <xsl:if test="string-length(@ncdftype) &gt; 0 and name() = 'Element'">
                 <xsl:variable name="n" select="@ncdfelementname"/>
@@ -197,32 +197,36 @@
     <!-- _______________________________________________________ -->
     <!--    OUTPUT RESULT-->
     <xsl:template name="main">
-        <xsl:result-document href="{$fieldoutputdoc}">
-            <xsl:copy-of select="$stringsxsd"/>
-            <!--<xsd:schema xmlns="urn:mtf:mil:6040b:ncdf:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.ncdf.gov/ncdf/conformanceTargets/3.0/"
-                xmlns:structures="http://release.ncdf.gov/ncdf/structures/4.0/" xmlns:term="http://release.ncdf.gov/ncdf/localTerminology/3.0/"
-                xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:ncdf:mtf" ct:conformanceTargets="http://reference.ncdf.gov/ncdf/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
+        <xsl:result-document href="{$fieldsxsdoutpath}">
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
+                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:int:nato:ncdf:mtf" 
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
+                xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>
-                        <xsl:text>Fields for MTF Messages</xsl:text>
+                        <xsl:text>NATO MTF Fields</xsl:text>
                     </xsd:documentation>
                 </xsd:annotation>
                 <xsl:copy-of select="$mtf_fields_xsd" copy-namespaces="no"/>
             </xsd:schema>
-        -->
         </xsl:result-document>
-        <xsl:result-document href="{$fieldmapoutputdoc}">
+        <xsl:result-document href="{$fieldsmapoutpath}">
             <Fields>
                 <xsl:copy-of select="$mtf_fields_map"/>
             </Fields>
-        </xsl:result-document>s
+        </xsl:result-document>
     </xsl:template>
 
     <xsl:template name="fld_nodes">

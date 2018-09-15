@@ -18,13 +18,12 @@
  */
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.ncdf.gov/ncdf/localTerminology/3.0/"
-    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
     exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:include href="NiemMap.xsl"/>
+    <xsl:include href="NcdfMap.xsl"/>
 
     <!--Outputs-->
-    <xsl:variable name="messagemapsoutput" select="concat($srcdir, 'Maps/NCDF_MTF_Msgsmaps.xml')"/>
     <xsl:variable name="messagesxsdoutputdoc" select="concat($srcdir, 'NCDF_MTF_Messages.xsd')"/>
 
 <!-- _______________________________________________________ -->
@@ -265,17 +264,23 @@
     <!-- _______________________________________________________ -->
 
     <xsl:template name="main">
-        <xsl:result-document href="{$messagesxsdoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:ncdf:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.ncdf.gov/ncdf/conformanceTargets/3.0/"
-                xmlns:structures="http://release.ncdf.gov/ncdf/structures/4.0/" xmlns:term="http://release.ncdf.gov/ncdf/localTerminology/3.0/"
-                xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:ncdf:mtf" ct:conformanceTargets="http://reference.ncdf.gov/ncdf/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
+        <!--<xsl:result-document href="{$messagesxsdoutputdoc}">
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
+                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:int:nato:ncdf:mtf" 
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
+                xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.ncdf.gov/ncdf/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
                 <xsd:include schemaLocation="NCDF_MTF_Sets.xsd"/>
                 <xsd:include schemaLocation="NCDF_MTF_Segments.xsd"/>
                 <xsd:annotation>
@@ -285,15 +290,15 @@
                 </xsd:annotation>
                 <xsl:copy-of select="$mtf_messages_xsd"/>
             </xsd:schema>
-        </xsl:result-document>
-        <xsl:result-document href="{$messagemapsoutput}">
+        </xsl:result-document>-->
+        <xsl:result-document href="{$messagesmapoutpath}">
             <Messages>
                 <xsl:copy-of select="$mtf_messages_map"/>
             </Messages>
         </xsl:result-document>
     </xsl:template>
 
-    <xsl:template name="msg_nodes">
+    <!--<xsl:template name="msg_nodes">
         <xsd:annotation>
             <xsd:documentation>
                 <xsl:text>Message structures for MTF Messages</xsl:text>
@@ -328,6 +333,6 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-    </xsl:template>
+    </xsl:template>-->
 
 </xsl:stylesheet>

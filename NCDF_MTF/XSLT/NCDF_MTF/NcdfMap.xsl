@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.ncdf.gov/ncdf/localTerminology/3.0/"
-    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.ncdf.gov/ncdf/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-    exclude-result-prefixes="xsd" version="2.0">
-    <xsl:include href="USMTF_Utility.xsl"/>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" version="2.0">
+    <xsl:include href="NMTF_Utility.xsl"/>
     <xsl:include href="NcdfStrings.xsl"/>
     <xsl:include href="NcdfNumerics.xsl"/>
     <xsl:include href="NcdfCodeLists.xsl"/>
-    
+
+    <xsl:variable name="fieldspath" select="'../../XSD/APP-11C-ch1/Consolidated/fields.xsd'"/>
+    <xsl:variable name="compositespath" select="'../../XSD/APP-11C-ch1/Consolidated/composites.xsd'"/>
+    <xsl:variable name="setspath" select="'../../XSD/APP-11C-ch1/Consolidated/sets.xsd'"/>
+    <xsl:variable name="messagespath" select="'../../XSD/APP-11C-ch1/Consolidated/messages.xsd'"/>
+
+    <xsl:variable name="fieldsxsdoutpath" select="'../../XSD/NCDF_MTF/NCDF_MTF_Fields.xsd'"/>
+    <xsl:variable name="compositesxsdoutpath" select="'../../XSD/NCDF_MTF/NCDF_MTF_Composites.xsd'"/>
+    <xsl:variable name="setsxsdoutpath" select="'../../XSD/NCDF_MTF/NCDF_MTF_Sets.xsd'"/>
+    <xsl:variable name="segmentsxsdoutpath" select="'../../XSD/NCDF_MTF/NCDF_MTF_Segments.xsd'"/>
+    <xsl:variable name="messagesxsdoutpath" select="'../../XSD/NCDF_MTF/NCDF_MTF_Messages.xsd'"/>
+
+    <xsl:variable name="fieldsmapoutpath" select="'../../XSD/NCDF_MTF/Maps/NCDF_MTF_Fieldmaps.xml'"/>
+    <xsl:variable name="compositesmapoutpath" select="'../../XSD/NCDF_MTF/Maps/NCDF_MTF_Compositemaps.xml'"/>
+    <xsl:variable name="setsmapoutpath" select="'../../XSD/NCDF_MTF/Maps/NCDF_MTF_Setmaps.xml'"/>
+    <xsl:variable name="segmentsmapoutpath" select="'../../XSD/NCDF_MTF/Maps/NCDF_MTF_Segmntmaps.xml'"/>
+    <xsl:variable name="messagesmapoutpath" select="'../../XSD/NCDF_MTF/Maps/NCDF_MTF_Msgsmaps.xml'"/>
+
+    <xsl:variable name="fieldsmapoutputdoc" select="document($fieldsmapoutpath)"/>
+    <xsl:variable name="compositesmapoutputdoc" select="document($compositesmapoutpath)"/>
+    <xsl:variable name="setsmapoutputdoc" select="document($segmentsmapoutpath)"/>
+    <xsl:variable name="segmentsmapoutputdoc" select="document($segmentsmapoutpath)"/>
+    <xsl:variable name="messagesmapoutputdoc" select="document($messagesmapoutpath)"/>
+
     <xsl:variable name="q" select="'&quot;'"/>
     <xsl:variable name="lt" select="'&lt;'"/>
     <xsl:variable name="gt" select="'&gt;'"/>
-    
+
     <xsl:variable name="srcdir" select="'../../XSD/'"/>
     <!--Baseline-->
     <xsl:variable name="baseline_fields_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/xsd:schema"/>
@@ -43,19 +64,19 @@
     </xsl:variable>
     <xsl:variable name="all_field_elements_map">
         <xsl:copy-of select="$ncdf_fields_map"/>
-        <xsl:for-each select="$ncdf_composites_map//Element[starts-with(@mtftype, 'f:') or appinf/mtfappinfo:Field]">
+        <xsl:for-each select="$ncdf_composites_map//Element[starts-with(@mtftype, 'f:') or appinfo/mtfappinfo:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_sets_map//Element[starts-with(@mtftype, 'f:') or appinf/mtfappinfo:Field]">
+        <xsl:for-each select="$ncdf_sets_map//Element[starts-with(@mtftype, 'f:') or appinfo/mtfappinfo:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_sets_map//Choice[Element[starts-with(@mtftype, 'f:') or Element/appinf/mtfappinfo:Field]]">
+        <xsl:for-each select="$ncdf_sets_map//Choice[Element[starts-with(@mtftype, 'f:') or Element/appinfo/mtfappinfo:Field]]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 'f:') or appinf/mtfappinfo:Field]">
+        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 'f:') or appinfo/mtfappinfo:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 'f:') or appinf/mtfappinfo:Field]">
+        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 'f:') or appinfo/mtfappinfo:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -87,7 +108,7 @@
                 <xsl:value-of select="$ncdfname"/>
             </xsl:variable>
             <xsl:variable name="mtfdoc">
-                <xsl:value-of select="$annot/*/xsd:documentation"/>
+                <xsl:apply-templates select="$annot/*/xsd:documentation" mode="normlize"/>
             </xsl:variable>
             <xsl:variable name="ncdftypedoc">
                 <xsl:choose>
@@ -150,22 +171,25 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <!--<xsl:variable name="field_chg" select="$field_changes/*/*[@name = $n]"/>-->
+                    <xsl:variable name="field_chg" select="$field_changes/*/*[@name = $n]"/>
                     <xsl:variable name="comp_chg" select="$comp_changes/CompositeTypeChanges/Element[@name = $n]"/>
                     <xsl:variable name="seqncdfelementname">
                         <xsl:choose>
+                            <xsl:when test="$field_chg/@ncdfelementname">
+                                <xsl:value-of select="$field_chg/@ncdfelementname"/>
+                            </xsl:when>
                             <xsl:when test="$comp_chg/@ncdfelementname">
                                 <xsl:value-of select="$comp_chg/@ncdfelementname"/>
                             </xsl:when>
-                            <!-- <xsl:when test="ends-with($ncdftypevar, 'TextType') and not(ends-with($n, 'Text'))">
+                            <xsl:when test="ends-with($ncdftypevar, 'TextType') and not(ends-with($n, 'Text'))">
                                 <xsl:value-of select="concat($n, 'Text')"/>
-                            </xsl:when>-->
-                            <!-- <xsl:when test="ends-with($ncdftypevar, 'NumericType') and not(ends-with($n, 'Numeric'))">
+                            </xsl:when>
+                            <xsl:when test="ends-with($ncdftypevar, 'NumericType') and not(ends-with($n, 'Numeric'))">
                                 <xsl:value-of select="concat($n, 'Numeric')"/>
-                            </xsl:when>-->
-                            <!-- <xsl:when test="ends-with($ncdftypevar, 'CodeType') and not(ends-with($n, 'Code'))">
+                            </xsl:when>
+                            <xsl:when test="ends-with($ncdftypevar, 'CodeType') and not(ends-with($n, 'Code'))">
                                 <xsl:value-of select="concat($n, 'Code')"/>
-                            </xsl:when>-->
+                            </xsl:when>
                             <xsl:otherwise>
                                 <xsl:value-of select="$n"/>
                             </xsl:otherwise>
@@ -207,11 +231,11 @@
             </xsl:variable>
             <Composite ncdfelementname="{$ncdfelementname}" ncdftype="{$ncdfcomplextype}" ncdfname="{$ncdfname}" ncdfelementdoc="{$ncdfelementdoc}" mtfdoc="{$mtfdoc}" ncdftypedoc="{$ncdftypedoc}"
                 mtfname="{@name}">
-                <appinf>
+                <appinfo>
                     <xsl:for-each select="$appinfo">
                         <xsl:copy-of select="."/>
                     </xsl:for-each>
-                </appinf>
+                </appinfo>
                 <Sequence>
                     <xsl:for-each select="$seq_fields">
                         <xsl:copy-of select="Element"/>
@@ -222,16 +246,16 @@
     </xsl:variable>
     <xsl:variable name="all_composite_elements_map">
         <xsl:copy-of select="$ncdf_composites_map"/>
-        <xsl:for-each select="$ncdf_sets_map//Element[starts-with(@mtftype, 'c:') or appinf/mtfappinfo:Composite]">
+        <xsl:for-each select="$ncdf_sets_map//Element[starts-with(@mtftype, 'c:') or appinfo/mtfappinfo:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_sets_map//Choice[Element[starts-with(@mtftype, 'c:') or Element/appinf/mtfappinfo:Composite]]">
+        <xsl:for-each select="$ncdf_sets_map//Choice[Element[starts-with(@mtftype, 'c:') or Element/appinfo/mtfappinfo:Composite]]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 'c:') or appinf/mtfappinfo:Composite]">
+        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 'c:') or appinfo/mtfappinfo:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 'c:') or appinf/mtfappinfo:Composite]">
+        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 'c:') or appinfo/mtfappinfo:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -243,10 +267,10 @@
         <xsl:for-each select="$ncdf_sets_map//Element">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 's:') or appinf/mtfappinfo:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
+        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 's:') or appinfo/mtfappinfo:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 's:') or appinf/mtfappinfo:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
+        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 's:') or appinfo/mtfappinfo:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -255,10 +279,10 @@
         <xsl:apply-templates select="$baseline_segments_xsd" mode="segmentglobal"/>
     </xsl:variable>
     <xsl:variable name="all_segment_elements_map">
-        <xsl:for-each select="$ncdf_segments_map//Element[appinf/mtfappinfo:Segment]">
+        <xsl:for-each select="$ncdf_segments_map//Element[appinfo/mtfappinfo:Segment]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_messages_map//Element[appinf/mtfappinfo:Segment]">
+        <xsl:for-each select="$ncdf_messages_map//Element[appinfo/mtfappinfo:Segment]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -266,15 +290,7 @@
         <xsl:apply-templates select="$baseline_msgs_xsd/*" mode="messageglobal"/>
     </xsl:variable>
 
-    <!--Outputs-->
-    <xsl:variable name="fieldsmapoutputdoc" select="concat($srcdir, 'NCDF_MTF/Maps/NCDF_MTF_Fieldmaps.xml')"/>
-    <xsl:variable name="compositesmapoutputdoc" select="concat($srcdir, 'NCDF_MTF/Maps/NCDF_MTF_Compositemaps.xml')"/>
-    <xsl:variable name="setsmapoutputdoc" select="concat($srcdir, 'NCDF_MTF/Maps/NCDF_MTF_Setmaps.xml')"/>
-    <xsl:variable name="segmentsmapoutputdoc" select="concat($srcdir, 'NCDF_MTF/Maps/NCDF_MTF_Sgmntmaps.xml')"/>
-    <xsl:variable name="messagesmapoutputdoc" select="concat($srcdir, 'NCDF_MTF/Maps/NCDF_MTF_Msgsmaps.xml')"/>
-
-    <!--<xsl:template name="map">-->
-    <xsl:template name="main">
+    <xsl:template name="map">
         <xsl:result-document href="{$fieldsmapoutputdoc}">
             <Fields>
                 <xsl:for-each select="$all_field_elements_map/*">
@@ -395,23 +411,23 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="mtfdocvar">
-            <xsl:value-of select="$annot/*/xsd:documentation"/>
+            <xsl:apply-templates select="$annot/*/xsd:documentation" mode="normlize"/>
         </xsl:variable>
         <xsl:variable name="ncdftypedocvar">
             <xsl:choose>
                 <xsl:when test="$change/@ncdftypedoc">
-                    <xsl:value-of select="concat('A data type for the ', replace($change/@ncdftypedoc, 'The', 'the'))"/>
+                    <xsl:apply-templates select="concat('A data type for the ', replace($change/@ncdftypedoc, 'The', 'the'))" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="starts-with($mtfdocvar, 'A data ')">
-                    <xsl:value-of select="$mtfdocvar"/>
+                    <xsl:apply-templates select="$mtfdocvar" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat('A data type for the', substring($mtfdocvar, 4))"/>
+                    <xsl:apply-templates select="concat('A data type for the', substring($mtfdocvar, 4))" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="ncdfelementdocvar">
-            <xsl:value-of select="replace($ncdftypedocvar, 'A data type', 'A data item')"/>
+            <xsl:apply-templates select="replace($ncdftypedocvar, 'A data type', 'A data item')" mode="normlize"/>
         </xsl:variable>
         <xsl:variable name="appinfovar">
             <xsl:for-each select="$annot/*/xsd:appinfo">
@@ -419,11 +435,11 @@
             </xsl:for-each>
         </xsl:variable>
         <Set ncdfelementname="{$ncdfelementnamevar}" ncdftype="{$ncdfcomplextypevar}" ncdfelementdoc="{$ncdfelementdocvar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" ncdftypedoc="{$ncdftypedocvar}">
-            <appinf>
+            <appinfo>
                 <xsl:for-each select="$appinfovar">
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
-            </appinf>
+            </appinfo>
             <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]">
                 <xsl:with-param name="settypevar" select="$mtfname"/>
             </xsl:apply-templates>
@@ -441,11 +457,15 @@
                 <xsl:when test="$changename/@ncdfelementname">
                     <xsl:value-of select="$changename/@ncdfelementname"/>
                 </xsl:when>
-                <xsl:when test="ends-with($mtfname, 'Segment')">
-                    <xsl:value-of select="$mtfname"/>
-                </xsl:when>
                 <xsl:when test="contains($mtfname, 'Segment_')">
                     <xsl:value-of select="concat(substring-before($mtfname, 'Segment_'), 'Segment')"/>
+                </xsl:when>
+                <xsl:when test="contains($mtfname, '_')">
+                    <xsl:value-of select="concat(substring-before($mtfname, '_'), 'Segment')"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtfname, 'Segment')">
+                    <!--<xsl:apply-templates select="@name" mode="txt"/>-->
+                    <xsl:value-of select="$mtfname"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="concat($mtfname, 'Segment')"/>
@@ -459,10 +479,10 @@
         <xsl:variable name="mtfdoc">
             <xsl:choose>
                 <xsl:when test="xsd:annotation/xsd:documentation">
-                    <xsl:value-of select="normalize-space(xsd:annotation/xsd:documentation)"/>
+                    <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="normalize-space($annot/*/xsd:documentation)"/>
+                    <xsl:apply-templates select="$annot/*/xsd:documentation" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -472,21 +492,20 @@
         <xsl:variable name="ncdftypedocvar">
             <xsl:choose>
                 <xsl:when test="$changedoc/@ncdftypedoc">
-                    <xsl:value-of select="concat('A data type for the', $changedoc/@ncdftypedoc, 'The')"/>
+                    <xsl:apply-templates select="concat('A data type for the', $changedoc/@ncdftypedoc, 'The')" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat('A data type for the', substring-after($mtfdoc, 'The'))"/>
+                    <xsl:apply-templates select="concat('A data type for the', substring-after($mtfdoc, 'The'))" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="ncdfelementdocvar">
             <xsl:choose>
                 <xsl:when test="$changedoc/@ncdfelementdoc">
-                    <xsl:value-of select="$changedoc/@ncdfelementdoc"/>
+                    <xsl:apply-templates select="$changedoc/@ncdfelementdoc" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="replace($ncdftypedocvar, 'A data type for', 'A data item for')"/>
-                    <!--<xsl:value-of select="normalize-space($ncdftypedoc)"/>-->
+                    <xsl:apply-templates select="replace($ncdftypedocvar, 'A data type for', 'A data item for')" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -502,11 +521,11 @@
                     <xsl:value-of select="$segseq"/>
                 </xsl:attribute>
             </xsl:if>
-            <appinf>
+            <appinfo>
                 <xsl:for-each select="$appinfovar/*">
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
-            </appinf>
+            </appinfo>
             <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]">
                 <xsl:with-param name="segmentnamevar" select="$mtfname"/>
             </xsl:apply-templates>
@@ -531,8 +550,11 @@
                 <xsl:when test="$message_changes/Element[@mtfname = $mtfnamevar][@messagename = '']/@ncdfelementname">
                     <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][@messagename = '']/@ncdfelementname"/>
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="ends-with($n, 'Message')">
                     <xsl:value-of select="$n"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat($n, 'Message')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -542,10 +564,10 @@
         <xsl:variable name="mtfdoc">
             <xsl:choose>
                 <xsl:when test="xsd:annotation/xsd:documentation">
-                    <xsl:value-of select="normalize-space(xsd:annotation/xsd:documentation)"/>
+                    <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="normalize-space($annot/*/xsd:documentation)"/>
+                    <xsl:apply-templates select="$annot/*/xsd:documentation" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -555,31 +577,30 @@
         <xsl:variable name="ncdftypedocvar">
             <xsl:choose>
                 <xsl:when test="$message_changes/Element[@mtfname = $mtfnamevar][@ncdfname = $ncdfelementnamevar]/@ncdftypedoc">
-                    <xsl:value-of select="concat('A data type for the', $message_changes/Element[@mtfname = $mtfnamevar][@ncdfname = $ncdfelementnamevar]/@ncdftypedoc, 'The')"/>
+                    <xsl:apply-templates select="concat('A data type for the', $message_changes/Element[@mtfname = $mtfnamevar][@ncdfname = $ncdfelementnamevar]/@ncdftypedoc, 'The')" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat('A data type for the', substring-after($mtfdoc, 'The'))"/>
+                    <xsl:apply-templates select="concat('A data type for the', substring-after($mtfdoc, 'The'))" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="ncdfelementdocvar">
             <xsl:choose>
                 <xsl:when test="$message_changes/Element[@mtfname = $mtfnamevar][@ncdfname = $ncdfelementnamevar]/@ncdfelementdoc">
-                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][@ncdfname = $ncdfelementnamevar]/@ncdfelementdoc"/>
+                    <xsl:apply-templates select="$message_changes/Element[@mtfname = $mtfnamevar][@ncdfname = $ncdfelementnamevar]/@ncdfelementdoc" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="replace($ncdftypedocvar, 'A data type', 'A data item')"/>
-                    <!--<xsl:value-of select="normalize-space($ncdftypedoc)"/>-->
+                    <xsl:apply-templates select="replace($ncdftypedocvar, 'A data type', 'A data item')" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <Message ncdfelementname="{$ncdfelementnamevar}" ncdftype="{$ncdfcomplextype}" ncdfelementdoc="{$ncdfelementdocvar}" mtfname="{@name}" mtfid="{$mtfid}" mtfdoc="{$mtfdoc}"
             ncdftypedoc="{$ncdftypedocvar}">
-            <appinf>
+            <appinfo>
                 <xsl:for-each select="$appinfovar/*">
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
-            </appinf>
+            </appinfo>
             <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]">
                 <xsl:with-param name="messagenamevar" select="$mtfnamevar"/>
             </xsl:apply-templates>
@@ -595,28 +616,42 @@
                 <xsl:when test="ends-with(@name, 'Type')">
                     <xsl:apply-templates select="@name" mode="fromtype"/>
                 </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="@name"/>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="mtfnamevar">
             <xsl:apply-templates select="@name" mode="txt"/>
         </xsl:variable>
         <xsl:variable name="mtfbase">
-            <xsl:value-of select="xsd:complexType/*/xsd:extension/@base"/>
+            <xsl:choose>
+                <xsl:when test="@type">
+                    <xsl:value-of select="@type"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="xsd:complexType/*/xsd:extension/@base"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:variable>
         <xsl:variable name="mtftypevar">
             <xsl:choose>
-                <xsl:when test="contains($mtfbase,':')">
-                    <xsl:value-of select="substring-after($mtfbase,':')"/>
+                <xsl:when test="contains($mtfbase, ':')">
+                    <xsl:value-of select="substring-after($mtfbase, ':')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$mtfbase"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+       <!--MTF name wthout underscore-->
         <xsl:variable name="mtfroot">
             <xsl:choose>
                 <xsl:when test="$segment_changes/Element[@mtfname = $mtfnamevar]">
                     <xsl:value-of select="$mtfnamevar"/>
+                </xsl:when>
+                <xsl:when test="starts-with(@name, '_')">
+                    <xsl:apply-templates select="@name" mode="txt"/>
                 </xsl:when>
                 <xsl:when test="contains(@name, '_')">
                     <xsl:value-of select="substring-before(@name, '_')"/>
@@ -627,7 +662,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="setnamevar">
-            <xsl:value-of select="substring($settypevar, 0,string-length($settypevar)-3)"/>
+            <xsl:value-of select="substring($settypevar, 0, string-length($settypevar) - 3)"/>
         </xsl:variable>
         <xsl:variable name="msgnamevar">
             <xsl:value-of select="ancestor::xsd:element[xsd:annotation/xsd:documentation/xsd:appinfo/MtfName]/@name"/>
@@ -643,6 +678,11 @@
         </xsl:variable>
         <xsl:variable name="annot">
             <xsl:apply-templates select="xsd:annotation"/>
+        </xsl:variable>
+        <xsl:variable name="appinfovar">
+            <xsl:for-each select="$annot/*/xsd:appinfo">
+                <xsl:copy-of select="*" copy-namespaces="no"/>
+            </xsl:for-each>
         </xsl:variable>
         <xsl:variable name="typeannot">
             <xsl:choose>
@@ -660,10 +700,10 @@
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="isField" select="exists($annot/appinf/mtfappinfo:Field) or starts-with($mtfbase, 'f:')"/>
-        <xsl:variable name="isComposite" select="exists($annot/appinf/mtfappinfo:Composite) or starts-with($mtfbase, 'c:')"/>
-        <xsl:variable name="isSet" select="exists($annot/appinf/mtfappinfo:Set) or starts-with($mtfbase, 's:')"/>
-        <xsl:variable name="isSegment" select="exists($annot/appinf/mtfappinfo:Segment)"/>
+        <xsl:variable name="isField" select="exists($annot/*/xsd:appinfo/mtfappinfo:Field) or starts-with($mtfbase, 'f:')"/>
+        <xsl:variable name="isComposite" select="exists($annot/*/xsd:appinfo/mtfappinfo:Composite) or starts-with($mtfbase, 'c:')"/>
+        <xsl:variable name="isSet" select="exists($annot/*/xsd:appinfo/mtfappinfo:Set) or starts-with($mtfbase, 's:')"/>
+        <xsl:variable name="isSegment" select="exists($annot/*/xsd:appinfo/mtfappinfo:Segment)"/>
         <xsl:variable name="ncdfmatch">
             <xsl:choose>
                 <xsl:when test="$isField">
@@ -676,7 +716,7 @@
                     <xsl:apply-templates select="$baseline_sets_xsd/xsd:complexType[@name = $mtftypevar][1]" mode="setglobal"/>
                 </xsl:when>
                 <xsl:when test="$isSegment">
-                    <xsl:apply-templates select="$baseline_segments_xsd/xsd:element[@name = $mtfroot][1]" mode="segmentglobal"/>
+                    <xsl:apply-templates select="$baseline_segments_xsd[@name = $mtfroot][1]" mode="segmentglobal"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -684,7 +724,7 @@
             <xsl:value-of select="$ncdfmatch/*/@mtfname"/>
         </xsl:variable>
         <xsl:variable name="setidvar">
-            <xsl:value-of select="$ncdfmatch/*/appinf/mtfappinfo:Set/@setid"/>
+            <xsl:value-of select="$ncdfmatch/*/appinfo/mtfappinfo:Set/@setid"/>
         </xsl:variable>
         <xsl:variable name="seq">
             <xsl:choose>
@@ -700,12 +740,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="mtftypedoc">
-            <xsl:value-of select="$typeannot/*/xsd:documentation"/>
-        </xsl:variable>
-        <xsl:variable name="appinfovar">
-            <xsl:for-each select="$annot/*/xsd:appinfo">
-                <xsl:copy-of select="*" copy-namespaces="no"/>
-            </xsl:for-each>
+            <xsl:apply-templates select="$typeannot/*/xsd:documentation" mode="normlize"/>
         </xsl:variable>
         <xsl:variable name="UseDesc">
             <xsl:value-of select="translate(upper-case($appinfovar/*/@usage), '.', '')"/>
@@ -733,6 +768,9 @@
                         <xsl:when test="$ncdfmatch/*/@ncdfelementname">
                             <xsl:value-of select="$ncdfmatch/*/@ncdfelementname"/>
                         </xsl:when>
+                        <xsl:when test="ends-with($mtftypevar, 'TextType') and not(ends-with($n, 'Text'))">
+                            <xsl:value-of select="concat($n, 'Text')"/>
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="$mtfnamevar"/>
                         </xsl:otherwise>
@@ -756,15 +794,15 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
-                <!-- <xsl:when test="ends-with($ncdftypevar, 'TextType') and not(ends-with($n, 'Text'))">
-                                <xsl:value-of select="concat($n, 'Text')"/>
-                            </xsl:when>-->
-                <!-- <xsl:when test="ends-with($ncdftypevar, 'NumericType') and not(ends-with($n, 'Numeric'))">
-                                <xsl:value-of select="concat($n, 'Numeric')"/>
-                            </xsl:when>-->
-                <!-- <xsl:when test="ends-with($ncdftypevar, 'CodeType') and not(ends-with($n, 'Code'))">
-                                <xsl:value-of select="concat($n, 'Code')"/>
-                            </xsl:when>-->
+                <xsl:when test="ends-with($mtftypevar, 'TextType') and not(ends-with($n, 'Text'))">
+                    <xsl:value-of select="concat($n, 'Text')"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtftypevar, 'NumericType') and not(ends-with($n, 'Numeric'))">
+                    <xsl:value-of select="concat($n, 'Numeric')"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtftypevar, 'CodeType') and not(ends-with($n, 'Code'))">
+                    <xsl:value-of select="concat($n, 'Code')"/>
+                </xsl:when>
                 <xsl:when test="$ncdfmatch/*/@ncdfelementname">
                     <xsl:value-of select="$ncdfmatch/*/@ncdfelementname"/>
                 </xsl:when>
@@ -811,6 +849,9 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
+                <xsl:when test="$isSegment">
+                    <xsl:value-of select="concat($mtfnamevar,'Segment')"/>
+                </xsl:when>
                 <xsl:when test="string-length($ncdfel) &gt; 0">
                     <xsl:value-of select="$ncdfel"/>
                 </xsl:when>
@@ -821,37 +862,58 @@
         </xsl:variable>
         <xsl:variable name="ncdfelementnamevar">
             <xsl:choose>
+                <!--Use Set Change-->
                 <xsl:when test="$settypevar and $set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar][1]/@ncdfelementname">
                     <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar][1]/@ncdfelementname"/>
                 </xsl:when>
+                <!--Use Set Field Change-->
                 <xsl:when test="$isField and $set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase][1]/@ncdfelementname">
                     <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase][1]/@ncdfelementname"/>
                 </xsl:when>
-                <xsl:when test="$segmentnamevar and $segment_changes/Element[@mtfname = $mtfnamevar]/@ncdfelementname">
+                <!--Use Segment Change-->
+                <xsl:when test="$isSegment and $segment_changes/Element[@mtfname = $mtfnamevar]/@ncdfelementname">
                     <xsl:value-of select="$segment_changes/Element[@mtfname = $mtfnamevar][1]/@ncdfelementname"/>
                 </xsl:when>
+                <!--Use Message element Change-->
                 <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfroot][@messagename = $messagenamevar]/@ncdfelementname">
                     <xsl:value-of select="$message_changes/Element[@mtfname = $mtfroot][@messagename = $messagenamevar]/@ncdfelementname"/>
                 </xsl:when>
+                <!--Use Message Change-->
                 <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfnamevar]/@ncdfelementname">
                     <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar]/@ncdfelementname"/>
                 </xsl:when>
+                <!--Use Subsitution group name -->
                 <xsl:when test="string-length($sbstgrp) &gt; 0">
                     <xsl:value-of select="$ncdfelement"/>
                 </xsl:when>
+                <!--Create GenText Name -->
                 <xsl:when test="starts-with($mtfnamevar, 'GeneralText')">
                     <xsl:call-template name="GenTextName">
                         <xsl:with-param name="textind" select="$TextIndicator"/>
                     </xsl:call-template>
                 </xsl:when>
+                <!--Create Heading Information Name -->
                 <xsl:when test="starts-with($mtfnamevar, 'HeadingInformation') and not($mtfnamevar = 'HeadingInformation')">
                     <xsl:call-template name="HeadingInformation">
                         <xsl:with-param name="textind" select="$TextIndicator"/>
                     </xsl:call-template>
                 </xsl:when>
-                <xsl:when test="starts-with($ncdfelement, '_')">
-                    <xsl:value-of select="$mtfnamevar"/>
+                <!--Create GenText Name -->
+                <xsl:when test="$setidvar = 'GENTEXT'">
+                    <xsl:choose>
+                        <xsl:when test="contains($ncdfelement, '_')">
+                            <xsl:value-of select="concat(substring-before($ncdfelement, '_'), 'GeneralText')"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="concat($ncdfelement, 'GeneralText')"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:when>
+                <!--Remove leading underscore in name -->
+                <xsl:when test="starts-with($ncdfelement, '_')">
+                    <xsl:apply-templates select="@name" mode="txt"/>
+                </xsl:when>
+                <!--Remove underscore in name -->
                 <xsl:when test="contains($ncdfelement, '_')">
                     <xsl:value-of select="substring-before($ncdfelement, '_')"/>
                 </xsl:when>
@@ -871,8 +933,11 @@
                 <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype">
                     <xsl:value-of select="$segment_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype"/>
                 </xsl:when>
+                <xsl:when test="@type">
+                    <xsl:apply-templates select="@type" mode="txt"/>
+                </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$mtftypevar"/>
+                    <xsl:apply-templates select="xsd:complexType/*/xsd:extension/@base" mode="txt"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -886,44 +951,41 @@
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="ffirnfud">
-            <xsl:value-of select="xsd:complexType/*//xsd:attribute[@name = 'ffirnFudn']/@fixed"/>
-        </xsl:variable>
         <xsl:variable name="setseq">
             <xsl:value-of select="xsd:complexType/xsd:complexContent/xsd:extension/xsd:attribute[@name = 'setSeq'][1]/@fixed"/>
         </xsl:variable>
         <xsl:variable name="mtfdocvar">
             <xsl:choose>
                 <xsl:when test="xsd:annotation/xsd:documentation">
-                    <xsl:value-of select="normalize-space(xsd:annotation/xsd:documentation)"/>
+                    <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$typeannot/*/xsd:documentation">
-                    <xsl:value-of select="replace($typeannot/*/xsd:documentation, 'A data type', 'A data item')"/>
+                    <xsl:apply-templates select="replace($typeannot/*/xsd:documentation, 'A data type', 'A data item')" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$ncdfmatch/*/@mtfdoc">
-                    <xsl:value-of select="$ncdfmatch/*/@mtfdoc"/>
+                    <xsl:apply-templates select="$ncdfmatch/*/@mtfdoc" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="normalize-space($annot/xsd:documentation)"/>
+                    <xsl:apply-templates select="$annot/xsd:documentation" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="ncdfdocvar">
             <xsl:choose>
                 <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@ncdfelementdoc">
-                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@ncdfelementdoc"/>
+                    <xsl:apply-templates select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@ncdfelementdoc" mode="normlize"/>
                 </xsl:when>
-                <xsl:when test="$annot/*/xsd:documentation and starts-with($ncdfelementnamevar, 'A data type')">
-                    <xsl:value-of select="replace($mtfdocvar, 'A data type ', 'A data item ')"/>
+                <xsl:when test="$annot/*/xsd:documentation and starts-with($annot/*/xsd:documentation, 'A data type')">
+                    <xsl:apply-templates select="replace($mtfdocvar, 'A data type ', 'A data item ')" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$annot/*/xsd:documentation">
-                    <xsl:value-of select="concat('A data item for ', replace($mtfdocvar, 'The', 'the'))"/>
+                    <xsl:apply-templates select="concat('A data item for ', replace($mtfdocvar, 'The', 'the'))" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="starts-with($ncdfmatch/*/@ncdfelementdoc, 'A data type for the') and contains($ncdfelementnamevar, 'Name')">
-                    <xsl:value-of select="replace(@ncdfelementdoc, 'A data type ', 'A data item for the name ')"/>
+                    <xsl:apply-templates select="replace(@ncdfelementdoc, 'A data type ', 'A data item for the name ')" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="starts-with($ncdfmatch/*/@ncdfelementdoc, 'A data type for the')">
-                    <xsl:value-of select="replace($ncdfmatch/*/@ncdfelementdoc, 'A data type for the', 'A data item for the')"/>
+                    <xsl:apply-templates select="replace($ncdfmatch/*/@ncdfelementdoc, 'A data type for the', 'A data item for the')" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="e">
@@ -931,7 +993,7 @@
                             <xsl:with-param name="string" select="$ncdfelementnamevar"/>
                         </xsl:call-template>
                     </xsl:variable>
-                    <xsl:value-of select="concat('A data item for ',$e)"/>
+                    <xsl:value-of select="concat('A data item for ', $e)"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -1002,7 +1064,12 @@
                     <xsl:value-of select="$setidvar"/>
                 </xsl:attribute>
             </xsl:if>
-            <xsl:if test="string-length($ffirnvar) &gt; 0">
+            <xsl:if test="string-length($ffirnfud) &gt; 0">
+                <xsl:attribute name="identifier">
+                    <xsl:value-of select="$ffirnfud"/>
+                </xsl:attribute>
+            </xsl:if>
+            <!-- <xsl:if test="string-length($ffirnvar) &gt; 0">
                 <xsl:attribute name="ffirn">
                     <xsl:value-of select="$ffirnvar"/>
                 </xsl:attribute>
@@ -1011,7 +1078,7 @@
                 <xsl:attribute name="fud">
                     <xsl:value-of select="$fudvar"/>
                 </xsl:attribute>
-            </xsl:if>
+            </xsl:if>-->
             <xsl:if test="string-length($ncdfelementdocvar) &gt; 0">
                 <xsl:attribute name="ncdfelementdoc">
                     <xsl:value-of select="$ncdfelementdocvar"/>
@@ -1064,7 +1131,7 @@
                     </xsl:attribute>
                 </xsl:when>
             </xsl:choose>
-            <appinf>
+            <appinfo>
                 <xsl:for-each select="$appinfovar/*">
                     <xsl:copy>
                         <xsl:for-each select="@*">
@@ -1080,14 +1147,24 @@
                                 <xsl:value-of select="$setidvar"/>
                             </xsl:attribute>
                         </xsl:if>
-                        <xsl:if test="string-length($ffirnfud) &gt; 0">
+                        <xsl:if test="string-length($ffirnvar) &gt; 0">
+                            <xsl:attribute name="ffirn">
+                                <xsl:value-of select="$ffirnvar"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <xsl:if test="string-length($fudvar) &gt; 0">
+                            <xsl:attribute name="fud">
+                                <xsl:value-of select="$fudvar"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <!-- <xsl:if test="string-length($ffirnfud) &gt; 0">
                             <xsl:attribute name="identifier">
                                 <xsl:value-of select="$ffirnfud"/>
                             </xsl:attribute>
-                        </xsl:if>
+                        </xsl:if>-->
                     </xsl:copy>
                 </xsl:for-each>
-            </appinf>
+            </appinfo>
             <xsl:if test="$typeappinfo/*">
                 <typeappinfo>
                     <xsl:for-each select="$typeappinfo">
@@ -1115,21 +1192,27 @@
             <xsl:apply-templates select="ancestor::xsd:complexType[@name][1]/@name" mode="txt"/>
         </xsl:variable>
         <xsl:variable name="setnamevar">
-            <xsl:value-of select="substring($settypevar, 0, string-length($settypevar)-3)"/>
+            <xsl:value-of select="substring($settypevar, 0, string-length($settypevar) - 3)"/>
         </xsl:variable>
         <xsl:variable name="parentnamevar">
             <xsl:choose>
+                <xsl:when test="ends-with(ancestor::xsd:element[@name][not(@name = 'GroupOfFields')]/@name,'Segment')">
+                        <xsl:value-of select="ancestor::xsd:element[@name][1]/@name"/>
+                </xsl:when>
                 <xsl:when test="ancestor::xsd:element[@name][not(@name = 'GroupOfFields')]/@name">
-                    <xsl:value-of select="ancestor::xsd:element[@name][not(@name = 'GroupOfFields')][1]/@name"/>
+                    <xsl:value-of select="concat(ancestor::xsd:element[@name][not(@name = 'GroupOfFields')][1]/@name,'Segment')"/>
+                </xsl:when>
+                <xsl:when test="ends-with(ancestor::*[@name][not(@name = 'GroupOfFields')][1]/@name,'Segment')">
+                    <xsl:value-of select="ancestor::*[@name][not(@name = 'GroupOfFields')][1]/@name"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="ancestor::*[@name][not(@name = 'GroupOfFields')][1]/@name"/>
+                    <xsl:value-of select="concat(ancestor::*[@name][not(@name = 'GroupOfFields')][1]/@name,'Segment')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="ncdfelementnamevar">
             <xsl:choose>
-               <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar][@setname = $setnamevar]/@ncdfname">
+                <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar][@setname = $setnamevar]/@ncdfname">
                     <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar][@setname = $setnamevar]/@ncdfname"/>
                 </xsl:when>
                 <xsl:when test="$substGrp_Changes/Choice[@mtfname = $mtfnamevar][@setname = $settypevar]/@ncdfname">
@@ -1142,7 +1225,7 @@
                     <xsl:value-of select="$substGrp_Changes/Choice[@mtfname = $mtfnamevar][@messagename = $messagenamevar]/@ncdfname"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="$mtfnamevar"/>
+                    <xsl:apply-templates select="$mtfnamevar" mode="txt"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -1153,34 +1236,34 @@
             <xsl:apply-templates select="xsd:element[1]/*/xsd:extension/xsd:annotation"/>
         </xsl:variable>
         <xsl:variable name="mtftypedoc">
-            <xsl:value-of select="$typeannot/xsd:documentation"/>
+            <xsl:apply-templates select="$typeannot/xsd:documentation" mode="normlize"/>
         </xsl:variable>
         <xsl:variable name="mtfdocvar">
             <xsl:choose>
                 <xsl:when test="starts-with($annot/*/xsd:documentation, 'A data type')">
-                    <xsl:value-of select="$annot/*/xsd:documentation"/>
+                    <xsl:apply-templates select="$annot/*/xsd:documentation" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$annot/*/xsd:documentation">
-                    <xsl:value-of select="concat('A data type for ', replace($annot/*/xsd:documentation, 'The', 'the'))"/>
+                    <xsl:apply-templates select="concat('A data type for ', replace($annot/*/xsd:documentation, 'The', 'the'))" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$typeannot/*/xsd:documentation">
-                    <xsl:value-of select="replace($typeannot/*/xsd:documentation, 'A data type', 'A data item')"/>
+                    <xsl:apply-templates select="replace($typeannot/*/xsd:documentation, 'A data type', 'A data item')" mode="normlize"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="normalize-space($annot/*/xsd:documentation)"/>
+                    <xsl:apply-templates select="$annot/*/xsd:documentation" mode="normlize"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="ncdfelementdocvar">
             <xsl:choose>
                 <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@ncdfelementdoc">
-                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@ncdfelementdoc"/>
+                    <xsl:apply-templates select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@ncdfelementdoc" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$annot/*/xsd:documentation and contains($ncdfelementnamevar, 'Name')">
-                    <xsl:value-of select="replace($mtfdocvar, 'A data type ', 'A data item for the name ')"/>
+                    <xsl:apply-templates select="replace($mtfdocvar, 'A data type ', 'A data item for the name ')" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$annot/*/xsd:documentation">
-                    <xsl:value-of select="replace($mtfdocvar, 'A data type ', 'A data item ')"/>
+                    <xsl:apply-templates select="replace($mtfdocvar, 'A data type ', 'A data item ')" mode="normlize"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -1226,7 +1309,7 @@
                     <xsl:value-of select="$substGrp_Changes/Choice[@substgrpname = $mtfnamevar][@segmentname = '']/@ncdfname"/>
                 </xsl:when>
                 <xsl:when test="string-length($substGrp_Changes/Choice[@substgrpname = $mtfnamevar][@smessagename = $messagenamevar]/@ncdfname) &gt; 0">
-                    <xsl:value-of select="$substGrp_Changes/Choice[@substgrpname = $mtfnamevar][@messagename= $messagenamevar]/@ncdfname"/>
+                    <xsl:value-of select="$substGrp_Changes/Choice[@substgrpname = $mtfnamevar][@messagename = $messagenamevar]/@ncdfname"/>
                 </xsl:when>
                 <xsl:when test="string-length($substGrp_Changes/Choice[@substgrpname = $mtfnamevar][@messagenamevar = '']/@ncdfname) &gt; 0">
                     <xsl:value-of select="$substGrp_Changes/Choice[@substgrpname = $mtfnamevar][@messagenamevar = '']/@ncdfname"/>
@@ -1239,7 +1322,8 @@
         <xsl:variable name="substgrpdocvar">
             <xsl:choose>
                 <xsl:when test="$ncdfelementdocvar">
-                    <xsl:value-of select="concat('A data concept for a choice of ', lower-case($ncdfelementdocvar))"/>
+                    <xsl:apply-templates select="concat('A data type for a choice of ', lower-case($ncdfelementdocvar))" mode="normlize"/>
+
                 </xsl:when>
                 <xsl:when test="$substgrpnamevar">
                     <xsl:variable name="splitname">
@@ -1247,17 +1331,17 @@
                             <xsl:with-param name="string" select="$substgrpnamevar"/>
                         </xsl:call-template>
                     </xsl:variable>
-                    <xsl:value-of select="concat('A data concept for a substitution group for ', lower-case($splitname))"/>
+                    <xsl:value-of select="concat('A data type for a substitution group for ', lower-case($splitname))"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="substgrpncdfdoc">
             <xsl:choose>
-                <xsl:when test="starts-with($substgrpdocvar, 'A data concept for')">
-                    <xsl:value-of select="$substgrpdocvar"/>
+                <xsl:when test="starts-with($substgrpdocvar, 'A data type for')">
+                    <xsl:apply-templates select="$substgrpdocvar" mode="normlize"/>
                 </xsl:when>
-                <xsl:when test="string-length($substgrpdocvar)&gt;0">
-                    <xsl:value-of select="concat('A data concept for a substitution group for ', lower-case($substgrpdocvar))"/>
+                <xsl:when test="string-length($substgrpdocvar) &gt; 0">
+                    <xsl:apply-templates select="concat('A data type for a substitution group for ', lower-case($substgrpdocvar))" mode="normlize"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -1303,11 +1387,11 @@
                 </xsl:when>
             </xsl:choose>
             <!--<xsl:copy-of select="$annot"/>-->
-            <appinf>
+            <appinfo>
                 <xsl:for-each select="$appinfovar">
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
-            </appinf>
+            </appinfo>
             <Choice name="{$substgrpnamevar}" substgrpname="{concat($substgrpnamevar,'Abstract')}" substgrpdoc="{$substgrpncdfdoc}">
                 <xsl:apply-templates select="xsd:complexType/xsd:choice/xsd:element">
                     <xsl:sort select="@name"/>
@@ -1359,7 +1443,14 @@
             <xsl:value-of select="ancestor::xsd:element[parent::xsd:schema][1]/@name"/>
         </xsl:variable>
         <xsl:variable name="parentnamevar">
-            <xsl:value-of select="ancestor::xsd:element[@name][1]/@name"/>
+            <xsl:choose>
+                <xsl:when test="ends-with(ancestor::xsd:element[@name][1]/@name,'Segment')">
+                    <xsl:value-of select="ancestor::xsd:element[@name][1]/@name"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat(ancestor::xsd:element[@name][1]/@name,'Segment')"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:variable>
         <xsl:variable name="segnamevar">
             <xsl:value-of select="ancestor::xsd:element[xsd:annotation/xsd:appinfo/*:SegmentStructureName][1]/@name"/>
@@ -1390,6 +1481,9 @@
                 </xsl:when>
                 <xsl:when test="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@parentname = '']">
                     <xsl:copy-of select="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@parentname = ''][1]"/>
+                </xsl:when>
+                <xsl:when test="$substGrp_Changes/Choice[@mtfname = $subgrpname][@messagename = $msgnamevar]">
+                    <xsl:copy-of select="$substGrp_Changes/Choice[@mtfname = $subgrpname][@messagename = $msgnamevar][1]"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -1428,9 +1522,7 @@
             <Choice name="{$choicenamevar}">
                 <xsl:apply-templates select="*[not(name() = 'xsd:annotation')]">
                     <xsl:sort select="@name"/>
-                    <xsl:with-param name="sbstgrp">
-                        <xsl:value-of select="$choicenamevar"/>
-                    </xsl:with-param>
+                    <xsl:with-param name="sbstgrp" select="$choicenamevar"/>
                     <xsl:with-param name="settypevar" select="$settypevar"/>
                     <xsl:with-param name="segmentnamevar" select="$segmentnamevar"/>
                     <xsl:with-param name="messagenamevar" select="$messagenamevar"/>

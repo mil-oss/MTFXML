@@ -19,7 +19,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" 
+    xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
     exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     
@@ -77,7 +77,6 @@
                 </xsd:annotation>
                 <xsd:simpleContent>
                     <xsd:extension base="{@ncdfsimpletype}">
-                        <xsd:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
                     </xsd:extension>
                 </xsd:simpleContent>
@@ -143,8 +142,14 @@
                 <xsl:when test="$n='FreeTextSimple'">
                     <xsl:text>FreeText</xsl:text>
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="$n='FreeText'">
+                    <xsl:text>FreeText</xsl:text>
+                </xsl:when>
+                <xsl:when test="ends-with($n,'Text')">
                     <xsl:value-of select="$n"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat($n,'Text')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
