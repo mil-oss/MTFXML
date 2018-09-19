@@ -1,2 +1,3 @@
-/MTFApp/nbproject/private/
-/MTFApp/node_modules/
+*.xml
+*.xsd
+*.zip
