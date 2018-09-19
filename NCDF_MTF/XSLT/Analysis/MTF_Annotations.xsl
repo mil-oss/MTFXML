@@ -108,7 +108,7 @@
             <xsl:copy-of select="$stron"/>
         </xsl:result-document>
         <!--<xsl:result-document href="{$currentrules}">
-            <xsd:schema xml:lang="en-US" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:mtf:mil:6040b:goe:mtf" targetNamespace="urn:mtf:mil:6040b:goe:mtf" elementFormDefault="unqualified"
+            <xsd:schema xml:lang="en-US" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:int:nato:ncdf:mtf:goe:mtf" targetNamespace="urn:int:nato:ncdf:mtf:goe:mtf" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
                 <xsl:for-each select="$mtfmsgs/xsd:schema/xsd:element">
                     <xsl:copy>

@@ -19,7 +19,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo"
     exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <!--<xsl:include href="../USMTF_NIEM/USMTF_Utility.xsl"/>-->

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="xsdpath" select="'../../../XSD/NIEM_IEPD/MILSTD_MTF/MILSTD_MTF.xsd'"/>
+    <xsl:variable name="xsdpath" select="'../../../XSD/NCDF_IEPD/MILSTD_MTF/MILSTD_MTF.xsd'"/>
     <xsl:variable name="MILSTDMTF" select="document($xsdpath)/xsd:schema"/>
-    <xsl:variable name="OutDir" select="'../../../XSD/NIEM_IEPD/MILSTD_MTF/SepMsgs/'"/>
+    <xsl:variable name="OutDir" select="'../../../XSD/NCDF_IEPD/MILSTD_MTF/SepMsgs/'"/>
 
     <xsl:variable name="q" select="'&quot;'"/>
     <xsl:variable name="lt" select="'&lt;'"/>
@@ -34,13 +34,11 @@
             <!--<xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$schtron" disable-output-escaping="yes"/>
             <xsl:text>&#10;</xsl:text>-->
-            <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf" 
-                xmlns:ism="urn:us:gov:ic:ism"
-                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf:niem:mtf" 
+                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:ncdf:mtf:niem:mtf"
                attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="../IC-ISM.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../../NIEM/mtfappinfo.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../../NIEM/mtfappinfo.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:value-of select="concat($message/xsd:annotation/xsd:appinfo/*:Msg/@mtfname, ' MESSAGE SCHEMA')"/>

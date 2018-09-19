@@ -22,10 +22,9 @@
         <xsl:variable name="mid" select="translate($msgid, ' .:()', '')"/>
         <!--MESSAGE-->
         <xsl:result-document href="{$OutDir}/{$mid}/{concat($mid,'_message.xsd')}">
-            <xsd:schema targetNamespace="urn:mtf:mil:6040b" xml:lang="en-US" xmlns="urn:mtf:mil:6040b" xmlns:s="urn:mtf:mil:6040b:set" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ICISM="urn:us:gov:ic:ism:v2" elementFormDefault="unqualified"
+            <xsd:schema targetNamespace="urn:int:nato:ncdf:mtf" xml:lang="en-US" xmlns="urn:int:nato:ncdf:mtf" xmlns:s="urn:int:nato:ncdf:mtf:set" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ICISM="urn:us:gov:ic:ism:v2" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:mtf:mil:6040b:set" schemaLocation="{concat($mid,'_sets.xsd')}"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:set" schemaLocation="{concat($mid,'_sets.xsd')}"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="../IC-ISM-v2.xsd"/>
                 <xsd:annotation>
                     <xsd:appinfo>
@@ -58,11 +57,11 @@
             <xsl:copy-of select="$msgsetnodes"/>
         </xsl:variable>
         <xsl:result-document href="{$OutDir}/{$mid}/{concat($mid,'_sets.xsd')}">
-            <xsd:schema targetNamespace="urn:mtf:mil:6040b:set" xml:lang="en-US" xmlns="urn:mtf:mil:6040b:set" xmlns:c="urn:mtf:mil:6040b:composite" xmlns:f="urn:mtf:mil:6040b:elemental"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ICISM="urn:us:gov:ic:ism:v2"
+            <xsd:schema targetNamespace="urn:int:nato:ncdf:mtf:set" xml:lang="en-US" xmlns="urn:int:nato:ncdf:mtf:set" xmlns:c="urn:int:nato:ncdf:mtf:composite" xmlns:f="urn:int:nato:ncdf:mtf:elemental"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ICISM="urn:us:gov:ic:ism:v2"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:mtf:mil:6040b:composite" schemaLocation="{concat($mid,'_composites.xsd')}"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:elemental" schemaLocation="{concat($mid,'_fields.xsd')}"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:composite" schemaLocation="{concat($mid,'_composites.xsd')}"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:elemental" schemaLocation="{concat($mid,'_fields.xsd')}"/>
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="../IC-ISM-v2.xsd"/>
                 <xsd:annotation>
                     <xsd:appinfo>
@@ -104,9 +103,9 @@
             <xsl:copy-of select="$msgcompositenodes"/>
         </xsl:variable>
         <xsl:result-document href="{$OutDir}/{$mid}/{concat($mid,'_composites.xsd')}">
-            <xsd:schema targetNamespace="urn:mtf:mil:6040b:composite" xml:lang="en-US" xmlns="urn:mtf:mil:6040b:composite" xmlns:f="urn:mtf:mil:6040b:elemental"
+            <xsd:schema targetNamespace="urn:int:nato:ncdf:mtf:composite" xml:lang="en-US" xmlns="urn:int:nato:ncdf:mtf:composite" xmlns:f="urn:int:nato:ncdf:mtf:elemental"
                 xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" attributeFormDefault="unqualified">
-                <xsd:import namespace="urn:mtf:mil:6040b:elemental" schemaLocation="{concat($mid,'_fields.xsd')}"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:elemental" schemaLocation="{concat($mid,'_fields.xsd')}"/>
                 <xsl:for-each select="$compositenodes/xsd:complexType">
                     <xsl:sort select="@name"/>
                     <xsl:variable name="n" select="@name"/>
@@ -142,7 +141,7 @@
             <xsl:copy-of select="$msgfieldnodes"/>
         </xsl:variable>
         <xsl:result-document href="{$OutDir}/{$mid}/{concat($mid,'_fields.xsd')}">
-            <xsd:schema targetNamespace="urn:mtf:mil:6040b:elemental" xml:lang="en-US" xmlns="urn:mtf:mil:6040b:elemental" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified"
+            <xsd:schema targetNamespace="urn:int:nato:ncdf:mtf:elemental" xml:lang="en-US" xmlns="urn:int:nato:ncdf:mtf:elemental" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified">
                 <xsd:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/xml.xsd"/>
                 <xsl:for-each select="$fieldnodes/xsd:complexType">

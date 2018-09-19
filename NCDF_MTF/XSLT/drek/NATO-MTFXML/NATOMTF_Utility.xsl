@@ -2,9 +2,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
     xmlns:appinfo="http://release.niem.gov/niem/appinfo/3.0/" 
-    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" 
+    xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
     xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" 
-    xmlns:ism="urn:us:gov:ic:ism:v2" 
     xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" exclude-result-prefixes="xsd" version="2.0">
 
     <!-- ************ Identity Transform ***********-->

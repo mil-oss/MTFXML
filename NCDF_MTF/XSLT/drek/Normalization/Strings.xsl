@@ -322,7 +322,7 @@
         <xsl:copy copy-namespaces="no">
             <xsl:choose>
                 <xsl:when test="exists(ancestor::xsd:enumeration)">
-                    <xsl:element name="Enum" namespace="urn:mtf:mil:6040b:goe:fields">
+                    <xsl:element name="Enum" namespace="urn:int:nato:ncdf:mtf:goe:fields">
                         <xsl:apply-templates select="@*"/>
                         <xsl:apply-templates select="*" mode="attr"/>
                     </xsl:element>

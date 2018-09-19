@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <xsl:variable name="srcpath" select="'../../../XSD/NIEM_MTF/'"/>
-    <xsl:variable name="outdir" select="'../../../XSD/NIEM_IEPD/MILSTD_MTF/'"/>
-    <xsl:variable name="AllMTF" select="document(concat($srcpath, 'NIEM_MTF.xsd'))"/>
+    <xsl:variable name="srcpath" select="'../../../XSD/NCDF_IEPD/MILSTD_MTF/'"/>
+    <xsl:variable name="outdir" select="'../../../XSD/NCDF_IEPD/MILSTD_MTF/'"/>
+    <xsl:variable name="AllMTF" select="document(concat($srcpath, 'NCDF_MTF.xsd'))"/>
     <xsl:variable name="MILSTDMTF">
         <xsl:apply-templates select="$AllMTF/xsd:schema/*" mode="milstd"/>
     </xsl:variable>
 
     <xsl:template name="main">
         <xsl:result-document href="{concat($outdir,'MILSTD_MTF.xsd')}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:ncdf:mtf" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
                 <xsl:copy-of select="$MILSTDMTF" copy-namespaces="no"/>
             </xsd:schema>
         </xsl:result-document>
@@ -191,10 +190,9 @@
             <!--<xsl:text>&#10;</xsl:text>
             <xsl:value-of select="$schtron" disable-output-escaping="yes"/>
             <xsl:text>&#10;</xsl:text>-->
-            <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="../IC-ISM.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../mtfappinfo.xsd"/>
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:int:nato:ncdf:mtf" attributeFormDefault="unqualified" version="1.0">
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../mtfappinfo.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:value-of select="concat($message/xsd:annotation/xsd:appinfo/*:Msg/@mtfname, ' MESSAGE SCHEMA')"/>

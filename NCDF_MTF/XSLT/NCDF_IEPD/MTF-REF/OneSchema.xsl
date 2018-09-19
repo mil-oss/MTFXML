@@ -22,17 +22,16 @@
     </xsl:variable>
     <xsl:template name="main">
         <xsl:result-document href="{concat($outpath,'NIEM_MTF.xsd')}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf:niem:mtf" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
                 xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:ncdf:mtf:niem:mtf"
                 ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
                 <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
                 <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
                 <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:text>UNIFIED MTF MESSAGE SCHEMA</xsl:text>

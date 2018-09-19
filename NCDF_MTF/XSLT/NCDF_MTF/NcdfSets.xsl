@@ -265,7 +265,14 @@
                             <xsd:documentation>
                                 <xsl:choose>
                                     <xsl:when test="string-length(@substgrpdoc) &gt; 0">
-                                        <xsl:value-of select="@substgrpdoc"/>
+                                        <xsl:choose>
+                                            <xsl:when test="starts-with(@substgrpdoc,'A data concept')">
+                                                <xsl:value-of select="@substgrpdoc"/>
+                                            </xsl:when>
+                                            <xsl:when test="starts-with(@substgrpdoc,'A data type')">
+                                                <xsl:value-of select="replace(@substgrpdoc,'A data type','A data concept')"/>
+                                            </xsl:when>
+                                        </xsl:choose>
                                     </xsl:when>
                                     <xsl:when test="string-length(@ncdfelementdoc) &gt; 0">
                                         <xsl:value-of select="@ncdfelementdoc"/>
@@ -468,7 +475,7 @@
             <xsd:complexType name="{concat(@ncdfelementname,'Type')}">
                 <xsd:annotation>
                     <xsd:documentation>
-                        <xsl:value-of select="$substgrpdoc"/>
+                        <xsl:value-of select="@ncdftypedoc"/>
                     </xsd:documentation>
                     <xsl:for-each select="appinfo/*">
                         <xsd:appinfo>

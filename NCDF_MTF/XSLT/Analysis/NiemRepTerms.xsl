@@ -241,8 +241,8 @@
 
     <xsl:template name="main">
         <xsl:result-document href="{$enumerationsoutdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:niem" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/3.0/" targetNamespace="urn:mtf:mil:6040b:niem"
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf:niem" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/3.0/" targetNamespace="urn:int:nato:ncdf:mtf:niem"
                 ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/3.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified" version="1.0">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>

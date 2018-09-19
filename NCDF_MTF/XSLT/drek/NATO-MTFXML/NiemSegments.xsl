@@ -18,7 +18,7 @@
  */
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-    xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:appinfo="http://release.niem.gov/niem/appinfo/3.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+    xmlns:appinfo="http://release.niem.gov/niem/appinfo/3.0/" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
     exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="USMTF_Utility.xsl"/>
@@ -668,18 +668,18 @@
 
     <xsl:template name="main">
         <xsl:result-document href="{$segmentsxsdoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:niem:segments" xmlns:ism="urn:us:gov:ic:ism:v2" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            <xsd:schema xmlns="urn:int:nato:ncdf:mtf:niem:segments" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/3.0/"
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/3.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:s="urn:mtf:mil:6040b:niem:sets" targetNamespace="urn:mtf:mil:6040b:niem:segments"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/3.0/" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:s="urn:int:nato:ncdf:mtf:niem:sets" targetNamespace="urn:int:nato:ncdf:mtf:niem:segments"
                 ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/3.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified" version="1.0">
                 <xsd:import namespace="urn:us:gov:ic:ism:v2" schemaLocation="IC-ISM-v2.xsd"/>
                 <xsd:import namespace="http://release.niem.gov/niem/structures/3.0/" schemaLocation="../NIEM/structures.xsd"/>
                 <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
                 <xsd:import namespace="http://release.niem.gov/niem/appinfo/3.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:niem:sets" schemaLocation="NIEM_MTF_Sets.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
+                <xsd:import namespace="urn:int:nato:ncdf:mtf:niem:sets" schemaLocation="NIEM_MTF_Sets.xsd"/>
                 <xsd:annotation>
                     <xsd:documentation>
                         <xsl:text>Segment structures for MTF Messages</xsl:text>

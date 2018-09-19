@@ -566,6 +566,14 @@
                 <xsl:when test="xsd:annotation/xsd:documentation">
                     <xsl:apply-templates select="xsd:annotation/xsd:documentation" mode="normlize"/>
                 </xsl:when>
+                <!--Use purpose for documentaton-->
+                <xsl:when test="$appinfovar/*/@purpose">
+                    <xsl:variable name="p">
+                        <xsl:value-of select="substring($appinfovar/*/@purpose,1,1)"/>
+                        <xsl:value-of select="lower-case(substring($appinfovar/*/@purpose,2))"/>
+                    </xsl:variable>
+                    <xsl:apply-templates select="$p" mode="normlize"/>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:apply-templates select="$annot/*/xsd:documentation" mode="normlize"/>
                 </xsl:otherwise>
@@ -578,6 +586,9 @@
             <xsl:choose>
                 <xsl:when test="$message_changes/Element[@mtfname = $mtfnamevar][@ncdfname = $ncdfelementnamevar]/@ncdftypedoc">
                     <xsl:apply-templates select="concat('A data type for the', $message_changes/Element[@mtfname = $mtfnamevar][@ncdfname = $ncdfelementnamevar]/@ncdftypedoc, 'The')" mode="normlize"/>
+                </xsl:when>
+                <xsl:when test="starts-with($mtfdoc,'A data type')">
+                    <xsl:value-of select="$mtfdoc"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:apply-templates select="concat('A data type for the', substring-after($mtfdoc, 'The'))" mode="normlize"/>
@@ -721,7 +732,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="ncdftypedocvar">
-            <xsl:value-of select="$ncdfmatch/*/@mtfname"/>
+            <xsl:value-of select="$ncdfmatch/*/@ncdfelementdoc"/>
         </xsl:variable>
         <xsl:variable name="setidvar">
             <xsl:value-of select="$ncdfmatch/*/appinfo/mtfappinfo:Set/@setid"/>
@@ -977,7 +988,7 @@
                 </xsl:when>
                 <xsl:when test="$annot/*/xsd:documentation and starts-with($annot/*/xsd:documentation, 'A data type')">
                     <xsl:apply-templates select="replace($mtfdocvar, 'A data type ', 'A data item ')" mode="normlize"/>
-                </xsl:when>
+                </xsl:when>              
                 <xsl:when test="$annot/*/xsd:documentation">
                     <xsl:apply-templates select="concat('A data item for ', replace($mtfdocvar, 'The', 'the'))" mode="normlize"/>
                 </xsl:when>
@@ -1260,11 +1271,27 @@
                     <xsl:apply-templates select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@ncdfelementdoc" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$annot/*/xsd:documentation and contains($ncdfelementnamevar, 'Name')">
-                    <xsl:apply-templates select="replace($mtfdocvar, 'A data type ', 'A data item for the name ')" mode="normlize"/>
+                    <xsl:apply-templates select="replace($mtfdocvar, 'A data type ', 'A data concept for the name ')" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="$annot/*/xsd:documentation">
-                    <xsl:apply-templates select="replace($mtfdocvar, 'A data type ', 'A data item ')" mode="normlize"/>
+                    <xsl:apply-templates select="replace($mtfdocvar, 'A data type ', 'A data concept ')" mode="normlize"/>
                 </xsl:when>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="ncdftypedocvar">
+            <xsl:choose>
+                <xsl:when test="starts-with($mtfdocvar, 'A data type')">
+                    <xsl:value-of select="$mtfdocvar"/>
+                </xsl:when>
+                <xsl:when test="$annot/*/xsd:documentation">
+                    <xsl:apply-templates select="concat('A data type for ', replace($annot/*/xsd:documentation, 'The', 'the'))" mode="normlize"/>
+                </xsl:when>
+                <xsl:when test="$typeannot/*/xsd:documentation">
+                    <xsl:apply-templates select="replace($typeannot/*/xsd:documentation, 'A data type', 'A data item')" mode="normlize"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="$annot/*/xsd:documentation" mode="normlize"/>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="seq">
@@ -1322,8 +1349,7 @@
         <xsl:variable name="substgrpdocvar">
             <xsl:choose>
                 <xsl:when test="$ncdfelementdocvar">
-                    <xsl:apply-templates select="concat('A data type for a choice of ', lower-case($ncdfelementdocvar))" mode="normlize"/>
-
+                    <xsl:value-of select="$ncdfelementdocvar"/>
                 </xsl:when>
                 <xsl:when test="$substgrpnamevar">
                     <xsl:variable name="splitname">
@@ -1331,17 +1357,17 @@
                             <xsl:with-param name="string" select="$substgrpnamevar"/>
                         </xsl:call-template>
                     </xsl:variable>
-                    <xsl:value-of select="concat('A data type for a substitution group for ', lower-case($splitname))"/>
+                    <xsl:value-of select="concat('A data concept for a substitution group for ', lower-case($splitname))"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="substgrpncdfdoc">
             <xsl:choose>
-                <xsl:when test="starts-with($substgrpdocvar, 'A data type for')">
+                <xsl:when test="starts-with($substgrpdocvar, 'A data concept')">
                     <xsl:apply-templates select="$substgrpdocvar" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="string-length($substgrpdocvar) &gt; 0">
-                    <xsl:apply-templates select="concat('A data type for a substitution group for ', lower-case($substgrpdocvar))" mode="normlize"/>
+                    <xsl:apply-templates select="$substgrpdocvar" mode="normlize"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -1367,6 +1393,11 @@
             <xsl:if test="string-length($parentnamevar) &gt; 0">
                 <xsl:attribute name="parentname">
                     <xsl:value-of select="$parentnamevar"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="string-length($ncdftypedocvar) &gt; 0">
+                <xsl:attribute name="ncdftypedoc">
+                    <xsl:value-of select="$ncdftypedocvar"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:choose>
@@ -1500,10 +1531,10 @@
         <xsl:variable name="substgrpdocvar">
             <xsl:choose>
                 <xsl:when test="$subname = 'ExerciseOperation'">
-                    <xsl:text>A data concept for a choice of Exercise or Operation context.</xsl:text>
+                    <xsl:text>A data type for a choice of Exercise or Operation context.</xsl:text>
                 </xsl:when>
                 <xsl:when test="$substmatch/*/@substgrpdoc">
-                    <xsl:value-of select="concat('A data concept for a substitution group for ', substring-after($substmatch/*/@substgrpdoc, 'A choice of '))"/>
+                    <xsl:value-of select="concat('A data type for a substitution group for ', substring-after($substmatch/*/@substgrpdoc, 'A choice of '))"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="splitname">
@@ -1511,7 +1542,7 @@
                             <xsl:with-param name="string" select="$subgrpname"/>
                         </xsl:call-template>
                     </xsl:variable>
-                    <xsl:value-of select="concat('A data concept for a substitution group for ', lower-case($splitname))"/>
+                    <xsl:value-of select="concat('A data type for a substitution group for ', lower-case($splitname))"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
