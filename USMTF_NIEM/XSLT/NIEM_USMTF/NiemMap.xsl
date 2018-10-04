@@ -2,6 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
     xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
     exclude-result-prefixes="xsd" version="2.0">
+    
     <xsl:include href="USMTF_Utility.xsl"/>
     <xsl:include href="NiemStrings.xsl"/>
     <xsl:include href="NiemNumerics.xsl"/>
@@ -222,31 +223,31 @@
     </xsl:variable>
     <xsl:variable name="all_composite_elements_map">
         <xsl:copy-of select="$niem_composites_map"/>
-        <xsl:for-each select="$niem_sets_map//Element[starts-with(@mtftype, 'c:') or appinfo/mtfappinfo:Composite]">
+        <xsl:for-each select="$niem_sets_map//*:Element[starts-with(@mtftype, 'c:') or *:appinfo/mtfappinfo:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$niem_sets_map//Choice[Element[starts-with(@mtftype, 'c:') or Element/appinfo/mtfappinfo:Composite]]">
+        <xsl:for-each select="$niem_sets_map//*:Choice[Element[starts-with(@mtftype, 'c:') or *:Element/*:appinfo/mtfappinfo:Composite]]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$niem_segments_map//Element[starts-with(@mtftype, 'c:') or appinfo/mtfappinfo:Composite]">
+        <xsl:for-each select="$niem_segments_map//*:Element[starts-with(@mtftype, 'c:') or *:appinfo/mtfappinfo:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$niem_messages_map//Element[starts-with(@mtftype, 'c:') or appinfo/mtfappinfo:Composite]">
+        <xsl:for-each select="$niem_messages_map//*:Element[starts-with(@mtftype, 'c:') or *:appinfo/mtfappinfo:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
 
     <xsl:variable name="niem_sets_map">
-        <xsl:apply-templates select="$baseline_sets_xsd/xsd:complexType" mode="setglobal"/>
+        <xsl:apply-templates select="$baseline_sets_xsd/*:complexType" mode="setglobal"/>
     </xsl:variable>
     <xsl:variable name="all_set_elements_map">
-        <xsl:for-each select="$niem_sets_map//Element">
+        <xsl:for-each select="$niem_sets_map//*:Element">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$niem_segments_map//Element[starts-with(@mtftype, 's:') or appinfo/mtfappinfo:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
+        <xsl:for-each select="$niem_segments_map//*:Element[starts-with(@mtftype, 's:') or *:appinfo/mtfappinfo:Set or starts-with(*:Choice/*:Element[1]/@mtftype, 's:')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$niem_messages_map//Element[starts-with(@mtftype, 's:') or appinfo/mtfappinfo:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
+        <xsl:for-each select="$niem_messages_map//*:Element[starts-with(@mtftype, 's:') or *:appinfo/mtfappinfo:Set or starts-with(*:Choice/*:Element[1]/@mtftype, 's:')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -255,10 +256,10 @@
         <xsl:apply-templates select="$baseline_segments_xsd" mode="segmentglobal"/>
     </xsl:variable>
     <xsl:variable name="all_segment_elements_map">
-        <xsl:for-each select="$niem_segments_map//Element[appinfo/mtfappinfo:Segment]">
+        <xsl:for-each select="$niem_segments_map//*:Element[*:appinfo/mtfappinfo:Segment]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$niem_messages_map//Element[appinfo/mtfappinfo:Segment]">
+        <xsl:for-each select="$niem_messages_map//*:Element[*:appinfo/mtfappinfo:Segment]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>

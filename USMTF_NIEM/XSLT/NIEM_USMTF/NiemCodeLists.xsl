@@ -313,7 +313,7 @@
         </xsd:enumeration>
     </xsl:template>
 
-    <xsl:template name="codelistmain">
+    <xsl:template name="codelists">
         <xsl:result-document href="{$codelistxsdout}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf:fields" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/4.0/"

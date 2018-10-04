@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="dirpath" select="'../../XSD/NCDF_MTF/'"/>
-    <xsl:variable name="ALLMTF" select="document(concat($dirpath, 'NCDF_MTF.xsd'))/xsd:schema"/>
-    <xsl:variable name="OutDir" select="'../../XSD/NCDF_MTF/SepMsgs/'"/>
-    <xsl:variable name="Done" select="document('../../XSD/NCDF_MTF/done.xml/')/Msgs"/>
-    <xsl:variable name="Deep" select="document('../../XSD/NCDF_MTF/deep_scan.xml/')/Msgs"/>
+    <xsl:variable name="dirpath" select="'../../XSD/NCDF_MTF_REF/'"/>
+    <xsl:variable name="ALLMTF" select="document(concat($dirpath, 'NCDF_MTF_REF.xsd'))/xsd:schema"/>
+    <xsl:variable name="OutDir" select="'../../XSD/NCDF_MTF_REF/SepMsgs/'"/>
+    <xsl:variable name="CopyDir" select="'../../XSD/NCDF_MTF_REF/SepMsgRef/'"/>
+    <xsl:variable name="Done" select="document('../../XSD/NCDF_MTF_REF/done.xml/')/Msgs"/>
+    <xsl:variable name="Deep" select="document('../../XSD/NCDF_MTF_REF/deep_scan.xml/')/Msgs"/>
 
     <xsl:variable name="q" select="'&quot;'"/>
     <xsl:variable name="lt" select="'&lt;'"/>
     <xsl:variable name="gt" select="'&gt;'"/>
 
     <xsl:template name="main">
+        <!--RENAME / COPY-->
+        <xsl:for-each select="$ALLMTF/xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
+            <xsl:sort select="xsd:annotation/xsd:appinfo/*:Msg/@mtfid"/>
+            <xsl:variable name="mid" select="translate(xsd:annotation/xsd:appinfo/*:Msg/@mtfid,' .','')"/>
+            <xsl:variable name="indoc" select="document(concat($OutDir,'/',$mid,'.xsd'))"/> 
+            <xsl:result-document href="{$CopyDir}/{concat($mid,'_REF.xsd')}">
+                <xsl:copy-of select="$indoc"/>
+            </xsl:result-document>
+        </xsl:for-each>
        <!-- <xsl:result-document href="{concat($dirpath,'/MsgList.xml')}">
             <NATO-MTF>
                 <xsl:for-each select="$ALLMTF/xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
@@ -20,13 +30,13 @@
                 </xsl:for-each>
             </NATO-MTF>
         </xsl:result-document>-->
-        <xsl:for-each select="$ALLMTF/xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
+        <!--<xsl:for-each select="$ALLMTF/xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
             <xsl:sort select="xsd:annotation/xsd:appinfo/*:Msg/@mtfid"/>
             <xsl:variable name="mid" select="translate(xsd:annotation/xsd:appinfo/*:Msg/@mtfid,' .','')"/>
-            <!-- <xsl:call-template name="ExtractMessageSchemaDeepScan">
+           <!-\- <xsl:call-template name="ExtractMessageSchemaDeepScan">
                 <xsl:with-param name="message" select="."/>
                 <xsl:with-param name="outdir" select="$OutDir"/>
-            </xsl:call-template>-->
+            </xsl:call-template>-\->
             <xsl:choose>
                 <xsl:when test="$Deep/Msg[@id = $mid]">
                     <xsl:call-template name="ExtractMessageSchemaDeepScan">
@@ -34,15 +44,15 @@
                         <xsl:with-param name="outdir" select="$OutDir"/>
                     </xsl:call-template>
                 </xsl:when>
-                <!--<xsl:otherwise>
+                <!-\-<xsl:otherwise>
                     <xsl:value-of select="$mid"/>
                     <xsl:call-template name="ExtractMessageSchema">
                         <xsl:with-param name="message" select="."/>
                         <xsl:with-param name="outdir" select="$OutDir"/>
                     </xsl:call-template>
-                </xsl:otherwise>-->
+                </xsl:otherwise>-\->
             </xsl:choose>
-        </xsl:for-each>
+        </xsl:for-each>-->
     </xsl:template>
     
     <!--*****************************************************-->

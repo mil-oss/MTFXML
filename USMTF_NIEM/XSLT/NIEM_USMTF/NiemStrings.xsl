@@ -17,23 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" 
-    exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    
+
     <!--<xsl:variable name="srcdir" select="'../../XSD/NIEM_MTF_1_NS_NIEM/'"/>-->
-   
+
 
     <xsl:variable name="strings_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:string']/xsd:pattern]"/>
-    
+
     <!--Test Output-->
     <xsl:variable name="xsdstroutputdoc" select="'../../XSD/Analysis/Normalized/Strings.xsd'"/>
     <xsl:variable name="stringsout" select="'../../XSD/Test/MTF_XML_Maps/NIEM_Strings.xml'"/>
-    <xsl:variable name="strsdir" select="'../../XSD/'"/>
-    <xsl:variable name="sfld_changes" select="document(concat($strsdir, 'Refactor_Changes/FieldChanges.xml'))/FieldChanges"/>
+    <xsl:variable name="sfld_changes" select="document('../../XSD/Refactor_Changes/FieldChanges.xml')/FieldChanges"/>
 
     <xsl:variable name="strings">
         <xsl:apply-templates select="$strings_xsd" mode="maptype">
@@ -144,7 +140,7 @@
                 <xsl:when test="$change/@niemelementname">
                     <xsl:value-of select="$change/@niemelementname"/>
                 </xsl:when>
-                <xsl:when test="$n='FreeTextSimple'">
+                <xsl:when test="$n = 'FreeTextSimple'">
                     <xsl:text>FreeText</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
@@ -234,8 +230,8 @@
         <xsl:variable name="appinfovar">
             <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
         </xsl:variable>
-        <Field niemelementname="{$niemelementnamevar}" niemsimpletype="{$niemsimpletype}" niemtype="{$niemcomplextype}" base="xsd:string" pattern="{$pattern}"
-            niempattern="{$niempattern}" niemelementdoc="{$niemelementdoc}" niemtypedoc="{$niemtypedocvar}" mtftype="{@name}" mtfdoc="{$mtfdoc}" >
+        <Field niemelementname="{$niemelementnamevar}" niemsimpletype="{$niemsimpletype}" niemtype="{$niemcomplextype}" base="xsd:string" pattern="{$pattern}" niempattern="{$niempattern}"
+            niemelementdoc="{$niemelementdoc}" niemtypedoc="{$niemtypedocvar}" mtftype="{@name}" mtfdoc="{$mtfdoc}">
             <xsl:if test="string-length($lengthvar) &gt; 0">
                 <xsl:attribute name="length" select="$lengthvar"/>
             </xsl:if>
@@ -246,7 +242,7 @@
                 <xsl:attribute name="maxLength" select="$maxlength"/>
             </xsl:if>
             <xsl:choose>
-                <xsl:when test="@name='FreeTextBaseType'">
+                <xsl:when test="@name = 'FreeTextBaseType'">
                     <xsl:attribute name="ffirn">
                         <xsl:text>6</xsl:text>
                     </xsl:attribute>
@@ -260,52 +256,61 @@
                 </xsl:otherwise>
             </xsl:choose>
             <appinfo>
-            <xsl:for-each select="$appinfovar/*">
-               <xsl:copy-of select="./mtfappinfo:Field" copy-namespaces="no"/>
-            </xsl:for-each>
+                <xsl:for-each select="$appinfovar/*">
+                    <xsl:copy-of select="./mtfappinfo:Field" copy-namespaces="no"/>
+                </xsl:for-each>
             </appinfo>
         </Field>
     </xsl:template>
     <!-- _______________________________________________________ -->
     <!--    OUTPUT RESULT-->
-    <!--<xsl:template name="main">
-        <xsl:result-document href="{$xsdoutputdoc}">
-            <xsl:call-template name="NIEMReferenceSchema">
-                <xsl:with-param name="schemadoc">
-                    <xsl:text>String fields for MTF Messages</xsl:text>
-                </xsl:with-param>
-                <xsl:with-param name="content">
-                    <xsl:for-each select="$stringsxsd/xsd:simpleType">
-                        <xsl:sort select="@name"/>
-                        <xsl:variable name="n" select="@name"/>
-                        <xsl:if test="not(preceding-sibling::xsd:simpleType/@name = $n)">
-                            <xsl:copy-of select="."/>
-                        </xsl:if>
-                    </xsl:for-each>
-                    <xsl:for-each select="$stringsxsd/xsd:complexType">
-                        <xsl:sort select="@name"/>
-                        <xsl:variable name="n" select="@name"/>
-                        <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
-                            <xsl:copy-of select="."/>
-                        </xsl:if>
-                    </xsl:for-each>
-                    <xsl:for-each select="$stringsxsd/xsd:element">
-                        <xsl:sort select="@name"/>
-                        <xsl:variable name="n" select="@name"/>
-                        <xsl:if test="not(preceding-sibling::xsd:element/@name = $n)">
-                            <xsl:copy-of select="."/>
-                        </xsl:if>
-                    </xsl:for-each>
-                </xsl:with-param>
-            </xsl:call-template>
+    <xsl:template name="strings">
+        <xsl:result-document href="{$xsdstroutputdoc}">
+            <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
+                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
+                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <xsl:text>Fields for MTF Messages</xsl:text>
+                    </xsd:documentation>
+                </xsd:annotation>
+                <xsl:for-each select="$stringsxsd/xsd:simpleType">
+                    <xsl:sort select="@name"/>
+                    <xsl:variable name="n" select="@name"/>
+                    <xsl:if test="not(preceding-sibling::xsd:simpleType/@name = $n)">
+                        <xsl:copy-of select="."/>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:for-each select="$stringsxsd/xsd:complexType">
+                    <xsl:sort select="@name"/>
+                    <xsl:variable name="n" select="@name"/>
+                    <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
+                        <xsl:copy-of select="."/>
+                    </xsl:if>
+                </xsl:for-each>
+                <xsl:for-each select="$stringsxsd/xsd:element">
+                    <xsl:sort select="@name"/>
+                    <xsl:variable name="n" select="@name"/>
+                    <xsl:if test="not(preceding-sibling::xsd:element/@name = $n)">
+                        <xsl:copy-of select="."/>
+                    </xsl:if>
+                </xsl:for-each>
+            </xsd:schema>
         </xsl:result-document>
         <xsl:result-document href="{$stringsout}">
             <Strings>
-                <xsl:for-each select="$strings">
+                <xsl:for-each select="$strings/*">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
             </Strings>
         </xsl:result-document>
-    </xsl:template>-->
+    </xsl:template>
 </xsl:stylesheet>

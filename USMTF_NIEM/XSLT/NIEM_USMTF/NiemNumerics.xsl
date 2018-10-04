@@ -19,7 +19,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-
+    <!--<xsl:include href="USMTF_Utility.xsl"/>-->
     <!--Input-->
 
     <!--Test Output-->
@@ -44,6 +44,10 @@
         </xsl:for-each>
     </xsl:variable>
 
+    <xsl:variable name="version" select="'C.0.01.00'"/>
+    <xsl:variable name="date" select="'October 2018'"/>
+    <xsl:variable name="remark" select="'Created by ICP M2018-02.'"/>
+
     <!--Create XML Map of Original XML Schema-->
     <xsl:variable name="numerics">
         <xsl:for-each select="$numerics_xsd/*">
@@ -52,10 +56,18 @@
             <xsl:variable name="min" select="xsd:restriction/xsd:minInclusive/@value"/>
             <xsl:variable name="max" select="xsd:restriction/xsd:maxInclusive/@value"/>
             <xsl:variable name="pattern" select="xsd:restriction/xsd:pattern/@value"/>
+            <xsl:variable name="totaldigits" select="xsd:restriction/xsd:totalDigits/@value"/>
             <xsl:variable name="base" select="xsd:restriction/@base"/>
-            <xsl:variable name="numchange" select="$nfld_changes/Numeric[@name = $mtfname]"/>
+            <xsl:variable name="numchange" select="$nfld_changes/*:Numeric[@name = $mtfname]"/>
             <xsl:variable name="e">
-                <xsl:apply-templates select="@name" mode="fromtype"/>
+                <xsl:choose>
+                    <xsl:when test="ends-with(@name, 'Type')">
+                        <xsl:value-of select="substring(@name, 0, string-length(@name) - 3)"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="@name"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:variable>
             <xsl:variable name="niemelementname">
                 <xsl:choose>
@@ -95,6 +107,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
+            <xsl:variable name="niemcomplextype" select="concat($niemtypename, 'Type')"/>
             <xsl:variable name="niempattern">
                 <xsl:choose>
                     <xsl:when test="$numchange/@niempattern">
@@ -107,9 +120,6 @@
                         <xsl:value-of select="$numchange/@pattern"/>
                     </xsl:otherwise>
                 </xsl:choose>
-            </xsl:variable>
-            <xsl:variable name="niemcomplextype">
-                <xsl:value-of select="concat($niemtypename, 'Type')"/>
             </xsl:variable>
             <xsl:variable name="mtfdoc">
                 <xsl:apply-templates select="xsd:annotation/xsd:documentation"/>
@@ -137,45 +147,77 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
-            <xsl:variable name="appinfo">
+            <xsl:variable name="fappinfo">
                 <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
             </xsl:variable>
             <xsl:variable name="ffirn" select="xsd:annotation/xsd:appinfo/*:FieldFormatIndexReferenceNumber"/>
             <xsl:variable name="fud" select="xsd:annotation/xsd:appinfo/*:FudNumber"/>
-            <xsl:variable name="numnormstype" select="$numsimpletypes/Numeric[@base = $base][@min = $min][@max = $max]"/>
-            <xsl:variable name="numpat" select="$numsimpletypes/Numeric[@base = $base][@min = $min][@max = $max][@pattern = $pattern]"/>
             <xsl:choose>
                 <xsl:when test="$base = 'xsd:integer'">
+                    <xsl:variable name="numnormstype">
+                        <xsl:choose>
+                            <xsl:when test="starts-with(@name, 'ContextQuantity')">
+                                <xsl:copy-of select="$numsimpletypes/*:Numeric[@base = $base][@min = $min][@max = $max]"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:copy-of select="$numsimpletypes/*:Numeric[@base = $base][@min = $min][@max = $max][@totaldigits = $totaldigits][@pattern = $pattern]"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
                     <xsl:variable name="niemsimpletypename">
                         <xsl:choose>
-                            <xsl:when test="$numpat/@niemsimpletypename">
-                                <xsl:value-of select="$numpat/@niemsimpletypename"/>
+                            <xsl:when test="$numnormstype/*/@niemsimpletypename">
+                                <xsl:value-of select="$numnormstype/*/@niemsimpletypename"/>
                             </xsl:when>
-                            <xsl:when test="$numnormstype/@niemsimpletypename">
-                                <xsl:value-of select="$numnormstype/@niemsimpletypename"/>
-                            </xsl:when>
-                            <xsl:when test="$numchange/@niemtype">
-                                <xsl:value-of select="concat(substring($numchange/@niemtype, 0, string-length($numchange/@niemtype) - 3), 'SimpleType')"/>
+                            <xsl:when test="$numchange/*/@niemtype">
+                                <xsl:value-of select="concat(substring($numchange/*/@niemtype, 0, string-length($numchange/@niemtype) - 3), 'SimpleType')"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:value-of select="concat($niemtypename, 'SimpleType')"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <Field mtftype="{@name}" niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletypename}" niemtype="{$niemcomplextype}" base="xsd:integer" min="{$min}" max="{$max}" pattern="{$pattern}" niempattern="{$niempattern}"
-                        niemelementdoc="{$niemelementdoc}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedoc}" ffirn="{$ffirn}" fud="{$fud}" format="{@format}" version="{@version}"
-                        dist="{@dist}" remark="{@remark}">
+                    <xsl:variable name="complextypename">
+                        <xsl:choose>
+                            <xsl:when test="$numnormstype/*/@niemsimpletypename">
+                                <xsl:value-of select="replace($numnormstype/*/@niemsimpletypename, 'SimpleType', 'Type')"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$niemcomplextype"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <Field mtftype="{@name}" niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletypename}" niemtype="{$complextypename}" base="xsd:integer" min="{$min}" max="{$max}"
+                        pattern="{$pattern}" niempattern="{$niempattern}" niemelementdoc="{$niemelementdoc}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedoc}" ffirn="{$ffirn}" fud="{$fud}"
+                        format="{$numnormstype/*/@format}" version="{$version}" date="{$version}" dist="{$numnormstype/*/@dist}" remark="{$remark}">
                         <fappinfo>
-                            <xsl:for-each select="$appinfo/*">
-                                <xsl:copy-of select="mtfappinfo:Field" copy-namespaces="no"/>
+                            <xsl:for-each select="$fappinfo/*">
+                                <xsl:copy>
+                                    <xsl:for-each select="@*">
+                                        <xsl:copy-of select="."/>
+                                    </xsl:for-each>
+                                    <xsl:attribute name="ffirn">
+                                        <xsl:value-of select="$ffirn"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="fud">
+                                        <xsl:value-of select="$fud"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="version">
+                                        <xsl:value-of select="$version"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="date">
+                                        <xsl:value-of select="$date"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="remark">
+                                        <xsl:value-of select="$remark"/>
+                                    </xsl:attribute>
+                                </xsl:copy>
                             </xsl:for-each>
                         </fappinfo>
                     </Field>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:variable name="length">
-                        <xsl:value-of select="xsd:restriction/xsd:length"/>
-                    </xsl:variable>
+                    <xsl:variable name="length" select="xsd:restriction/xsd:length"/>
                     <xsl:variable name="minlen">
                         <xsl:value-of select="xsd:annotation/xsd:appinfo/*:MinimumLength"/>
                     </xsl:variable>
@@ -190,8 +232,11 @@
                     </xsl:variable>
                     <xsl:variable name="fractionDigits">
                         <xsl:choose>
-                            <xsl:when test="string-length($mindec)&gt;0">
+                            <xsl:when test="number($mindec) &gt; 0">
                                 <xsl:value-of select="$mindec"/>
+                            </xsl:when>
+                            <xsl:when test="number($maxdec) &gt; 0">
+                                <xsl:value-of select="$maxdec"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:call-template name="FindMaxDecimals">
@@ -205,7 +250,7 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <xsl:variable name="totalDigit">
+                    <xsl:variable name="calcTotalDigit">
                         <xsl:call-template name="FindTotalDigitCount">
                             <xsl:with-param name="value1">
                                 <xsl:value-of select="$min"/>
@@ -215,18 +260,39 @@
                             </xsl:with-param>
                         </xsl:call-template>
                     </xsl:variable>
-                    <xsl:variable name="totalDigitCount">
+                    <xsl:variable name="totaldigits">
                         <xsl:choose>
-                            <xsl:when test="number($maxlen)-1 &gt; number($totalDigit)">
-                                <xsl:value-of select="number($maxlen)-1"/>
+                            <xsl:when test="number($maxlen) - 1 &gt; number($calcTotalDigit)">
+                                <xsl:value-of select="number($maxlen) - 1"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="$totalDigit"/>
+                                <xsl:value-of select="$calcTotalDigit"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <xsl:variable name="numfracdigit" select="$numsimpletypes/Numeric[@base = $base][@min = $min][@max = $max][@fractiondigits= $fractionDigits][@totaldigits= $totalDigitCount]"/>
-                    <xsl:variable name="numnormstype" select="$numsimpletypes/Numeric[@base = $base][@min = $min][@max = $max]"/>
+                    <xsl:variable name="numnormstype">
+                        <xsl:choose>
+                            <xsl:when test="starts-with(@name, 'ContextQuantity')">
+                                <xsl:copy-of
+                                    select="$numsimpletypes/*:Numeric[@base = $base][number(@min) = number($min)][number(@max) = number($max)][@fractiondigits = $fractionDigits][@totaldigits = $totaldigits]"
+                                />
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:copy-of
+                                    select="$numsimpletypes/*:Numeric[@base = $base][@min = $min][@max = $max][@fractiondigits = $fractionDigits][@totaldigits = $totaldigits][@pattern = $pattern]"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <xsl:variable name="complextypename">
+                        <xsl:choose>
+                            <xsl:when test="$numnormstype/*/@niemsimpletypename">
+                                <xsl:value-of select="replace($numnormstype/*[1]/@niemsimpletypename, 'SimpleType', 'Type')"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="$niemcomplextype"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
                     <xsl:variable name="niemsimpletypename">
                         <xsl:choose>
                             <xsl:when test="$numchange/@niemtype">
@@ -235,28 +301,43 @@
                             <xsl:when test="$numchange/@niemsimpletypename">
                                 <xsl:value-of select="$numchange/@niemsimpletypename"/>
                             </xsl:when>
-                            <xsl:when test="$numpat/@niemsimpletypename">
-                                <xsl:value-of select="$numpat/@niemsimpletypename"/>
-                            </xsl:when>
-                            <xsl:when test="$numfracdigit/@niemsimpletypename">
-                                <xsl:value-of select="$numfracdigit/@niemsimpletypename"/>
-                            </xsl:when>
-                            <xsl:when test="$numnormstype/@niemsimpletypename">
-                                <xsl:value-of select="$numnormstype/@niemsimpletypename"/>
+                            <xsl:when test="$numnormstype/*/@niemsimpletypename">
+                                <xsl:value-of select="$numnormstype/*[1]/@niemsimpletypename"/>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:value-of select="concat($niemtypename, 'SimpleType')"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <Field mtftype="{@name}" niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletypename}" niemtype="{$niemcomplextype}" base="xsd:decimal" min="{$min}" max="{$max}"
-                        fractionDigits="{$fractionDigits}" totalDigits="{$totalDigitCount}" niemelementdoc="{$niemelementdoc}" niemtypedoc="{$niemtypedoc}" mtfdoc="{$mtfdoc}"
-                        ffirn="{$ffirn}" fud="{$fud}" length="{$length}" minlen="{$minlen}" maxlen="{$maxlen}" mindec="{$mindec}" maxdec="{$maxdec}">
-                        <appinfo>
-                            <xsl:for-each select="$appinfo/*">
-                                <xsl:copy-of select="mtfappinfo:Field" copy-namespaces="no"/>
+                    <Field mtftype="{@name}" niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletypename}" niemtype="{$complextypename}" base="xsd:decimal" min="{$min}" max="{$max}"
+                        fractiondigits="{$fractionDigits}" totaldigits="{$totaldigits}" niemelementdoc="{$niemelementdoc}" niemtypedoc="{$niemtypedoc}" mtfdoc="{$mtfdoc}" ffirn="{$ffirn}" fud="{$fud}"
+                        length="{$length}" minlen="{$minlen}" maxlen="{$maxlen}" mindec="{$mindec}" maxdec="{$maxdec}">
+                        <fappinfo>
+                            <mtfappinfo:Field>
+                            <xsl:for-each select="$fappinfo/*">
+                                <xsl:copy>
+                                    <xsl:for-each select="@*">
+                                        <xsl:copy-of select="."/>
+                                    </xsl:for-each>
+                                    <xsl:attribute name="ffirn">
+                                        <xsl:value-of select="@ffirn"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="fud">
+                                        <xsl:value-of select="@fud"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="version">
+                                        <xsl:value-of select="@version"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="date">
+                                        <xsl:value-of select="@date"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="remark">
+                                        <xsl:value-of select="@remark"/>
+                                    </xsl:attribute>
+                                </xsl:copy>
                             </xsl:for-each>
-                        </appinfo>
+                            </mtfappinfo:Field>
+                        </fappinfo>
                     </Field>
                 </xsl:otherwise>
             </xsl:choose>
@@ -268,19 +349,25 @@
     </xsl:variable>
 
     <!--Create SimpleType from Normalized SimpleTypes -->
-    <xsl:template match="Numeric" mode="makeSimpleType">
+    <xsl:template match="*:Numeric" mode="makeSimpleType">
         <xsd:simpleType name="{@niemsimpletypename}">
             <xsd:annotation>
                 <xsd:documentation>
-                    <xsl:value-of select="@niemtypedoc"/>
+                    <xsl:value-of select="normalize-space(@niemtypedoc)"/>
                 </xsd:documentation>
                 <xsd:appinfo>
                     <mtfappinfo:SimpleType name="{@simpletypename}">
-                        <xsl:if test="@format !='.'">
+                        <xsl:if test="@format != '.'">
                             <xsl:attribute name="format">
                                 <xsl:value-of select="@format"/>
                             </xsl:attribute>
                         </xsl:if>
+                        <xsl:attribute name="ffirn">
+                            <xsl:value-of select="@ffirn"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="fud">
+                            <xsl:value-of select="@fud"/>
+                        </xsl:attribute>
                         <xsl:attribute name="version">
                             <xsl:value-of select="@version"/>
                         </xsl:attribute>
@@ -297,19 +384,61 @@
                 </xsd:appinfo>
             </xsd:annotation>
             <xsd:restriction base="{@base}">
-                <xsd:minInclusive value="{@min}"/>
-                <xsd:maxInclusive value="{@max}"/>
-                <xsl:if test="@totaldigits !='.'">
+                <xsl:apply-templates select="@min" mode="fix"/>
+                <xsl:apply-templates select="@max" mode="fix"/>
+                <xsl:if test="@totaldigits != '.'">
                     <xsd:totalDigits value="{@totaldigits}"/>
                 </xsl:if>
-                <xsl:if test="@fractiondigits !='.'">
+                <xsl:if test="@fractiondigits != '.'">
                     <xsd:fractionDigits value="{@fractiondigits}"/>
                 </xsl:if>
-                <xsl:if test="@niempattern !='.'">
+                <xsl:if test="@niempattern != '.'">
                     <xsd:pattern value="{@niempattern}"/>
                 </xsl:if>
             </xsd:restriction>
         </xsd:simpleType>
+    </xsl:template>
+
+    <xsl:template match="@min" mode="fix">
+        <xsl:variable name="mn">
+            <xsl:choose>
+                <xsl:when test="contains(string(number(.)), 'E')">
+                    <xsl:value-of select="."/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="number(.)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="starts-with($mn, '0.')">
+                <xsd:minInclusive value="{substring-after($mn, '0')}"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsd:minInclusive value="{$mn}"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+
+    <xsl:template match="@max" mode="fix">
+        <xsl:variable name="mx">
+            <xsl:choose>
+                <xsl:when test="contains(string(number(.)), 'E')">
+                    <xsl:value-of select="."/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="number(.)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:choose>
+            <xsl:when test="starts-with($mx, '0.')">
+                <xsd:maxInclusive value="{substring-after($mx, '0')}"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsd:maxInclusive value="{$mx}"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!--Create XSD from XML Map-->
@@ -323,22 +452,22 @@
                     <xsd:simpleType name="{@niemsimpletype}">
                         <xsd:annotation>
                             <xsd:documentation>
-                                <xsl:value-of select="@niemtypedoc"/>
+                                <xsl:value-of select="normalize-space(@niemtypedoc)"/>
                             </xsd:documentation>
                             <xsd:appinfo>
-                                <xsl:for-each select="fappinfo/*">
+                                <xsl:for-each select="*:fappinfo/*">
                                     <xsl:copy-of select="." copy-namespaces="no"/>
                                 </xsl:for-each>
                             </xsd:appinfo>
                         </xsd:annotation>
                         <xsd:restriction base="{@base}">
-                            <xsd:minInclusive value="{@min}"/>
-                            <xsd:maxInclusive value="{@max}"/>
-                            <xsl:if test="@fractionDigits">
-                                <xsd:fractionDigits value="{@fractionDigits}"/>
+                            <xsl:apply-templates select="@min" mode="fix"/>
+                            <xsl:apply-templates select="@max" mode="fix"/>
+                            <xsl:if test="@fractiondigits">
+                                <xsd:fractionDigits value="{@fractiondigits}"/>
                             </xsl:if>
-                            <xsl:if test="@totalDigits">
-                                <xsd:totalDigits value="{@totalDigits}"/>
+                            <xsl:if test="@totaldigits">
+                                <xsd:totalDigits value="{@totaldigits}"/>
                             </xsl:if>
                         </xsd:restriction>
                     </xsd:simpleType>
@@ -347,10 +476,10 @@
             <xsd:complexType name="{@niemtype}">
                 <xsd:annotation>
                     <xsd:documentation>
-                        <xsl:value-of select="@niemtypedoc"/>
+                        <xsl:value-of select="normalize-space(@niemtypedoc)"/>
                     </xsd:documentation>
                     <xsd:appinfo>
-                        <xsl:for-each select="fappinfo/*">
+                        <xsl:for-each select="*:fappinfo/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
                     </xsd:appinfo>
@@ -365,10 +494,10 @@
             <xsd:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
                 <xsd:annotation>
                     <xsd:documentation>
-                        <xsl:value-of select="@niemelementdoc"/>
+                        <xsl:value-of select="normalize-space(@niemelementdoc)"/>
                     </xsd:documentation>
                     <xsd:appinfo>
-                        <xsl:for-each select="fappinfo/*">
+                        <xsl:for-each select="*:fappinfo/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
                     </xsd:appinfo>
@@ -480,7 +609,7 @@
 
     <!-- _______________________________________________________ -->
 
-<!--    <xsl:template name="main">
+    <xsl:template name="numerics">
         <xsl:result-document href="{$xsdoutputdoc}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
                 xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
@@ -525,6 +654,6 @@
                 </xsl:for-each>
             </Numerics>
         </xsl:result-document>
-    </xsl:template>-->
+    </xsl:template>
 
 </xsl:stylesheet>

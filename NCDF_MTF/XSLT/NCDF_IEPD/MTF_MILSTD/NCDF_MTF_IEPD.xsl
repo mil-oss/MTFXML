@@ -1,27 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd"
+    version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <xsl:variable name="srcpath" select="'../../../XSD/NCDF_IEPD/MILSTD_MTF/'"/>
-    <xsl:variable name="outdir" select="'../../../XSD/NCDF_IEPD/MILSTD_MTF/'"/>
-    <xsl:variable name="AllMTF" select="document(concat($srcpath, 'NCDF_MTF.xsd'))"/>
-    <xsl:variable name="MILSTDMTF">
-        <xsl:apply-templates select="$AllMTF/xsd:schema/*" mode="milstd"/>
-    </xsl:variable>
+    <xsl:variable name="srcpath" select="'../../../XSD/NCDF_MTF_REF/'"/>
+    <xsl:variable name="Outdir" select="'../../../XSD/NCDF_MTF_IEPD/'"/>
+    <xsl:variable name="AllMTF" select="document(concat($srcpath, 'NCDF_MTF_REF.xsd'))"/>
+    <xsl:variable name="mtfappinf" select="document(concat($srcpath, 'NCDF/mtfappinfo.xsd'))"/>
+    <xsl:variable name="appinf" select="document(concat($srcpath, 'NCDF/appinfo.xsd'))"/>
+    <xsl:variable name="struct" select="document(concat($srcpath, 'NCDF/structures.xsd'))"/>
+    <xsl:variable name="locterm" select="document(concat($srcpath, 'NCDF/localTerminology.xsd'))"/>
 
     <xsl:template name="main">
-        <xsl:result-document href="{concat($outdir,'MILSTD_MTF.xsd')}">
+        <!--COPY REF XSD TO IEPD FOLDER-->
+        <xsl:result-document href="{concat($Outdir,'/_ALL/xml/xsd/NCDF_MTF_REF.xsd')}">
+            <xsl:copy-of select="$AllMTF/*"/>
+        </xsl:result-document>
+        <!--CREATE CUMULATIVE IEPD AND COPY TO ALL_IEPD FOLDER-->
+        <xsl:result-document href="{concat($Outdir,'/_ALL/xml/xsd/NCDF_MTF.xsd')}">
+            <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:int:nato:ncdf:mtf" targetNamespace="urn:int:nato:ncdf:mtf" xml:lang="en-US" elementFormDefault="unqualified"
+                attributeFormDefault="unqualified" version="1.0">
+                <xsl:apply-templates select="$AllMTF/xsd:schema/*" mode="milstd"/>
+            </xsd:schema>
+        </xsl:result-document>
+        <!--COPY REF XSD, NCDF RESOURCES, AND CREATED MSG IEPD TO MSG IEPD FOLDER-->
+        <xsl:for-each select="$AllMTF/xsd:schema/xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
+            <xsl:sort select="xsd:annotation/xsd:appinfo/*:Msg/@mtfid"/>
+            <xsl:variable name="mid" select="translate(xsd:annotation/xsd:appinfo/*:Msg/@mtfid, ' .', '')"/>
+            <xsl:variable name="indoc" select="document(concat($srcpath, 'SepMsgRef/', $mid, '_REF.xsd'))"/>
+            <!--COPY MSG REF XSD TO MSG IEPD FOLDER-->
+            <xsl:result-document href="{$Outdir}/{concat($mid,'_IEPD/xml/xsd/',$mid,'_REF.xsd')}">
+                <xsl:copy-of select="$indoc"/>
+            </xsl:result-document>
+            <!--COPY NCDF RESOURCES TO EACH MSG IEPD FOLDER-->
+            <xsl:result-document href="{$Outdir}/{concat($mid,'_IEPD/xml/xsd/NCDF/appinfo.xsd')}">
+                <xsl:copy-of select="$appinf/xsd:schema"/>
+            </xsl:result-document>
+            <xsl:result-document href="{$Outdir}/{concat($mid,'_IEPD/xml/xsd/NCDF/mtfappinfo.xsd')}">
+                <xsl:copy-of select="$mtfappinf/xsd:schema"/>
+            </xsl:result-document>
+            <xsl:result-document href="{$Outdir}/{concat($mid,'_IEPD/xml/xsd/NCDF/structures.xsd')}">
+                <xsl:copy-of select="$struct/xsd:schema"/>
+            </xsl:result-document>
+            <xsl:result-document href="{$Outdir}/{concat($mid,'_IEPD/xml/xsd/NCDF/localTerminology.xsd')}">
+                <xsl:copy-of select="$locterm/xsd:schema"/>
+            </xsl:result-document>
+            <!--COPY CREATTED IMPLEMENTATION XSD TO MSG IEPD FOLDER-->
+            <xsl:result-document href="{concat($Outdir,$mid,'_IEPD/xml/xsd/',$mid,'.xsd')}">
+                <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:int:nato:ncdf:mtf" targetNamespace="urn:int:nato:ncdf:mtf" xml:lang="en-US" elementFormDefault="unqualified"
+                    attributeFormDefault="unqualified" version="1.0">
+                    <xsl:apply-templates select="$indoc/xsd:schema/*" mode="milstd"/>
+                </xsd:schema>
+            </xsl:result-document>
+        </xsl:for-each>
+        <!--  <xsl:result-document href="{concat($outdir,'MILSTD_MTF.xsd')}">
             <xsd:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 targetNamespace="urn:int:nato:ncdf:mtf" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
                 <xsl:copy-of select="$MILSTDMTF" copy-namespaces="no"/>
             </xsd:schema>
-        </xsl:result-document>
-        <xsl:for-each select="$MILSTDMTF//xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
+        </xsl:result-document>-->
+        <!--<xsl:for-each select="$AllMTF/*/xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
+            <xsl:variable name="mid" select="translate(xsd:annotation/xsd:appinfo/*:Msg/@mtfid,' .','')"/>
             <xsl:call-template name="ExtractMessageSchema">
                 <xsl:with-param name="message" select="."/>
-                <xsl:with-param name="outdir" select="concat($outdir, 'SepMsgs/')"/>
+                <xsl:with-param name="outdir" select="concat($Outdir,$mid,'_IEPD/')"/>
             </xsl:call-template>
-        </xsl:for-each>
+        </xsl:for-each>-->
     </xsl:template>
 
     <xsl:template match="*" mode="milstd">
@@ -30,16 +74,16 @@
             <xsl:when test="parent::xsd:schema and xsd:annotation/xsd:appinfo/*:Choice">
                 <xsd:element name="{@name}" type="{@type}">
                     <xsl:copy-of select="xsd:annotation" copy-namespaces="no"/>
-                        <xsl:for-each select="$AllMTF//xsd:element[@substitutionGroup = $r]">
-                            <xsl:variable name="t" select="@type"/>
-                            <xsl:variable name="n" select="@name"/>
-                            <xsl:variable name="match">
-                                <xsl:copy-of select="$AllMTF/xsd:schema/xsd:element[@name = $n][@type = $t]"/>
-                            </xsl:variable>
-                            <xsd:element ref="{@name}">
-                                <xsl:copy-of select="$match/*/xsd:annotation" copy-namespaces="no"/>
-                            </xsd:element>
-                        </xsl:for-each>
+                    <xsl:for-each select="$AllMTF//xsd:element[@substitutionGroup = $r]">
+                        <xsl:variable name="t" select="@type"/>
+                        <xsl:variable name="n" select="@name"/>
+                        <xsl:variable name="match">
+                            <xsl:copy-of select="$AllMTF/xsd:schema/xsd:element[@name = $n][@type = $t]"/>
+                        </xsl:variable>
+                        <xsd:element ref="{@name}">
+                            <xsl:copy-of select="$match/*/xsd:annotation" copy-namespaces="no"/>
+                        </xsd:element>
+                    </xsl:for-each>
                 </xsd:element>
             </xsl:when>
             <xsl:when test="xsd:annotation/xsd:appinfo/*:Choice">
@@ -176,80 +220,4 @@
     <xsl:template match="xsd:schema/xsd:element[@abstract]" mode="milstd"/>
     <xsl:template match="*[contains(@ref, 'AugmentationPoint')]" mode="milstd"/>
     <xsl:template match="@abstract" mode="milstd"/>
-    <xsl:template name="ExtractMessageSchema">
-        <xsl:param name="message"/>
-        <xsl:param name="outdir"/>
-        <xsl:variable name="msgid" select="$MILSTDMTF/*[@name = $message/@type]/xsd:annotation/xsd:appinfo/*:Msg/@mtfid"/>
-        <xsl:variable name="mid" select="translate($msgid, ' .:()', '')"/>
-        <!--<xsl:variable name="schtron">
-            <xsl:value-of
-                select="concat($lt, '?xml-model', ' href=', $q, '../../../Baseline_Schema/MTF_Schema_Tests/', $mid, '.sch', $q, ' type=', $q, 'application/xml', $q, ' schematypens=', $q, 'http://purl.oclc.org/dsdl/schematron', $q, '?', $gt)"
-            />
-        </xsl:variable>-->
-        <xsl:result-document href="{$outdir}/{concat($mid,'.xsd')}">
-            <!--<xsl:text>&#10;</xsl:text>
-            <xsl:value-of select="$schtron" disable-output-escaping="yes"/>
-            <xsl:text>&#10;</xsl:text>-->
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-                targetNamespace="urn:int:nato:ncdf:mtf" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../mtfappinfo.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:value-of select="concat($message/xsd:annotation/xsd:appinfo/*:Msg/@mtfname, ' MESSAGE SCHEMA')"/>
-                    </xsd:documentation>
-                    <xsd:appinfo>
-                        <mtfappinfo:Msg mtfname="{$message/xsd:annotation/xsd:appinfo/*:Msg/@mtfname}" mtfid="{$msgid}"/>
-                    </xsd:appinfo>
-                </xsd:annotation>
-                <xsl:copy-of select="$message"/>
-                <xsl:copy-of select="$MILSTDMTF/xsd:complexType[@name = $message/@type]"/>
-                <xsl:variable name="all">
-                    <xsl:for-each select="$MILSTDMTF/*[@name = $message/@type]//*[@ref | @base | @type]">
-                        <xsl:variable name="n" select="@ref | @base | @type"/>
-                        <xsl:call-template name="iterateNode">
-                            <xsl:with-param name="node" select="$MILSTDMTF/*[@name = $n]"/>
-                            <xsl:with-param name="iteration" select="18"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
-                </xsl:variable>
-                <xsl:for-each select="$all/xsd:complexType[not(@name = $message/@type)]">
-                    <xsl:sort select="@name"/>
-                    <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="count(preceding-sibling::xsd:complexType[@name = $n]) = 0">
-                        <xsl:copy-of select="."/>
-                    </xsl:if>
-                </xsl:for-each>
-                <xsl:for-each select="$all/xsd:simpleType">
-                    <xsl:sort select="@name"/>
-                    <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="count(preceding-sibling::xsd:simpleType[@name = $n]) = 0">
-                        <xsl:copy-of select="."/>
-                    </xsl:if>
-                </xsl:for-each>
-                <xsl:for-each select="$all/xsd:element[not(@name = $message/@name)]">
-                    <xsl:sort select="@name"/>
-                    <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="count(preceding-sibling::xsd:element[@name = $n]) = 0">
-                        <xsl:copy-of select="."/>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsd:schema>
-        </xsl:result-document>
-    </xsl:template>
-    <xsl:template name="iterateNode">
-        <xsl:param name="node"/>
-        <xsl:param name="iteration"/>
-        <xsl:copy-of select="$node"/>
-        <xsl:if test="$iteration &gt; 0">
-            <xsl:for-each select="$node//@*[name() = 'ref' or name() = 'type' or name() = 'base'][not(. = $node/@name)]">
-                <xsl:variable name="n">
-                    <xsl:value-of select="."/>
-                </xsl:variable>
-                <xsl:call-template name="iterateNode">
-                    <xsl:with-param name="node" select="$MILSTDMTF/*[@name = $n]"/>
-                    <xsl:with-param name="iteration" select="number($iteration - 1)"/>
-                </xsl:call-template>
-            </xsl:for-each>
-        </xsl:if>
-    </xsl:template>
 </xsl:stylesheet>

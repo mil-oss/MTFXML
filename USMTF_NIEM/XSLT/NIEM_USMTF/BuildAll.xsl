@@ -1350,7 +1350,7 @@
                                     <xsd:documentation>
                                         <xsl:choose>
                                             <xsl:when test="@niemtypedoc">
-                                                <xsl:value-of select="replace(@niemtypedoc,'A data type','A data item')"/>
+                                                <xsl:value-of select="replace(@niemtypedoc, 'A data type', 'A data item')"/>
                                             </xsl:when>
                                             <xsl:otherwise>
                                                 <xsl:value-of select="@niemelementdoc"/>
@@ -1546,14 +1546,14 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-    </xsl:variable>   
+    </xsl:variable>
     <xsl:variable name="mtf_messages_map">
         <xsl:for-each select="$niem_messages_map/*">
             <xsl:sort select="@mtfname"/>
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
-    <!-- _______________________________________________________ -->   
+    <!-- _______________________________________________________ -->
     <!--Consolidated-->
     <xsl:variable name="ALLMTF">
         <xsl:copy-of select="$mtf_fields_xsd"/>
