@@ -58,7 +58,7 @@
                         <xsl:variable name="n" select="@ref | @base | @type"/>
                         <xsl:call-template name="iterateNode">
                             <xsl:with-param name="node" select="$ALLMTF/*[@name = $n]"/>
-                            <xsl:with-param name="iteration" select="18"/>
+                            <xsl:with-param name="iteration" select="6"/>
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:variable>
@@ -67,7 +67,7 @@
                         <xsl:variable name="n" select="@name"/>
                         <xsl:call-template name="iterateNode">
                             <xsl:with-param name="node" select="$ALLMTF/*[@substitutionGroup = $n]"/>
-                            <xsl:with-param name="iteration" select="10"/>
+                            <xsl:with-param name="iteration" select="4"/>
                         </xsl:call-template>
                     </xsl:for-each>
                 </xsl:variable>

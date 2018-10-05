@@ -67,8 +67,11 @@
                     <xsl:when test="$mtfname = 'IndicatorOnOrOffType'">
                         <xsl:text>OnOffUnknownCode</xsl:text>
                     </xsl:when>
-                    <xsl:otherwise>
+                    <xsl:when test="ends-with($n,'Code')">
                         <xsl:value-of select="$n"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($n,'Code')"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -313,7 +316,7 @@
         </xsd:enumeration>
     </xsl:template>
 
-    <xsl:template name="codelists">
+    <xsl:template name="codelistmain">
         <xsl:result-document href="{$codelistxsdout}">
             <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf:fields" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
                 xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/4.0/"

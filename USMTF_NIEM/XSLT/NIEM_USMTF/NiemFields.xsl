@@ -173,25 +173,21 @@
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="mtf_fields_map">
-        <xsl:for-each select="$all_field_elements_map/*">
+        <xsl:for-each select="$all_field_elements_map/*[string-length(@niemtype) &gt; 0 and name() = 'Field']">
             <xsl:sort select="@niemelementname"/>
-            <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Field'">
                 <xsl:variable name="n" select="@niemelementname"/>
                 <xsl:variable name="t" select="@niemtype"/>
                 <xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:if>
-            </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$all_field_elements_map/*">
+        <xsl:for-each select="$all_field_elements_map/*[string-length(@niemtype) &gt; 0 and name() = 'Element']">
             <xsl:sort select="@niemelementname"/>
-            <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Element'">
                 <xsl:variable name="n" select="@niemelementname"/>
                 <xsl:variable name="t" select="@niemtype"/>
                 <xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:if>
-            </xsl:if>
         </xsl:for-each>
     </xsl:variable>
     <!-- _______________________________________________________ -->
