@@ -17,21 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-    exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism"
+    xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NiemMap.xsl"/>
 
     <!--Outputs-->
     <xsl:variable name="messagemapsoutput" select="concat($srcdir, 'Maps/NIEM_MTF_Msgsmaps.xml')"/>
-    <xsl:variable name="messagesxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Messages.xsd')"/>
+    <xsl:variable name="messagesxsdoutputdoc"
+        select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Messages.xsd')"/>
 
-<!-- _______________________________________________________ -->
+    <!-- _______________________________________________________ -->
 
     <!--XSD GENERATION-->
     <!-- _______________________________________________________ -->
 
+    <!--Messages-->
     <xsl:variable name="messagelements">
         <xsl:for-each select="$niem_messages_map//Sequence/Element">
             <xsl:sort select="@niemelementname"/>
@@ -57,7 +62,7 @@
                                     <xs:documentation>
                                         <xsl:choose>
                                             <xsl:when test="@niemtypedoc">
-                                                <xsl:value-of select="replace(@niemtypedoc,'A data type','A data item')"/>
+                                                <xsl:value-of select="replace(@niemtypedoc, 'A data type', 'A data item')"/>
                                             </xsl:when>
                                             <xsl:otherwise>
                                                 <xsl:value-of select="@niemelementdoc"/>
@@ -209,7 +214,7 @@
                     <xsl:for-each select="appinfo/*">
                         <xs:appinfo>
                             <xsl:copy-of select="."/>
-                           <!-- <xsl:copy>
+                            <!-- <xsl:copy>
                                 <xsl:copy-of select="@name"/>
                                 <xsl:copy-of select="@positionName"/>
                                 <!-\-\\\\-<xsl:copy-of select="@usage"/>
@@ -253,38 +258,49 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-    </xsl:variable>   
+    </xsl:variable>
     <xsl:variable name="mtf_messages_map">
         <xsl:for-each select="$niem_messages_map/*">
             <xsl:sort select="@mtfname"/>
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
-
+   
+    <!-- _______________________________________________________ -->
     <!--    OUTPUT RESULT-->
     <!-- _______________________________________________________ -->
 
     <xsl:template name="main">
         <xsl:result-document href="{$messagesxsdoutputdoc}">
-            <schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+                version="1.0">
                 <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
-                <include schemaLocation="NIEM_MTF_Sets.xsd"/>
-                <include schemaLocation="NIEM_MTF_Segments.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/"
+                    schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/"
+                    schemaLocation="./localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/"
+                    schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Segments.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Message structures for MTF Messages</xsl:text>
                     </xs:documentation>
                 </xs:annotation>
                 <xsl:copy-of select="$mtf_messages_xsd"/>
-            </schema>
+            </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$messagemapsoutput}">
             <Messages>

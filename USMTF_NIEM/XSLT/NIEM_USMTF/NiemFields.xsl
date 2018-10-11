@@ -27,6 +27,8 @@
     <!--Outputs-->
     <xsl:variable name="fieldoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Fields.xsd')"/>
     <xsl:variable name="fieldmapoutputdoc" select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Fieldmaps.xml')"/>
+    <!-- _______________________________________________________ -->
+    <!--Fields-->
     <xsl:variable name="fieldsxsd">
         <xsl:for-each select="$stringsxsd/*:simpleType">
             <xsl:sort select="@name"/>
@@ -68,7 +70,7 @@
             <xsl:copy-of select="."/>
         </xsl:for-each>-->
         <xsl:for-each select="$codelistxsd/*:simpleType">
-            <xsl:sort select="@name"/>
+        <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:if test="not(preceding-sibling::*:simpleType/@name = $n)">
                 <xsl:copy-of select="."/>
@@ -173,24 +175,28 @@
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="mtf_fields_map">
-        <xsl:for-each select="$all_field_elements_map/*[string-length(@niemtype) &gt; 0 and name() = 'Field']">
+        <xsl:for-each select="$all_field_elements_map/*">
             <xsl:sort select="@niemelementname"/>
+            <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Field'">
                 <xsl:variable name="n" select="@niemelementname"/>
                 <xsl:variable name="t" select="@niemtype"/>
                 <xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:if>
+            </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$all_field_elements_map/*[string-length(@niemtype) &gt; 0 and name() = 'Element']">
+        <xsl:for-each select="$all_field_elements_map/*">
             <xsl:sort select="@niemelementname"/>
+            <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Element'">
                 <xsl:variable name="n" select="@niemelementname"/>
                 <xsl:variable name="t" select="@niemtype"/>
                 <xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:if>
+            </xsl:if>
         </xsl:for-each>
     </xsl:variable>
-    <!-- _______________________________________________________ -->
+<!-- _______________________________________________________ -->
     <!--    OUTPUT RESULT-->
     <xsl:template name="main">
         <xsl:result-document href="{$fieldoutputdoc}">

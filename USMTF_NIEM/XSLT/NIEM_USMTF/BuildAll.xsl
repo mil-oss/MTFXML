@@ -366,7 +366,7 @@
                 </xsl:if>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$all_composite_elements_map/*">
+      <!--  <xsl:for-each select="$all_composite_elements_map/*">
             <xsl:sort select="@niemelementname"/>
             <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Element'">
                 <xsl:variable name="n" select="@niemelementname"/>
@@ -375,7 +375,7 @@
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:if>
             </xsl:if>
-        </xsl:for-each>
+        </xsl:for-each>-->
     </xsl:variable>
     <!-- _______________________________________________________ -->
     <!--Sets-->
@@ -1567,16 +1567,27 @@
     <xsl:template name="main">
         <!--Schema-->
         <xsl:result-document href="{$dirpath}/NIEM_MTF_Fields.xsd">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified"
+                version="1.0">
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/"
+                    schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/"
+                    schemaLocation="./localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/"
+                    schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Fields for MTF Messages</xsl:text>
@@ -1586,17 +1597,25 @@
             </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NIEM_MTF_Composites.xsd">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
-                <include schemaLocation="NIEM_MTF_Fields.xsd"/>
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified"
+                version="1.0">
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="./localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Fields.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Composite fields for MTF Composite Fields</xsl:text>
@@ -1606,18 +1625,26 @@
             </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NIEM_MTF_Sets.xsd">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
-                <include schemaLocation="NIEM_MTF_Fields.xsd"/>
-                <include schemaLocation="NIEM_MTF_Composites.xsd"/>
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified"
+                version="1.0">
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="./localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Fields.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Composites.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Set structures for MTF Messages</xsl:text>
@@ -1627,17 +1654,25 @@
             </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NIEM_MTF_Segments.xsd">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
-                <include schemaLocation="NIEM_MTF_Sets.xsd"/>
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified"
+                version="1.0">
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="./localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Segment structures for MTF Segments</xsl:text>
@@ -1647,18 +1682,26 @@
             </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NIEM_MTF_Messages.xsd">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
-                <include schemaLocation="NIEM_MTF_Sets.xsd"/>
-                <include schemaLocation="NIEM_MTF_Segments.xsd"/>
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified"
+                version="1.0">
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="./localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Segments.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Message structures for MTF Messages</xsl:text>
@@ -1668,17 +1711,24 @@
             </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NIEM_MTF.xsd">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:niem:mtf"
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
-                attributeFormDefault="unqualified" version="1.0">
-                <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+                xml:lang="en-US"
+                elementFormDefault="unqualified"
+                attributeFormDefault="unqualified"
+                version="1.0">
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="./localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>UNIFIED MTF MESSAGE SCHEMA</xsl:text>
@@ -1725,13 +1775,13 @@
             </Messages>
         </xsl:result-document>
         <!--Message Schema-->
-        <xsl:for-each select="$ALLMTF/*:element[*:annotation/*:appinfo/*:Msg][position() &gt; 19][position() &lt; 50]">
+        <!--<xsl:for-each select="$ALLMTF/*:element[*:annotation/*:appinfo/*:Msg][position() &gt; 19][position() &lt; 50]">
             <xsl:call-template name="ExtractMessageSchema">
                 <xsl:with-param name="message" select="."/>
                 <xsl:with-param name="outdir" select="$sepmsgsout"/>
                 <xsl:with-param name="allMTF" select="$ALLMTF"/>
             </xsl:call-template>
-        </xsl:for-each>
+        </xsl:for-each>-->
     </xsl:template>
 
 </xsl:stylesheet>

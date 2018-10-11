@@ -77,7 +77,6 @@
                 </xs:annotation>
                 <xs:simpleContent>
                     <xs:extension base="{@niemsimpletype}">
-                        <xs:attributeGroup ref="ism:SecurityAttributesOptionGroup"/>
                         <xs:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
                     </xs:extension>
                 </xs:simpleContent>

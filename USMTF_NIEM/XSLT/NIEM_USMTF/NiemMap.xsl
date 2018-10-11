@@ -985,7 +985,7 @@
                 <xsl:copy-of select="*:Field" copy-namespaces="no"/>
             </xsl:for-each>
         </xsl:variable>
-        <xs:element niemelementname="{$niemelementnamevar}" niemtype="{$niemtypevar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" niemtypedoc="{$niemtypedocvar}" niemelementdoc="{$niemelementdocvar}"
+        <Element niemelementname="{$niemelementnamevar}" niemtype="{$niemtypevar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" niemtypedoc="{$niemtypedocvar}" niemelementdoc="{$niemelementdocvar}"
             seq="{$seq}">
             <xsl:if test="string-length($sbstgrp) &gt; 0">
                 <xsl:attribute name="substitutiongroup">
@@ -1115,7 +1115,7 @@
                 <xsl:with-param name="segmentnamevar" select="$segmentnamevar"/>
                 <xsl:with-param name="messagenamevar" select="$messagenamevar"/>
             </xsl:apply-templates>
-        </xs:element>
+        </Element>
     </xsl:template>
     <!--  Choice / Substitution Groups Map -->
     <xsl:template match="*:element[*:complexType/*:choice]">
@@ -1276,7 +1276,7 @@
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
-        <xs:element mtfname="{@name}" niemelementname="{concat($niemelementnamevar,'Choice')}" seq="{$seq}">
+        <Element mtfname="{@name}" niemelementname="{concat($niemelementnamevar,'Choice')}" seq="{$seq}">
             <xsl:for-each select="@*[not(name() = 'name')]">
                 <xsl:copy-of select="."/>
             </xsl:for-each>
@@ -1334,13 +1334,13 @@
                     </xsl:with-param>
                 </xsl:apply-templates>
             </Choice>
-        </xs:element>
+        </Element>
     </xsl:template>
     <xsl:template match="*:element[@name = 'GroupOfFields']">
         <xsl:param name="settypevar"/>
         <xsl:param name="segmentnamevar"/>
         <xsl:param name="messagenamevar"/>
-        <xs:sequence name="GroupOfFields">
+        <Sequence name="GroupOfFields">
             <xsl:for-each select="@*">
                 <xsl:copy-of select="."/>
             </xsl:for-each>
@@ -1349,7 +1349,7 @@
                 <xsl:with-param name="segmentnamevar" select="$segmentnamevar"/>
                 <xsl:with-param name="messagenamevar" select="$messagenamevar"/>
             </xsl:apply-templates>
-        </xs:sequence>
+        </Sequence>
     </xsl:template>
     <!--sets.xsd choice occur in *:element complexType-->
     <xsl:template match="*:complexType/*:choice">
@@ -1437,7 +1437,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="seq" select="*:element[1]//*:extension[1]/*:attribute[@name = 'setSeq']/@fixed"/>
-        <xs:element substgrpname="{concat($choicenamevar,'Abstract')}" messagename="{$msgnamevar}" parentname="{$parentnamevar}" substgrpdoc="{$substgrpdocvar}">
+        <Element substgrpname="{concat($choicenamevar,'Abstract')}" messagename="{$msgnamevar}" parentname="{$parentnamevar}" substgrpdoc="{$substgrpdocvar}">
             <xsl:copy-of select="@minOccurs"/>
             <xsl:copy-of select="@maxOccurs"/>
             <Choice name="{$choicenamevar}">
@@ -1451,7 +1451,7 @@
                     <xsl:with-param name="messagenamevar" select="$messagenamevar"/>
                 </xsl:apply-templates>
             </Choice>
-        </xs:element>
+        </Element>
     </xsl:template>
     <xsl:template match="*:sequence[*:element[1][@name = 'GroupOfFields']][not(*:element[not(@name = 'GroupOfFields')])]">
         <xsl:param name="settypevar"/>
@@ -1467,13 +1467,13 @@
         <xsl:param name="settypevar"/>
         <xsl:param name="segmentnamevar"/>
         <xsl:param name="messagenamevar"/>
-        <xs:sequence>
+        <Sequence>
             <xsl:apply-templates select="*">
                 <xsl:with-param name="settypevar" select="$settypevar"/>
                 <xsl:with-param name="segmentnamevar" select="$segmentnamevar"/>
                 <xsl:with-param name="messagenamevar" select="$messagenamevar"/>
             </xsl:apply-templates>
-        </xs:sequence>
+        </Sequence>
     </xsl:template>
     <xsl:template match="*:complexType">
         <xsl:param name="settypevar"/>

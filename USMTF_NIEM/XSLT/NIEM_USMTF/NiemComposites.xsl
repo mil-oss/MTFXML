@@ -24,7 +24,8 @@
     <!--Outputs-->
     <xsl:variable name="compositeoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Composites.xsd')"/>
     <xsl:variable name="compositemapoutputdoc" select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Compositemaps.xml')"/>
-
+    <!-- _______________________________________________________ -->
+    <!--Composites-->
     <xsl:variable name="elementsxsd">
         <xsl:for-each select="$all_composite_elements_map/*">
             <xsl:sort select="@niemelementname"/>
@@ -34,10 +35,10 @@
             </xsl:variable>
             <xsl:variable name="s" select="@substgrpname"/>
             <xsl:choose>
-               <xsl:when test="$niem_fields_map//*[@niemelementname = $n]"/>
+                <xsl:when test="$niem_fields_map//*[@niemelementname = $n]"/>
                 <!--<xsl:when test="$all_field_elements_map//*[@niemelementname = $n]"/>-->
                 <xsl:when test="@substgrpname and $all_field_elements_map//*[@substgrpname = $s]"/>
-                <xsl:when test="name()='Choice'">
+                <xsl:when test="name() = 'Choice'">
                     <xs:element name="{@substgrpname}">
                         <xsl:attribute name="abstract">
                             <xsl:text>true</xsl:text>
@@ -78,7 +79,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-    </xsl:variable>    
+    </xsl:variable>
     <xsl:variable name="compositefields">
         <xsl:for-each select="$niem_composites_map//Sequence/Element[starts-with(@mtftype, 'c:')]">
             <xsl:sort select="@niemelementname"/>
@@ -143,7 +144,10 @@
                     <xs:extension base="structures:ObjectType">
                         <xs:sequence>
                             <xsl:for-each select="*:Sequence/Element">
-                                <xs:element ref="{@niemelementname}"/>
+                                <xsl:variable name="refname">
+                                    <xsl:value-of select="@niemelementname"/>
+                                </xsl:variable>
+                                <xs:element ref="{$refname}"/>
                             </xsl:for-each>
                             <xs:element ref="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
                         </xs:sequence>
@@ -203,7 +207,7 @@
     <xsl:variable name="mtf_composites_map">
         <xsl:for-each select="$all_composite_elements_map/*">
             <xsl:sort select="@niemelementname"/>
-            <xsl:if test="string-length(@niemtype)&gt;0 and name()='Composite'">
+            <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Composite'">
                 <xsl:variable name="n" select="@niemelementname"/>
                 <xsl:variable name="t" select="@niemtype"/>
                 <xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">
@@ -213,7 +217,7 @@
         </xsl:for-each>
         <xsl:for-each select="$all_composite_elements_map/*">
             <xsl:sort select="@niemelementname"/>
-            <xsl:if test="string-length(@niemtype)&gt;0 and name()='Element'">
+            <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Element'">
                 <xsl:variable name="n" select="@niemelementname"/>
                 <xsl:variable name="t" select="@niemtype"/>
                 <xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">
@@ -223,6 +227,7 @@
         </xsl:for-each>
     </xsl:variable>
     <!-- _______________________________________________________ -->
+
     <!--    OUTPUT RESULT-->
     <xsl:template name="main">
         <xsl:result-document href="{$compositeoutputdoc}">
@@ -249,6 +254,7 @@
                 <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/"
                     schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
                 <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Fields.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Composite fields for MTF Composite Fields</xsl:text>

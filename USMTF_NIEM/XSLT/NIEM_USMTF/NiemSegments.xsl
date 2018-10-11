@@ -17,21 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-    exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism"
+    xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NiemMap.xsl"/>
 
     <!--Set deconfliction and annotation changes-->
     <!--Outputs-->
-    <xsl:variable name="segmentmapsoutput" select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Segmntmaps.xml')"/>
-    <xsl:variable name="segmentsxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Segments.xsd')"/>
+    <xsl:variable name="segmentmapsoutput"
+        select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Segmntmaps.xml')"/>
+    <xsl:variable name="segmentsxsdoutputdoc"
+        select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Segments.xsd')"/>
     <!-- _________________________________________ -->
 
     <!--XSD GENERATION-->
     <!-- _______________________________________________________ -->
-
+    <!--Segments-->
     <xsl:variable name="segmentelements">
         <xsl:for-each select="$niem_segments_map//Sequence/Element">
             <xsl:sort select="@niemelementname"/>
@@ -379,7 +384,6 @@
             </xsl:for-each>
         </xsl:for-each>-->
     </xsl:variable>
-
     <xsl:variable name="mtf_segments_xsd">
         <xsl:for-each select="$segmentsxsd/*:complexType">
             <xsl:sort select="@name"/>
@@ -412,37 +416,47 @@
             </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
-
     <xsl:variable name="mtf_segments_map">
         <xsl:for-each select="$niem_segments_map/*">
             <xsl:sort select="@mtfname"/>
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
-
+    <!-- _______________________________________________________ -->
+    
     <!--    OUTPUT RESULT-->
     <!-- _______________________________________________________ -->
 
     <xsl:template name="main">
         <xsl:result-document href="{$segmentsxsdoutputdoc}">
-            <schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism"
+                xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified"
+                version="1.0">
                 <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
-                <include schemaLocation="NIEM_MTF_Sets.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/"
+                    schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/"
+                    schemaLocation="./localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/"
+                    schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
+                <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Segment structures for MTF Segments</xsl:text>
                     </xs:documentation>
                 </xs:annotation>
                 <xsl:copy-of select="$mtf_segments_xsd" copy-namespaces="no"/>
-            </schema>
+            </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$segmentmapsoutput}">
             <Segments>
