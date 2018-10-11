@@ -17,7 +17,7 @@
                 <xsl:copy-of select="$MILSTDMTF" copy-namespaces="no"/>
             </xsd:schema>
         </xsl:result-document>
-        <xsl:for-each select="$MILSTDMTF//xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
+        <xsl:for-each select="$MILSTDMTF//xsd:element[xsd:annotation/xsd:appinfo/*:Msg][position()&gt;199]">
             <xsl:call-template name="ExtractMessageSchema">
                 <xsl:with-param name="message" select="."/>
                 <xsl:with-param name="outdir" select="concat($outdir, 'SepMsgs/')"/>

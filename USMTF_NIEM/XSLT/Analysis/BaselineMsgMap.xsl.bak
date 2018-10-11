@@ -220,7 +220,7 @@
             </appinfo>
             <xsl:for-each select="xsd:restriction/xsd:enumeration">
                 <xsl:sort select="@value"/>
-                <xs:enumeration value="{@value}" dataItem="{xsd:annotation/xsd:appinfo/*:DataItem}" doc="{normalize-space(xsd:annotation/xsd:documentation/text())}"/>
+                <Enumeration value="{@value}" dataItem="{xsd:annotation/xsd:appinfo/*:DataItem}" doc="{normalize-space(xsd:annotation/xsd:documentation/text())}"/>
             </xsl:for-each>
         </Field>
     </xsl:template>

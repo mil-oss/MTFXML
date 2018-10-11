@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
     xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-    exclude-result-prefixes="xsd" version="2.0">
+    exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NiemMap.xsl"/>
 
@@ -46,7 +46,7 @@
                     <xsl:variable name="segSeq">
                         <xsl:value-of select="ancestor::Segment/@segseq"/>
                     </xsl:variable>
-                    <xsd:element name="{@niemelementname}">
+                    <xs:element name="{@niemelementname}">
                         <xsl:if test="@niemtype">
                             <xsl:attribute name="type">
                                 <xsl:value-of select="@niemtype"/>
@@ -67,8 +67,8 @@
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
                         </xsl:if>
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:choose>
                                     <xsl:when test="@niemtype = 'GeneralTextType'">
                                         <xsl:value-of select="@niemelementdoc"/>
@@ -83,27 +83,27 @@
                                         <xsl:value-of select="@niemelementdoc"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </xsd:documentation>
+                            </xs:documentation>
                             <xsl:choose>
                                 <xsl:when test="appinfo/mtfappinfo:Segment">
-                                    <xsd:appinfo>
+                                    <xs:appinfo>
                                         <xsl:copy-of select="appinfo/mtfappinfo:Segment"/>
-                                    </xsd:appinfo>
+                                    </xs:appinfo>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:for-each select="appinfo/*">
-                                        <xsd:appinfo>
+                                        <xs:appinfo>
                                             <xsl:copy>
                                                 <xsl:copy-of select="@positionName"/>
                                                 <xsl:copy-of select="ancestor::Element/@textindicator"/>
                                                 <xsl:copy-of select="@usage"/>
                                             </xsl:copy>
-                                        </xsd:appinfo>
+                                        </xs:appinfo>
                                     </xsl:for-each>
                                 </xsl:otherwise>
                             </xsl:choose>
-                        </xsd:annotation>
-                    </xsd:element>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -113,21 +113,21 @@
                 <xsl:when test="$all_set_elements_map/*[@substgrpname = $substgrp]"/>
                 <xsl:when test="starts-with(Choice/Element[1]/@mtftype, 's:')"/>
                 <xsl:otherwise>
-                    <xsd:element name="{@substgrpname}" abstract="true">
-                        <xsd:annotation>
-                            <xsd:documentation>
+                    <xs:element name="{@substgrpname}" abstract="true">
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="@substgrpdoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
+                            </xs:documentation>
+                            <xs:appinfo>
                                 <mtfappinfo:Choice>
                                     <xsl:for-each select="Choice/Element">
                                         <xsl:sort select="@niemelementname"/>
                                         <mtfappinfo:Element name="{@niemelementname}" type="{@niemtype}"/>
                                     </xsl:for-each>
                                 </mtfappinfo:Choice>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:for-each select="Choice/Element">
@@ -146,7 +146,7 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:variable>
-                        <xsd:element name="{@niemelementname}">
+                        <xs:element name="{@niemelementname}">
                             <xsl:if test="@niemtype">
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="@niemtype"/>
@@ -167,12 +167,12 @@
                                     <xsl:text>true</xsl:text>
                                 </xsl:attribute>
                             </xsl:if>
-                            <xsd:annotation>
-                                <xsd:documentation>
+                            <xs:annotation>
+                                <xs:documentation>
                                     <xsl:value-of select="@niemelementdoc"/>
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:for-each>
@@ -193,7 +193,7 @@
                 <xsl:when test="$all_set_elements_map/*[@niemelementname = $n]"/>
                 <xsl:when test="starts-with(@mtftype, 's:')"/>
                 <xsl:otherwise>
-                    <xsd:element name="{$n}">
+                    <xs:element name="{$n}">
                         <xsl:if test="@niemtype">
                             <xsl:attribute name="type">
                                 <xsl:value-of select="@niemtype"/>
@@ -214,8 +214,8 @@
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
                         </xsl:if>
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:choose>
                                     <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                         <xsl:value-of select="@substgrpdoc"/>
@@ -235,24 +235,24 @@
                                         </xsl:call-template>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </xsd:documentation>
+                            </xs:documentation>
                             <xsl:for-each select="appinfo/*">
-                                <xsd:appinfo>
+                                <xs:appinfo>
                                     <xsl:copy-of select="."/>
-                                </xsd:appinfo>
+                                </xs:appinfo>
                             </xsl:for-each>
                             <xsl:if test="@substgrpname">
-                                <xsd:appinfo>
+                                <xs:appinfo>
                                     <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                         <xsl:for-each select="Choice/Element">
                                             <xsl:sort select="@name"/>
                                             <mtfappinfo:Element name="{@niemelementname}" type="{@niemtype}"/>
                                         </xsl:for-each>
                                     </mtfappinfo:Choice>
-                                </xsd:appinfo>
+                                </xs:appinfo>
                             </xsl:if>
-                        </xsd:annotation>
-                    </xsd:element>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -260,15 +260,15 @@
     <xsl:variable name="segmentsxsd">
         <xsl:for-each select="$niem_segments_map/Segment">
             <xsl:sort select="@niemtype"/>
-            <xsd:complexType name="{@niemtype}">
-                <xsd:annotation>
-                    <xsd:documentation>
+            <xs:complexType name="{@niemtype}">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@niemtypedoc"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsd:complexContent>
-                    <xsd:extension base="structures:ObjectType">
-                        <xsd:sequence>
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="structures:ObjectType">
+                        <xs:sequence>
                             <xsl:for-each select="*:Sequence/Element">
                                 <xsl:variable name="n" select="@niemelementname"/>
                                 <xsl:variable name="refname">
@@ -284,11 +284,11 @@
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:variable>
-                                <xsd:element ref="{$refname}">
+                                <xs:element ref="{$refname}">
                                     <xsl:copy-of select="@minOccurs"/>
                                     <xsl:copy-of select="@maxOccurs"/>
-                                    <xsd:annotation>
-                                        <xsd:documentation>
+                                    <xs:annotation>
+                                        <xs:documentation>
                                             <xsl:choose>
                                                 <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                                     <xsl:value-of select="@substgrpdoc"/>
@@ -303,90 +303,90 @@
                                                     <xsl:value-of select="@niemelementdoc"/>
                                                 </xsl:otherwise>
                                             </xsl:choose>
-                                        </xsd:documentation>
+                                        </xs:documentation>
                                         <xsl:for-each select="appinfo/*">
-                                            <xsd:appinfo>
+                                            <xs:appinfo>
                                                 <xsl:copy>
                                                     <xsl:copy-of select="@positionName"/>
                                                     <xsl:copy-of select="ancestor::Element/@textindicator"/>
                                                     <xsl:copy-of select="@usage"/>
                                                 </xsl:copy>
-                                            </xsd:appinfo>
+                                            </xs:appinfo>
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
-                                            <xsd:appinfo>
+                                            <xs:appinfo>
                                                 <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                                     <xsl:for-each select="Choice/Element">
                                                         <xsl:sort select="@name"/>
                                                         <mtfappinfo:Element name="{@niemelementname}" type="{@niemtype}"/>
                                                     </xsl:for-each>
                                                 </mtfappinfo:Choice>
-                                            </xsd:appinfo>
+                                            </xs:appinfo>
                                         </xsl:if>
-                                    </xsd:annotation>
-                                </xsd:element>
+                                    </xs:annotation>
+                                </xs:element>
                             </xsl:for-each>
-                            <xsd:element ref="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
-                        </xsd:sequence>
-                    </xsd:extension>
-                </xsd:complexContent>
-            </xsd:complexType>
-            <xsd:element name="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" abstract="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                            <xs:element ref="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:element name="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" abstract="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="concat('An augmentation point for ', @niemtype)"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@niemelementdoc"/>
-                    </xsd:documentation>
+                    </xs:documentation>
                     <xsl:for-each select="appinfo/*">
-                        <xsd:appinfo>
+                        <xs:appinfo>
                             <xsl:copy>
                                 <xsl:copy-of select="@segmentname"/>
                                 <!--<xsl:copy-of select="@positionName"/>-->
                                 <xsl:copy-of select="@usage"/>
                                 <xsl:copy-of select="@concept"/>
                             </xsl:copy>
-                        </xsd:appinfo>
+                        </xs:appinfo>
                     </xsl:for-each>
-                </xsd:annotation>
-            </xsd:element>
+                </xs:annotation>
+            </xs:element>
         </xsl:for-each>
         <!--Global Set Elements-->
         <xsl:copy-of select="$segmentelements"/>
         <!--Set Elements with Choice to Substitution Groups-->
         <!--<xsl:for-each select="$niem_segments_map//Element[Choice]">
             <xsl:variable name="substgrp" select="@substgrpname"/>
-            <xsd:element name="{@substgrpname}" abstract="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+            <xs:element name="{@substgrpname}" abstract="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="normalize-space(@substgrpdoc)"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xsl:for-each select="Choice/Element">
-                <xsd:element name="{@niemelementname}" type="{@niemtype}" substitutionGroup="{$substgrp}" nillable="true">
-                    <xsd:annotation>
-                        <xsd:documentation>
+                <xs:element name="{@niemelementname}" type="{@niemtype}" substitutionGroup="{$substgrp}" nillable="true">
+                    <xs:annotation>
+                        <xs:documentation>
                             <xsl:value-of select="normalize-space(@niemelementdoc)"/>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:element>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xsl:for-each>
         </xsl:for-each>-->
     </xsl:variable>
 
     <xsl:variable name="mtf_segments_xsd">
-        <xsl:for-each select="$segmentsxsd/xsd:complexType">
+        <xsl:for-each select="$segmentsxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:variable name="pre1" select="preceding-sibling::xsd:complexType[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::xsd:complexType[@name = $n][2]"/>
-            <xsl:variable name="pre3" select="preceding-sibling::xsd:complexType[@name = $n][3]"/>
+            <xsl:variable name="pre1" select="preceding-sibling::*:complexType[@name = $n][1]"/>
+            <xsl:variable name="pre2" select="preceding-sibling::*:complexType[@name = $n][2]"/>
+            <xsl:variable name="pre3" select="preceding-sibling::*:complexType[@name = $n][3]"/>
             <xsl:choose>
                 <xsl:when test="$n = $pre1/@name"/>
                 <xsl:when test="deep-equal(., $pre2)"/>
@@ -397,15 +397,15 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-        <xsl:for-each select="$segmentsxsd/xsd:element[@name]">
+        <xsl:for-each select="$segmentsxsd/*:element[@name]">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
             <xsl:choose>
                 <xsl:when test="string-length(@type) = 0 and not(@abstract)"/>
                 <xsl:when test="not(@type) and not(@abstract)"/>
-                <xsl:when test="count(preceding-sibling::xsd:element[@name = $n and @type = $t]) &gt; 0"/>
-                <xsl:when test="count(preceding-sibling::xsd:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
+                <xsl:when test="count(preceding-sibling::*:element[@name = $n and @type = $t]) &gt; 0"/>
+                <xsl:when test="count(preceding-sibling::*:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
@@ -425,24 +425,24 @@
 
     <xsl:template name="main">
         <xsl:result-document href="{$segmentsxsdoutputdoc}">
-            <xsd:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+            <schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
                 xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
                 xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
                 targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
-                <xsd:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
-                <xsd:include schemaLocation="NIEM_MTF_Sets.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
+                <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
+                <include schemaLocation="NIEM_MTF_Sets.xsd"/>
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:text>Segment structures for MTF Segments</xsl:text>
-                    </xsd:documentation>
-                </xsd:annotation>
+                    </xs:documentation>
+                </xs:annotation>
                 <xsl:copy-of select="$mtf_segments_xsd" copy-namespaces="no"/>
-            </xsd:schema>
+            </schema>
         </xsl:result-document>
         <xsl:result-document href="{$segmentmapsoutput}">
             <Segments>

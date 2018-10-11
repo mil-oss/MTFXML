@@ -35,8 +35,8 @@
     <xsl:variable name="norm_enums"
         select="document(concat($sdir, 'Refactor_Changes/M201804C0IF-Enumerations.xml'))/Enumerations"/>
     <!--Output-->
-    <xsl:variable name="codelistout" select="'../../XSD/Analysis/Maps/CodeLists.xml'"/>
-    <xsl:variable name="codelistxsdout" select="'../../XSD/Analysis/Normalized/CodeLists.xsd'"/>
+    <xsl:variable name="codelistout" select="'../../XSD/Analysis/Normalized/NIEM_CodeLists.xml'"/>
+    <xsl:variable name="codelistxsdout" select="'../../XSD/Analysis//Normalized/CodeLists.xsd'"/>
     <!--Map Original Enumerated SimpleTypes to an XML fragment-->
     <xsl:variable name="codelists">
         <xsl:for-each select="$enumerations_xsd">
@@ -201,7 +201,7 @@
                                         <Code dataItem="{@dataItem}"/>
                                     </xs:appinfo>
                                 </xs:annotation>
-                            </xs:enumeration>
+                            </enumeration>
                         </xsl:for-each>
                     </xs:restriction>
                 </xs:simpleType>
@@ -250,7 +250,7 @@
                                     <xsl:value-of select="@doc"/>
                                 </xs:documentation>
                             </xs:annotation>
-                        </xs:enumeration>
+                        </enumeration>
                     </xsl:for-each>
                 </xs:restriction>
             </xs:simpleType>
@@ -335,7 +335,7 @@
                     <xsl:value-of select="@doc"/>
                 </xs:documentation>
             </xs:annotation>
-        </xs:enumeration>
+        </enumeration>
     </xsl:template>
 
     <xsl:template name="codelistmain">
