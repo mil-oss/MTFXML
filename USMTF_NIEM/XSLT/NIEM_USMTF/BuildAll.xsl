@@ -1775,13 +1775,13 @@
             </Messages>
         </xsl:result-document>
         <!--Message Schema-->
-        <!--<xsl:for-each select="$ALLMTF/*:element[*:annotation/*:appinfo/*:Msg][position() &gt; 19][position() &lt; 50]">
+        <xsl:for-each select="$ALLMTF/*:element[*:annotation/*:appinfo/*:Msg][position() &gt; 19][position() &lt; 50]">
             <xsl:call-template name="ExtractMessageSchema">
                 <xsl:with-param name="message" select="."/>
                 <xsl:with-param name="outdir" select="$sepmsgsout"/>
                 <xsl:with-param name="allMTF" select="$ALLMTF"/>
             </xsl:call-template>
-        </xsl:for-each>-->
+        </xsl:for-each>
     </xsl:template>
 
 </xsl:stylesheet>

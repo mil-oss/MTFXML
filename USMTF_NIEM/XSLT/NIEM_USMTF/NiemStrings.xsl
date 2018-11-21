@@ -192,11 +192,11 @@
         <xsl:variable name="niemcomplextype" select="concat($niemtypename, 'Type')"/>
         <xsl:variable name="mtfdoc">
             <xsl:choose>
-                <xsl:when test="*:annotation/*:documentation">
-                    <xsl:apply-templates select="*:annotation/*:documentation"/>
-                </xsl:when>
                 <xsl:when test="$change/@niemtypedoc">
                     <xsl:value-of select="$change/@niemtypedoc"/>
+                </xsl:when>
+                <xsl:when test="*:annotation/*:documentation">
+                    <xsl:apply-templates select="*:annotation/*:documentation"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>

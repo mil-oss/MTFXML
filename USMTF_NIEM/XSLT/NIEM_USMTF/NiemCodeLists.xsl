@@ -17,23 +17,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism"
-    xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-    xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <!--<xsl:include href="USMTF_Utility.xsl"/>-->
-    <xsl:variable name="enumerations_xsd"
-        select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema//*:simpleType[*:restriction[@base = 'xsd:string'][*:enumeration]]"/>
+    
+    <xsl:variable name="enumerations_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema//*:simpleType[*:restriction[@base = 'xsd:string'][*:enumeration]]"/>
     <xsl:variable name="sdir" select="'../../XSD/'"/>
-    <xsl:variable name="cfld_changes"
-        select="document(concat($sdir, 'Refactor_Changes/FieldChanges.xml'))/FieldChanges"/>
-    <xsl:variable name="norm_enum_types"
-        select="document(concat($sdir, 'Refactor_Changes/M201804C0IF-EnumerationSimpleTypes.xml'))/EnumerationTypes"/>
-    <xsl:variable name="norm_enums"
-        select="document(concat($sdir, 'Refactor_Changes/M201804C0IF-Enumerations.xml'))/Enumerations"/>
+    <xsl:variable name="cfld_changes" select="document(concat($sdir, 'Refactor_Changes/FieldChanges.xml'))/FieldChanges"/>
+    <xsl:variable name="norm_enum_types" select="document(concat($sdir, 'Refactor_Changes/M201804C0IF-EnumerationSimpleTypes.xml'))/EnumerationTypes"/>
+    <xsl:variable name="norm_enums" select="document(concat($sdir, 'Refactor_Changes/M201804C0IF-Enumerations.xml'))/Enumerations"/>
     <!--Output-->
     <xsl:variable name="codelistout" select="'../../XSD/Analysis/Maps/CodeLists.xml'"/>
     <xsl:variable name="codelistxsdout" select="'../../XSD/Analysis/Normalized/CodeLists.xsd'"/>
@@ -48,10 +42,8 @@
             <xsl:variable name="fud">
                 <xsl:value-of select="*:annotation/*:appinfo/*:FudNumber"/>
             </xsl:variable>
-            <xsl:variable name="changeto"
-                select="$cfld_changes/CodeList[@name = $mtfname]/@changeto"/>
-            <xsl:variable name="etype"
-                select="$norm_enum_types/EnumerationType[@ffirn = $ffirn][@fud = $fud]"/>
+            <xsl:variable name="changeto" select="$cfld_changes/CodeList[@name = $mtfname]/@changeto"/>
+            <xsl:variable name="etype" select="$norm_enum_types/EnumerationType[@ffirn = $ffirn][@fud = $fud]"/>
             <xsl:variable name="n">
                 <xsl:choose>
                     <xsl:when test="$cfld_changes/CodeList[@name = $mtfname]/@changeto">
@@ -90,19 +82,13 @@
                         <xsl:value-of select="$etype/@niemname"/>
                     </xsl:when>
                     <xsl:when test="$cfld_changes/CodeList/@name = $n">
-                        <xsl:value-of
-                            select="concat(substring($changeto, 0, string-length($changeto) - 3), 'CodeSimpleType')"
-                        />
+                        <xsl:value-of select="concat(substring($changeto, 0, string-length($changeto) - 3), 'CodeSimpleType')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($niemelementname, 'TypeType')">
-                        <xsl:value-of
-                            select="concat(substring($niemelementname, 0, string-length($niemelementname) - 6), 'CodeSimpleType')"
-                        />
+                        <xsl:value-of select="concat(substring($niemelementname, 0, string-length($niemelementname) - 6), 'CodeSimpleType')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($niemelementname, 'Type')">
-                        <xsl:value-of
-                            select="concat(substring($niemelementname, 0, string-length($niemelementname) - 3), 'CodeSimpleType')"
-                        />
+                        <xsl:value-of select="concat(substring($niemelementname, 0, string-length($niemelementname) - 3), 'CodeSimpleType')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($niemelementname, 'Code')">
                         <xsl:value-of select="concat($niemelementname, 'SimpleType')"/>
@@ -115,14 +101,10 @@
             <xsl:variable name="niemcomplextype">
                 <xsl:choose>
                     <xsl:when test="$cfld_changes/CodeList/@name = $n">
-                        <xsl:value-of
-                            select="concat(substring($changeto, 0, string-length($changeto) - 3), 'CodeType')"
-                        />
+                        <xsl:value-of select="concat(substring($changeto, 0, string-length($changeto) - 3), 'CodeType')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($niemelementname, 'Type')">
-                        <xsl:value-of
-                            select="concat(substring($niemelementname, 0, string-length($niemelementname) - 3), 'CodeType')"
-                        />
+                        <xsl:value-of select="concat(substring($niemelementname, 0, string-length($niemelementname) - 3), 'CodeType')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($niemelementname, 'Code')">
                         <xsl:value-of select="concat($niemelementname, 'Type')"/>
@@ -151,19 +133,17 @@
             <xsl:variable name="fappinfo">
                 <xsl:apply-templates select="*:annotation/*:appinfo"/>
             </xsl:variable>
-            <Field niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletype}"
-                niemtype="{$niemcomplextype}" niemtypedoc="{$niemtypedoc}"
-                niemelementdoc="{$niemelementdoc}" mtftype="{@name}" ffirn="{$ffirn}" fud="{$fud}">
-                <xs:appinfo>
-                    <xsl:for-each select="$fappinfo/*">
-                        <xsl:copy-of select="mtfappinfo:Field" copy-namespaces="no"/>
-                    </xsl:for-each>
-                </xs:appinfo>
+            <Field niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletype}" niemtype="{$niemcomplextype}" niemtypedoc="{$niemtypedoc}" niemelementdoc="{$niemelementdoc}"
+                mtftype="{@name}" ffirn="{$ffirn}" fud="{$fud}">
+
+                <xsl:for-each select="$fappinfo">
+                    <xsl:copy-of select="$fappinfo" copy-namespaces="no"/>
+                </xsl:for-each>
+
                 <Codes>
                     <xsl:for-each select="*:restriction/*:enumeration">
                         <xsl:sort select="@value"/>
-                        <Code value="{@value}" dataItem="{*:annotation/*:appinfo/*:DataItem}"
-                            doc="{normalize-space(*:annotation/*:documentation/text())}"/>
+                        <Code value="{@value}" dataItem="{*:annotation/*:appinfo/*:DataItem}" doc="{normalize-space(*:annotation/*:documentation/text())}"/>
                     </xsl:for-each>
                 </Codes>
             </Field>
@@ -235,11 +215,13 @@
                     <xs:documentation>
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
-                    <xs:appinfo>
-                        <xsl:for-each select="appinfo/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:for-each>
-                    </xs:appinfo>
+                    <xsl:if test="*:appinfo/*">
+                        <xs:appinfo>
+                            <xsl:for-each select="*:appinfo/*">
+                                <xsl:copy-of select="." copy-namespaces="no"/>
+                            </xsl:for-each>
+                        </xs:appinfo>
+                    </xsl:if>
                 </xs:annotation>
                 <xs:restriction base="xs:string">
                     <xsl:for-each select="$codes/Code">
@@ -259,7 +241,7 @@
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="appinfo/*">
+                        <xsl:for-each select="*:appinfo/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
                     </xs:appinfo>
@@ -308,8 +290,7 @@
                         </xs:appinfo>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
-                        <xsl:apply-templates select="$norm_enums/Enumeration[@niemtype = $n]"
-                            mode="enum">
+                        <xsl:apply-templates select="$norm_enums/Enumeration[@niemtype = $n]" mode="enum">
                             <xsl:sort select="@seq"/>
                         </xsl:apply-templates>
                     </xs:restriction>
@@ -338,27 +319,17 @@
 
     <xsl:template name="codelistmain">
         <xsl:result-document href="{$codelistxsdout}">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf:fields" xmlns:ism="urn:us:gov:ic:ism"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf:fields"
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified"
-                version="1.0">
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf:fields" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" targetNamespace="urn:mtf:mil:6040b:niem:mtf:fields"
+                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
+                attributeFormDefault="unqualified" version="1.0">
                 <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/"
-                    schemaLocation="../NIEM/structures.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/"
-                    schemaLocation="../NIEM/localTerminology.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/"
-                    schemaLocation="../NIEM/appinfo.xsd"/>
-                <xs:import namespace="urn:mtf:mil:6040b:appinfo"
-                    schemaLocation="../NIEM/mtfappinfo.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NIEM/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NIEM/localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NIEM/appinfo.xsd"/>
+                <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../NIEM/mtfappinfo.xsd"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:text>Code Lists for MTF Messages</xsl:text>

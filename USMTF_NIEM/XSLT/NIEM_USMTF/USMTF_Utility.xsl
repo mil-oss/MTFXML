@@ -94,21 +94,21 @@
         <Change from="FieldFormatRemark" to="remark"/>
         <Change from="FieldFormatSponsor" to="sponsor"/>
         <Change from="FudExplanation" to="explanation"/>
-        <Change from="FudName" to="fieldname"/>
+        <Change from="FudName" to="name"/>
         <Change from="InitialSetFormatPosition" to="initialPosition"/>
         <Change from="SetFormatIdentifier" to="setid"/>
-        <Change from="SetFormatName" to="setname"/>
+        <Change from="SetFormatName" to="name"/>
         <Change from="SetFormatNote" to="note"/>
         <Change from="SetFormatPositionConcept" to="concept"/>
         <Change from="SetFormatPositionName" to="positionName"/>
         <Change from="SetFormatRemark" to="remark"/>
         <Change from="SetFormatSponsor" to="sponsor"/>
-        <Change from="SegmentStructureName" to="segmentname"/>
+        <Change from="SegmentStructureName" to="name"/>
         <Change from="SegmentStructureConcept" to="concept"/>
         <Change from="SegmentStructureUseDescription" to="usage"/>
         <Change from="SetFormatPositionUseDescription" to="usage"/>
         <Change from="SetFormatPositionNumber" to="position"/>
-        <Change from="MtfName" to="mtfname"/>
+        <Change from="MtfName" to="name"/>
         <Change from="MtfIdentifier" to="mtfid"/>
         <Change from="MtfSponsor" to="sponsor"/>
         <Change from="MtfPurpose" to="purpose"/>
