@@ -189,7 +189,8 @@
                 <xsl:when test="$niem_fields_map//*[@niemelementname = $n]"/>
                 <!--<xsl:when test="$all_field_elements_map//*[@niemelementname = $n]"/>-->
                 <xsl:when test="@substgrpname and $all_field_elements_map//*[@substgrpname = $s]"/>
-                <xsl:when test="name() = 'Choice'">
+                <xsl:when test="name() = 'Choice'"/>
+               <!-- <xsl:when test="name() = 'Choice'">
                     <xs:element name="{@substgrpname}">
                         <xsl:attribute name="abstract">
                             <xsl:text>true</xsl:text>
@@ -208,7 +209,7 @@
                             </xs:appinfo>
                         </xs:annotation>
                     </xs:element>
-                </xsl:when>
+                </xsl:when>-->
                 <xsl:otherwise>
                     <xs:element name="{@niemelementname}" type="{$t}" nillable="true">
                         <xsl:if test="@substitutiongroup">
@@ -384,54 +385,6 @@
         <xsl:for-each select="$niem_sets_map//Sequence[@name = 'GroupOfFields']">
             <xsl:choose>
                 <xsl:when test="count(./Element) = 1"/>
-                <!--                    <xsl:variable name="n" select="Element[1]/@niemelementname"/>
-                    <xs:element name="{$n}">
-                        <xsl:if test="Element[1]/@niemtype">
-                            <xsl:attribute name="type">
-                                <xsl:value-of select="Element[1]/@niemtype"/>
-                            </xsl:attribute>
-                        </xsl:if>
-                      
-                        <xsl:if test="not(@substgrpname)">
-                            <xsl:attribute name="nillable">
-                                <xsl:text>true</xsl:text>
-                            </xsl:attribute>
-                        </xsl:if>
-                        <xs:annotation>
-                            <xs:documentation>
-                                <xsl:choose>
-                                    <xsl:when test="string-length(@substgrpdoc) &gt; 0">
-                                        <xsl:value-of select="@substgrpdoc"/>
-                                    </xsl:when>
-                                    <xsl:when test="string-length(@niemelementdoc) &gt; 0">
-                                        <xsl:value-of select="@niemelementdoc"/>
-                                    </xsl:when>
-                                    <xsl:when test="string-length(@niemtypedoc) &gt; 0">
-                                        <xsl:value-of select="@niemtypedoc"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="@mtfdoc"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xs:documentation>
-                            <xsl:for-each select="appinfo/*">
-                                <xs:appinfo>
-                                    <xsl:copy-of select="."/>
-                                </xs:appinfo>
-                            </xsl:for-each>
-                            <xsl:if test="@substgrpname">
-                                <xs:appinfo>
-                                    <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
-                                        <xsl:for-each select="Choice/Element">
-                                            <xsl:sort select="@name"/>
-                                            <mtfappinfo:Element name="{@niemelementname}" type="{@niemtype}"/>
-                                        </xsl:for-each>
-                                    </mtfappinfo:Choice>
-                                </xs:appinfo>
-                            </xsl:if>
-                        </xs:annotation>
-                    </xs:element>
-                </xsl:when>-->
                 <xsl:otherwise>
                     <xsl:variable name="setname">
                         <xsl:value-of select="ancestor::Set/@niemelementname"/>
@@ -802,7 +755,12 @@
         </xsl:for-each>
         <!--Global Set Elements-->
         <xsl:for-each select="$setfields/*">
-            <xsl:copy-of select="."/>
+            <xsl:choose>
+                <xsl:when test="starts-with(@mtftype,'f:')"/>
+                <xsl:otherwise>
+                    <xsl:copy-of select="." copy-namespaces="no"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:for-each>
         <!--Set Elements with Choice to Substitution Groups-->
         <xsl:for-each select="$all_set_elements_map//Element[@niemelementname][Choice]">
@@ -1750,38 +1708,43 @@
         </xsl:result-document>
         <!--Maps-->
         <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Fieldmaps.xml">
-            <Fields>
+            <Fields xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/">
                 <xsl:copy-of select="$mtf_fields_map"/>
             </Fields>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Compositemaps.xml">
-            <Composites>
+            <Composites xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/">
                 <xsl:copy-of select="$mtf_composites_map" copy-namespaces="no"/>
             </Composites>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Setmaps.xml">
-            <Sets>
-                <xsl:copy-of select="$niem_sets_map"/>
+            <Sets xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/">
+                <xsl:copy-of select="$niem_sets_map" copy-namespaces="no"/>
             </Sets>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Segmntmaps.xml">
-            <Segments>
+            <Segments xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/">
                 <xsl:copy-of select="$mtf_segments_map" copy-namespaces="no"/>
             </Segments>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Msgsmaps.xml">
-            <Messages>
+            <Messages xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/">
                 <xsl:copy-of select="$mtf_messages_map"/>
             </Messages>
         </xsl:result-document>
         <!--Message Schema-->
-        <xsl:for-each select="$ALLMTF/*:element[*:annotation/*:appinfo/*:Msg][position() &gt; 19][position() &lt; 50]">
+        <!--<xsl:for-each select="$ALLMTF/*:element[*:annotation/*:appinfo/*:Msg][position() &gt; 19][position() &lt; 50]">
             <xsl:call-template name="ExtractMessageSchema">
                 <xsl:with-param name="message" select="."/>
                 <xsl:with-param name="outdir" select="$sepmsgsout"/>
                 <xsl:with-param name="allMTF" select="$ALLMTF"/>
             </xsl:call-template>
-        </xsl:for-each>
+        </xsl:for-each>-->
     </xsl:template>
 
 </xsl:stylesheet>

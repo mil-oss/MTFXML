@@ -21,7 +21,7 @@
     xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
     exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <!--<xsl:include href="USMTF_Utility.xsl"/>-->
+    <xsl:include href="USMTF_Utility.xsl"/>
     
     <xsl:variable name="enumerations_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema//*:simpleType[*:restriction[@base = 'xsd:string'][*:enumeration]]"/>
     <xsl:variable name="sdir" select="'../../XSD/'"/>
@@ -56,18 +56,6 @@
             </xsl:variable>
             <xsl:variable name="niemelementname">
                 <xsl:choose>
-                    <xsl:when test="$mtfname = 'WaterTypeType'">
-                        <xsl:text>WaterCategoryCode</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="$mtfname = 'MissionStatusType'">
-                        <xsl:text>StatusOfMissionCode</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="$mtfname = 'TargetCategoryCodeType'">
-                        <xsl:text>TargetNumberCode</xsl:text>
-                    </xsl:when>
-                    <xsl:when test="$mtfname = 'IndicatorOnOrOffType'">
-                        <xsl:text>OnOffUnknownCode</xsl:text>
-                    </xsl:when>
                     <xsl:when test="ends-with($n, 'Code')">
                         <xsl:value-of select="$n"/>
                     </xsl:when>
@@ -78,7 +66,7 @@
             </xsl:variable>
             <xsl:variable name="niemsimpletype">
                 <xsl:choose>
-                    <xsl:when test="$etype/@niemname">
+                    <xsl:when test="$etype/@niemname !='.'">
                         <xsl:value-of select="$etype/@niemname"/>
                     </xsl:when>
                     <xsl:when test="$cfld_changes/CodeList/@name = $n">
@@ -100,6 +88,9 @@
             </xsl:variable>
             <xsl:variable name="niemcomplextype">
                 <xsl:choose>
+                    <xsl:when test="$etype/@niemname !='.'">
+                        <xsl:value-of select="replace($etype/@niemname,'CodeSimpleType','CodeType')"/>
+                    </xsl:when>
                     <xsl:when test="$cfld_changes/CodeList/@name = $n">
                         <xsl:value-of select="concat(substring($changeto, 0, string-length($changeto) - 3), 'CodeType')"/>
                     </xsl:when>
@@ -131,15 +122,13 @@
                 <xsl:value-of select="replace($niemtypedoc, 'A data type', 'A data item')"/>
             </xsl:variable>
             <xsl:variable name="fappinfo">
-                <xsl:apply-templates select="*:annotation/*:appinfo"/>
+                <xsl:apply-templates select="*:annotation/*:appinfo">
+                    <xsl:with-param name="appattr" select="$etype"/>
+                </xsl:apply-templates>
             </xsl:variable>
             <Field niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletype}" niemtype="{$niemcomplextype}" niemtypedoc="{$niemtypedoc}" niemelementdoc="{$niemelementdoc}"
                 mtftype="{@name}" ffirn="{$ffirn}" fud="{$fud}">
-
-                <xsl:for-each select="$fappinfo">
-                    <xsl:copy-of select="$fappinfo" copy-namespaces="no"/>
-                </xsl:for-each>
-
+                <xsl:copy-of select="$fappinfo" copy-namespaces="no"/>
                 <Codes>
                     <xsl:for-each select="*:restriction/*:enumeration">
                         <xsl:sort select="@value"/>
@@ -148,64 +137,61 @@
                 </Codes>
             </Field>
         </xsl:for-each>
-    </xsl:variable>
-
-    <!--  <xsl:variable name="normcodelisttypes">
-        <xsl:for-each select="$cfld_changes/CodeList">
-            <xsl:variable name="n" select="@name"/>
-            <xsl:variable name="ch" select="@changeto"/>
-            <xsl:if test="not(preceding-sibling::CodeList[1]/@changeto = $ch)">
-                <xsl:variable name="codes" select="$codelists/CodeList[@name = $n][1]/Codes"/>
-                <xsl:variable name="stype" select="concat(substring($ch, 0, string-length($ch) - 3), 'CodeSimpleType')"/>
-                <xsl:variable name="ctype" select="concat(substring($ch, 0, string-length($ch) - 3), 'CodeType')"/>
-                <xsl:variable name="el" select="concat(substring($n, 0, string-length($n) - 3), 'Code')"/>
-                <xs:simpleType name="{$stype}">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <xsl:value-of select="@doc"/>
-                        </xs:documentation>
-                        <xs:appinfo>
-                            <xsl:for-each select="appinfo/*">
-                                <xsl:copy-of select="." copy-namespaces="no"/>
-                            </xsl:for-each>
-                        </xs:appinfo>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xsl:for-each select="$codes/Code">
-                            <xs:enumeration value="{@value}">
-                                <xs:annotation>
-                                    <xs:documentation>
-                                        <xsl:value-of select="@doc"/>
-                                    </xs:documentation>
-                                    <xs:appinfo>
-                                        <Code dataItem="{@dataItem}"/>
-                                    </xs:appinfo>
-                                </xs:annotation>
-                            </xs:enumeration>
-                        </xsl:for-each>
-                    </xs:restriction>
-                </xs:simpleType>
-                <xs:complexType name="{$ctype}">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <xsl:value-of select="@doc"/>
-                        </xs:documentation>
-                        <xs:appinfo>
-                            <xsl:for-each select="appinfo/*">
-                                <xsl:copy-of select="." copy-namespaces="no"/>
-                            </xsl:for-each>
-                        </xs:appinfo>
-                    </xs:annotation>
-                    <xs:simpleContent>
-                        <xs:extension base="{$stype}">
-                            <xs:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
-                        </xs:extension>
-                    </xs:simpleContent>
-                </xs:complexType>
-            </xsl:if>
+        <xsl:for-each select="$norm_enum_types/*[@niemname='.']">
+            <xsl:variable name="frn" select="@ffirn"/>
+            <xsl:variable name="fd" select="@fud"/>
+            <xsl:variable name="nn">
+                <xsl:call-template name="CamelCase">
+                    <xsl:with-param name="text" select="@fudname"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <xsl:variable name="niemelname" select="replace($nn,' ','')"/>
+            <xsl:variable name="niemcodestype">
+                <xsl:call-template name="codeSimpleTypeName">
+                    <xsl:with-param name="ntext" select="$niemelname"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <xsl:variable name="niemcodetype" select="replace($niemcodestype,'CodeSimpleType','CodeType')"/>
+            <xsl:variable name="typedoc">
+                <xsl:choose>
+                    <xsl:when test="starts-with(@fudexp, 'A data type for')">
+                    <xsl:value-of select="."/>
+                </xsl:when>
+                <xsl:when test="ends-with(@fudexp, 'Simple Type')">
+                        <xsl:value-of select="concat('A data type for ', lower-case(substring-before(@fudexp, 'Simple Type')))"/>
+                </xsl:when>
+                    <xsl:when test="ends-with(@fudexp, 'Type')">
+                        <xsl:value-of select="concat('A data type for ', lower-case(substring-before(@fudexp, 'Type')))"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat('A data type for ', concat(lower-case(substring(@fudexp,1,1)),substring(@fudexp,2)))"/>
+                </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <Field niemelementname="{$niemelname}" niemsimpletype="{$niemcodestype}" niemtype="{$niemcodetype}" niemtypedoc="{$typedoc}" niemelementdoc="{@fudexp}" ffirn="{@ffirn}" fud="{@fud}">
+                <xs:appinfo>
+                    <mtfappinfo:Field name="{@fudname}"
+                        explanation="{@fudexp}"
+                        version="{@version}"
+                        versiondate="{@versiondate}"
+                        dist="{@dist}"
+                        ffirn="{@ffirn}"
+                        fud="{@fud}">
+                        <xsl:apply-templates select="@abbrev" mode="hascontent"/>
+                        <xsl:apply-templates select="@reldoc" mode="hascontent"/>
+                        <xsl:apply-templates select="@remarks" mode="hascontent"/>
+                    </mtfappinfo:Field>
+                </xs:appinfo>
+                <Codes>
+                    <xsl:for-each select="$norm_enums/Enumeration[@ffirn=$frn][@fud=$fd]">
+                        <xsl:sort select="@seq"/>
+                        <Code value="{@value}" dataItem="{@datacode}" doc="{@doc}"/>
+                    </xsl:for-each>
+                </Codes>
+            </Field>
         </xsl:for-each>
     </xsl:variable>
--->
+
     <xsl:variable name="codelisttypes">
         <xsl:for-each select="$codelists/*">
             <xsl:variable name="n" select="@niemelementname"/>
@@ -253,7 +239,6 @@
                 </xs:simpleContent>
             </xs:complexType>
         </xsl:for-each>
-        <xsl:apply-templates select="$norm_enum_types/*" mode="makeCodeSimpleType"/>
     </xsl:variable>
 
     <xsl:variable name="codelistxsd">
@@ -284,9 +269,9 @@
                             <xsl:value-of select="@comment"/>
                         </xs:documentation>
                         <xs:appinfo>
-                            <mtfappinfo:SimpleType>
-                                <xsl:apply-templates select="@*[name() != 'fudexp']" mode="copy"/>
-                            </mtfappinfo:SimpleType>
+                            <mtfappinfo:Field>
+                                <xsl:apply-templates select="@*" mode="copy"/>
+                            </mtfappinfo:Field>
                         </xs:appinfo>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
@@ -356,7 +341,7 @@
             </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$codelistout}">
-            <CodeLists>
+            <CodeLists xmlns:xs="http://www.w3.org/2001/XMLSchema">
                 <xsl:copy-of select="$codelists"/>
             </CodeLists>
         </xsl:result-document>

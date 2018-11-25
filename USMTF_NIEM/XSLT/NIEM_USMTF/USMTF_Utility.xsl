@@ -560,13 +560,14 @@
                     <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Type')))"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat('A data type for ', lower-case($doctxt))"/>
+                    <xsl:value-of select="concat('A data type for ', concat(lower-case(substring($doctxt,1,1)),substring($doctxt,2)))"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xs:documentation>
     </xsl:template>
 
     <xsl:template match="*:appinfo">
+        <xsl:param name="appattr"/>
         <xs:appinfo>
             <xsl:choose>
                 <xsl:when test="*:Enum">
@@ -595,6 +596,7 @@
                         <!--<xsl:apply-templates select="@*[not(name()='name')]"/>-->
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="$appattr" mode="addattr"/>
                         <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
                     </xsl:element>
                 </xsl:when>
@@ -602,6 +604,7 @@
                     <xsl:element name="mtfappinfo:Field">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="$appattr" mode="addattr"/>
                         <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
                     </xsl:element>
                 </xsl:when>
@@ -609,6 +612,7 @@
                     <xsl:element name="mtfappinfo:Set">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="$appattr" mode="addattr"/>
                         <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
                     </xsl:element>
                 </xsl:when>
@@ -616,16 +620,35 @@
                     <xsl:element name="mtfappinfo:Segment">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="$appattr" mode="addattr"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Mtf')]">
                     <xsl:element name="mtfappinfo:Msg">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="$appattr" mode="addattr"/>
                     </xsl:element>
                 </xsl:when>
             </xsl:choose>
         </xs:appinfo>
+    </xsl:template>
+    
+    <xsl:template match="*" mode="addattr">
+        <xsl:copy-of select="@version" copy-namespaces="no"/>
+        <xsl:copy-of select="@versiondate" copy-namespaces="no"/>
+        <xsl:copy-of select="@dist" copy-namespaces="no"/>
+        <xsl:copy-of select="@fud" copy-namespaces="no"/>
+        <xsl:copy-of select="@ffirn" copy-namespaces="no"/>
+        <xsl:apply-templates select="@abbrev" mode="hascontent"/>
+        <xsl:apply-templates select="@reldoc" mode="hascontent"/>
+        <xsl:apply-templates select="@remarks" mode="hascontent"/>
+    </xsl:template>
+    
+    <xsl:template match="@*" mode="hascontent">
+        <xsl:if test=".!='.' and .!=''">
+            <xsl:copy-of select="."/>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="*:appinfo[child::*[starts-with(name(), 'Elemental')]]"/>
@@ -681,19 +704,20 @@
 
     <xsl:template name="CamelCase">
         <xsl:param name="text"/>
+        <xsl:variable name="t" select="translate($text,',/','')"/>
         <xsl:choose>
-            <xsl:when test="contains($text, ' ')">
+            <xsl:when test="contains($t, ' ')">
                 <xsl:call-template name="CamelCaseWord">
-                    <xsl:with-param name="text" select="substring-before($text, ' ')"/>
+                    <xsl:with-param name="text" select="substring-before($t, ' ')"/>
                 </xsl:call-template>
                 <xsl:text> </xsl:text>
                 <xsl:call-template name="CamelCase">
-                    <xsl:with-param name="text" select="substring-after($text, ' ')"/>
+                    <xsl:with-param name="text" select="substring-after($t, ' ')"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="CamelCaseWord">
-                    <xsl:with-param name="text" select="$text"/>
+                    <xsl:with-param name="text" select="$t"/>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
@@ -745,6 +769,38 @@
         </xsl:choose>
     </xsl:template>
 
+    <xsl:template name="codeSimpleTypeName">
+        <xsl:param name="ntext"/>
+        <xsl:choose>
+            <xsl:when test="ends-with($ntext,'CodeType')">
+                <xsl:value-of select="concat(substring($ntext,0,string-length($ntext)-3),'SimpleType')"/>
+            </xsl:when>
+            <xsl:when test="ends-with($ntext,'Code')">
+                <xsl:value-of select="concat($ntext,'SimpleType')"/>
+            </xsl:when>
+            <xsl:when test="ends-with($ntext,'Type')">
+                <xsl:value-of select="concat(substring($ntext,0,string-length($ntext)-3),'CodeSimpleType')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat($ntext,'CodeSimpleType')"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="codeTypeName">
+        <xsl:param name="ntext"/>
+        <xsl:choose>
+            <xsl:when test="ends-with($ntext,'CodeType')">
+                <xsl:value-of select="concat(substring($ntext,0,string-length($ntext)-3),'SimpleType')"/>
+            </xsl:when>
+            <xsl:when test="ends-with($ntext,'Code')">
+                <xsl:value-of select="concat($ntext,'SimpleType')"/>
+            </xsl:when>
+            <xsl:when test="ends-with($ntext,'Type')">
+                <xsl:value-of select="concat(substring($ntext,0,string-length($ntext)-3),'CodeSimpleType')"/>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
     <!-- *********** NIEM Representation Terms **************-->
     <xsl:variable name="neimterms">
         <NIEMTerms>
