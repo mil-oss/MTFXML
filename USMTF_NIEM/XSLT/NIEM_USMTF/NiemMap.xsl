@@ -628,9 +628,9 @@
         </xsl:variable>
         <xsl:variable name="mtfroot">
             <xsl:choose>
-                <xsl:when test="$segment_changes/Element[@mtfname = $mtfnamevar]">
+                <!--<xsl:when test="$segment_changes/Element[@mtfname = $mtfnamevar]">
                     <xsl:value-of select="$mtfnamevar"/>
-                </xsl:when>
+                </xsl:when>-->
                 <xsl:when test="contains(@name, '_')">
                     <xsl:value-of select="substring-before(@name, '_')"/>
                 </xsl:when>
@@ -807,11 +807,11 @@
             <xsl:choose>
                 <xsl:when test="$sbstgrp">
                     <xsl:choose>
-                        <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $setnamevar]">
-                            <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $setnamevar]/@niemname"/>
-                        </xsl:when>
                         <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $segmentnamevar]">
                             <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $segmentnamevar]/@niemname"/>
+                        </xsl:when>
+                        <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $setnamevar]">
+                            <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $setnamevar]/@niemname"/>
                         </xsl:when>
                         <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $messagenamevar]">
                             <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $messagenamevar]/@niemname"/>
@@ -1538,7 +1538,7 @@
             <xsl:when test="$n = 'SecurityAndDefenseRemarks'">
                 <xsl:text>SecurityAndDefensesRemarksGenText</xsl:text>
             </xsl:when>
-            <xsl:when test="$n = '48-hourOutlookForecast'">
+            <xsl:when test="$n = '48hourOutlookForecast'">
                 <xsl:text>FortyEightHourOutlookForecast</xsl:text>
             </xsl:when>
             <xsl:otherwise>

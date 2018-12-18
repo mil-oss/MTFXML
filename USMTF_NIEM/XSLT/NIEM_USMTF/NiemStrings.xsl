@@ -17,10 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    
-    <!--<xsl:include href="USMTF_Utility.xsl"/>-->
+
+   <!-- <xsl:include href="USMTF_Utility.xsl"/>-->
 
     <!--<xsl:variable name="srcdir" select="'../../XSD/NIEM_MTF_1_NS_NIEM/'"/>-->
 
@@ -42,14 +42,20 @@
             <xsl:sort select="@niemsimpletype"/>
             <xs:simpleType name="{@niemsimpletype}">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U"
+                        ism:ownerProducer="USA"
+                        ism:noticeType="DoD-Dist-A">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
-                    <xs:appinfo>
-                        <xsl:for-each select="appinfo/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:for-each>
-                    </xs:appinfo>
+                    <xsl:if test="*:appinfo/*">
+                        <xs:appinfo>
+                            <xsl:for-each select="*:appinfo/*">
+                                <xsl:element name="{name()}">
+                                    <xsl:apply-templates select="@*" mode="appinfoatts"/>
+                                </xsl:element>
+                            </xsl:for-each>
+                        </xs:appinfo>
+                    </xsl:if>
                 </xs:annotation>
                 <xs:restriction base="{@base}">
                     <xs:pattern value="{@niempattern}"/>
@@ -66,13 +72,21 @@
             </xs:simpleType>
             <xs:complexType name="{@niemtype}">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U"
+                        ism:ownerProducer="USA"
+                        ism:noticeType="DoD-Dist-A">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="appinfo/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:for-each>
+                        <xsl:if test="*:appinfo/*">
+                            <xs:appinfo>
+                                <xsl:for-each select="*:appinfo/*">
+                                    <xsl:element name="{name()}">
+                                        <xsl:apply-templates select="@*" mode="appinfoatts"/>
+                                    </xsl:element>
+                                </xsl:for-each>
+                            </xs:appinfo>
+                        </xsl:if>
                     </xs:appinfo>
                 </xs:annotation>
                 <xs:simpleContent>
@@ -83,14 +97,20 @@
             </xs:complexType>
             <xs:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U"
+                        ism:ownerProducer="USA"
+                        ism:noticeType="DoD-Dist-A">
                         <xsl:value-of select="@niemelementdoc"/>
                     </xs:documentation>
-                    <xs:appinfo>
-                        <xsl:for-each select="appinfo/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:for-each>
-                    </xs:appinfo>
+                    <xsl:if test="*:appinfo/*">
+                        <xs:appinfo>
+                            <xsl:for-each select="*:appinfo/*">
+                                <xsl:element name="{name()}">
+                                    <xsl:apply-templates select="@*" mode="appinfoatts"/>
+                                </xsl:element>
+                            </xsl:for-each>
+                        </xs:appinfo>
+                    </xsl:if>
                 </xs:annotation>
             </xs:element>
         </xsl:for-each>
@@ -146,7 +166,7 @@
                     <xsl:value-of select="$n"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat($n,'Text')"/>
+                    <xsl:value-of select="concat($n, 'Text')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -257,40 +277,27 @@
                     <xsl:attribute name="fud" select="*:annotation/*:appinfo/*:FudNumber"/>
                 </xsl:otherwise>
             </xsl:choose>
-            <xs:appinfo>
-                <xsl:for-each select="$appinfovar/*">
-                    <xsl:copy-of select="./mtfappinfo:Field" copy-namespaces="no"/>
-                </xsl:for-each>
-            </xs:appinfo>
+            <xsl:copy-of select="$appinfovar"/>
         </Field>
     </xsl:template>
     <!-- _______________________________________________________ -->
     <!--    OUTPUT RESULT-->
     <xsl:template name="strings">
         <xsl:result-document href="{$xsdstroutputdoc}">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
-                xmlns:ism="urn:us:gov:ic:ism"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
-                xml:lang="en-US"
-                elementFormDefault="unqualified"
-                attributeFormDefault="unqualified"
-                version="1.0">
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
                 <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/"
-                    schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
                 <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="./localTerminology.xsd"/>
                 <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
                 <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U"
+                        ism:ownerProducer="USA"
+                        ism:noticeType="DoD-Dist-A">
                         <xsl:text>Fields for MTF Messages</xsl:text>
                     </xs:documentation>
                 </xs:annotation>

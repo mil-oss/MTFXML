@@ -17,9 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ism="urn:us:gov:ic:ism" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-   <!--<xsl:include href="USMTF_Utility.xsl"/>-->
+    <!--<xsl:include href="USMTF_Utility.xsl"/>-->
     <!--Input-->
 
     <!--Test Output-->
@@ -30,9 +31,9 @@
 
     <xsl:variable name="numsimpletypes" select="document(concat($nsdir, 'Refactor_Changes/M201804C0IF-NumericSimpleTypes-NORM.xml'))/NumericSimpleTypes"/>
 
-    <xsl:variable name="integers_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base,':integer')]]"/>
+    <xsl:variable name="integers_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base, ':integer')]]"/>
 
-    <xsl:variable name="decimals_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base,':decimal')]]"/>
+    <xsl:variable name="decimals_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base, ':decimal')]]"/>
 
     <!--Fragment containing all integer and decimal SimpleTypes from Original XML Schema-->
     <xsl:variable name="numerics_xsd">
@@ -58,7 +59,7 @@
             <xsl:variable name="max" select="xs:restriction/xs:maxInclusive/@value"/>
             <xsl:variable name="pattern" select="xs:restriction/xs:pattern/@value"/>
             <xsl:variable name="totaldigits" select="xs:restriction/xs:totalDigits/@value"/>
-            <xsl:variable name="base" select="replace(xs:restriction/@base,'xsd:','xs:')"/>
+            <xsl:variable name="base" select="replace(xs:restriction/@base, 'xsd:', 'xs:')"/>
             <xsl:variable name="numchange" select="$nfld_changes/*:Numeric[@name = $mtfname]"/>
             <xsl:variable name="e">
                 <xsl:choose>
@@ -79,7 +80,7 @@
                         <xsl:value-of select="concat(substring($e, 0, string-length($e) - 5), 'Numeric')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($e, 'Count')">
-                        <xsl:value-of select="concat($e,'Numeric')"/>
+                        <xsl:value-of select="concat($e, 'Numeric')"/>
                     </xsl:when>
                     <xsl:when test="$e = 'TargetIdentification'">
                         <xsl:text>TargetID</xsl:text>
@@ -91,7 +92,7 @@
                         <xsl:value-of select="replace($e, 'Code', 'Numeric')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="concat($e,'Numeric')"/>
+                        <xsl:value-of select="concat($e, 'Numeric')"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -175,7 +176,7 @@
                                 <xsl:value-of select="$numchange/@niemtype"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="replace($niemsimpletypename,'SimpleType','Type')"/>
+                                <xsl:value-of select="replace($niemsimpletypename, 'SimpleType', 'Type')"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
@@ -292,7 +293,7 @@
                                 <xsl:value-of select="$numchange/@niemtype"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="replace($niemsimpletypename,'SimpleType','Type')"/>
+                                <xsl:value-of select="replace($niemsimpletypename, 'SimpleType', 'Type')"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
@@ -381,43 +382,20 @@
         <xsl:for-each select="$numerics/Field">
             <xsl:sort select="@niemsimpletype"/>
             <xsl:variable name="nst" select="@niemsimpletype"/>
-            <!--<xsl:choose>
-                <xsl:when test="$numsimpletypes/*[@niemsimpletypename= $nst]"/>
-                <xsl:otherwise>
-                    <xs:simpleType name="{@niemsimpletype}">
-                        <xs:annotation>
-                            <xs:documentation>
-                                <xsl:value-of select="normalize-space(@niemtypedoc)"/>
-                            </xs:documentation>
-                            <xs:appinfo>
-                                <xsl:for-each select="*:fappinfo/*">
-                                    <xsl:copy-of select="." copy-namespaces="no"/>
-                                </xsl:for-each>
-                            </xs:appinfo>
-                        </xs:annotation>
-                        <xs:restriction base="{@base}">
-                            <xsl:apply-templates select="@min" mode="fix"/>
-                            <xsl:apply-templates select="@max" mode="fix"/>
-                            <xsl:if test="@fractiondigits">
-                                <xs:fractionDigits value="{@fractiondigits}"/>
-                            </xsl:if>
-                            <xsl:if test="@totaldigits">
-                                <xs:totalDigits value="{@totaldigits}"/>
-                            </xsl:if>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xsl:otherwise>
-            </xsl:choose>-->
             <xs:complexType name="{@niemtype}">
                 <xs:annotation>
-                    <xs:documentation>
-                        <xsl:value-of select="normalize-space(@niemtypedoc)"/>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
+                        <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
-                    <xs:appinfo>
-                        <xsl:for-each select="*:fappinfo/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:for-each>
-                    </xs:appinfo>
+                    <xsl:if test="*:fappinfo/*">
+                        <xs:appinfo>
+                            <xsl:for-each select="*:fappinfo/*">
+                                <xsl:element name="{name()}">
+                                    <xsl:apply-templates select="@*" mode="appinfoatts"/>
+                                </xsl:element>
+                            </xsl:for-each>
+                        </xs:appinfo>
+                    </xsl:if>
                 </xs:annotation>
                 <xs:simpleContent>
                     <xs:extension base="{@niemsimpletype}">
@@ -427,7 +405,7 @@
             </xs:complexType>
             <xs:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
                         <xsl:value-of select="normalize-space(@niemelementdoc)"/>
                     </xs:documentation>
                     <xs:appinfo>
@@ -437,15 +415,15 @@
                     </xs:appinfo>
                 </xs:annotation>
             </xs:element>
-        </xsl:for-each> --> </xsl:variable>
-
-
+        </xsl:for-each>
+    </xsl:variable>
+    
     <!--Create SimpleType from Normalized SimpleTypes -->
     <xsl:template match="*:Numeric" mode="makeSimpleType">
         <xs:simpleType name="{@niemsimpletypename}">
             <xs:annotation>
-                <xs:documentation>
-                    <xsl:value-of select="normalize-space(@niemtypedoc)"/>
+                <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
+                    <xsl:value-of select="@niemtypedoc"/>
                 </xs:documentation>
                 <xs:appinfo>
                     <mtfappinfo:SimpleType name="{@simpletypename}">
@@ -598,29 +576,18 @@
 
     <xsl:template name="numerics">
         <xsl:result-document href="{$xsdoutputdoc}">
-            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
-                xmlns:ism="urn:us:gov:ic:ism"
-                xmlns:xs="http://www.w3.org/2001/XMLSchema"
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:mtf:mil:6040b:niem:mtf"
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
-                xml:lang="en-US"
-                elementFormDefault="unqualified"
-                attributeFormDefault="unqualified"
-                version="1.0">
+            <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
                 <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/"
-                    schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
                 <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="./localTerminology.xsd"/>
                 <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
                 <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="./mtfappinfo.xsd"/>
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
                         <xsl:text>Numeric Fields for MTF Messages</xsl:text>
                     </xs:documentation>
                 </xs:annotation>

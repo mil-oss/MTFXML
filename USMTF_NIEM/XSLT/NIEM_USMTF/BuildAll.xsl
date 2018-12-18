@@ -5,8 +5,9 @@
     <xsl:include href="SeparateMsgs.xsl"/>
 
     <xsl:variable name="dirpath" select="concat($srcdir, 'NIEM_MTF/')"/>
-    <xsl:variable name="sepmsgsout" select="'../../XSD/NIEM_MTF/SepMsgs/'"/>
+    <xsl:variable name="sepmsgsout" select="concat($dirpath, 'SepMsgs/')"/>
     <!-- _______________________________________________________ -->
+    
     <!--Fields-->
     <xsl:variable name="fieldsxsd">
         <xsl:for-each select="$stringsxsd/*:simpleType">
@@ -1316,7 +1317,7 @@
                                             </xsl:otherwise>
                                         </xsl:choose>
                                     </xs:documentation>
-                                    <xsl:for-each select="appinfo/*">
+                                    <xsl:for-each select="*:appinfo/*">
                                         <xs:appinfo>
                                             <xsl:copy>
                                                 <xsl:copy-of select="@positionName"/>
@@ -1381,7 +1382,7 @@
                     <xs:documentation>
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="*:appinfo/*">
                         <xs:appinfo>
                             <xsl:copy-of select="."/>
                         </xs:appinfo>
@@ -1458,15 +1459,9 @@
                     <xs:documentation>
                         <xsl:value-of select="@niemelementdoc"/>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="*:appinfo/*">
                         <xs:appinfo>
                             <xsl:copy-of select="."/>
-                            <!-- <xsl:copy>
-                                <xsl:copy-of select="@name"/>
-                                <xsl:copy-of select="@positionName"/>
-                                <!-\-\\\\-<xsl:copy-of select="@usage"/>
-                                <xsl:copy-of select="@concept"/> -\->
-                            </xsl:copy>-->
                         </xs:appinfo>
                     </xsl:for-each>
                 </xs:annotation>
@@ -1738,13 +1733,13 @@
             </Messages>
         </xsl:result-document>
         <!--Message Schema-->
-        <!--<xsl:for-each select="$ALLMTF/*:element[*:annotation/*:appinfo/*:Msg][position() &gt; 19][position() &lt; 50]">
+        <xsl:for-each select="$ALLMTF/*:element[*:annotation/*:appinfo/*:Msg]">
             <xsl:call-template name="ExtractMessageSchema">
                 <xsl:with-param name="message" select="."/>
                 <xsl:with-param name="outdir" select="$sepmsgsout"/>
                 <xsl:with-param name="allMTF" select="$ALLMTF"/>
             </xsl:call-template>
-        </xsl:for-each>-->
+        </xsl:for-each>
     </xsl:template>
 
 </xsl:stylesheet>

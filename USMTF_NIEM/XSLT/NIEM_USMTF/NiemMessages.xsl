@@ -211,7 +211,7 @@
                     <xs:documentation>
                         <xsl:value-of select="@niemelementdoc"/>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="*:appinfo/*">
                         <xs:appinfo>
                             <xsl:copy-of select="."/>
                             <!-- <xsl:copy>
