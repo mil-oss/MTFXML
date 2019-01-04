@@ -2,6 +2,7 @@
 <sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2"
     xmlns:sqf="http://www.schematron-quickfix.com/validator/process">
     <sch:pattern>
+
         <sch:rule context="/">
             <sch:assert test="xsd:restriction/@base='XXX'">Base type Mis-Match</sch:assert> 
             <sch:assert test="xsd:restriction/xsd:minInclusive/@value='XXX'">Min value Mis-Match</sch:assert>
@@ -15,10 +16,11 @@
         <sch:rule context="xsd:complexType">
             <sch:assert test="@name='XXX'">Complex type Mis-Match</sch:assert> 
         </sch:rule>
+
         <sch:rule context="xsd:element">
             <sch:assert test="@type='XXX'">Type Mis-Match</sch:assert> 
         </sch:rule>
-        
+      
         <sch:rule context="xsd:annotation">
             <sch:assert test="xsd:documentation='XXX'">Documentation Error</sch:assert>
             <sch:assert test="xsd:appinfo/*/@identifier='XXX'">Identifier Mis-Match.</sch:assert>
@@ -36,5 +38,6 @@
             <sch:assert test="xsd:appinfo/*/@purpose='XXX'">Purpose Mis-Match.</sch:assert>
             <sch:assert test="xsd:appinfo/Example='XXX'">Example Mis-Match.</sch:assert>
         </sch:rule>
+        
     </sch:pattern>
 </sch:schema>

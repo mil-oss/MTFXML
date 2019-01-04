@@ -27,8 +27,7 @@
     <xsl:include href="NiemMap.xsl"/>
     <!--Outputs-->
     <xsl:variable name="setxsdoutputdoc" select="concat($srcdir, 'NIEM_MTF/NIEM_MTF_Sets.xsd')"/>
-    <xsl:variable name="setmapsoutput"
-        select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Setmaps.xml')"/>
+    <xsl:variable name="setmapsoutput" select="concat($srcdir, 'NIEM_MTF/Maps/NIEM_MTF_Setmaps.xml')"/>
 
     <!-- XSD GENERATION-->
     <!-- _______________________________________________________ -->
@@ -301,7 +300,7 @@
     </xsl:variable>
     <xsl:variable name="setsxsd">
         <xsl:for-each select="$niem_sets_map/Set">
-            <xsl:sort select="@niemtype"/>
+            <xsl:sort select="@niemelementname"/>
             <xsl:variable name="setname">
                 <xsl:value-of select="@niemelementname"/>
             </xsl:variable>

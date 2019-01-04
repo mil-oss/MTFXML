@@ -31,19 +31,19 @@
     <xsl:variable name="niem_fields_map">
         <xsl:for-each select="$strings/*">
             <xsl:sort select="@niemelementname"/>
-            <xsl:copy-of select="."/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <xsl:for-each select="$numerics/*">
             <xsl:sort select="@niemelementname"/>
-            <xsl:copy-of select="."/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <xsl:for-each select="$codelists/*">
             <xsl:sort select="@niemelementname"/>
-            <xsl:copy-of select="."/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="all_field_elements_map">
-        <xsl:copy-of select="$niem_fields_map"/>
+        <xsl:copy-of select="$niem_fields_map" copy-namespaces="no"/>
         <xsl:for-each select="$niem_composites_map//Element[starts-with(@mtftype, 'f:') or appinfo/mtfappinfo:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
@@ -223,19 +223,19 @@
                 mtfname="{@name}">
                 <xs:appinfo>
                     <xsl:for-each select="$appinfo">
-                        <xsl:copy-of select="."/>
+                        <xsl:copy-of select="." copy-namespaces="no"/>
                     </xsl:for-each>
                 </xs:appinfo>
                 <Sequence>
                     <xsl:for-each select="$seq_fields">
-                        <xsl:copy-of select="Element"/>
+                        <xsl:copy-of select="Element" copy-namespaces="no"/>
                     </xsl:for-each>
                 </Sequence>
             </Composite>
         </xsl:for-each>
     </xsl:variable>  
     <xsl:variable name="all_composite_elements_map">
-        <xsl:copy-of select="$niem_composites_map"/>
+        <xsl:copy-of select="$niem_composites_map" copy-namespaces="no"/>
         <xsl:for-each select="$niem_sets_map//*:Element[starts-with(@mtftype, 'c:') or *:appinfo/mtfappinfo:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
@@ -428,13 +428,13 @@
         </xsl:variable>
         <xsl:variable name="appinfovar">
             <xsl:for-each select="$annot/*/*:appinfo">
-                <xsl:copy-of select="*:Set" copy-namespaces="no"/>
+                <xsl:apply-templates select="*:Set" mode="xsdcopy"/>
             </xsl:for-each>
         </xsl:variable>
         <Set niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextypevar}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" niemtypedoc="{$niemtypedocvar}">
             <xs:appinfo>
                 <xsl:for-each select="$appinfovar">
-                    <xsl:copy-of select="." copy-namespaces="no"/>
+                    <xsl:apply-templates select="." mode="xsdcopy"/>
                 </xsl:for-each>
             </xs:appinfo>
             <xsl:apply-templates select="*[not(name() = '*:annotation')]">
@@ -517,7 +517,7 @@
             </xsl:if>
             <xs:appinfo>
                 <xsl:for-each select="$appinfovar/*">
-                    <xsl:copy-of select="."/>
+                    <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
             </xs:appinfo>
             <xsl:apply-templates select="*[not(name() = '*:annotation')]">
@@ -590,7 +590,7 @@
             niemtypedoc="{$niemtypedocvar}">
             <xs:appinfo>
                 <xsl:for-each select="$appinfovar/*">
-                    <xsl:copy-of select="."/>
+                    <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
             </xs:appinfo>
             <xsl:apply-templates select="*[not(name() = '*:annotation')]">
@@ -628,9 +628,9 @@
         </xsl:variable>
         <xsl:variable name="mtfroot">
             <xsl:choose>
-                <xsl:when test="$segment_changes/Element[@mtfname = $mtfnamevar]">
+                <!--<xsl:when test="$segment_changes/Element[@mtfname = $mtfnamevar]">
                     <xsl:value-of select="$mtfnamevar"/>
-                </xsl:when>
+                </xsl:when>-->
                 <xsl:when test="contains(@name, '_')">
                     <xsl:value-of select="substring-before(@name, '_')"/>
                 </xsl:when>
@@ -680,10 +680,10 @@
         <xsl:variable name="niemmatch">
             <xsl:choose>
                 <xsl:when test="$isField">
-                    <xsl:copy-of select="$niem_fields_map/Field[@mtftype = $mtftypevar][1]"/>
+                    <xsl:copy-of select="$niem_fields_map/Field[@mtftype = $mtftypevar][1]" copy-namespaces="no"/>
                 </xsl:when>
                 <xsl:when test="$isComposite">
-                    <xsl:copy-of select="$niem_composites_map/Composite[@mtftype = $mtftypevar][1]"/>
+                    <xsl:copy-of select="$niem_composites_map/Composite[@mtftype = $mtftypevar][1]" copy-namespaces="no"/>
                 </xsl:when>
                 <xsl:when test="$isSet">
                     <xsl:apply-templates select="$baseline_sets_xsd/*:complexType[@name = $mtftypevar][1]" mode="setglobal"/>
@@ -807,11 +807,11 @@
             <xsl:choose>
                 <xsl:when test="$sbstgrp">
                     <xsl:choose>
-                        <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $setnamevar]">
-                            <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $setnamevar]/@niemname"/>
-                        </xsl:when>
                         <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $segmentnamevar]">
                             <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $segmentnamevar]/@niemname"/>
+                        </xsl:when>
+                        <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $setnamevar]">
+                            <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $setnamevar]/@niemname"/>
                         </xsl:when>
                         <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $messagenamevar]">
                             <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $messagenamevar]/@niemname"/>
@@ -1083,7 +1083,7 @@
                 <xsl:for-each select="$appinfovar/*">
                     <xsl:copy>
                         <xsl:for-each select="@*">
-                            <xsl:copy-of select="."/>
+                            <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
                         <xsl:if test="string-length($TextIndicator) &gt; 0">
                             <xsl:attribute name="textindicator">
@@ -1106,7 +1106,7 @@
             <xsl:if test="$typeappinfo/*">
                 <typeappinfo>
                     <xsl:for-each select="$typeappinfo">
-                        <xsl:copy-of select="."/>
+                        <xsl:copy-of select="." copy-namespaces="no"/>
                     </xsl:for-each>
                 </typeappinfo>
             </xsl:if>
@@ -1278,7 +1278,7 @@
         </xsl:variable>
         <Element mtfname="{@name}" niemelementname="{concat($niemelementnamevar,'Choice')}" seq="{$seq}">
             <xsl:for-each select="@*[not(name() = 'name')]">
-                <xsl:copy-of select="."/>
+                <xsl:copy-of select="." copy-namespaces="no"/>
             </xsl:for-each>
             <xsl:if test="string-length($settypevar) &gt; 0">
                 <xsl:attribute name="setname">
@@ -1320,7 +1320,7 @@
             <!--<xsl:copy-of select="$annot"/>-->
             <xs:appinfo>
                 <xsl:for-each select="$appinfovar">
-                    <xsl:copy-of select="."/>
+                    <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
             </xs:appinfo>
             <Choice name="{$substgrpnamevar}" substgrpname="{concat($substgrpnamevar,'Abstract')}" substgrpdoc="{$substgrpniemdoc}">
@@ -1342,7 +1342,7 @@
         <xsl:param name="messagenamevar"/>
         <Sequence name="GroupOfFields">
             <xsl:for-each select="@*">
-                <xsl:copy-of select="."/>
+                <xsl:copy-of select="." copy-namespaces="no"/>
             </xsl:for-each>
             <xsl:apply-templates select="*:complexType/*:sequence/*">
                 <xsl:with-param name="settypevar" select="$settypevar"/>
@@ -1398,13 +1398,13 @@
         <xsl:variable name="substmatch">
             <xsl:choose>
                 <xsl:when test="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@parentname = $parentnamevar]">
-                    <xsl:copy-of select="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@parentname = $parentnamevar][1]"/>
+                    <xsl:copy-of select="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@parentname = $parentnamevar][1]" copy-namespaces="no"/>
                 </xsl:when>
                 <xsl:when test="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@segmentname = $segnamevar]">
-                    <xsl:copy-of select="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@segmentname = $segnamevar][1]"/>
+                    <xsl:copy-of select="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@segmentname = $segnamevar][1]" copy-namespaces="no"/>
                 </xsl:when>
                 <xsl:when test="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@parentname = '']">
-                    <xsl:copy-of select="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@parentname = ''][1]"/>
+                    <xsl:copy-of select="$substGrp_Changes/Choice[@substgrpname = $subgrpname][@parentname = ''][1]" copy-namespaces="no"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
@@ -1538,7 +1538,7 @@
             <xsl:when test="$n = 'SecurityAndDefenseRemarks'">
                 <xsl:text>SecurityAndDefensesRemarksGenText</xsl:text>
             </xsl:when>
-            <xsl:when test="$n = '48-hourOutlookForecast'">
+            <xsl:when test="$n = '48hourOutlookForecast'">
                 <xsl:text>FortyEightHourOutlookForecast</xsl:text>
             </xsl:when>
             <xsl:otherwise>
