@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     
     <!--Test Output-->
@@ -28,9 +28,9 @@
 
     <xsl:variable name="numsimpletypes" select="document(concat($nsdir, 'Refactor_Changes/NumericSimpleTypes.xml'))/NumericSimpleTypes"/>
 
-    <xsl:variable name="integers_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:integer']]"/>
+    <xsl:variable name="integers_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/*:schema/*:simpleType[*:restriction[@base = 'xs:integer']]"/>
 
-    <xsl:variable name="decimals_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/xsd:schema/xsd:simpleType[xsd:restriction[@base = 'xsd:decimal']]"/>
+    <xsl:variable name="decimals_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/*:schema/*:simpleType[*:restriction[@base = 'xs:decimal']]"/>
 
     <!--Fragment containing all integer and decimal SimpleTypes from Original XML Schema-->
     <xsl:variable name="numerics_xsd">
@@ -47,10 +47,10 @@
         <xsl:for-each select="$numerics_xsd/*">
             <xsl:sort select="@name"/>
             <xsl:variable name="mtfname" select="@name"/>
-            <xsl:variable name="min" select="xsd:restriction/xsd:minInclusive/@value"/>
-            <xsl:variable name="max" select="xsd:restriction/xsd:maxInclusive/@value"/>
-            <xsl:variable name="pattern" select="xsd:restriction/xsd:pattern/@value"/>
-            <xsl:variable name="base" select="xsd:restriction/@base"/>
+            <xsl:variable name="min" select="*:restriction/*:minInclusive/@value"/>
+            <xsl:variable name="max" select="*:restriction/*:maxInclusive/@value"/>
+            <xsl:variable name="pattern" select="*:restriction/*:pattern/@value"/>
+            <xsl:variable name="base" select="*:restriction/@base"/>
             <xsl:variable name="numchange" select="$nfld_changes/Numeric[@name = $mtfname]"/>
             <xsl:variable name="e">
                 <xsl:apply-templates select="@name" mode="fromtype"/>
@@ -110,7 +110,7 @@
                 <xsl:value-of select="concat($ncdftypename, 'Type')"/>
             </xsl:variable>
             <xsl:variable name="mtfdoc">
-                <xsl:apply-templates select="xsd:annotation"/>
+                <xsl:apply-templates select="*:annotation"/>
             </xsl:variable>
             <xsl:variable name="ncdftypedoc">
                 <xsl:choose>
@@ -118,7 +118,7 @@
                         <xsl:value-of select="$numchange/@ncdftypedoc"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="$mtfdoc"/>
+                        <xsl:value-of select="concat('A data type for ',lower-case($mtfdoc))"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -131,19 +131,19 @@
                         <xsl:value-of select="replace($numchange/@ncdftypedoc, 'A data type', 'A data item')"/>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:value-of select="replace($mtfdoc, 'A data type', 'A data item')"/>
+                        <xsl:value-of select="replace($ncdftypedoc, 'A data type', 'A data item')"/>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
             <xsl:variable name="appinfo">
-                <xsl:apply-templates select="xsd:annotation/xsd:appinfo"/>
+                <xsl:apply-templates select="*:annotation/*:appinfo"/>
             </xsl:variable>
-            <xsl:variable name="ffirn" select="xsd:annotation/xsd:appinfo/*:FieldFormatIndexReferenceNumber"/>
-            <xsl:variable name="fud" select="xsd:annotation/xsd:appinfo/*:FudNumber"/>
+            <xsl:variable name="ffirn" select="*:annotation/*:appinfo/*:FieldFormatIndexReferenceNumber"/>
+            <xsl:variable name="fud" select="*:annotation/*:appinfo/*:FudNumber"/>
             <xsl:variable name="numnormstype" select="$numsimpletypes/Numeric[@base = $base][@min = $min][@max = $max]"/>
             <xsl:variable name="numpat" select="$numsimpletypes/Numeric[@base = $base][@min = $min][@max = $max][@pattern = $pattern]"/>
             <xsl:choose>
-                <xsl:when test="$base = 'xsd:integer'">
+                <xsl:when test="$base = 'xs:integer'">
                     <xsl:variable name="ncdfsimpletypename">
                         <xsl:choose>
                             <xsl:when test="$numpat/@ncdfsimpletypename">
@@ -160,7 +160,7 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <Field mtftype="{@name}" ncdfelementname="{$ncdfelementname}" ncdfsimpletype="{$ncdfsimpletypename}" ncdftype="{$ncdfcomplextype}" base="xsd:integer" min="{$min}" max="{$max}" pattern="{$pattern}" ncdfpattern="{$ncdfpattern}"
+                    <Field mtftype="{@name}" ncdfelementname="{$ncdfelementname}" ncdfsimpletype="{$ncdfsimpletypename}" ncdftype="{$ncdfcomplextype}" base="xs:integer" min="{$min}" max="{$max}" pattern="{$pattern}" ncdfpattern="{$ncdfpattern}"
                         ncdfelementdoc="{$ncdfelementdoc}" mtfdoc="{$mtfdoc}" ncdftypedoc="{$ncdftypedoc}" ffirn="{$ffirn}" fud="{$fud}" format="{@format}" version="{@version}"
                         dist="{@dist}" remark="{@remark}">
                         <fappinfo>
@@ -172,19 +172,19 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:variable name="length">
-                        <xsl:value-of select="xsd:restriction/xsd:length"/>
+                        <xsl:value-of select="*:restriction/*:length"/>
                     </xsl:variable>
                     <xsl:variable name="minlen">
-                        <xsl:value-of select="xsd:annotation/xsd:appinfo/*:MinimumLength"/>
+                        <xsl:value-of select="*:annotation/*:appinfo/*:MinimumLength"/>
                     </xsl:variable>
                     <xsl:variable name="maxlen">
-                        <xsl:value-of select="xsd:annotation/xsd:appinfo/*:MaximumLength"/>
+                        <xsl:value-of select="*:annotation/*:appinfo/*:MaximumLength"/>
                     </xsl:variable>
                     <xsl:variable name="mindec">
-                        <xsl:value-of select="xsd:restriction/xsd:annotation/xsd:appinfo/*:MinimumDecimalPlaces"/>
+                        <xsl:value-of select="*:restriction/*:annotation/*:appinfo/*:MinimumDecimalPlaces"/>
                     </xsl:variable>
                     <xsl:variable name="maxdec">
-                        <xsl:value-of select="xsd:restriction/xsd:annotation/xsd:appinfo/*:MaximumDecimalPlaces"/>
+                        <xsl:value-of select="*:restriction/*:annotation/*:appinfo/*:MaximumDecimalPlaces"/>
                     </xsl:variable>
                     <xsl:variable name="fractionDigits">
                         <xsl:choose>
@@ -247,7 +247,7 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <Field mtftype="{@name}" ncdfelementname="{$ncdfelementname}" ncdfsimpletype="{$ncdfsimpletypename}" ncdftype="{$ncdfcomplextype}" base="xsd:decimal" min="{$min}" max="{$max}"
+                    <Field mtftype="{@name}" ncdfelementname="{$ncdfelementname}" ncdfsimpletype="{$ncdfsimpletypename}" ncdftype="{$ncdfcomplextype}" base="xs:decimal" min="{$min}" max="{$max}"
                         fractionDigits="{$fractionDigits}" totalDigits="{$totalDigitCount}" ncdfelementdoc="{$ncdfelementdoc}" ncdftypedoc="{$ncdftypedoc}" mtfdoc="{$mtfdoc}"
                         ffirn="{$ffirn}" fud="{$fud}" length="{$length}" minlen="{$minlen}" maxlen="{$maxlen}" mindec="{$mindec}" maxdec="{$maxdec}">
                         <appinfo>
@@ -267,12 +267,12 @@
 
     <!--Create SimpleType from Normalized SimpleTypes -->
     <xsl:template match="Numeric" mode="makeSimpleType">
-        <xsd:simpleType name="{@ncdfsimpletypename}">
-            <xsd:annotation>
-                <xsd:documentation>
+        <xs:simpleType name="{@ncdfsimpletypename}">
+            <xs:annotation>
+                <xs:documentation>
                     <xsl:value-of select="@ncdftypedoc"/>
-                </xsd:documentation>
-                <xsd:appinfo>
+                </xs:documentation>
+                <xs:appinfo>
                     <mtfappinfo:SimpleType name="{@simpletypename}">
                         <xsl:if test="@format !='.'">
                             <xsl:attribute name="format">
@@ -292,22 +292,22 @@
                             <xsl:value-of select="@dist"/>
                         </xsl:attribute>
                     </mtfappinfo:SimpleType>
-                </xsd:appinfo>
-            </xsd:annotation>
-            <xsd:restriction base="{@base}">
-                <xsd:minInclusive value="{@min}"/>
-                <xsd:maxInclusive value="{@max}"/>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:restriction base="{@base}">
+                <xs:minInclusive value="{@min}"/>
+                <xs:maxInclusive value="{@max}"/>
                 <xsl:if test="@totaldigits !='.'">
-                    <xsd:totalDigits value="{@totaldigits}"/>
+                    <xs:totalDigits value="{@totaldigits}"/>
                 </xsl:if>
                 <xsl:if test="@fractiondigits !='.'">
-                    <xsd:fractionDigits value="{@fractiondigits}"/>
+                    <xs:fractionDigits value="{@fractiondigits}"/>
                 </xsl:if>
                 <xsl:if test="@ncdfpattern !='.'">
-                    <xsd:pattern value="{@ncdfpattern}"/>
+                    <xs:pattern value="{@ncdfpattern}"/>
                 </xsl:if>
-            </xsd:restriction>
-        </xsd:simpleType>
+            </xs:restriction>
+        </xs:simpleType>
     </xsl:template>
 
     <!--Create XSD from XML Map-->
@@ -318,59 +318,59 @@
             <xsl:choose>
                 <xsl:when test="$normnumericsxsd/*[@name = $nst]"/>
                 <xsl:otherwise>
-                    <xsd:simpleType name="{@ncdfsimpletype}">
-                        <xsd:annotation>
-                            <xsd:documentation>
+                    <xs:simpleType name="{@ncdfsimpletype}">
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="@ncdftypedoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
+                            </xs:documentation>
+                            <xs:appinfo>
                                 <xsl:for-each select="fappinfo/*">
                                     <xsl:copy-of select="." copy-namespaces="no"/>
                                 </xsl:for-each>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                        <xsd:restriction base="{@base}">
-                            <xsd:minInclusive value="{@min}"/>
-                            <xsd:maxInclusive value="{@max}"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                        <xs:restriction base="{@base}">
+                            <xs:minInclusive value="{@min}"/>
+                            <xs:maxInclusive value="{@max}"/>
                             <xsl:if test="@fractionDigits">
-                                <xsd:fractionDigits value="{@fractionDigits}"/>
+                                <xs:fractionDigits value="{@fractionDigits}"/>
                             </xsl:if>
                             <xsl:if test="@totalDigits">
-                                <xsd:totalDigits value="{@totalDigits}"/>
+                                <xs:totalDigits value="{@totalDigits}"/>
                             </xsl:if>
-                        </xsd:restriction>
-                    </xsd:simpleType>
+                        </xs:restriction>
+                    </xs:simpleType>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsd:complexType name="{@ncdftype}">
-                <xsd:annotation>
-                    <xsd:documentation>
+            <xs:complexType name="{@ncdftype}">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdftypedoc"/>
-                    </xsd:documentation>
-                    <xsd:appinfo>
+                    </xs:documentation>
+                    <xs:appinfo>
                         <xsl:for-each select="fappinfo/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
-                    </xsd:appinfo>
-                </xsd:annotation>
-                <xsd:simpleContent>
-                    <xsd:extension base="{@ncdfsimpletype}">
-                        <xsd:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
-                    </xsd:extension>
-                </xsd:simpleContent>
-            </xsd:complexType>
-            <xsd:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleContent>
+                    <xs:extension base="{@ncdfsimpletype}">
+                        <xs:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdfelementdoc"/>
-                    </xsd:documentation>
-                    <xsd:appinfo>
+                    </xs:documentation>
+                    <xs:appinfo>
                         <xsl:for-each select="fappinfo/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
-                    </xsd:appinfo>
-                </xsd:annotation>
-            </xsd:element>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
         </xsl:for-each>
         <xsl:for-each select="$normnumericsxsd/*">
             <xsl:sort select="@name"/>
@@ -479,40 +479,40 @@
 
 <!--    <xsl:template name="main">
         <xsl:result-document href="{$xsdoutputdoc}">
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+            <xs:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
                 xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
                 xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
                 targetNamespace="urn:int:nato:ncdf:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
+                <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
+                <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
+                <xs:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:text>Numeric Fields for MTF Messages</xsl:text>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsl:for-each select="$numericsxsd/xsd:simpleType">
+                    </xs:documentation>
+                </xs:annotation>
+                <xsl:for-each select="$numericsxsd/xs:simpleType">
                     <xsl:sort select="@name"/>
                     <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="not(preceding-sibling::xsd:simpleType/@name = $n)">
+                    <xsl:if test="not(preceding-sibling::xs:simpleType/@name = $n)">
                         <xsl:copy-of select="."/>
                     </xsl:if>
                 </xsl:for-each>
-                <xsl:for-each select="$numericsxsd/xsd:complexType">
+                <xsl:for-each select="$numericsxsd/xs:complexType">
                     <xsl:sort select="@name"/>
                     <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
+                    <xsl:if test="not(preceding-sibling::xs:complexType/@name = $n)">
                         <xsl:copy-of select="."/>
                     </xsl:if>
                 </xsl:for-each>
-                <xsl:for-each select="$numericsxsd/xsd:element">
+                <xsl:for-each select="$numericsxsd/xs:element">
                     <xsl:sort select="@name"/>
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
-            </xsd:schema>
+            </xs:schema>
         </xsl:result-document>
         <xsl:result-document href="{$numericsout}">
             <Numerics>

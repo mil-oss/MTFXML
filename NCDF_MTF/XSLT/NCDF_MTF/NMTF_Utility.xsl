@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-    xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-    exclude-result-prefixes="xsd" version="2.0">
+    xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" exclude-result-prefixes="xsd"
+    version="2.0">
 
     <!-- ************ Identity Transform ***********-->
     <!-- This will allow application of any templates without mode qualifier -->
@@ -191,6 +191,9 @@
                 <xsl:when test="starts-with($n, 'c:')">
                     <xsl:value-of select="substring-after($n, 'c:')"/>
                 </xsl:when>
+                <xsl:when test="starts-with($n, 's:')">
+                    <xsl:value-of select="substring-after($n, 's:')"/>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$n"/>
                 </xsl:otherwise>
@@ -213,6 +216,9 @@
                 </xsl:when>
                 <xsl:when test="starts-with(., 'c:')">
                     <xsl:value-of select="substring-after(., 'c:')"/>
+                </xsl:when>
+                <xsl:when test="starts-with(., 's:')">
+                    <xsl:value-of select="substring-after(., 's:')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="."/>
@@ -461,6 +467,12 @@
                             <xsl:when test="string-length(xsd:appinfo[1]/*:SetFormatIdentifier/text()) &gt; 0">
                                 <xsl:value-of select="xsd:appinfo/*:SetFormatIdentifier"/>
                             </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SegmentStructureConcept/text()) &gt; 0">
+                                <xsl:value-of select="xsd:appinfo/*:SegmentStructureConcept"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(xsd:appinfo[1]/*:SegmentStructureUseDescription/text()) &gt; 0">
+                                <xsl:value-of select="xsd:appinfo/*:SegmentStructureUseDescription"/>
+                            </xsl:when>
                             <xsl:otherwise>
                                 <xsl:call-template name="breakIntoWords">
                                     <xsl:with-param name="string">
@@ -471,20 +483,7 @@
                         </xsl:choose>
                     </xsl:variable>
                     <xsd:documentation>
-                        <xsl:choose>
-                            <xsl:when test="starts-with($doctxt, 'A data type for')">
-                                <xsl:value-of select="."/>
-                            </xsl:when>
-                            <xsl:when test="ends-with($doctxt, 'Simple Type')">
-                                <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Simple Type')))"/>
-                            </xsl:when>
-                            <xsl:when test="ends-with($doctxt, 'Type')">
-                                <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Type')))"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="concat('A data type for ', lower-case($doctxt))"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <xsl:value-of select="$doctxt"/>
                     </xsd:documentation>
                 </xsl:otherwise>
             </xsl:choose>
@@ -614,6 +613,7 @@
                     <xsl:element name="mtfappinfo:Segment">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::xsd:element[1]/xsd:complexType/xsd:extension/xsd:annotation/xsd:appinfo/*" mode="attr"/>
+                        <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Mtf')]">
@@ -792,8 +792,7 @@
             <term:LocalTerm term="NICS" literal="NATO Integrated Communications System"/>
             <term:LocalTerm term="SIC" literal="Subject Identifier Code"/>
             <term:LocalTerm term="UTM" literal="Universal Transverse Mercator"/>
-            <appinfo:Distro statement="DISTRIBUTION STATEMENT"
-            />
+            <appinfo:Distro statement="DISTRIBUTION STATEMENT"/>
         </xsd:appinfo>
     </xsl:variable>
 
@@ -813,9 +812,9 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:choose>
-            <xsl:when test="string-length($str)&gt;0">
+            <xsl:when test="string-length($str) &gt; 0">
                 <xsl:call-template name="removeStrings">
-                    <xsl:with-param name="targetStr" select="replace($targetStr, $str,'')"/>
+                    <xsl:with-param name="targetStr" select="replace($targetStr, $str, '')"/>
                     <xsl:with-param name="strings" select="substring-after($strings, ',')"/>
                 </xsl:call-template>
             </xsl:when>
@@ -824,7 +823,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    
+
     <xsl:template match="*" mode="normlize">
         <xsl:value-of select="normalize-space(translate(., '&#34;&#xA;', ''))"/>
     </xsl:template>

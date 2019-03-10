@@ -1,70 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NcdfMap.xsl"/>
 
     <xsl:variable name="dirpath" select="concat($srcdir, 'NCDF_MTF/')"/>
-    <xsl:variable name="sepmsgsout" select="'../../XSD/NCDF_MTF/SepMsgs/'"/>
+
     <!-- _______________________________________________________ -->
     <!--Fields-->
     <xsl:variable name="fieldsxsd">
-        <xsl:for-each select="$stringsxsd/xsd:simpleType">
+        <xsl:for-each select="$stringsxsd/*:simpleType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:simpleType/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="not(preceding-sibling::*:simpleType/@name = $n)">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$stringsxsd/xsd:complexType">
+        <xsl:for-each select="$stringsxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="not(preceding-sibling::*:complexType/@name = $n)">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
-        <!--<xsl:for-each select="$stringsxsd/xsd:element">
+        <xsl:for-each select="$numericsxsd/*:simpleType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:element/@name = $n)">
-                <xsl:copy-of select="."/>
-            </xsl:if>
-        </xsl:for-each>-->
-        <xsl:for-each select="$numericsxsd/xsd:simpleType">
-            <xsl:sort select="@name"/>
-            <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:simpleType/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="not(preceding-sibling::*:simpleType/@name = $n)">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$numericsxsd/xsd:complexType">
+        <xsl:for-each select="$numericsxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="not(preceding-sibling::*:complexType/@name = $n)">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
-        <!--<xsl:for-each select="$numericsxsd/xsd:element">
-            <xsl:sort select="@name"/>
-            <xsl:copy-of select="."/>
-        </xsl:for-each>-->
-        <xsl:for-each select="$codelistxsd/xsd:simpleType">
+        <xsl:for-each select="$codelistxsd/*:simpleType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:simpleType/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="not(preceding-sibling::*:simpleType/@name = $n)">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$codelistxsd/xsd:complexType">
+        <xsl:for-each select="$codelistxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="not(preceding-sibling::*:complexType/@name = $n)">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
-        <!--<xsl:for-each select="$codelistxsd/xsd:element">
-            <xsl:sort select="@name"/>
-            <xsl:copy-of select="."/>
-        </xsl:for-each>-->
         <xsl:for-each select="$all_field_elements_map/*">
             <xsl:sort select="@ncdfelementname"/>
             <xsl:choose>
@@ -72,7 +57,7 @@
                     <xsl:variable name="n" select="@ncdfelementname"/>
                     <xsl:variable name="t" select="@ncdftype"/>
                     <xsl:if test="count(preceding-sibling::*[@ncdfelementname = $n][@ncdftype = $t]) = 0">
-                        <xsd:element name="{@ncdfelementname}">
+                        <xs:element name="{@ncdfelementname}">
                             <xsl:if test="@ncdftype">
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="@ncdftype"/>
@@ -93,62 +78,62 @@
                                     <xsl:text>true</xsl:text>
                                 </xsl:attribute>
                             </xsl:if>
-                            <xsd:annotation>
-                                <xsd:documentation>
+                            <xs:annotation>
+                                <xs:documentation>
                                     <xsl:value-of select="@ncdfelementdoc"/>
-                                </xsd:documentation>
-                                <xsd:appinfo>
+                                </xs:documentation>
+                                <xs:appinfo>
                                     <xsl:for-each select="appinfo/*">
                                         <xsl:copy-of select="." copy-namespaces="no"/>
                                     </xsl:for-each>
-                                </xsd:appinfo>
-                            </xsd:annotation>
-                        </xsd:element>
+                                </xs:appinfo>
+                            </xs:annotation>
+                        </xs:element>
                     </xsl:if>
                 </xsl:when>
                 <xsl:when test="name() = 'Choice'">
-                    <xsd:element name="{@substgrpname}">
+                    <xs:element name="{@substgrpname}">
                         <xsl:attribute name="abstract">
                             <xsl:text>true</xsl:text>
                         </xsl:attribute>
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="@substgrpdoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
+                            </xs:documentation>
+                            <xs:appinfo>
                                 <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                     <xsl:for-each select="Element">
                                         <xsl:sort select="@ncdfelementname"/>
                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
                                 </mtfappinfo:Choice>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:when>
             </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="mtf_fields_xsd">
-        <xsl:for-each select="$fieldsxsd/xsd:simpleType">
+        <xsl:for-each select="$fieldsxsd/*:simpleType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:simpleType/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="count(preceding-sibling::*:simpleType[@name = $n]) = 0">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$fieldsxsd/xsd:complexType">
+        <xsl:for-each select="$fieldsxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="count(preceding-sibling::*:complexType[@name = $n]) = 0">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$fieldsxsd/xsd:element">
+        <xsl:for-each select="$fieldsxsd/*:element">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:element/@name = $n)">
-                <xsl:copy-of select="."/>
+            <xsl:if test="count(preceding-sibling::*:element[@name = $n]) = 0">
+                <xsl:apply-templates select="." mode="identity"/>
             </xsl:if>
         </xsl:for-each>
     </xsl:variable>
@@ -159,7 +144,7 @@
                 <xsl:variable name="n" select="@ncdfelementname"/>
                 <xsl:variable name="t" select="@ncdftype"/>
                 <xsl:if test="count(preceding-sibling::*[@ncdfelementname = $n][@ncdftype = $t]) = 0">
-                    <xsl:copy-of select="." copy-namespaces="no"/>
+                    <xsl:apply-templates select="." mode="identity"/>
                 </xsl:if>
             </xsl:if>
         </xsl:for-each>
@@ -169,7 +154,7 @@
                 <xsl:variable name="n" select="@ncdfelementname"/>
                 <xsl:variable name="t" select="@ncdftype"/>
                 <xsl:if test="count(preceding-sibling::*[@ncdfelementname = $n][@ncdftype = $t]) = 0">
-                    <xsl:copy-of select="." copy-namespaces="no"/>
+                    <xsl:apply-templates select="." mode="identity"/>
                 </xsl:if>
             </xsl:if>
         </xsl:for-each>
@@ -189,43 +174,43 @@
                 <!--<xsl:when test="$all_field_elements_map//*[@ncdfelementname = $n]"/>-->
                 <xsl:when test="@substgrpname and $all_field_elements_map//*[@substgrpname = $s]"/>
                 <xsl:when test="name() = 'Choice'">
-                    <xsd:element name="{@substgrpname}">
+                    <xs:element name="{@substgrpname}">
                         <xsl:attribute name="abstract">
                             <xsl:text>true</xsl:text>
                         </xsl:attribute>
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="@substgrpdoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
+                            </xs:documentation>
+                            <xs:appinfo>
                                 <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                     <xsl:for-each select="Element">
                                         <xsl:sort select="@ncdfelementname"/>
                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
                                 </mtfappinfo:Choice>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsd:element name="{@ncdfelementname}" type="{$t}" nillable="true">
+                    <xs:element name="{@ncdfelementname}" type="{$t}" nillable="true">
                         <xsl:if test="@substitutiongroup">
                             <xsl:attribute name="substitutionGroup">
                                 <xsl:value-of select="@substitutiongroup"/>
                             </xsl:attribute>
                         </xsl:if>
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="@ncdfelementdoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
+                            </xs:documentation>
+                            <xs:appinfo>
                                 <xsl:for-each select="appinfo/*">
                                     <xsl:copy-of select="." copy-namespaces="no"/>
                                 </xsl:for-each>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -234,7 +219,7 @@
         <xsl:for-each select="$ncdf_composites_map//Sequence/Element[starts-with(@mtftype, 'c:')]">
             <xsl:sort select="@ncdfelementname"/>
             <xsl:variable name="n" select="@ncdfelementname"/>
-            <xsd:element name="{@ncdfelementname}">
+            <xs:element name="{@ncdfelementname}">
                 <xsl:attribute name="type">
                     <xsl:value-of select="@ncdfelementtype"/>
                 </xsl:attribute>
@@ -246,8 +231,8 @@
                 <xsl:attribute name="nillable">
                     <xsl:text>true</xsl:text>
                 </xsl:attribute>
-                <xsd:annotation>
-                    <xsd:documentation>
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:choose>
                             <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                 <xsl:value-of select="@substgrpdoc"/>
@@ -262,14 +247,14 @@
                                 <xsl:value-of select="@mtfdoc"/>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </xsd:documentation>
+                    </xs:documentation>
                     <xsl:for-each select="appinfo/*">
-                        <xsd:appinfo>
-                            <xsl:copy-of select="."/>
-                        </xsd:appinfo>
+                        <xs:appinfo>
+                            <xsl:copy-of select="." copy-namespaces="no"/>
+                        </xs:appinfo>
                     </xsl:for-each>
-                </xsd:annotation>
-            </xsd:element>
+                </xs:annotation>
+            </xs:element>
         </xsl:for-each>
         <xsl:for-each select="$elementsxsd/*">
             <xsl:variable name="n" select="@name"/>
@@ -279,46 +264,46 @@
     <xsl:variable name="compositexsd">
         <xsl:for-each select="$ncdf_composites_map/Composite">
             <xsl:sort select="@ncdftype"/>
-            <xsd:complexType name="{@ncdftype}">
-                <xsd:annotation>
-                    <xsd:documentation>
+            <xs:complexType name="{@ncdftype}">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdftypedoc"/>
-                    </xsd:documentation>
-                    <xsd:appinfo>
+                    </xs:documentation>
+                    <xs:appinfo>
                         <xsl:for-each select="appinfo/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
-                    </xsd:appinfo>
-                </xsd:annotation>
-                <xsd:complexContent>
-                    <xsd:extension base="structures:ObjectType">
-                        <xsd:sequence>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="structures:ObjectType">
+                        <xs:sequence>
                             <xsl:for-each select="*:Sequence/Element">
                                 <xsl:variable name="refname">
                                     <xsl:value-of select="@ncdfelementname"/>
                                 </xsl:variable>
-                                <xsd:element ref="{$refname}"/>
+                                <xs:element ref="{$refname}"/>
                             </xsl:for-each>
-                            <xsd:element ref="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
-                        </xsd:sequence>
-                    </xsd:extension>
-                </xsd:complexContent>
-            </xsd:complexType>
-            <xsd:element name="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" abstract="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                            <xs:element ref="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:element name="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" abstract="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="concat('An augmentation point for ', @ncdftype)"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
                 <xsl:if test="@substitutiongroup">
                     <xsl:attribute name="substitutionGroup">
                         <xsl:value-of select="@substitutiongroup"/>
                     </xsl:attribute>
                 </xsl:if>
-                <xsd:annotation>
-                    <xsd:documentation>
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:choose>
                             <xsl:when test="@ncdfelementname = 'BlankSpace'">
                                 <xsl:text>A data item for a blank space character that is used to separate elements within a data chain, or to mark the beginning or end of a unit of data.</xsl:text>
@@ -327,31 +312,36 @@
                                 <xsl:value-of select="@ncdfelementdoc"/>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </xsd:documentation>
-                    <xsd:appinfo>
+                    </xs:documentation>
+                    <xs:appinfo>
                         <xsl:for-each select="appinfo/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
-                    </xsd:appinfo>
-                </xsd:annotation>
-            </xsd:element>
+                    </xs:appinfo>
+                </xs:annotation>
+            </xs:element>
         </xsl:for-each>
         <xsl:copy-of select="$compositefields"/>
     </xsl:variable>
     <xsl:variable name="mtf_composites_xsd">
-        <xsl:for-each select="$compositexsd/xsd:complexType">
+        <xsl:for-each select="$compositexsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
+            <xsl:if test="not(preceding-sibling::*:complexType/@name = $n)">
                 <xsl:copy-of select="."/>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$compositexsd/xsd:element">
+        <xsl:for-each select="$compositexsd/*:element">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:element/@name = $n)">
-                <xsl:copy-of select="."/>
-            </xsl:if>
+            <xsl:variable name="t" select="@type"/>
+            <xsl:choose>
+                <xsl:when test="count($setsxsd/*:element[@name = $n and @type = $t]) &gt; 0"/>
+                <xsl:when test="count(preceding-sibling::*[@name = $n]) &gt; 0"/>
+                <xsl:otherwise>
+                    <xsl:copy-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="mtf_composites_map">
@@ -370,8 +360,8 @@
             <xsl:if test="string-length(@ncdftype) &gt; 0 and name() = 'Element'">
                 <xsl:variable name="n" select="@ncdfelementname"/>
                 <xsl:variable name="t" select="@ncdftype"/>
-                <xsl:if test="count(preceding-sibling::*[@ncdfelementname = $n][@ncdftype = $t]) = 0">
-                    <xsl:copy-of select="." copy-namespaces="no"/>
+                <xsl:if test="not(preceding-sibling::*:element/@name = $n)">
+                    <xsl:copy-of select="."/>
                 </xsl:if>
             </xsl:if>
         </xsl:for-each>
@@ -383,54 +373,6 @@
         <xsl:for-each select="$ncdf_sets_map//Sequence[@name = 'GroupOfFields']">
             <xsl:choose>
                 <xsl:when test="count(./Element) = 1"/>
-                <!--                    <xsl:variable name="n" select="Element[1]/@ncdfelementname"/>
-                    <xsd:element name="{$n}">
-                        <xsl:if test="Element[1]/@ncdftype">
-                            <xsl:attribute name="type">
-                                <xsl:value-of select="Element[1]/@ncdftype"/>
-                            </xsl:attribute>
-                        </xsl:if>
-                      
-                        <xsl:if test="not(@substgrpname)">
-                            <xsl:attribute name="nillable">
-                                <xsl:text>true</xsl:text>
-                            </xsl:attribute>
-                        </xsl:if>
-                        <xsd:annotation>
-                            <xsd:documentation>
-                                <xsl:choose>
-                                    <xsl:when test="string-length(@substgrpdoc) &gt; 0">
-                                        <xsl:value-of select="@substgrpdoc"/>
-                                    </xsl:when>
-                                    <xsl:when test="string-length(@ncdfelementdoc) &gt; 0">
-                                        <xsl:value-of select="@ncdfelementdoc"/>
-                                    </xsl:when>
-                                    <xsl:when test="string-length(@ncdftypedoc) &gt; 0">
-                                        <xsl:value-of select="@ncdftypedoc"/>
-                                    </xsl:when>
-                                    <xsl:otherwise>
-                                        <xsl:value-of select="@mtfdoc"/>
-                                    </xsl:otherwise>
-                                </xsl:choose>
-                            </xsd:documentation>
-                            <xsl:for-each select="appinfo/*">
-                                <xsd:appinfo>
-                                    <xsl:copy-of select="."/>
-                                </xsd:appinfo>
-                            </xsl:for-each>
-                            <xsl:if test="@substgrpname">
-                                <xsd:appinfo>
-                                    <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
-                                        <xsl:for-each select="Choice/Element">
-                                            <xsl:sort select="@name"/>
-                                            <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
-                                        </xsl:for-each>
-                                    </mtfappinfo:Choice>
-                                </xsd:appinfo>
-                            </xsl:if>
-                        </xsd:annotation>
-                    </xsd:element>
-                </xsl:when>-->
                 <xsl:otherwise>
                     <xsl:variable name="setname">
                         <xsl:value-of select="ancestor::Set/@ncdfelementname"/>
@@ -486,24 +428,24 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <xsd:element name="{$fgname}" type="{concat($fgname,'Type')}" nillable="true">
+                    <xs:element name="{$fgname}" type="{concat($fgname,'Type')}" nillable="true">
                         <!--<xsl:copy-of select="@minOccurs"/>
                         <xsl:copy-of select="@maxOccurs"/>-->
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="replace($datadefdoc, 'type', 'item')"/>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
-                    <xsd:complexType name="{concat($fgname,'Type')}">
-                        <xsd:annotation>
-                            <xsd:documentation>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:complexType name="{concat($fgname,'Type')}">
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="$datadefdoc"/>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                        <xsd:complexContent>
-                            <xsd:extension base="structures:ObjectType">
-                                <xsd:sequence>
+                            </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexContent>
+                            <xs:extension base="structures:ObjectType">
+                                <xs:sequence>
                                     <xsl:for-each select="Element">
                                         <xsl:variable name="refname">
                                             <xsl:choose>
@@ -515,11 +457,11 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xsl:variable>
-                                        <xsd:element ref="{$refname}">
+                                        <xs:element ref="{$refname}">
                                             <xsl:copy-of select="@minOccurs"/>
                                             <xsl:copy-of select="@maxOccurs"/>
-                                            <xsd:annotation>
-                                                <xsd:documentation>
+                                            <xs:annotation>
+                                                <xs:documentation>
                                                     <xsl:choose>
                                                         <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                                             <xsl:value-of select="@substgrpdoc"/>
@@ -531,37 +473,37 @@
                                                             <xsl:value-of select="@ncdfelementdoc"/>
                                                         </xsl:otherwise>
                                                     </xsl:choose>
-                                                </xsd:documentation>
+                                                </xs:documentation>
                                                 <xsl:for-each select="appinfo/*">
-                                                    <xsd:appinfo>
-                                                        <xsl:copy-of select="."/>
-                                                    </xsd:appinfo>
+                                                    <xs:appinfo>
+                                                        <xsl:copy-of select="." copy-namespaces="no"/>
+                                                    </xs:appinfo>
                                                 </xsl:for-each>
                                                 <xsl:if test="@substgrpname">
-                                                    <xsd:appinfo>
+                                                    <xs:appinfo>
                                                         <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                                             <xsl:for-each select="Choice/Element">
                                                                 <xsl:sort select="@name"/>
                                                                 <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                                             </xsl:for-each>
                                                         </mtfappinfo:Choice>
-                                                    </xsd:appinfo>
+                                                    </xs:appinfo>
                                                 </xsl:if>
-                                            </xsd:annotation>
-                                        </xsd:element>
+                                            </xs:annotation>
+                                        </xs:element>
                                     </xsl:for-each>
-                                    <xsd:element ref="{concat($fgname,'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
-                                </xsd:sequence>
-                            </xsd:extension>
-                        </xsd:complexContent>
-                    </xsd:complexType>
-                    <xsd:element name="{concat($fgname,'AugmentationPoint')}" abstract="true">
-                        <xsd:annotation>
-                            <xsd:documentation>
+                                    <xs:element ref="{concat($fgname,'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                    <xs:element name="{concat($fgname,'AugmentationPoint')}" abstract="true">
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="concat('An augmentation point for ', replace($datadefdoc, 'A data type for', ''))"/>
-                            </xsd:documentation>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -583,9 +525,9 @@
                 <xsl:when test="starts-with(Choice/Element[1]/@mtftype, 'f:')"/>
                 <xsl:when test="starts-with(@mtftype, 'c:')"/>
                 <xsl:when test="starts-with(Choice/Element[1]/@mtftype, 'c:')"/>
-                <xsl:when test="@ncdfelementname = 'FreeText'"/>
+                <xsl:when test="$ncdf_sets_map/Set[@ncdfelementname = $n]"/>
                 <xsl:otherwise>
-                    <xsd:element name="{$n}">
+                    <xs:element name="{$n}">
                         <xsl:if test="@ncdftype">
                             <xsl:attribute name="type">
                                 <xsl:value-of select="@ncdftype"/>
@@ -606,8 +548,8 @@
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
                         </xsl:if>
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:choose>
                                     <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                         <xsl:value-of select="@substgrpdoc"/>
@@ -622,26 +564,74 @@
                                         <xsl:value-of select="@mtfdoc"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </xsd:documentation>
+                            </xs:documentation>
                             <xsl:for-each select="appinfo/*">
-                                <xsd:appinfo>
-                                    <xsl:copy-of select="."/>
-                                </xsd:appinfo>
+                                <xs:appinfo>
+                                    <xsl:copy-of select="." copy-namespaces="no"/>
+                                </xs:appinfo>
                             </xsl:for-each>
                             <xsl:if test="@substgrpname">
-                                <xsd:appinfo>
+                                <xs:appinfo>
                                     <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                         <xsl:for-each select="Choice/Element">
                                             <xsl:sort select="@name"/>
                                             <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                         </xsl:for-each>
                                     </mtfappinfo:Choice>
-                                </xsd:appinfo>
+                                </xs:appinfo>
                             </xsl:if>
-                        </xsd:annotation>
-                    </xsd:element>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:if test="ends-with(@mtftype, 'GeneralTextType')">
+                <xs:complexType name="{@ncdftype}">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:value-of select="@ncdfelementdoc"/>
+                        </xs:documentation>
+                        <xsl:for-each select="appinfo/*">
+                            <xs:appinfo>
+                                <xsl:copy-of select="." copy-namespaces="no"/>
+                            </xs:appinfo>
+                        </xsl:for-each>
+                    </xs:annotation>
+                    <xs:complexContent>
+                        <xs:extension base="SetBaseType">
+                            <xs:sequence>
+                                <xs:element ref="{concat(@mtfname,'TextIndicator')}" minOccurs="1" maxOccurs="1">
+                                    <xs:annotation>
+                                        <xs:documentation>
+                                            <xsl:value-of select="concat('A data item for ', @mtfname, ' Text Indicator')"/>
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element ref="FreeText" minOccurs="1" maxOccurs="1">
+                                    <xs:annotation>
+                                        <xs:documentation>A data item for text entry</xs:documentation>
+                                        <xs:appinfo>
+                                            <mtfappinfo:Field positionName="FREE TEXT" identifier="A" justification="Left"
+                                                definition="AN UNFORMATTED FREE TEXT FIELD CONTAINING AN UNLIMITED NUMBER OF CHARACTERS. USED IN THE FREE TEXT SETS AMPN, GENTEXT, NARR, AND REMARKS."
+                                                remark="ANY NUMBER AND TYPE OF CHARACTERS ALLOWED EXCEPT DOUBLE SLANTS (//)." version="1.0" ffirn="1006" fud="1"/>
+                                        </xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element ref="GeneralTextSetAugmentationPoint" minOccurs="0" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+                <xs:element name="{concat(@mtfname,'TextIndicator')}" type="TextIndicatorType">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:value-of select="concat('A data item for ', @ncdfelementname, ' Text Indicator')"/>
+                        </xs:documentation>
+                        <xs:appinfo>
+                            <mtfappinfo:Field fixed="{@positionname}"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xsl:if>
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="setsxsd">
@@ -655,7 +645,7 @@
                     <xsl:when test="@mtfname = 'SetBaseType'">
                         <xsl:text>structures:ObjectType</xsl:text>
                     </xsl:when>
-                    <xsl:when test="@mtfname = 'OperationIdentificationDataType'">
+                    <xsl:when test="@mtfname = 'OperationCodewordType'">
                         <xsl:text>structures:ObjectType</xsl:text>
                     </xsl:when>
                     <xsl:when test="@mtfname = 'ExerciseIdentificationType'">
@@ -666,20 +656,20 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
-            <xsd:complexType name="{@ncdftype}">
-                <xsd:annotation>
-                    <xsd:documentation>
+            <xs:complexType name="{@ncdftype}">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdftypedoc"/>
-                    </xsd:documentation>
+                    </xs:documentation>
                     <xsl:for-each select="appinfo/*">
-                        <xsd:appinfo>
-                            <xsl:copy-of select="."/>
-                        </xsd:appinfo>
+                        <xs:appinfo>
+                            <xsl:copy-of select="." copy-namespaces="no"/>
+                        </xs:appinfo>
                     </xsl:for-each>
-                </xsd:annotation>
-                <xsd:complexContent>
-                    <xsd:extension base="{$basetype}">
-                        <xsd:sequence>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="{$basetype}">
+                        <xs:sequence>
                             <xsl:for-each select="*:Sequence/*">
                                 <xsl:variable name="refname">
                                     <xsl:choose>
@@ -705,11 +695,11 @@
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:variable>
-                                <xsd:element ref="{$refname}">
+                                <xs:element ref="{$refname}">
                                     <xsl:copy-of select="@minOccurs"/>
                                     <xsl:copy-of select="@maxOccurs"/>
-                                    <xsd:annotation>
-                                        <xsd:documentation>
+                                    <xs:annotation>
+                                        <xs:documentation>
                                             <xsl:choose>
                                                 <xsl:when test="$refname = 'FreeText'">
                                                     <xsl:text>A data item for text entry</xsl:text>
@@ -738,43 +728,43 @@
                                                     </xsl:call-template>
                                                 </xsl:otherwise>
                                             </xsl:choose>
-                                        </xsd:documentation>
+                                        </xs:documentation>
                                         <xsl:for-each select="appinfo/*">
-                                            <xsd:appinfo>
+                                            <xs:appinfo>
                                                 <xsl:copy-of select="." copy-namespaces="no"/>
-                                            </xsd:appinfo>
+                                            </xs:appinfo>
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
-                                            <xsd:appinfo>
+                                            <xs:appinfo>
                                                 <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                                     <xsl:for-each select="Choice/Element">
                                                         <xsl:sort select="@name"/>
                                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                                     </xsl:for-each>
                                                 </mtfappinfo:Choice>
-                                            </xsd:appinfo>
+                                            </xs:appinfo>
                                         </xsl:if>
-                                    </xsd:annotation>
-                                </xsd:element>
+                                    </xs:annotation>
+                                </xs:element>
                             </xsl:for-each>
-                            <xsd:element ref="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
-                        </xsd:sequence>
-                    </xsd:extension>
-                </xsd:complexContent>
-            </xsd:complexType>
-            <xsd:element name="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" abstract="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                            <xs:element ref="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:element name="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" abstract="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="concat('An augmentation point for ', @ncdftype)"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xsl:choose>
                 <xsl:when test="@ncdfelementname = 'SetBase'"/>
                 <xsl:otherwise>
-                    <xsd:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
-                        <xsd:annotation>
-                            <xsd:documentation>
+                    <xs:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:choose>
                                     <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                         <xsl:value-of select="@substgrpdoc"/>
@@ -783,19 +773,28 @@
                                         <xsl:value-of select="@ncdfelementdoc"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </xsd:documentation>
-                            <xsl:if test="@substgrpname">
-                                <xsd:appinfo>
-                                    <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
-                                        <xsl:for-each select="Choice/Element">
-                                            <xsl:sort select="@name"/>
-                                            <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                            </xs:documentation>
+                            <xsl:choose>
+                                <xsl:when test="@substgrpname">
+                                    <xs:appinfo>
+                                        <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                            <xsl:for-each select="Choice/Element">
+                                                <xsl:sort select="@name"/>
+                                                <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                            </xsl:for-each>
+                                        </mtfappinfo:Choice>
+                                    </xs:appinfo>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xs:appinfo>
+                                        <xsl:for-each select="appinfo/*">
+                                            <xsl:copy-of select="." copy-namespaces="no"/>
                                         </xsl:for-each>
-                                    </mtfappinfo:Choice>
-                                </xsd:appinfo>
-                            </xsl:if>
-                        </xsd:annotation>
-                    </xsd:element>
+                                    </xs:appinfo>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -809,127 +808,106 @@
             <xsl:variable name="substgrpdoc" select="Choice/@substgrpdoc"/>
             <xsl:variable name="setname" select="@setname"/>
             <xsl:variable name="n" select="@ncdfelementname"/>
-            <xsd:complexType name="{concat(@ncdfelementname,'Type')}">
-                <xsd:annotation>
-                    <xsd:documentation>
+            <xs:complexType name="{concat(@ncdfelementname,'ChoiceType')}">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="$substgrpdoc"/>
-                    </xsd:documentation>
+                    </xs:documentation>
                     <xsl:for-each select="appinfo/*">
-                        <xsd:appinfo>
+                        <xs:appinfo>
                             <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsd:appinfo>
+                        </xs:appinfo>
                     </xsl:for-each>
-                </xsd:annotation>
-                <xsd:complexContent>
-                    <xsd:extension base="SetBaseType">
-                        <xsd:sequence>
-                            <xsd:element ref="{Choice/@substgrpname}">
-                                <xsd:annotation>
-                                    <xsd:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="SetBaseType">
+                        <xs:sequence>
+                            <xs:element ref="{Choice/@substgrpname}">
+                                <xs:annotation>
+                                    <xs:documentation>
                                         <xsl:value-of select="$substgrpdoc"/>
-                                    </xsd:documentation>
-                                    <xsd:appinfo>
+                                    </xs:documentation>
+                                    <xs:appinfo>
                                         <mtfappinfo:Choice substitutionGroup="{Choice/@substgrpname}">
                                             <xsl:for-each select="Choice/Element">
                                                 <xsl:sort select="@ncdfelementname"/>
                                                 <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                             </xsl:for-each>
                                         </mtfappinfo:Choice>
-                                    </xsd:appinfo>
-                                </xsd:annotation>
-                            </xsd:element>
-                            <xsd:element ref="{concat(@ncdfelementname,'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
-                        </xsd:sequence>
-                    </xsd:extension>
-                </xsd:complexContent>
-            </xsd:complexType>
-            <xsd:element name="{@ncdfelementname}" type="{concat(@ncdfelementname,'Type')}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element ref="{concat(@ncdfelementname,'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:element name="{@ncdfelementname}" type="{concat(@ncdfelementname,'ChoiceType')}" nillable="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdfelementdoc"/>
-                    </xsd:documentation>
+                    </xs:documentation>
                     <xsl:choose>
                         <xsl:when test="Choice/@substgrpname">
-                            <xsd:appinfo>
+                            <xs:appinfo>
                                 <mtfappinfo:Choice substitutionGroup="{Choice/@substgrpname}">
                                     <xsl:for-each select="Choice/Element">
                                         <xsl:sort select="@name"/>
                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
                                 </mtfappinfo:Choice>
-                            </xsd:appinfo>
+                            </xs:appinfo>
                         </xsl:when>
-                        <!--<xsl:when test="appinfo">
-                            <xsd:appinfo>
-                                <xsl:for-each select="appinfo/*">
-                                    <xsl:copy-of select="." copy-namespaces="no"/>
-                                </xsl:for-each>
-                            </xsd:appinfo>
-                        </xsl:when>-->
                     </xsl:choose>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="{concat(@ncdfelementname,'AugmentationPoint')}" abstract="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="{concat(@ncdfelementname,'AugmentationPoint')}" abstract="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="concat('An augmentation point for ', concat(@ncdfelementname, 'Type'))"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xsl:choose>
                 <xsl:when test="$all_field_elements_map/Element[@substitutiongroup = $substgrp]"/>
                 <!--<xsl:when test="$all_composite_elements_map/Element[@substitutiongroup=$substgrp]"/>-->
                 <xsl:otherwise>
-                    <xsd:element name="{Choice/@substgrpname}" abstract="true">
-                        <xsd:annotation>
-                            <xsd:documentation>
+                    <xs:element name="{Choice/@substgrpname}" abstract="true">
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="Choice/@substgrpdoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
+                            </xs:documentation>
+                            <xs:appinfo>
                                 <mtfappinfo:Choice substitutionGroup="{Choice/@substgrpname}">
                                     <xsl:for-each select="Choice/Element">
                                         <xsl:sort select="@ncdfelementname"/>
                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
                                 </mtfappinfo:Choice>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
-            <!--<xsl:for-each select="Choice/Element">
-                <xsl:sort select="@ncdfelementname"/>
-                <xsl:variable name="n" select="@ncdfelementname"/>
-                <xsd:element name="{@ncdfelementname}" type="{@ncdftype}" substitutionGroup="{$substgrp}" nillable="true">
-                    <xsd:annotation> 
-                        <xsd:documentation>
-                            <xsl:value-of select="@ncdfelementdoc"/>
-                        </xsd:documentation>
-                        <!-\-<xsd:appinfo>
-                                <xsl:for-each select="appinfo/*">
-                                    <xsl:copy-of select="." copy-namespaces="no"/>
-                                </xsl:for-each>
-                            </xsd:appinfo>-\->
-                    </xsd:annotation>
-                </xsd:element>
-            </xsl:for-each>-->
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="mtf_sets_xsd">
-        <xsl:for-each select="$setsxsd/xsd:complexType">
+        <xsl:for-each select="$setsxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="not(preceding-sibling::xsd:complexType/@name = $n)">
+            <xsl:if test="not(preceding-sibling::*:complexType/@name = $n)">
                 <xsl:copy-of select="."/>
             </xsl:if>
         </xsl:for-each>
-        <xsl:for-each select="$setsxsd/xsd:element[@name]">
+        <xsl:for-each select="$setsxsd/*:element[@name]">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
             <xsl:choose>
-                <xsl:when test="count(preceding-sibling::xsd:element[@name = $n and @type = $t]) &gt; 0"/>
-                <xsl:when test="count(preceding-sibling::xsd:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
+                <xsl:when test="count($mtf_fields_xsd/*:element[@name = $n]) &gt; 0"/>
+                <xsl:when test="count($mtf_composites_xsd/*:element[@name = $n]) &gt; 0"/>
+                <xsl:when test="count(preceding-sibling::*:element[@name = $n][@type = $t]) &gt; 0"/>
+                <xsl:when test="count(preceding-sibling::*:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
@@ -937,12 +915,10 @@
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="mtf_sets_map">
-        <Sets>
-            <xsl:for-each select="$ncdf_sets_map/*">
-                <xsl:sort select="@mtfname"/>
-                <xsl:copy-of select="." copy-namespaces="no"/>
-            </xsl:for-each>
-        </Sets>
+        <xsl:for-each select="$ncdf_sets_map/*">
+            <xsl:sort select="@mtfname"/>
+            <xsl:copy-of select="." copy-namespaces="no"/>
+        </xsl:for-each>
     </xsl:variable>
     <!-- _______________________________________________________ -->
     <!--Segments-->
@@ -953,6 +929,7 @@
             <xsl:choose>
                 <xsl:when test="$all_set_elements_map/*[@substgrpname = $n]"/>
                 <xsl:when test="$all_set_elements_map/*[@ncdfelementname = $n]"/>
+                <xsl:when test="$ncdf_segments_map/Segment[@ncdfelementname = $n]"/>
                 <xsl:when test="starts-with(Choice/Element[1]/@mtftype, 's:')"/>
                 <xsl:otherwise>
                     <xsl:variable name="t" select="@ncdftype"/>
@@ -960,7 +937,7 @@
                     <xsl:variable name="segSeq">
                         <xsl:value-of select="ancestor::Segment/@segseq"/>
                     </xsl:variable>
-                    <xsd:element name="{@ncdfelementname}">
+                    <xs:element name="{@ncdfelementname}">
                         <xsl:if test="@ncdftype">
                             <xsl:attribute name="type">
                                 <xsl:value-of select="@ncdftype"/>
@@ -981,8 +958,8 @@
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
                         </xsl:if>
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:choose>
                                     <xsl:when test="@ncdftype = 'GeneralTextType'">
                                         <xsl:value-of select="@ncdfelementdoc"/>
@@ -997,29 +974,64 @@
                                         <xsl:value-of select="@ncdfelementdoc"/>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </xsd:documentation>
-                            <xsl:choose>
-                                <xsl:when test="appinfo/mtfappinfo:Segment">
-                                    <xsd:appinfo>
-                                        <xsl:copy-of select="appinfo/mtfappinfo:Segment"/>
-                                    </xsd:appinfo>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <xsl:for-each select="appinfo/*">
-                                        <xsd:appinfo>
-                                            <xsl:copy>
-                                                <xsl:copy-of select="@positionName"/>
-                                                <xsl:copy-of select="ancestor::Element/@textindicator"/>
-                                                <xsl:copy-of select="@usage"/>
-                                            </xsl:copy>
-                                        </xsd:appinfo>
-                                    </xsl:for-each>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:documentation>
+                            <xsl:for-each select="appinfo/*">
+                                <xs:appinfo>
+                                    <xsl:copy-of select="." copy-namespaces="no"/>
+                                </xs:appinfo>
+                            </xsl:for-each>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:if test="ends-with(@mtftype, 'GeneralTextType')">
+                <xs:complexType name="{@ncdftype}">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:value-of select="@ncdfelementdoc"/>
+                        </xs:documentation>
+                        <xsl:for-each select="appinfo/*">
+                            <xs:appinfo>
+                                <xsl:copy-of select="." copy-namespaces="no"/>
+                            </xs:appinfo>
+                        </xsl:for-each>
+                    </xs:annotation>
+                    <xs:complexContent>
+                        <xs:extension base="SetBaseType">
+                            <xs:sequence>
+                                <xs:element ref="{concat(@mtfname,'TextIndicator')}" minOccurs="1" maxOccurs="1">
+                                    <xs:annotation>
+                                        <xs:documentation>
+                                            <xsl:value-of select="concat('A data item for ', @ncdfelementname, ' Text Indicator')"/>
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element ref="FreeText" minOccurs="1" maxOccurs="1">
+                                    <xs:annotation>
+                                        <xs:documentation>A data item for text entry</xs:documentation>
+                                        <xs:appinfo>
+                                            <mtfappinfo:Field positionName="FREE TEXT" identifier="A" justification="Left"
+                                                definition="AN UNFORMATTED FREE TEXT FIELD CONTAINING AN UNLIMITED NUMBER OF CHARACTERS. USED IN THE FREE TEXT SETS AMPN, GENTEXT, NARR, AND REMARKS."
+                                                remark="ANY NUMBER AND TYPE OF CHARACTERS ALLOWED EXCEPT DOUBLE SLANTS (//)." version="1.0" ffirn="1006" fud="1"/>
+                                        </xs:appinfo>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element ref="GeneralTextSetAugmentationPoint" minOccurs="0" maxOccurs="unbounded"/>
+                            </xs:sequence>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+                <xs:element name="{concat(@mtfname,'TextIndicator')}" type="TextIndicatorType">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:value-of select="concat('A data item for ', @mtfname, ' Text Indicator')"/>
+                        </xs:documentation>
+                        <xs:appinfo>
+                            <mtfappinfo:Field fixed="{@positionname}"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xsl:if>
         </xsl:for-each>
         <xsl:for-each select="$ncdf_segments_map//Element[Choice]">
             <xsl:variable name="substgrp" select="@substgrpname"/>
@@ -1027,21 +1039,21 @@
                 <xsl:when test="$all_set_elements_map/*[@substgrpname = $substgrp]"/>
                 <xsl:when test="starts-with(Choice/Element[1]/@mtftype, 's:')"/>
                 <xsl:otherwise>
-                    <xsd:element name="{@substgrpname}" abstract="true">
-                        <xsd:annotation>
-                            <xsd:documentation>
+                    <xs:element name="{@substgrpname}" abstract="true">
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="@substgrpdoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
+                            </xs:documentation>
+                            <xs:appinfo>
                                 <mtfappinfo:Choice>
                                     <xsl:for-each select="Choice/Element">
                                         <xsl:sort select="@ncdfelementname"/>
                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
                                 </mtfappinfo:Choice>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:for-each select="Choice/Element">
@@ -1060,7 +1072,7 @@
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:variable>
-                        <xsd:element name="{@ncdfelementname}">
+                        <xs:element name="{@ncdfelementname}">
                             <xsl:if test="@ncdftype">
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="@ncdftype"/>
@@ -1081,12 +1093,12 @@
                                     <xsl:text>true</xsl:text>
                                 </xsl:attribute>
                             </xsl:if>
-                            <xsd:annotation>
-                                <xsd:documentation>
+                            <xs:annotation>
+                                <xs:documentation>
                                     <xsl:value-of select="@ncdfelementdoc"/>
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:for-each>
@@ -1107,7 +1119,7 @@
                 <xsl:when test="$all_set_elements_map/*[@ncdfelementname = $n]"/>
                 <xsl:when test="starts-with(@mtftype, 's:')"/>
                 <xsl:otherwise>
-                    <xsd:element name="{$n}">
+                    <xs:element name="{$n}">
                         <xsl:if test="@ncdftype">
                             <xsl:attribute name="type">
                                 <xsl:value-of select="@ncdftype"/>
@@ -1128,8 +1140,8 @@
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
                         </xsl:if>
-                        <xsd:annotation>
-                            <xsd:documentation>
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:choose>
                                     <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                         <xsl:value-of select="@substgrpdoc"/>
@@ -1149,24 +1161,24 @@
                                         </xsl:call-template>
                                     </xsl:otherwise>
                                 </xsl:choose>
-                            </xsd:documentation>
+                            </xs:documentation>
                             <xsl:for-each select="appinfo/*">
-                                <xsd:appinfo>
-                                    <xsl:copy-of select="."/>
-                                </xsd:appinfo>
+                                <xs:appinfo>
+                                    <xsl:copy-of select="." copy-namespaces="no"/>
+                                </xs:appinfo>
                             </xsl:for-each>
                             <xsl:if test="@substgrpname">
-                                <xsd:appinfo>
+                                <xs:appinfo>
                                     <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                         <xsl:for-each select="Choice/Element">
                                             <xsl:sort select="@name"/>
                                             <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                         </xsl:for-each>
                                     </mtfappinfo:Choice>
-                                </xsd:appinfo>
+                                </xs:appinfo>
                             </xsl:if>
-                        </xsd:annotation>
-                    </xsd:element>
+                        </xs:annotation>
+                    </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
@@ -1174,15 +1186,15 @@
     <xsl:variable name="segmentsxsd">
         <xsl:for-each select="$ncdf_segments_map/Segment">
             <xsl:sort select="@ncdftype"/>
-            <xsd:complexType name="{@ncdftype}">
-                <xsd:annotation>
-                    <xsd:documentation>
+            <xs:complexType name="{@ncdftype}">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdftypedoc"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsd:complexContent>
-                    <xsd:extension base="structures:ObjectType">
-                        <xsd:sequence>
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="structures:ObjectType">
+                        <xs:sequence>
                             <xsl:for-each select="*:Sequence/Element">
                                 <xsl:variable name="n" select="@ncdfelementname"/>
                                 <xsl:variable name="refname">
@@ -1190,19 +1202,16 @@
                                         <xsl:when test="@substgrpname">
                                             <xsl:value-of select="@substgrpname"/>
                                         </xsl:when>
-                                        <xsl:when test="$segmentelements/*[@name = $n]">
-                                            <xsl:value-of select="$n"/>
-                                        </xsl:when>
                                         <xsl:otherwise>
                                             <xsl:value-of select="$n"/>
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:variable>
-                                <xsd:element ref="{$refname}">
+                                <xs:element ref="{$refname}">
                                     <xsl:copy-of select="@minOccurs"/>
                                     <xsl:copy-of select="@maxOccurs"/>
-                                    <xsd:annotation>
-                                        <xsd:documentation>
+                                    <xs:annotation>
+                                        <xs:documentation>
                                             <xsl:choose>
                                                 <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                                     <xsl:value-of select="@substgrpdoc"/>
@@ -1217,108 +1226,75 @@
                                                     <xsl:value-of select="@ncdfelementdoc"/>
                                                 </xsl:otherwise>
                                             </xsl:choose>
-                                        </xsd:documentation>
+                                        </xs:documentation>
                                         <xsl:for-each select="appinfo/*">
-                                            <xsd:appinfo>
-                                                <xsl:copy>
-                                                    <xsl:copy-of select="@positionName"/>
-                                                    <xsl:copy-of select="ancestor::Element/@textindicator"/>
-                                                    <xsl:copy-of select="@usage"/>
-                                                </xsl:copy>
-                                            </xsd:appinfo>
+                                            <xs:appinfo>
+                                                <xsl:copy-of select="." copy-namespaces="no"/>
+                                            </xs:appinfo>
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
-                                            <xsd:appinfo>
+                                            <xs:appinfo>
                                                 <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                                     <xsl:for-each select="Choice/Element">
                                                         <xsl:sort select="@name"/>
                                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                                     </xsl:for-each>
                                                 </mtfappinfo:Choice>
-                                            </xsd:appinfo>
+                                            </xs:appinfo>
                                         </xsl:if>
-                                    </xsd:annotation>
-                                </xsd:element>
+                                    </xs:annotation>
+                                </xs:element>
                             </xsl:for-each>
-                            <xsd:element ref="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
-                        </xsd:sequence>
-                    </xsd:extension>
-                </xsd:complexContent>
-            </xsd:complexType>
-            <xsd:element name="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" abstract="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                            <xs:element ref="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:element name="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" abstract="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="concat('An augmentation point for ', @ncdftype)"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdfelementdoc"/>
-                    </xsd:documentation>
+                    </xs:documentation>
                     <xsl:for-each select="appinfo/*">
-                        <xsd:appinfo>
-                            <xsl:copy>
-                                <xsl:copy-of select="@segmentname"/>
-                                <!--<xsl:copy-of select="@positionName"/>-->
-                                <xsl:copy-of select="@usage"/>
-                                <xsl:copy-of select="@concept"/>
-                            </xsl:copy>
-                        </xsd:appinfo>
+                        <xs:appinfo>
+                            <xsl:copy-of select="." copy-namespaces="no"/>
+                        </xs:appinfo>
                     </xsl:for-each>
-                </xsd:annotation>
-            </xsd:element>
+                </xs:annotation>
+            </xs:element>
         </xsl:for-each>
         <!--Global Set Elements-->
         <xsl:copy-of select="$segmentelements"/>
-        <!--Set Elements with Choice to Substitution Groups-->
-        <!--<xsl:for-each select="$ncdf_segments_map//Element[Choice]">
-            <xsl:variable name="substgrp" select="@substgrpname"/>
-            <xsd:element name="{@substgrpname}" abstract="true">
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:value-of select="normalize-space(@substgrpdoc)"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsl:for-each select="Choice/Element">
-                <xsd:element name="{@ncdfelementname}" type="{@ncdftype}" substitutionGroup="{$substgrp}" nillable="true">
-                    <xsd:annotation>
-                        <xsd:documentation>
-                            <xsl:value-of select="normalize-space(@ncdfelementdoc)"/>
-                        </xsd:documentation>
-                    </xsd:annotation>
-                </xsd:element>
-            </xsl:for-each>
-        </xsl:for-each>-->
     </xsl:variable>
     <xsl:variable name="mtf_segments_xsd">
-        <xsl:for-each select="$segmentsxsd/xsd:complexType">
+        <xsl:for-each select="$segmentsxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:variable name="pre1" select="preceding-sibling::xsd:complexType[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::xsd:complexType[@name = $n][2]"/>
-            <xsl:variable name="pre3" select="preceding-sibling::xsd:complexType[@name = $n][3]"/>
             <xsl:choose>
-                <xsl:when test="$n = $pre1/@name"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
-                <xsl:when test="deep-equal(., $pre3)"/>
+                <xsl:when test="$setsxsd/*:complexType[@name = $n]"/>
+                <xsl:when test="count(preceding-sibling::*:complexType[@name = $n]) &gt; 0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-        <xsl:for-each select="$segmentsxsd/xsd:element[@name]">
+        <xsl:for-each select="$segmentsxsd/*:element[@name]">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
             <xsl:choose>
+                <xsl:when test="$setsxsd/*:element[@name = $n]"/>
                 <xsl:when test="string-length(@type) = 0 and not(@abstract)"/>
                 <xsl:when test="not(@type) and not(@abstract)"/>
-                <xsl:when test="count(preceding-sibling::xsd:element[@name = $n and @type = $t]) &gt; 0"/>
-                <xsl:when test="count(preceding-sibling::xsd:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
+                <xsl:when test="count(preceding-sibling::*:element[@name = $n and @type = $t]) &gt; 0"/>
+                <xsl:when test="count(preceding-sibling::*:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
@@ -1347,35 +1323,31 @@
                     </xsl:variable>
                     <xsl:choose>
                         <xsl:when test="@ncdfelementname">
-                            <xsd:element name="{@ncdfelementname}">
+                            <xs:element name="{@ncdfelementname}">
                                 <xsl:attribute name="type">
                                     <xsl:value-of select="@ncdftype"/>
                                 </xsl:attribute>
                                 <xsl:attribute name="nillable">
                                     <xsl:text>true</xsl:text>
                                 </xsl:attribute>
-                                <xsd:annotation>
-                                    <xsd:documentation>
+                                <xs:annotation>
+                                    <xs:documentation>
                                         <xsl:choose>
                                             <xsl:when test="@ncdftypedoc">
-                                                <xsl:value-of select="replace(@ncdftypedoc,'A data type','A data item')"/>
+                                                <xsl:value-of select="replace(@ncdftypedoc, 'A data type', 'A data item')"/>
                                             </xsl:when>
                                             <xsl:otherwise>
                                                 <xsl:value-of select="@ncdfelementdoc"/>
                                             </xsl:otherwise>
                                         </xsl:choose>
-                                    </xsd:documentation>
+                                    </xs:documentation>
                                     <xsl:for-each select="appinfo/*">
-                                        <xsd:appinfo>
-                                            <xsl:copy>
-                                                <xsl:copy-of select="@positionName"/>
-                                                <!--<xsl:copy-of select="@concept"/>
-                                                    <xsl:copy-of select="@usage"/>-->
-                                            </xsl:copy>
-                                        </xsd:appinfo>
+                                        <xs:appinfo>
+                                            <xsl:copy-of select="." copy-namespaces="no"/>
+                                        </xs:appinfo>
                                     </xsl:for-each>
-                                </xsd:annotation>
-                            </xsd:element>
+                                </xs:annotation>
+                            </xs:element>
                         </xsl:when>
                     </xsl:choose>
                 </xsl:otherwise>
@@ -1387,25 +1359,25 @@
                 <xsl:when test="$all_set_elements_map//*[@substgrpname = $substgrp]"/>
                 <xsl:when test="$all_segment_elements_map//*[@substgrpname = $substgrp]"/>
                 <xsl:when test="@substgrpname">
-                    <xsd:element name="{@substgrpname}" abstract="true">
-                        <xsd:annotation>
-                            <xsd:documentation>
+                    <xs:element name="{@substgrpname}" abstract="true">
+                        <xs:annotation>
+                            <xs:documentation>
                                 <xsl:value-of select="@substgrpdoc"/>
-                            </xsd:documentation>
-                            <xsd:appinfo>
+                            </xs:documentation>
+                            <xs:appinfo>
                                 <mtfappinfo:Choice>
                                     <xsl:for-each select="Choice/Element">
                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
                                 </mtfappinfo:Choice>
-                            </xsd:appinfo>
-                        </xsd:annotation>
-                    </xsd:element>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
                     <xsl:for-each select="Choice/Element">
                         <xsl:variable name="n" select="@ncdfelementname"/>
-                        <xsd:element name="{@ncdfelementname}" type="{@ncdftype}" substitutionGroup="{$substgrp}" nillable="true">
-                            <xsd:annotation>
-                                <xsd:documentation>
+                        <xs:element name="{@ncdfelementname}" type="{@ncdftype}" substitutionGroup="{$substgrp}" nillable="true">
+                            <xs:annotation>
+                                <xs:documentation>
                                     <xsl:choose>
                                         <xsl:when test="@ncdftypedoc">
                                             <xsl:value-of select="@ncdftypedoc"/>
@@ -1414,9 +1386,9 @@
                                             <xsl:value-of select="@ncdfelementdoc"/>
                                         </xsl:when>
                                     </xsl:choose>
-                                </xsd:documentation>
-                            </xsd:annotation>
-                        </xsd:element>
+                                </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
                     </xsl:for-each>
                 </xsl:when>
             </xsl:choose>
@@ -1425,20 +1397,20 @@
     <xsl:variable name="messagesxsd">
         <xsl:for-each select="$ncdf_messages_map/Message">
             <xsl:sort select="@ncdftype"/>
-            <xsd:complexType name="{@ncdftype}">
-                <xsd:annotation>
-                    <xsd:documentation>
+            <xs:complexType name="{@ncdftype}">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdftypedoc"/>
-                    </xsd:documentation>
+                    </xs:documentation>
                     <xsl:for-each select="appinfo/*">
-                        <xsd:appinfo>
-                            <xsl:copy-of select="."/>
-                        </xsd:appinfo>
+                        <xs:appinfo>
+                            <xsl:copy-of select="." copy-namespaces="no"/>
+                        </xs:appinfo>
                     </xsl:for-each>
-                </xsd:annotation>
-                <xsd:complexContent>
-                    <xsd:extension base="structures:ObjectType">
-                        <xsd:sequence>
+                </xs:annotation>
+                <xs:complexContent>
+                    <xs:extension base="structures:ObjectType">
+                        <xs:sequence>
                             <xsl:for-each select="*:Sequence/Element">
                                 <xsl:variable name="n" select="@ncdfelementname"/>
                                 <!--<xsl:variable name="p" select="substring-before(@mtftype, ':')"/>-->
@@ -1455,11 +1427,11 @@
                                         </xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:variable>
-                                <xsd:element ref="{$refname}">
+                                <xs:element ref="{$refname}">
                                     <xsl:copy-of select="@minOccurs"/>
                                     <xsl:copy-of select="@maxOccurs"/>
-                                    <xsd:annotation>
-                                        <xsd:documentation>
+                                    <xs:annotation>
+                                        <xs:documentation>
                                             <xsl:choose>
                                                 <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                                     <xsl:value-of select="@substgrpdoc"/>
@@ -1471,65 +1443,59 @@
                                                     <xsl:value-of select="@ncdftypedoc"/>
                                                 </xsl:otherwise>
                                             </xsl:choose>
-                                        </xsd:documentation>
+                                        </xs:documentation>
                                         <xsl:for-each select="appinfo/*">
-                                            <xsd:appinfo>
-                                                <xsl:copy-of select="."/>
-                                            </xsd:appinfo>
+                                            <xs:appinfo>
+                                                <xsl:copy-of select="." copy-namespaces="no"/>
+                                            </xs:appinfo>
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
-                                            <xsd:appinfo>
+                                            <xs:appinfo>
                                                 <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
                                                     <xsl:for-each select="Choice/Element">
                                                         <xsl:sort select="@name"/>
                                                         <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                                     </xsl:for-each>
                                                 </mtfappinfo:Choice>
-                                            </xsd:appinfo>
+                                            </xs:appinfo>
                                         </xsl:if>
-                                    </xsd:annotation>
-                                </xsd:element>
+                                    </xs:annotation>
+                                </xs:element>
                             </xsl:for-each>
-                            <xsd:element ref="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
-                        </xsd:sequence>
-                    </xsd:extension>
-                </xsd:complexContent>
-            </xsd:complexType>
-            <xsd:element name="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" abstract="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                            <xs:element ref="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:element name="{concat(substring(@ncdftype,0,string-length(@ncdftype)-3),'AugmentationPoint')}" abstract="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="concat('An augmentation point for ', @ncdftype)"/>
-                    </xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
-                <xsd:annotation>
-                    <xsd:documentation>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="{@ncdfelementname}" type="{@ncdftype}" nillable="true">
+                <xs:annotation>
+                    <xs:documentation>
                         <xsl:value-of select="@ncdfelementdoc"/>
-                    </xsd:documentation>
+                    </xs:documentation>
                     <xsl:for-each select="appinfo/*">
-                        <xsd:appinfo>
-                            <xsl:copy-of select="."/>
-                            <!-- <xsl:copy>
-                                <xsl:copy-of select="@name"/>
-                                <xsl:copy-of select="@positionName"/>
-                                <!-\-\\\\-<xsl:copy-of select="@usage"/>
-                                <xsl:copy-of select="@concept"/> -\->
-                            </xsl:copy>-->
-                        </xsd:appinfo>
+                        <xs:appinfo>
+                            <xsl:copy-of select="." copy-namespaces="no"/>
+                        </xs:appinfo>
                     </xsl:for-each>
-                </xsd:annotation>
-            </xsd:element>
+                </xs:annotation>
+            </xs:element>
         </xsl:for-each>
         <!--Global Elements-->
         <xsl:copy-of select="$messagelements"/>
     </xsl:variable>
     <xsl:variable name="mtf_messages_xsd">
-        <xsl:for-each select="$messagesxsd/xsd:complexType">
+        <xsl:for-each select="$messagesxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:variable name="pre1" select="preceding-sibling::xsd:complexType[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::xsd:complexType[@name = $n][2]"/>
+            <xsl:variable name="pre1" select="preceding-sibling::*:complexType[@name = $n][1]"/>
+            <xsl:variable name="pre2" select="preceding-sibling::*:complexType[@name = $n][2]"/>
             <xsl:choose>
                 <xsl:when test="$n = $pre1/@name"/>
                 <xsl:when test="deep-equal(., $pre2)"/>
@@ -1539,13 +1505,13 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-        <xsl:for-each select="$messagesxsd/xsd:element">
+        <xsl:for-each select="$messagesxsd/*:element">
             <xsl:sort select="@name"/>
             <xsl:sort select="@type"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
-            <xsl:variable name="pre1" select="preceding-sibling::xsd:element[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::xsd:element[@name = $n][2]"/>
+            <xsl:variable name="pre1" select="preceding-sibling::*:element[@name = $n][1]"/>
+            <xsl:variable name="pre2" select="preceding-sibling::*:element[@name = $n][2]"/>
             <xsl:choose>
                 <xsl:when test="deep-equal(., $pre1)"/>
                 <xsl:when test="deep-equal(., $pre2)"/>
@@ -1554,14 +1520,14 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:for-each>
-    </xsl:variable>   
+    </xsl:variable>
     <xsl:variable name="mtf_messages_map">
         <xsl:for-each select="$ncdf_messages_map/*">
             <xsl:sort select="@mtfname"/>
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
-    <!-- _______________________________________________________ -->   
+    <!-- _______________________________________________________ -->
     <!--Consolidated-->
     <xsl:variable name="ALLMTF">
         <xsl:copy-of select="$mtf_fields_xsd"/>
@@ -1571,176 +1537,123 @@
         <xsl:copy-of select="$mtf_messages_xsd"/>
     </xsl:variable>
 
+    <xsl:variable name="ref-xsd-template">
+        <xs:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+            xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo"
+            xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:ncdf:mtf"
+            ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
+            attributeFormDefault="unqualified" version="1.0">
+            <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ncdf/utility/structures/4.0/structures.xsd"/>
+            <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="ncdf/localTerminology.xsd"/>
+            <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ncdf/utility/appinfo/4.0/appinfo.xsd"/>
+            <xs:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="ncdf/mtfappinfo.xsd"/>
+        </xs:schema>
+    </xsl:variable>
+
     <xsl:template name="main">
         <!--Schema-->
         <xsl:result-document href="{$dirpath}/NCDF_MTF_Fields.xsd">
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
-                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:int:nato:ncdf:mtf" 
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
-                xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
-                <xsd:include schemaLocation="NCDF_MTF_Sets.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:text>Fields for MTF Messages</xsl:text>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsl:copy-of select="$mtf_fields_xsd" copy-namespaces="no"/>
-            </xsd:schema>
+            <xsl:for-each select="$ref-xsd-template/*">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*" mode="identity"/>
+                    <xsl:apply-templates select="*" mode="identity"/>
+                    <xs:include schemaLocation="NCDF_MTF_Sets.xsd"/>
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:text>Fields for MTF Messages</xsl:text>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xsl:copy-of select="$mtf_fields_xsd" copy-namespaces="no"/>
+                </xsl:copy>
+            </xsl:for-each>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NCDF_MTF_Composites.xsd">
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
-                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:int:nato:ncdf:mtf" 
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
-                xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
-                <xsd:include schemaLocation="NCDF_MTF_Fields.xsd"/>
-                <xsd:include schemaLocation="NCDF_MTF_Sets.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:text>Composite fields for MTF Composite Fields</xsl:text>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsl:copy-of select="$mtf_composites_xsd" copy-namespaces="no"/>
-            </xsd:schema>
+            <xsl:for-each select="$ref-xsd-template/*">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*" mode="identity"/>
+                    <xsl:apply-templates select="*" mode="identity"/>
+                    <xs:include schemaLocation="NCDF_MTF_Fields.xsd"/>
+                    <xs:include schemaLocation="NCDF_MTF_Sets.xsd"/>
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:text>Composite fields for MTF Composite Fields</xsl:text>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xsl:copy-of select="$mtf_composites_xsd" copy-namespaces="no"/>
+                </xsl:copy>
+            </xsl:for-each>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NCDF_MTF_Sets.xsd">
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
-                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:int:nato:ncdf:mtf" 
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
-                xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
-                <xsd:include schemaLocation="NCDF_MTF_Fields.xsd"/>
-                <xsd:include schemaLocation="NCDF_MTF_Composites.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:text>Set structures for MTF Messages</xsl:text>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsl:copy-of select="$mtf_sets_xsd" copy-namespaces="no"/>
-            </xsd:schema>
+            <xsl:for-each select="$ref-xsd-template/*">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*" mode="identity"/>
+                    <xsl:apply-templates select="*" mode="identity"/>
+                    <xs:include schemaLocation="NCDF_MTF_Fields.xsd"/>
+                    <xs:include schemaLocation="NCDF_MTF_Composites.xsd"/>
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:text>Set structures for MTF Messages</xsl:text>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xsl:copy-of select="$mtf_sets_xsd" copy-namespaces="no"/>
+                </xsl:copy>
+            </xsl:for-each>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NCDF_MTF_Segments.xsd">
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
-                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:int:nato:ncdf:mtf" 
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
-                xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
-                <xsd:include schemaLocation="NCDF_MTF_Sets.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:text>Segment structures for MTF Segments</xsl:text>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsl:copy-of select="$mtf_segments_xsd" copy-namespaces="no"/>
-            </xsd:schema>
+            <xsl:for-each select="$ref-xsd-template/*">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*" mode="identity"/>
+                    <xsl:apply-templates select="*" mode="identity"/>
+                    <xs:include schemaLocation="NCDF_MTF_Sets.xsd"/>
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:text>Segment structures for MTF Segments</xsl:text>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xsl:copy-of select="$mtf_segments_xsd" copy-namespaces="no"/>
+                </xsl:copy>
+            </xsl:for-each>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NCDF_MTF_Messages.xsd">
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
-                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:int:nato:ncdf:mtf" 
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
-                xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
-                <xsd:include schemaLocation="NCDF_MTF_Sets.xsd"/>
-                <xsd:include schemaLocation="NCDF_MTF_Segments.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:text>Message structures for MTF Messages</xsl:text>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsl:copy-of select="$mtf_messages_xsd"/>
-            </xsd:schema>
+            <xsl:for-each select="$ref-xsd-template/*">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*" mode="identity"/>
+                    <xsl:apply-templates select="*" mode="identity"/>
+                    <xs:include schemaLocation="NCDF_MTF_Sets.xsd"/>
+                    <xs:include schemaLocation="NCDF_MTF_Segments.xsd"/>
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:text>Message structures for MTF Messages</xsl:text>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xsl:copy-of select="$mtf_messages_xsd"/>
+                </xsl:copy>
+            </xsl:for-each>
         </xsl:result-document>
         <xsl:result-document href="{$dirpath}/NCDF_MTF.xsd">
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
-                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:int:nato:ncdf:mtf" 
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
-                xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:text>UNIFIED MTF MESSAGE SCHEMA</xsl:text>
-                    </xsd:documentation>
-                </xsd:annotation>
-                <xsl:for-each select="$ALLMTF/xsd:complexType">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-                <xsl:for-each select="$ALLMTF/xsd:simpleType">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-                <xsl:for-each select="$ALLMTF/xsd:element">
-                    <xsl:sort select="@name"/>
-                    <xsl:copy-of select="."/>
-                </xsl:for-each>
-            </xsd:schema>
+            <xsl:for-each select="$ref-xsd-template/*">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*" mode="identity"/>
+                    <xsl:apply-templates select="*" mode="identity"/>
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:text>UNIFIED MTF MESSAGE SCHEMA</xsl:text>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xsl:for-each select="$ALLMTF/*:complexType">
+                        <xsl:sort select="@name"/>
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:for-each select="$ALLMTF/*:simpleType">
+                        <xsl:sort select="@name"/>
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:for-each select="$ALLMTF/*:element">
+                        <xsl:sort select="@name"/>
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                </xsl:copy>
+            </xsl:for-each>
         </xsl:result-document>
         <!--Maps-->
         <xsl:result-document href="{$dirpath}/Maps/NCDF_MTF_Fieldmaps.xml">
@@ -1768,129 +1681,31 @@
                 <xsl:copy-of select="$mtf_messages_map"/>
             </Messages>
         </xsl:result-document>
-        <!--Individual Message Schema-->
-        <!--<xsl:for-each select="$ALLMTF/xsd:element[xsd:annotation/xsd:appinfo/*:Msg]">
-            <xsl:call-template name="ExtractMessageSchema">
-                <xsl:with-param name="message" select="."/>
-                <xsl:with-param name="outdir" select="$sepmsgsout"/>
-            </xsl:call-template>
-        </xsl:for-each>-->
-    </xsl:template>
-
-    <xsl:template name="ExtractMessageSchema">
-        <xsl:param name="message"/>
-        <xsl:param name="outdir"/>
-        <xsl:variable name="msgid" select="$ALLMTF/*[@name = $message/@type]/xsd:annotation/xsd:appinfo/*:Msg/@mtfid"/>
-        <xsl:variable name="mid" select="translate($msgid, ' .:()', '')"/>
-        <xsl:variable name="schtron">
-            <xsl:value-of
-                select="concat($lt, '?xml-model', ' href=', $q, '../../../APP-11C-ch1/Consolidated/MTF_Schema_Tests/', $mid, '.sch', $q, ' type=', $q, 'application/xml', $q, ' schematypens=', $q, 'http://purl.oclc.org/dsdl/schematron', $q, '?', $gt)"
-            />
-        </xsl:variable>
-        <xsl:result-document href="{$outdir}/{concat($mid,'.xsd')}">
-            <!--<xsl:text>&#10;</xsl:text>
-            <xsl:value-of select="$schtron" disable-output-escaping="yes"/>
-            <xsl:text>&#10;</xsl:text>-->
-            <xsd:schema xmlns="urn:int:nato:ncdf:mtf" 
-                xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-                xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
-                xmlns:structures="http://release.niem.gov/niem/structures/4.0/" 
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" 
-                xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" 
-                xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
-                targetNamespace="urn:int:nato:ncdf:mtf" 
-                ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" 
-                xml:lang="en-US"
-                elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsd:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../NCDF/structures.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../NCDF/localTerminology.xsd"/>
-                <xsd:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../NCDF/appinfo.xsd"/>
-                <xsd:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="../NCDF/mtfappinfo.xsd"/>
-                <xsd:annotation>
-                    <xsd:documentation>
-                        <xsl:value-of select="concat($message/xsd:annotation/xsd:appinfo/*:Msg/@mtfname, ' MESSAGE SCHEMA')"/>
-                    </xsd:documentation>
-                    <xsd:appinfo>
-                        <mtfappinfo:Msg mtfname="{$message/xsd:annotation/xsd:appinfo/*:Msg/@mtfname}" mtfid="{$msgid}"/>
-                    </xsd:appinfo>
-                </xsd:annotation>
-                <xsl:copy-of select="$message"/>
-                <xsl:copy-of select="$ALLMTF/xsd:complexType[@name = $message/@type]"/>
-                <xsl:variable name="msgnodes">
-                    <xsl:for-each select="$ALLMTF/*[@name = $message/@type]//*[@ref | @base | @type]">
-                        <xsl:variable name="n" select="@ref | @base | @type"/>
-                        <xsl:call-template name="iterateNode">
-                            <xsl:with-param name="node" select="$ALLMTF/*[@name = $n]"/>
-                            <xsl:with-param name="iteration" select="18"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
-                </xsl:variable>
-                <xsl:variable name="subgrps">
-                    <xsl:for-each select="$msgnodes/xsd:element[@abstract = 'true'][xsd:annotation/xsd:appinfo/*:Choice]">
-                        <xsl:variable name="n" select="@name"/>
-                        <xsl:call-template name="iterateNode">
-                            <xsl:with-param name="node" select="$ALLMTF/*[@substitutionGroup = $n]"/>
-                            <xsl:with-param name="iteration" select="10"/>
-                        </xsl:call-template>
-                    </xsl:for-each>
-                </xsl:variable>
-                <xsl:variable name="all">
-                    <xsl:copy-of select="$msgnodes"/>
-                    <xsl:copy-of select="$subgrps"/>
-                </xsl:variable>
-                <xsl:for-each select="$all/xsd:complexType[not(@name = $message/@type)]">
-                    <xsl:sort select="@name"/>
-                    <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="count(preceding-sibling::xsd:complexType[@name = $n]) = 0">
-                        <xsl:copy-of select="."/>
-                    </xsl:if>
-                </xsl:for-each>
-                <xsl:for-each select="$all/xsd:simpleType">
-                    <xsl:sort select="@name"/>
-                    <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="count(preceding-sibling::xsd:simpleType[@name = $n]) = 0">
-                        <xsl:copy-of select="."/>
-                    </xsl:if>
-                </xsl:for-each>
-                <xsl:for-each select="$all/xsd:element[not(@name = $message/@name)]">
-                    <xsl:sort select="@name"/>
-                    <xsl:variable name="n" select="@name"/>
-                    <xsl:if test="count(preceding-sibling::xsd:element[@name = $n]) = 0">
-                        <xsl:copy-of select="."/>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsd:schema>
+        <xsl:result-document href="{$dirpath}/Maps/NCDF_MTF_AllMaps.xml">
+            <MTF>
+                <xsl:copy-of select="$mtf_messages_map" copy-namespaces="no"/>
+                <xsl:copy-of select="$mtf_segments_map" copy-namespaces="no"/>
+                <xsl:copy-of select="$mtf_sets_map" copy-namespaces="no"/>
+                <xsl:copy-of select="$mtf_composites_map" copy-namespaces="no"/>
+                <xsl:copy-of select="$mtf_fields_map" copy-namespaces="no"/>
+            </MTF>
         </xsl:result-document>
     </xsl:template>
-    <xsl:template name="iterateNode">
-        <xsl:param name="node"/>
-        <xsl:param name="iteration"/>
-        <xsl:copy-of select="$node"/>
-        <xsl:if test="$iteration &gt; 0">
-            <xsl:for-each select="$node//@*[name() = 'ref' or name() = 'type' or name() = 'base' or name() = 'substitutionGroup' or name() = 'abstract'][not(. = $node/@name)]">
-                <xsl:variable name="n">
-                    <xsl:value-of select="."/>
-                </xsl:variable>
-                <xsl:choose>
-                    <xsl:when test="$n = 'abstract' and $node/xsd:annotation/xsd:appinfo/*:Choice">
-                        <xsl:variable name="s" select="$node/@name"/>
-                        <xsl:for-each select="$ALLMTF/*[@substitutionGroup = $s]">
-                            <xsl:call-template name="iterateNode">
-                                <xsl:with-param name="node" select="."/>
-                                <xsl:with-param name="iteration" select="number($iteration - 1)"/>
-                            </xsl:call-template>
-                        </xsl:for-each>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:call-template name="iterateNode">
-                            <xsl:with-param name="node" select="$ALLMTF/*[@name = $n]"/>
-                            <xsl:with-param name="iteration" select="number($iteration - 1)"/>
-                        </xsl:call-template>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:for-each>
-        </xsl:if>
+
+    <xsl:template match="*" mode="identity">
+        <xsl:copy copy-namespaces="no">
+            <xsl:apply-templates select="@*" mode="identity"/>
+            <xsl:apply-templates select="text()" mode="identity"/>
+            <xsl:apply-templates select="*" mode="identity"/>
+        </xsl:copy>
+    </xsl:template>
+
+    <xsl:template match="@*" mode="identity">
+        <xsl:copy-of select="." copy-namespaces="no"/>
+    </xsl:template>
+
+    <xsl:template match="text()" mode="identity">
+        <xsl:value-of select="normalize-space(.)"/>
     </xsl:template>
 
 </xsl:stylesheet>
