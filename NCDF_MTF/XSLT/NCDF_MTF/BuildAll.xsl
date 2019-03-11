@@ -83,7 +83,7 @@
                                     <xsl:value-of select="@ncdfelementdoc"/>
                                 </xs:documentation>
                                 <xs:appinfo>
-                                    <xsl:for-each select="appinfo/*">
+                                    <xsl:for-each select="info/*">
                                         <xsl:copy-of select="." copy-namespaces="no"/>
                                     </xsl:for-each>
                                 </xs:appinfo>
@@ -101,12 +101,12 @@
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
-                                <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                <inf:Choice substitutionGroup="{@substgrpname}">
                                     <xsl:for-each select="Element">
                                         <xsl:sort select="@ncdfelementname"/>
-                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
-                                </mtfappinfo:Choice>
+                                </inf:Choice>
                             </xs:appinfo>
                         </xs:annotation>
                     </xs:element>
@@ -205,7 +205,7 @@
                                 <xsl:value-of select="@ncdfelementdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
-                                <xsl:for-each select="appinfo/*">
+                                <xsl:for-each select="info/*">
                                     <xsl:copy-of select="." copy-namespaces="no"/>
                                 </xsl:for-each>
                             </xs:appinfo>
@@ -248,7 +248,7 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="info/*">
                         <xs:appinfo>
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xs:appinfo>
@@ -270,7 +270,7 @@
                         <xsl:value-of select="@ncdftypedoc"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="appinfo/*">
+                        <xsl:for-each select="info/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
                     </xs:appinfo>
@@ -314,7 +314,7 @@
                         </xsl:choose>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="appinfo/*">
+                        <xsl:for-each select="info/*">
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xsl:for-each>
                     </xs:appinfo>
@@ -378,13 +378,13 @@
                         <xsl:value-of select="ancestor::Set/@ncdfelementname"/>
                     </xsl:variable>
                     <xsl:variable name="setdocname">
-                        <xsl:value-of select="lower-case(ancestor::Set/appinfo/mtfappinfo:Set/@setname)"/>
+                        <xsl:value-of select="lower-case(ancestor::Set/info/mtfappinfo:Set/@setname)"/>
                     </xsl:variable>
                     <xsl:variable name="setdoc">
                         <xsl:value-of select="ancestor::Set/@ncdftypedoc"/>
                     </xsl:variable>
                     <xsl:variable name="fielddocname">
-                        <xsl:value-of select="lower-case(Element[1]/appinfo/mtfappinfo:Field/@positionName)"/>
+                        <xsl:value-of select="lower-case(Element[1]/info/mtfappinfo:Field/@positionName)"/>
                     </xsl:variable>
                     <xsl:variable name="fgname">
                         <xsl:choose>
@@ -474,7 +474,7 @@
                                                         </xsl:otherwise>
                                                     </xsl:choose>
                                                 </xs:documentation>
-                                                <xsl:for-each select="appinfo/*">
+                                                <xsl:for-each select="info/*">
                                                     <xs:appinfo>
                                                         <xsl:copy-of select="." copy-namespaces="no"/>
                                                     </xs:appinfo>
@@ -565,7 +565,7 @@
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xs:documentation>
-                            <xsl:for-each select="appinfo/*">
+                            <xsl:for-each select="info/*">
                                 <xs:appinfo>
                                     <xsl:copy-of select="." copy-namespaces="no"/>
                                 </xs:appinfo>
@@ -590,7 +590,7 @@
                         <xs:documentation>
                             <xsl:value-of select="@ncdfelementdoc"/>
                         </xs:documentation>
-                        <xsl:for-each select="appinfo/*">
+                        <xsl:for-each select="info/*">
                             <xs:appinfo>
                                 <xsl:copy-of select="." copy-namespaces="no"/>
                             </xs:appinfo>
@@ -616,18 +616,25 @@
                                         </xs:appinfo>
                                     </xs:annotation>
                                 </xs:element>
-                                <xs:element ref="GeneralTextSetAugmentationPoint" minOccurs="0" maxOccurs="unbounded"/>
+                                <xs:element ref="{concat(@mtfname,'GeneralTextSetAugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
                             </xs:sequence>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
+                <xs:element name="{concat(@mtfname,'GeneralTextSetAugmentationPoint')}" abstract="true">
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:value-of select="concat('An augmentation point for ', @mtfname, ' General Text Set')"/>
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
                 <xs:element name="{concat(@mtfname,'TextIndicator')}" type="TextIndicatorType">
                     <xs:annotation>
                         <xs:documentation>
                             <xsl:value-of select="concat('A data item for ', @ncdfelementname, ' Text Indicator')"/>
                         </xs:documentation>
                         <xs:appinfo>
-                            <mtfappinfo:Field fixed="{@positionname}"/>
+                            <mtfappinfo:Field fixed="{info/*/@textindicator}"/>
                         </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
@@ -661,7 +668,7 @@
                     <xs:documentation>
                         <xsl:value-of select="@ncdftypedoc"/>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="info/*">
                         <xs:appinfo>
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xs:appinfo>
@@ -729,7 +736,7 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xs:documentation>
-                                        <xsl:for-each select="appinfo/*">
+                                        <xsl:for-each select="info/*">
                                             <xs:appinfo>
                                                 <xsl:copy-of select="." copy-namespaces="no"/>
                                             </xs:appinfo>
@@ -787,7 +794,7 @@
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xs:appinfo>
-                                        <xsl:for-each select="appinfo/*">
+                                        <xsl:for-each select="info/*">
                                             <xsl:copy-of select="." copy-namespaces="no"/>
                                         </xsl:for-each>
                                     </xs:appinfo>
@@ -813,7 +820,7 @@
                     <xs:documentation>
                         <xsl:value-of select="$substgrpdoc"/>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="info/*">
                         <xs:appinfo>
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xs:appinfo>
@@ -975,7 +982,7 @@
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xs:documentation>
-                            <xsl:for-each select="appinfo/*">
+                            <xsl:for-each select="info/*">
                                 <xs:appinfo>
                                     <xsl:copy-of select="." copy-namespaces="no"/>
                                 </xs:appinfo>
@@ -990,7 +997,7 @@
                         <xs:documentation>
                             <xsl:value-of select="@ncdfelementdoc"/>
                         </xs:documentation>
-                        <xsl:for-each select="appinfo/*">
+                        <xsl:for-each select="info/*">
                             <xs:appinfo>
                                 <xsl:copy-of select="." copy-namespaces="no"/>
                             </xs:appinfo>
@@ -1162,7 +1169,7 @@
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xs:documentation>
-                            <xsl:for-each select="appinfo/*">
+                            <xsl:for-each select="info/*">
                                 <xs:appinfo>
                                     <xsl:copy-of select="." copy-namespaces="no"/>
                                 </xs:appinfo>
@@ -1227,7 +1234,7 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xs:documentation>
-                                        <xsl:for-each select="appinfo/*">
+                                        <xsl:for-each select="info/*">
                                             <xs:appinfo>
                                                 <xsl:copy-of select="." copy-namespaces="no"/>
                                             </xs:appinfo>
@@ -1262,7 +1269,7 @@
                     <xs:documentation>
                         <xsl:value-of select="@ncdfelementdoc"/>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="info/*">
                         <xs:appinfo>
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xs:appinfo>
@@ -1341,7 +1348,7 @@
                                             </xsl:otherwise>
                                         </xsl:choose>
                                     </xs:documentation>
-                                    <xsl:for-each select="appinfo/*">
+                                    <xsl:for-each select="info/*">
                                         <xs:appinfo>
                                             <xsl:copy-of select="." copy-namespaces="no"/>
                                         </xs:appinfo>
@@ -1402,7 +1409,7 @@
                     <xs:documentation>
                         <xsl:value-of select="@ncdftypedoc"/>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="info/*">
                         <xs:appinfo>
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xs:appinfo>
@@ -1444,7 +1451,7 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xs:documentation>
-                                        <xsl:for-each select="appinfo/*">
+                                        <xsl:for-each select="info/*">
                                             <xs:appinfo>
                                                 <xsl:copy-of select="." copy-namespaces="no"/>
                                             </xs:appinfo>
@@ -1479,7 +1486,7 @@
                     <xs:documentation>
                         <xsl:value-of select="@ncdfelementdoc"/>
                     </xs:documentation>
-                    <xsl:for-each select="appinfo/*">
+                    <xsl:for-each select="info/*">
                         <xs:appinfo>
                             <xsl:copy-of select="." copy-namespaces="no"/>
                         </xs:appinfo>
@@ -1494,12 +1501,8 @@
         <xsl:for-each select="$messagesxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:variable name="pre1" select="preceding-sibling::*:complexType[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::*:complexType[@name = $n][2]"/>
             <xsl:choose>
-                <xsl:when test="$n = $pre1/@name"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
+                <xsl:when test="count(preceding-sibling::*:complexType[@name=$n])&gt;0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
@@ -1510,11 +1513,9 @@
             <xsl:sort select="@type"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
-            <xsl:variable name="pre1" select="preceding-sibling::*:element[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::*:element[@name = $n][2]"/>
             <xsl:choose>
-                <xsl:when test="deep-equal(., $pre1)"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
+                <xsl:when test="$segmentsxsd/*:element[@name = $n]"/>
+                <xsl:when test="count(preceding-sibling::*:element[@name=$n][@type=$t])&gt;0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
