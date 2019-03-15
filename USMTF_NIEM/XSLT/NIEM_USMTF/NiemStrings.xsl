@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:inf="urn:mtf:mil:6040b:appinfo" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
    <!-- <xsl:include href="USMTF_Utility.xsl"/>-->
@@ -175,6 +175,9 @@
                 <xsl:when test="ends-with($n, 'Code')">
                     <xsl:value-of select="replace($n, 'Code', 'Text')"/>
                 </xsl:when>
+                <xsl:when test="starts-with($n, 'Gentext')">
+                    <xsl:value-of select="$n"/>
+                </xsl:when>
                 <xsl:when test="ends-with($n, 'Indicator')">
                     <xsl:value-of select="replace($n, 'Indicator', 'Text')"/>
                 </xsl:when>
@@ -277,7 +280,11 @@
                     <xsl:attribute name="fud" select="*:annotation/*:appinfo/*:FudNumber"/>
                 </xsl:otherwise>
             </xsl:choose>
-            <xsl:copy-of select="$appinfovar"/>
+            <info>
+                <xsl:for-each select="$appinfovar/*/*">
+                    <xsl:copy-of select="."/>
+                </xsl:for-each>
+            </info>
         </Field>
     </xsl:template>
     <!-- _______________________________________________________ -->
@@ -286,7 +293,7 @@
         <xsl:result-document href="{$xsdstroutputdoc}">
             <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
                 xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
                 targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
                 <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>

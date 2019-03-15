@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:inf="urn:mtf:mil:6040b:appinfo" version="2.0">
     <xsl:output method="xml"  indent="yes" xmlns="http://www.w3.org/2001/XMLSchema"/>
     <xsl:include href="NiemMap.xsl"/>
 
@@ -138,12 +138,12 @@
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
-                                <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                <inf:Choice substitutionGroup="{@substgrpname}">
                                     <xsl:for-each select="Element">
                                         <xsl:sort select="@niemelementname"/>
-                                        <mtfappinfo:Element name="{@niemelementname}" type="{@niemtype}"/>
+                                        <inf:Element name="{@niemelementname}" type="{@niemtype}"/>
                                     </xsl:for-each>
-                                </mtfappinfo:Choice>
+                                </inf:Choice>
                             </xs:appinfo>
                         </xs:annotation>
                     </xs:element>
@@ -207,7 +207,7 @@
                 xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
                 xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
                 xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:inf="urn:mtf:mil:6040b:appinfo"
                 xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
                 targetNamespace="urn:mtf:mil:6040b:niem:mtf"
                 ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"

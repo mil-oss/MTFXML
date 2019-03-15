@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:inf="urn:int:nato:ncdf:mtf:appinfo" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NcdfMap.xsl"/>
 
@@ -183,12 +183,12 @@
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
-                                <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                <inf:Choice substitutionGroup="{@substgrpname}">
                                     <xsl:for-each select="Element">
                                         <xsl:sort select="@ncdfelementname"/>
-                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
-                                </mtfappinfo:Choice>
+                                </inf:Choice>
                             </xs:appinfo>
                         </xs:annotation>
                     </xs:element>
@@ -378,13 +378,13 @@
                         <xsl:value-of select="ancestor::Set/@ncdfelementname"/>
                     </xsl:variable>
                     <xsl:variable name="setdocname">
-                        <xsl:value-of select="lower-case(ancestor::Set/info/mtfappinfo:Set/@setname)"/>
+                        <xsl:value-of select="lower-case(ancestor::Set/info/inf:Set/@setname)"/>
                     </xsl:variable>
                     <xsl:variable name="setdoc">
                         <xsl:value-of select="ancestor::Set/@ncdftypedoc"/>
                     </xsl:variable>
                     <xsl:variable name="fielddocname">
-                        <xsl:value-of select="lower-case(Element[1]/info/mtfappinfo:Field/@positionName)"/>
+                        <xsl:value-of select="lower-case(Element[1]/info/inf:Field/@positionName)"/>
                     </xsl:variable>
                     <xsl:variable name="fgname">
                         <xsl:choose>
@@ -481,12 +481,12 @@
                                                 </xsl:for-each>
                                                 <xsl:if test="@substgrpname">
                                                     <xs:appinfo>
-                                                        <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                                        <inf:Choice substitutionGroup="{@substgrpname}">
                                                             <xsl:for-each select="Choice/Element">
                                                                 <xsl:sort select="@name"/>
-                                                                <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                                                <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                                             </xsl:for-each>
-                                                        </mtfappinfo:Choice>
+                                                        </inf:Choice>
                                                     </xs:appinfo>
                                                 </xsl:if>
                                             </xs:annotation>
@@ -572,12 +572,12 @@
                             </xsl:for-each>
                             <xsl:if test="@substgrpname">
                                 <xs:appinfo>
-                                    <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                    <inf:Choice substitutionGroup="{@substgrpname}">
                                         <xsl:for-each select="Choice/Element">
                                             <xsl:sort select="@name"/>
-                                            <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                            <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                         </xsl:for-each>
-                                    </mtfappinfo:Choice>
+                                    </inf:Choice>
                                 </xs:appinfo>
                             </xsl:if>
                         </xs:annotation>
@@ -610,7 +610,7 @@
                                     <xs:annotation>
                                         <xs:documentation>A data item for text entry</xs:documentation>
                                         <xs:appinfo>
-                                            <mtfappinfo:Field positionName="FREE TEXT" identifier="A" justification="Left"
+                                            <inf:Field positionName="FREE TEXT" identifier="A" justification="Left"
                                                 definition="AN UNFORMATTED FREE TEXT FIELD CONTAINING AN UNLIMITED NUMBER OF CHARACTERS. USED IN THE FREE TEXT SETS AMPN, GENTEXT, NARR, AND REMARKS."
                                                 remark="ANY NUMBER AND TYPE OF CHARACTERS ALLOWED EXCEPT DOUBLE SLANTS (//)." version="1.0" ffirn="1006" fud="1"/>
                                         </xs:appinfo>
@@ -634,7 +634,7 @@
                             <xsl:value-of select="concat('A data item for ', @ncdfelementname, ' Text Indicator')"/>
                         </xs:documentation>
                         <xs:appinfo>
-                            <mtfappinfo:Field fixed="{info/*/@textindicator}"/>
+                            <inf:Field fixed="{info/*/@textindicator}"/>
                         </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
@@ -743,12 +743,12 @@
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
                                             <xs:appinfo>
-                                                <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                                <inf:Choice substitutionGroup="{@substgrpname}">
                                                     <xsl:for-each select="Choice/Element">
                                                         <xsl:sort select="@name"/>
-                                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                                     </xsl:for-each>
-                                                </mtfappinfo:Choice>
+                                                </inf:Choice>
                                             </xs:appinfo>
                                         </xsl:if>
                                     </xs:annotation>
@@ -784,12 +784,12 @@
                             <xsl:choose>
                                 <xsl:when test="@substgrpname">
                                     <xs:appinfo>
-                                        <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                        <inf:Choice substitutionGroup="{@substgrpname}">
                                             <xsl:for-each select="Choice/Element">
                                                 <xsl:sort select="@name"/>
-                                                <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                                <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                             </xsl:for-each>
-                                        </mtfappinfo:Choice>
+                                        </inf:Choice>
                                     </xs:appinfo>
                                 </xsl:when>
                                 <xsl:otherwise>
@@ -835,12 +835,12 @@
                                         <xsl:value-of select="$substgrpdoc"/>
                                     </xs:documentation>
                                     <xs:appinfo>
-                                        <mtfappinfo:Choice substitutionGroup="{Choice/@substgrpname}">
+                                        <inf:Choice substitutionGroup="{Choice/@substgrpname}">
                                             <xsl:for-each select="Choice/Element">
                                                 <xsl:sort select="@ncdfelementname"/>
-                                                <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                                <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                             </xsl:for-each>
-                                        </mtfappinfo:Choice>
+                                        </inf:Choice>
                                     </xs:appinfo>
                                 </xs:annotation>
                             </xs:element>
@@ -857,12 +857,12 @@
                     <xsl:choose>
                         <xsl:when test="Choice/@substgrpname">
                             <xs:appinfo>
-                                <mtfappinfo:Choice substitutionGroup="{Choice/@substgrpname}">
+                                <inf:Choice substitutionGroup="{Choice/@substgrpname}">
                                     <xsl:for-each select="Choice/Element">
                                         <xsl:sort select="@name"/>
-                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
-                                </mtfappinfo:Choice>
+                                </inf:Choice>
                             </xs:appinfo>
                         </xsl:when>
                     </xsl:choose>
@@ -885,12 +885,12 @@
                                 <xsl:value-of select="Choice/@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
-                                <mtfappinfo:Choice substitutionGroup="{Choice/@substgrpname}">
+                                <inf:Choice substitutionGroup="{Choice/@substgrpname}">
                                     <xsl:for-each select="Choice/Element">
                                         <xsl:sort select="@ncdfelementname"/>
-                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
-                                </mtfappinfo:Choice>
+                                </inf:Choice>
                             </xs:appinfo>
                         </xs:annotation>
                     </xs:element>
@@ -1017,7 +1017,7 @@
                                     <xs:annotation>
                                         <xs:documentation>A data item for text entry</xs:documentation>
                                         <xs:appinfo>
-                                            <mtfappinfo:Field positionName="FREE TEXT" identifier="A" justification="Left"
+                                            <inf:Field positionName="FREE TEXT" identifier="A" justification="Left"
                                                 definition="AN UNFORMATTED FREE TEXT FIELD CONTAINING AN UNLIMITED NUMBER OF CHARACTERS. USED IN THE FREE TEXT SETS AMPN, GENTEXT, NARR, AND REMARKS."
                                                 remark="ANY NUMBER AND TYPE OF CHARACTERS ALLOWED EXCEPT DOUBLE SLANTS (//)." version="1.0" ffirn="1006" fud="1"/>
                                         </xs:appinfo>
@@ -1034,7 +1034,7 @@
                             <xsl:value-of select="concat('A data item for ', @mtfname, ' Text Indicator')"/>
                         </xs:documentation>
                         <xs:appinfo>
-                            <mtfappinfo:Field fixed="{@positionname}"/>
+                            <inf:Field fixed="{@positionname}"/>
                         </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
@@ -1052,12 +1052,12 @@
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
-                                <mtfappinfo:Choice>
+                                <inf:Choice>
                                     <xsl:for-each select="Choice/Element">
                                         <xsl:sort select="@ncdfelementname"/>
-                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
-                                </mtfappinfo:Choice>
+                                </inf:Choice>
                             </xs:appinfo>
                         </xs:annotation>
                     </xs:element>
@@ -1176,12 +1176,12 @@
                             </xsl:for-each>
                             <xsl:if test="@substgrpname">
                                 <xs:appinfo>
-                                    <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                    <inf:Choice substitutionGroup="{@substgrpname}">
                                         <xsl:for-each select="Choice/Element">
                                             <xsl:sort select="@name"/>
-                                            <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                            <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                         </xsl:for-each>
-                                    </mtfappinfo:Choice>
+                                    </inf:Choice>
                                 </xs:appinfo>
                             </xsl:if>
                         </xs:annotation>
@@ -1241,12 +1241,12 @@
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
                                             <xs:appinfo>
-                                                <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                                <inf:Choice substitutionGroup="{@substgrpname}">
                                                     <xsl:for-each select="Choice/Element">
                                                         <xsl:sort select="@name"/>
-                                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                                     </xsl:for-each>
-                                                </mtfappinfo:Choice>
+                                                </inf:Choice>
                                             </xs:appinfo>
                                         </xsl:if>
                                     </xs:annotation>
@@ -1372,11 +1372,11 @@
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
-                                <mtfappinfo:Choice>
+                                <inf:Choice>
                                     <xsl:for-each select="Choice/Element">
-                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                     </xsl:for-each>
-                                </mtfappinfo:Choice>
+                                </inf:Choice>
                             </xs:appinfo>
                         </xs:annotation>
                     </xs:element>
@@ -1458,12 +1458,12 @@
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
                                             <xs:appinfo>
-                                                <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                                <inf:Choice substitutionGroup="{@substgrpname}">
                                                     <xsl:for-each select="Choice/Element">
                                                         <xsl:sort select="@name"/>
-                                                        <mtfappinfo:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
+                                                        <inf:Element name="{@ncdfelementname}" type="{@ncdftype}"/>
                                                     </xsl:for-each>
-                                                </mtfappinfo:Choice>
+                                                </inf:Choice>
                                             </xs:appinfo>
                                         </xsl:if>
                                     </xs:annotation>

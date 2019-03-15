@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    xmlns:inf="urn:mtf:mil:6040b:appinfo"
     xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism"
     xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" exclude-result-prefixes="xs" version="2.0">
 
@@ -425,7 +425,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:copy copy-namespaces="no">
+        <xs:annotation>
             <xsl:choose>
                 <xsl:when test="*:documentation">
                     <xsl:apply-templates select="*:documentation">
@@ -512,7 +512,7 @@
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:apply-templates select="*:appinfo"/>
-        </xsl:copy>
+        </xs:annotation>
     </xsl:template>
 
     <xsl:template match="*:annotation" mode="doc">
@@ -621,7 +621,7 @@
                 </xsl:when>
                 <xsl:when
                     test="child::*[starts-with(name(), 'Field')] and starts-with(ancestor::*:element[1]/*:complexType/*/*:extension/@base, 'c:')">
-                    <xsl:element name="mtfappinfo:Composite">
+                    <xsl:element name="inf:Composite">
                         <!--<xsl:apply-templates select="@*[not(name()='name')]"/>-->
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates
@@ -634,7 +634,7 @@
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Field')]">
-                    <xsl:element name="mtfappinfo:Field">
+                    <xsl:element name="inf:Field">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates
                             select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*"
@@ -658,7 +658,7 @@
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Set')]">
-                    <xsl:element name="mtfappinfo:Set">
+                    <xsl:element name="inf:Set">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates
                             select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*"
@@ -670,7 +670,7 @@
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Segment')]">
-                    <xsl:element name="mtfappinfo:Segment">
+                    <xsl:element name="inf:Segment">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates
                             select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*"
@@ -681,7 +681,7 @@
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Mtf')]">
-                    <xsl:element name="mtfappinfo:Msg">
+                    <xsl:element name="inf:Msg">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates
                             select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*"
@@ -726,7 +726,7 @@
 
     <xsl:template match="*:enumeration/*:annotation/*:appinfo">
         <xs:appinfo>
-            <xsl:element name="mtfappinfo:Code">
+            <xsl:element name="inf:Code">
                 <xsl:apply-templates select="*" mode="attr"/>
             </xsl:element>
         </xs:appinfo>
@@ -736,11 +736,11 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
-                <xsl:element name="mtfappinfo:Document" inherit-namespaces="yes">
+                <xsl:element name="inf:Document" inherit-namespaces="yes">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:FieldFormatRelatedDocument">
-                    <xsl:element name="mtfappinfo:Document" inherit-namespaces="yes">
+                    <xsl:element name="inf:Document" inherit-namespaces="yes">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
@@ -752,11 +752,11 @@
         <xsl:if
             test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
-                <xsl:element name="mtfappinfo:Example" inherit-namespaces="yes">
+                <xsl:element name="inf:Example" inherit-namespaces="yes">
                     <xsl:value-of select="normalize-space(text())"/>
                 </xsl:element>
                 <xsl:for-each select="following-sibling::*:SetFormatExample">
-                    <xsl:element name="mtfappinfo:Example" inherit-namespaces="yes">
+                    <xsl:element name="inf:Example" inherit-namespaces="yes">
                         <xsl:value-of select="normalize-space(text())"/>
                     </xsl:element>
                 </xsl:for-each>
@@ -980,6 +980,9 @@
             <xsl:value-of select="."/>
         </xsl:attribute>
     </xsl:template>
-
+    
+    <xsl:template match="*" mode="normlize">
+        <xsl:value-of select="normalize-space(translate(., '&#34;&#xA;', ''))"/>
+    </xsl:template>
 
 </xsl:stylesheet>

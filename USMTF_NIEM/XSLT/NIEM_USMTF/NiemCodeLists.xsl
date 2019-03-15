@@ -18,7 +18,7 @@
  */
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    xmlns:ism="urn:us:gov:ic:ism" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:inf="urn:mtf:mil:6040b:appinfo"
     exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <!--<xsl:include href="USMTF_Utility.xsl"/>-->
@@ -88,7 +88,11 @@
             </xsl:variable>
             <Field niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletypename}" niemtype="{$niemcomplextype}" niemtypedoc="{$niemtypedoc}" niemelementdoc="{$niemelementdoc}"
                 mtftype="{@name}" ffirn="{$ffirn}" fud="{$fud}">
-                <xsl:copy-of select="$fappinfo" copy-namespaces="no"/>
+                <info>
+                    <xsl:for-each select="$fappinfo/*">
+                        <xsl:copy-of select="." copy-namespaces="no"/>
+                    </xsl:for-each>
+                </info>
                 <Codes>
                     <xsl:for-each select="*:restriction/*:enumeration">
                         <Code value="{@value}" dataItem="{*:annotation/*:appinfo/*:DataItem}" doc="{normalize-space(*:annotation/*:documentation/text())}"/>
@@ -132,12 +136,12 @@
             </xsl:variable>
             <Field niemsimpletype="{$niemcodestype}" niemtype="{$niemcodetype}" niemtypedoc="{$typedoc}" niemelementdoc="{$eldoc}" ffirn="{@ffirn}" fud="{@fud}">
                 <xs:appinfo>
-                    <mtfappinfo:Field name="{@fudname}" explanation="{@fudexp}" version="{@version}" versiondate="{@versiondate}" dist="{@dist}" ffirn="{@ffirn}" fud="{@fud}">
+                    <inf:Field name="{@fudname}" explanation="{@fudexp}" version="{@version}" versiondate="{@versiondate}" dist="{@dist}" ffirn="{@ffirn}" fud="{@fud}">
                         <xsl:apply-templates select="@abbrev" mode="hascontent"/>
                         <xsl:apply-templates select="@reldoc" mode="hascontent"/>
                         <xsl:apply-templates select="@cmRemark" mode="hascontent"/>
                         <xsl:apply-templates select="@remarks" mode="hascontent"/>
-                    </mtfappinfo:Field>
+                    </inf:Field>
                 </xs:appinfo>
                 <Codes>
                     <xsl:for-each select="$norm_enums/Enumeration[@ffirn = $frn][@fud = $fd]">
@@ -253,7 +257,7 @@
         <xsl:result-document href="{$codelistxsdout}">
             <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf:fields" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
-                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:inf="urn:mtf:mil:6040b:appinfo"
                 xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" targetNamespace="urn:mtf:mil:6040b:niem:mtf:fields"
                 ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
                 attributeFormDefault="unqualified" version="1.0">

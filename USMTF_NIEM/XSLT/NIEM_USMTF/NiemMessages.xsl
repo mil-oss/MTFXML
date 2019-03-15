@@ -21,7 +21,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism"
     xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-    xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+    xmlns:inf="urn:mtf:mil:6040b:appinfo"
     xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NiemMap.xsl"/>
@@ -97,11 +97,11 @@
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
-                                <mtfappinfo:Choice>
+                                <inf:Choice>
                                     <xsl:for-each select="Choice/Element">
-                                        <mtfappinfo:Element name="{@niemelementname}" type="{@niemtype}"/>
+                                        <inf:Element name="{@niemelementname}" type="{@niemtype}"/>
                                     </xsl:for-each>
-                                </mtfappinfo:Choice>
+                                </inf:Choice>
                             </xs:appinfo>
                         </xs:annotation>
                     </xs:element>
@@ -183,12 +183,12 @@
                                         </xsl:for-each>
                                         <xsl:if test="@substgrpname">
                                             <xs:appinfo>
-                                                <mtfappinfo:Choice substitutionGroup="{@substgrpname}">
+                                                <inf:Choice substitutionGroup="{@substgrpname}">
                                                     <xsl:for-each select="Choice/Element">
                                                         <xsl:sort select="@name"/>
-                                                        <mtfappinfo:Element name="{@niemelementname}" type="{@niemtype}"/>
+                                                        <inf:Element name="{@niemelementname}" type="{@niemtype}"/>
                                                     </xsl:for-each>
-                                                </mtfappinfo:Choice>
+                                                </inf:Choice>
                                             </xs:appinfo>
                                         </xsl:if>
                                     </xs:annotation>
@@ -278,7 +278,7 @@
                 xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
                 xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
                 xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-                xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+                xmlns:inf="urn:mtf:mil:6040b:appinfo"
                 xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
                 targetNamespace="urn:mtf:mil:6040b:niem:mtf"
                 ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:inf="urn:int:nato:ncdf:mtf:appinfo" version="2.0">
+
     <xsl:include href="NMTF_Utility.xsl"/>
     <xsl:include href="NcdfStrings.xsl"/>
     <xsl:include href="NcdfNumerics.xsl"/>
@@ -59,19 +60,19 @@
     </xsl:variable>
     <xsl:variable name="all_field_elements_map">
         <xsl:copy-of select="$ncdf_fields_map"/>
-        <xsl:for-each select="$ncdf_composites_map//Element[starts-with(@mtftype, 'f:') or appinfo/inf:Field]">
+        <xsl:for-each select="$ncdf_composites_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_sets_map//Element[starts-with(@mtftype, 'f:') or appinfo/inf:Field]">
+        <xsl:for-each select="$ncdf_sets_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_sets_map//Choice[Element[starts-with(@mtftype, 'f:') or Element/appinfo/inf:Field]]">
+        <xsl:for-each select="$ncdf_sets_map//Choice[Element[starts-with(@mtftype, 'f:') or Element/info/inf:Field]]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 'f:') or appinfo/inf:Field]">
+        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 'f:') or appinfo/inf:Field]">
+        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -244,16 +245,16 @@
     </xsl:variable>
     <xsl:variable name="all_composite_elements_map">
         <xsl:copy-of select="$ncdf_composites_map"/>
-        <xsl:for-each select="$ncdf_sets_map//Element[starts-with(@mtftype, 'c:') or appinfo/inf:Composite]">
+        <xsl:for-each select="$ncdf_sets_map//Element[starts-with(@mtftype, 'c:') or info/inf:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_sets_map//Choice[Element[starts-with(@mtftype, 'c:') or Element/appinfo/inf:Composite]]">
+        <xsl:for-each select="$ncdf_sets_map//Choice[Element[starts-with(@mtftype, 'c:') or Element/info/inf:Composite]]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 'c:') or appinfo/inf:Composite]">
+        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 'c:') or info/inf:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 'c:') or appinfo/inf:Composite]">
+        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 'c:') or info/inf:Composite]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -265,10 +266,10 @@
         <xsl:for-each select="$ncdf_sets_map//Element">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 's:') or appinfo/inf:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
+        <xsl:for-each select="$ncdf_segments_map//Element[starts-with(@mtftype, 's:') or info/inf:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 's:') or appinfo/inf:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
+        <xsl:for-each select="$ncdf_messages_map//Element[starts-with(@mtftype, 's:') or info/inf:Set or starts-with(Choice/Element[1]/@mtftype, 's:')]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -277,10 +278,10 @@
         <xsl:apply-templates select="$baseline_segments_xsd" mode="segmentglobal"/>
     </xsl:variable>
     <xsl:variable name="all_segment_elements_map">
-        <xsl:for-each select="$ncdf_segments_map//Element[appinfo/inf:Segment]">
+        <xsl:for-each select="$ncdf_segments_map//Element[info/inf:Segment]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
-        <xsl:for-each select="$ncdf_messages_map//Element[appinfo/inf:Segment]">
+        <xsl:for-each select="$ncdf_messages_map//Element[info/inf:Segment]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
     </xsl:variable>
@@ -558,8 +559,8 @@
         <xsl:variable name="n" select="@name"/>
         <xsl:variable name="ncdfelementnamevar">
             <xsl:choose>
-                <xsl:when test="$message_changes/Element[@messagename = $mtfnamevar]/@ncdfname">
-                    <xsl:value-of select="$message_changes/Element[@messagename = $mtfnamevar]/@ncdfname"/>
+                <xsl:when test="$message_changes/Element[@messagename = $mtfnamevar]/@niemelementname">
+                    <xsl:value-of select="$message_changes/Element[@messagename = $mtfnamevar]/@niemelementname"/>
                 </xsl:when>
                 <xsl:when test="$message_changes/Element[@mtfname = $mtfnamevar][@messagename = '']/@ncdfelementname">
                     <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][@messagename = '']/@ncdfelementname"/>
@@ -646,6 +647,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+        <xsl:variable name="mtfname" select="@name"/>
         <xsl:variable name="mtfnamevar">
             <xsl:apply-templates select="@name" mode="txt"/>
         </xsl:variable>
@@ -689,7 +691,7 @@
             <xsl:value-of select="substring($settypevar, 0, string-length($settypevar) - 3)"/>
         </xsl:variable>
         <xsl:variable name="msgnamevar">
-            <xsl:value-of select="ancestor::*:element[*:annotation/*:documentation/*:appinfo/MtfName]/@name"/>
+            <xsl:value-of select="ancestor::*:element[*:annotation/*/*:MtfName]/@name"/>
         </xsl:variable>
         <xsl:variable name="ffirnfud">
             <xsl:value-of select="*:complexType/*//*:attribute[@name = 'ffirnFudn']/@fixed"/>
@@ -746,7 +748,7 @@
             <xsl:value-of select="$ncdfmatch/*/@ncdfelementdoc"/>
         </xsl:variable>
         <xsl:variable name="setidvar">
-            <xsl:value-of select="$ncdfmatch/*/appinfo/inf:Set/@setid"/>
+            <xsl:value-of select="$ncdfmatch/*/info/inf:Set/@setid"/>
         </xsl:variable>
         <xsl:variable name="seq">
             <xsl:choose>
@@ -1147,7 +1149,7 @@
                     <xsl:value-of select="$UseDesc"/>
                 </xsl:attribute>
             </xsl:if>
-           <!-- <xsl:if test="string-length($TextIndicator) &gt; 0">
+            <!-- <xsl:if test="string-length($TextIndicator) &gt; 0">
                 <xsl:attribute name="textindicator">
                     <xsl:value-of select="$TextIndicator"/>
                 </xsl:attribute>
@@ -1683,7 +1685,7 @@
                 <xsl:text>FortyEightHourOutlookForecast</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($n, 'GenText')"/>
+                <xsl:value-of select="concat($n, 'GeneralText')"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ism="urn:us:gov:ic:ism" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo"
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ism="urn:us:gov:ic:ism" xmlns:inf="urn:mtf:mil:6040b:appinfo"
     exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <!--<xsl:include href="USMTF_Utility.xsl"/>-->
@@ -183,9 +183,9 @@
                     <Field mtftype="{@name}" niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletypename}" niemtype="{$complextypename}" base="xs:integer" min="{$min}" max="{$max}"
                         pattern="{$pattern}" niempattern="{$niempattern}" niemelementdoc="{$niemelementdoc}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedoc}" ffirn="{$ffirn}" fud="{$fud}"
                         format="{$numnormstype/*/@format}" version="{$Version}" date="{$Date}" dist="{$numnormstype/*/@dist}" remark="{$Remark}">
-                        <fappinfo>
+                        <info>
                             <!--<xsl:copy-of select="$fappinfo"/>-->
-                            <mtfappinfo:Field>
+                            <inf:Field>
                                 <xsl:for-each select="$fappinfo/*/*">
                                     <xsl:for-each select="@*">
                                         <xsl:copy-of select="."/>
@@ -209,8 +209,8 @@
                                         <xsl:value-of select="$Dist"/>
                                     </xsl:attribute>
                                 </xsl:for-each>
-                            </mtfappinfo:Field>
-                        </fappinfo>
+                            </inf:Field>
+                        </info>
                     </Field>
                 </xsl:when>
                 <xsl:when test="$base = 'xs:decimal'">
@@ -300,9 +300,9 @@
                     <Field mtftype="{@name}" niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletypename}" niemtype="{$complextypename}" base="xs:decimal" min="{$min}" max="{$max}"
                         fractiondigits="{$fractionDigits}" totaldigits="{$totaldigits}" length="{$length}" minlen="{$minlen}" maxlen="{$maxlen}" mindec="{$mindec}" maxdec="{$maxdec}"
                         niemelementdoc="{$niemelementdoc}" niemtypedoc="{$niemtypedoc}" mtfdoc="{$mtfdoc}" ffirn="{$ffirn}" fud="{$fud}">
-                        <fappinfo>
+                        <info>
                             <!--<xsl:copy-of select="$fappinfo"/>-->
-                            <mtfappinfo:Field>
+                            <inf:Field>
                                 <xsl:for-each select="$fappinfo/*/*">
                                     <xsl:for-each select="@*">
                                         <xsl:copy-of select="."/>
@@ -326,8 +326,8 @@
                                         <xsl:value-of select="$Dist"/>
                                     </xsl:attribute>
                                 </xsl:for-each>
-                            </mtfappinfo:Field>
-                        </fappinfo>
+                            </inf:Field>
+                        </info>
                     </Field>
                 </xsl:when>
             </xsl:choose>
@@ -426,7 +426,7 @@
                     <xsl:value-of select="@niemtypedoc"/>
                 </xs:documentation>
                 <xs:appinfo>
-                    <mtfappinfo:SimpleType name="{@simpletypename}">
+                    <inf:SimpleType name="{@simpletypename}">
                         <xsl:if test="@format != '.'">
                             <xsl:attribute name="format">
                                 <xsl:value-of select="@format"/>
@@ -450,7 +450,7 @@
                         <xsl:attribute name="distribution">
                             <xsl:value-of select="@dist"/>
                         </xsl:attribute>
-                    </mtfappinfo:SimpleType>
+                    </inf:SimpleType>
                 </xs:appinfo>
             </xs:annotation>
             <xs:restriction base="{@base}">
@@ -578,7 +578,7 @@
         <xsl:result-document href="{$xsdoutputdoc}">
             <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
                 xmlns:structures="http://release.niem.gov/niem/structures/4.0/" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
-                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:mtfappinfo="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+                xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
                 targetNamespace="urn:mtf:mil:6040b:niem:mtf" ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US"
                 elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
                 <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="IC-ISM.xsd"/>
