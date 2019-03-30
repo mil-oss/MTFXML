@@ -4,19 +4,14 @@
     <xsl:variable name="allmtf" select="document('../../XSD/NIEM_MTF/NIEM_MTF.xsd')/*:schema"/>
     <xsl:variable name="outDir" select="'../../XSD/NIEM_MTF/SepMsgs/'"/>
 
-    <xsl:variable name="nodes">
-        <xsl:choose>
-            <xsl:when test="not(document(concat($outDir, '/allmapsave.xml')))">
-                <xsl:apply-templates select="$allmtf/*" mode="map"/>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:copy-of select="document(concat($outDir, '/allmapsave.xml'))/*"/>
-            </xsl:otherwise>
-        </xsl:choose>
+    <!--<xsl:variable name="allnodes" select="document('../../XSD/NIEM_MTF/Maps/NIEM_MTF_AllMaps.xsd')/*"/>-->
+
+    <xsl:variable name="allnodes">
+        <xsl:apply-templates select="$allmtf/*" mode="map"/>
     </xsl:variable>
 
-    <xsl:variable name="mnodes">
-        <xsl:apply-templates select="$nodes/*/*[@name][@type][@mtfid]" mode="msglist"/>
+    <xsl:variable name="messagenodes">
+        <xsl:apply-templates select="$allnodes/*[@name][@type][@mtfid]" mode="msglist"/>
     </xsl:variable>
 
     <xsl:template match="*" mode="msglist">
@@ -24,12 +19,12 @@
         <xsl:variable name="t" select="@type"/>
         <xsl:variable name="m" select="@mtfid"/>
         <xsl:variable name="mnodes">
-            <xsl:apply-templates select="$nodes/*/*[@name = $n]/*" mode="list">
+            <xsl:apply-templates select="$allnodes/*[@name = $n]/*" mode="list">
                 <xsl:with-param name="nlist">
                     <node/>
                 </xsl:with-param>
             </xsl:apply-templates>
-            <xsl:apply-templates select="$nodes/*/*[@name = $t]/*" mode="list">
+            <xsl:apply-templates select="$allnodes/*[@name = $t]/*" mode="list">
                 <xsl:with-param name="nlist">
                     <node/>
                 </xsl:with-param>
@@ -41,10 +36,10 @@
                 <xsl:copy-of select="@mtfid"/>
                 <xsl:copy-of select="@type"/>
             </xsl:copy>
-            <xsl:copy-of select="$nodes/*/*[@name = $t][1]"/>
+            <xsl:copy-of select="$allnodes/*[@name = $t][1]"/>
             <xsl:for-each select="distinct-values($mnodes/*/@name)">
                 <xsl:variable name="n" select="."/>
-                <xsl:copy-of select="$nodes/*/*[@name = $n][1]"/>
+                <xsl:copy-of select="$allnodes/*[@name = $n][1]"/>
             </xsl:for-each>
         </xsl:variable>
         <Message mtfid="{@mtfid}">
@@ -87,7 +82,7 @@
             <xsl:copy-of select="@type"/>
         </xsl:element>
         <xsl:if test="not($nlist/*[@name = $n])">
-            <xsl:apply-templates select="$nodes/*/*[@name = $n]/*" mode="list">
+            <xsl:apply-templates select="$allnodes/*[@name = $n]/*" mode="list">
                 <xsl:with-param name="nlist">
                     <xsl:copy-of select="$nlist"/>
                     <node name="{$n}"/>
@@ -95,7 +90,7 @@
             </xsl:apply-templates>
         </xsl:if>
         <xsl:if test="not($nlist/*[@name = $t])">
-            <xsl:apply-templates select="$nodes/*/*[@name = $t]/*" mode="list">
+            <xsl:apply-templates select="$allnodes/*[@name = $t]/*" mode="list">
                 <xsl:with-param name="nlist">
                     <xsl:copy-of select="$nlist"/>
                     <node name="{$t}"/>
@@ -118,21 +113,19 @@
     </xsl:variable>
 
     <xsl:template name="main">
-        <xsl:if test="not(document(concat($outDir, '/allmapsave.xml')))">
-            <xsl:result-document href="{concat($outDir,'/allmapsave.xml')}">
-                <nodes>
-                    <xsl:copy-of select="$nodes" copy-namespaces="no"/>
-                </nodes>
-            </xsl:result-document>
-        </xsl:if>
-       <!--<xsl:result-document href="{concat($outDir,'/msgmap.xml')}">
+        <xsl:result-document href="{concat($outDir,'/allmapsave.xml')}">
+            <nodes>
+                <xsl:copy-of select="$allnodes" copy-namespaces="no"/>
+            </nodes>
+        </xsl:result-document>
+        <xsl:result-document href="{concat($outDir,'/msgmap.xml')}">
             <Messages>
-                <xsl:for-each select="$mnodes/*">
-                   <xsl:copy-of select="."/>
+                <xsl:for-each select="$messagenodes/*">
+                    <xsl:copy-of select="."/>
                 </xsl:for-each>
             </Messages>
-        </xsl:result-document>-->
-        <xsl:for-each select="$mnodes/*">
+        </xsl:result-document>
+        <xsl:for-each select="$messagenodes/*">
             <xsl:variable name="msg" select="."/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
@@ -145,26 +138,32 @@
                     <xsl:copy>
                         <xsl:apply-templates select="@*" mode="identity"/>
                         <xsl:apply-templates select="*" mode="identity"/>
-                        <xsl:copy-of select="$allmtf/*[@name = $t]/xs:annotation"/>
-                        <xsl:copy-of select="$allmtf/*[@name = $n]"/>
-                        <xsl:copy-of select="$allmtf/*[@name = $t]"/>
-                        <xsl:variable name="nodelist">
+                        <xsl:for-each select="$msg/*">
+                            <xsl:variable name="nn" select="@name"/>
+                            <xsl:copy-of select="$allmtf/*[@name = $nn]"/>
+                        </xsl:for-each>
+<!--                        <xsl:variable name="nodelist">
                             <xsl:for-each select="$msg/*">
                                 <xsl:variable name="nn" select="@name"/>
                                 <xsl:copy-of select="$allmtf/*[@name = $nn]"/>
                             </xsl:for-each>
                         </xsl:variable>
-                        <xsl:for-each select="$nodelist/xs:complexType[not(@name = $t)]">
-                            <xsl:sort select="@name"/>
-                            <xsl:variable name="n" select="@name"/>
-                            <xsl:if test="count(preceding-sibling::xs:complexType[@name = $n]) = 0">
-                                <xsl:copy-of select="." copy-namespaces="no"/>
-                            </xsl:if>
-                        </xsl:for-each>
+                        <xsl:copy-of select="$nodelist/xs:complexType[@name = $t]/xs:annotation"/>
+                        
+                        <xsl:copy-of select="$nodelist/xs:element[@name = $n]"/>
+                        <xsl:copy-of select="$nodelist/xs:complexType[@name = $t]"/>
+                        
                         <xsl:for-each select="$nodelist/xs:simpleType">
                             <xsl:sort select="@name"/>
                             <xsl:variable name="n" select="@name"/>
                             <xsl:if test="count(preceding-sibling::xs:simpleType[@name = $n]) = 0">
+                                <xsl:copy-of select="." copy-namespaces="no"/>
+                            </xsl:if>
+                        </xsl:for-each>
+                        <xsl:for-each select="$nodelist/xs:complexType[not(@name = $t)]">
+                            <xsl:sort select="@name"/>
+                            <xsl:variable name="n" select="@name"/>
+                            <xsl:if test="count(preceding-sibling::xs:complexType[@name = $n]) = 0">
                                 <xsl:copy-of select="." copy-namespaces="no"/>
                             </xsl:if>
                         </xsl:for-each>
@@ -174,7 +173,7 @@
                             <xsl:if test="count(preceding-sibling::xs:element[@name = $n]) = 0">
                                 <xsl:copy-of select="." copy-namespaces="no"/>
                             </xsl:if>
-                        </xsl:for-each>
+                        </xsl:for-each>-->
                     </xsl:copy>
                 </xsl:for-each>
             </xsl:result-document>
@@ -190,6 +189,7 @@
     <xsl:template match="*:annotation" mode="map"/>
 
     <xsl:template match="*[@ref]" mode="map">
+        <xsl:variable name="r" select="@ref"/>
         <xsl:choose>
             <xsl:when test="@* = 'structures:SimpleObjectAttributeGroup'">
                 <xsl:apply-templates select="*" mode="map"/>
@@ -197,13 +197,11 @@
             <xsl:when test="@* = 'structures:ObjectType'">
                 <xsl:apply-templates select="*" mode="map"/>
             </xsl:when>
+            <xsl:when test="ends-with(@ref, 'Abstract')">
+                <xsl:apply-templates select="$allmtf/*[@name = $r]" mode="map"/>
+                <xsl:apply-templates select="$allmtf/*[@substitutionGroup = $r]" mode="map"/>
+            </xsl:when>
             <xsl:otherwise>
-                <xsl:variable name="r" select="@ref"/>
-                <!--<node ref="{@ref}" type="{name()}">
-                    <xsl:copy-of select="$allmtf/*[@name = $r]/@type"/>
-                    <xsl:copy-of select="*:annotation/*:appinfo/*/@mtfid"/>
-                    <xsl:apply-templates select="*" mode="map"/>
-                </node>-->
                 <xsl:element name="{replace(name(),'xs:','')}">
                     <xsl:copy-of select="@ref"/>
                     <xsl:copy-of select="$allmtf/*[@name = $r]/@type"/>
@@ -274,23 +272,21 @@
     <xsl:template name="iterateNode">
         <xsl:param name="node"/>
         <xsl:param name="nodelist"/>
-        <xsl:variable name="n" select="$node/@name"/>
-        <node name="{$n}"/>
+        <xsl:variable name="nm" select="$node/@name"/>
+        <node name="{$nm}"/>
         <xsl:for-each select="distinct-values($node//@*[name() = 'ref' or name() = 'type' or name() = 'base' or name() = 'substitutionGroup' or name() = 'abstract'][not(. = $node/@name)])">
             <xsl:variable name="n" select="."/>
             <xsl:choose>
                 <xsl:when test="$n = 'abstract' and $node/*:annotation/*:appinfo/*:Choice">
                     <xsl:variable name="s" select="$node/@name"/>
-                    <xsl:for-each select="$allmtf/*[@substitutionGroup = $s]/@substitutionGroup">
-                        <xsl:if test="not($nodelist/*[@name = $s])">
-                            <xsl:call-template name="iterateNode">
-                                <xsl:with-param name="node" select="$allmtf/*[@name = $s]"/>
-                                <xsl:with-param name="nodelist">
-                                    <xsl:copy-of select="$nodelist"/>
-                                    <node name="{$s}"/>
-                                </xsl:with-param>
-                            </xsl:call-template>
-                        </xsl:if>
+                    <node name="{$s}"/>
+                    <xsl:for-each select="$allmtf/*[@substitutionGroup = $s]">
+                        <xsl:call-template name="iterateNode">
+                            <xsl:with-param name="node" select="."/>
+                            <xsl:with-param name="nodelist">
+                                <xsl:copy-of select="$nodelist"/>
+                            </xsl:with-param>
+                        </xsl:call-template>
                     </xsl:for-each>
                 </xsl:when>
                 <xsl:otherwise>

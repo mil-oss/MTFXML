@@ -93,7 +93,7 @@
                     <xsl:when test="$change/@niemelementname">
                         <xsl:value-of select="$change/@niemelementname"/>
                     </xsl:when>
-                    <xsl:when test="contains($n,'BlankSpace')">
+                    <xsl:when test="contains($n, 'BlankSpace')">
                         <xsl:text>BlankSpaceText</xsl:text>
                     </xsl:when>
                     <xsl:otherwise>
@@ -597,6 +597,9 @@
                 <xsl:when test="starts-with($mtfdoc, 'A data type')">
                     <xsl:value-of select="$mtfdoc"/>
                 </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat('A data type for ', lower-case(substring($mtfdoc, 1, 1)), substring($mtfdoc, 2))"/>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="niemelementdocvar">
@@ -772,6 +775,44 @@
                 <xsl:with-param name="textind" select="$TextIndicator"/>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="niemtypevar">
+            <xsl:choose>
+                <xsl:when test="ends-with($mtftypevar, 'GeneralTextType')">
+                    <xsl:value-of select="concat($GenText, 'Type')"/>
+                </xsl:when>
+                <xsl:when test="$isSet and ends-with($mtfnamevar, 'HeadingInformation')">
+                    <xsl:value-of select="concat($mtfnamevar, 'SetType')"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtftypevar, 'HeadingInformationType')">
+                    <xsl:value-of select="concat($HeaderInfo, 'Type')"/>
+                </xsl:when>
+                <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemtype">
+                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemtype"/>
+                </xsl:when>
+                <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]/@niemtype">
+                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]/@niemtype"/>
+                </xsl:when>
+                <xsl:when test="$segmentnamevar and $segment_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype">
+                    <xsl:value-of select="$segment_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype"/>
+                </xsl:when>
+                <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype">
+                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype"/>
+                </xsl:when>
+                <!--BlankText -->
+                <xsl:when test="contains($mtftypevar, 'BlankSpace')">
+                    <xsl:text>BlankSpaceTextType</xsl:text>
+                </xsl:when>
+                <xsl:when test="string-length($niemmatch//@niemtype) &gt; 0">
+                    <xsl:apply-templates select="$niemmatch//@niemtype" mode="txt"/>
+                </xsl:when>
+                <xsl:when test="$isSet and $niem_sets_map/Set[@mtfname = $mtftypevar]">
+                    <xsl:value-of select="$niem_sets_map/Set[@mtfname = $mtftypevar]/@niemtype"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="*:complexType/*/*:extension/@base" mode="txt"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:variable name="niemel">
             <xsl:choose>
                 <xsl:when test="$isField">
@@ -789,15 +830,21 @@
                         <xsl:when test="ends-with($mtftypevar, 'GeneralTextType')">
                             <xsl:value-of select="$GenText"/>
                         </xsl:when>
-                        <xsl:when test="ends-with($mtftypevar, 'TextType') and not(ends-with($n, 'Text'))">
+                        <xsl:when test="ends-with($niemtypevar, 'TextType') and not(ends-with($n, 'Text'))">
                             <xsl:value-of select="concat($n, 'Text')"/>
                         </xsl:when>
-                        <xsl:when test="ends-with($mtftypevar, 'CodeType') and not(ends-with($mtfnamevar, 'Code'))">
+                        <xsl:when test="ends-with($niemtypevar, 'CodeType') and not(ends-with($mtfnamevar, 'Code'))">
                             <xsl:value-of select="concat($mtfnamevar, 'Code')"/>
                         </xsl:when>
-                        <!--<xsl:when test="$niemmatch/*/@niemelementname">
-                            <xsl:value-of select="$niemmatch/*/@niemelementname"/>
-                        </xsl:when>-->
+                        <xsl:when test="contains($niemtypevar, 'Integer') and not(ends-with($mtfnamevar, 'Numeric'))">
+                            <xsl:value-of select="concat($mtfnamevar, 'Numeric')"/>
+                        </xsl:when>
+                        <xsl:when test="contains($niemtypevar, 'Decimal') and not(ends-with($mtfnamevar, 'Numeric'))">
+                            <xsl:value-of select="concat($mtfnamevar, 'Numeric')"/>
+                        </xsl:when>
+                        <xsl:when test="ends-with($niemtypevar, 'IndicatorType') and not(ends-with($mtfnamevar, 'Indicator'))">
+                            <xsl:value-of select="concat($mtfnamevar, 'Indicator')"/>
+                        </xsl:when>
                         <xsl:otherwise>
                             <xsl:value-of select="$mtfnamevar"/>
                         </xsl:otherwise>
@@ -902,7 +949,7 @@
                         <xsl:when test="$niem_fields_map/*[@niemelementname = $niemel]">
                             <xsl:value-of select="concat($sbstgrp, $niemel)"/>
                         </xsl:when>
-                        <xsl:when test="contains(@name,'HeadingInformation')">
+                        <xsl:when test="contains(@name, 'HeadingInformation')">
                             <xsl:call-template name="HeadingInformation">
                                 <xsl:with-param name="textind" select="$TextIndicator"/>
                             </xsl:call-template>
@@ -951,12 +998,8 @@
                     <xsl:value-of select="$segment_changes/Element[@mtfname = $mtfnamevar][1]/@niemelementname"/>
                 </xsl:when>
                 <!--Use Message element Change-->
-                <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfroot][@messagename = $messagenamevar]/@niemelementname">
-                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfroot][@messagename = $messagenamevar]/@niemelementname"/>
-                </xsl:when>
-                <!--Use Message Change-->
-                <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfnamevar]/@niemelementname">
-                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar]/@niemelementname"/>
+                <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfname][@messagename = $messagenamevar]/@niemelementname">
+                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfname][@messagename = $messagenamevar]/@niemelementname"/>
                 </xsl:when>
                 <!--Use Subsitution group name -->
                 <xsl:when test="string-length($sbstgrp) &gt; 0">
@@ -970,7 +1013,7 @@
                 <xsl:when test="contains($mtftypevar, 'GeneralText')">
                     <xsl:value-of select="$GenText"/>
                 </xsl:when>
-                <xsl:when test="contains($mtftypevar,'HeadingInformation')">
+                <xsl:when test="contains($mtftypevar, 'HeadingInformation')">
                     <xsl:value-of select="$HeaderInfo"/>
                 </xsl:when>
                 <!--Create GenText Name -->
@@ -987,41 +1030,6 @@
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$niemelement"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:variable name="niemtypevar">
-            <xsl:choose>
-                <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemtype">
-                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemtype"/>
-                </xsl:when>
-                <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]/@niemtype">
-                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]/@niemtype"/>
-                </xsl:when>
-                <xsl:when test="$segmentnamevar and $segment_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype">
-                    <xsl:value-of select="$segment_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype"/>
-                </xsl:when>
-                <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype">
-                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype"/>
-                </xsl:when>
-                <xsl:when test="ends-with($mtftypevar, 'GeneralTextType')">
-                    <xsl:value-of select="concat($GenText, 'Type')"/>
-                </xsl:when>
-                <xsl:when test="ends-with($mtftypevar, 'HeadingInformationType')">
-                    <xsl:value-of select="concat($HeaderInfo, 'Type')"/>
-                </xsl:when>
-                <!--BlankText -->
-                <xsl:when test="contains($mtftypevar, 'BlankSpace')">
-                    <xsl:text>BlankSpaceTextType</xsl:text>
-                </xsl:when>
-                <xsl:when test="string-length($niemmatch//@niemtype) &gt; 0">
-                    <xsl:apply-templates select="$niemmatch//@niemtype" mode="txt"/>
-                </xsl:when>
-                <xsl:when test="$isSet and $niem_sets_map/Set[@mtfname = $mtftypevar]">
-                    <xsl:value-of select="$niem_sets_map/Set[@mtfname = $mtftypevar]/@niemtype"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates select="*:complexType/*/*:extension/@base" mode="txt"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -1172,11 +1180,6 @@
                     <xsl:value-of select="$UseDesc"/>
                 </xsl:attribute>
             </xsl:if>
-            <!-- <xsl:if test="string-length($TextIndicator) &gt; 0">
-                <xsl:attribute name="textindicator">
-                    <xsl:value-of select="$TextIndicator"/>
-                </xsl:attribute>
-            </xsl:if>-->
             <xsl:if test="string-length($setseq) &gt; 0">
                 <xsl:attribute name="setseq">
                     <xsl:value-of select="$setseq"/>
@@ -1733,24 +1736,27 @@
     <xsl:template name="niemName">
         <xsl:param name="n"/>
         <xsl:param name="suffix"/>
+        <xsl:variable name="sn">
+            <xsl:value-of select="$n"/>
+        </xsl:variable>
         <xsl:choose>
-            <xsl:when test="$n = 'TargetIdentification'">
+            <xsl:when test="$sn = 'TargetIdentification'">
                 <xsl:text>TargetID</xsl:text>
             </xsl:when>
-            <xsl:when test="starts-with($n, 'Gentext')">
-                <xsl:value-of select="$n"/>
+            <xsl:when test="starts-with($sn, 'Gentext')">
+                <xsl:value-of select="$sn"/>
             </xsl:when>
-            <xsl:when test="ends-with($n, 'Indicator')">
-                <xsl:value-of select="replace($n, 'Indicator', $suffix)"/>
+            <xsl:when test="ends-with($sn, 'Indicator')">
+                <xsl:value-of select="replace($sn, 'Indicator', $suffix)"/>
             </xsl:when>
-            <xsl:when test="ends-with($n, 'Number')">
-                <xsl:value-of select="concat(substring($n, 0, string-length($n) - 5), $suffix)"/>
+            <xsl:when test="ends-with($sn, 'Number')">
+                <xsl:value-of select="concat(substring($sn, 0, string-length($sn) - 5), $suffix)"/>
             </xsl:when>
-            <xsl:when test="ends-with($n, 'Code')">
-                <xsl:value-of select="replace($n, 'Code', $suffix)"/>
+            <xsl:when test="ends-with($sn, 'Code')">
+                <xsl:value-of select="replace($sn, 'Code', $suffix)"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($n, $suffix)"/>
+                <xsl:value-of select="concat($sn, $suffix)"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

@@ -48,16 +48,16 @@
                 <xsl:choose>
                     <xsl:when test="$niemsimpletype/@fudname">
                         <xsl:variable name="camelcasename">
-                            <xsl:call-template name="CamelCase">
+                            <xsl:call-template name="cCamelCase">
                                 <xsl:with-param name="text" select="$niemsimpletype/@fudname"/>
                             </xsl:call-template>
                         </xsl:variable>
-                        <xsl:call-template name="codeSimpleTypeName">
+                        <xsl:call-template name="ccodeSimpleTypeName">
                             <xsl:with-param name="ntext" select="replace($camelcasename, ' ', '')"/>
                         </xsl:call-template>
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:call-template name="codeSimpleTypeName">
+                        <xsl:call-template name="ccodeSimpleTypeName">
                             <xsl:with-param name="ntext" select="@name"/>
                         </xsl:call-template>
                     </xsl:otherwise>
@@ -152,6 +152,81 @@
             </Field>
         </xsl:for-each>-->
     </xsl:variable>
+    
+    <xsl:template name="cCamelCase">
+        <xsl:param name="text"/>
+        <xsl:variable name="t" select="translate($text, ',/()-', '')"/>
+        <xsl:choose>
+            <xsl:when test="contains($t, ' ')">
+                <xsl:call-template name="cCamelCaseWord">
+                    <xsl:with-param name="text" select="substring-before($t, ' ')"/>
+                </xsl:call-template>
+                <xsl:text> </xsl:text>
+                <xsl:call-template name="cCamelCase">
+                    <xsl:with-param name="text" select="substring-after($t, ' ')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="cCamelCaseWord">
+                    <xsl:with-param name="text" select="$t"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="cCamelCaseWord">
+        <xsl:param name="text"/>
+        <xsl:value-of
+            select="translate(substring($text, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+        <xsl:value-of
+            select="translate(substring($text, 2, string-length($text) - 1), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"
+        />
+    </xsl:template>
+    
+    
+    <xsl:template name="ccodeSimpleTypeName">
+        <xsl:param name="ntext"/>
+        <xsl:choose>
+            <xsl:when test="ends-with($ntext, 'CodeType')">
+                <xsl:value-of
+                    select="concat(substring($ntext, 0, string-length($ntext) - 3), 'SimpleType')"/>
+            </xsl:when>
+            <xsl:when test="ends-with($ntext, 'Code')">
+                <xsl:value-of select="replace($ntext, 'Code', 'ValueCodeSimpleType')"/>
+            </xsl:when>
+            <xsl:when test="ends-with($ntext, 'TypeType')">
+                <xsl:value-of
+                    select="concat(substring($ntext, 0, string-length($ntext) - 6), 'CategoryCodeSimpleType')"
+                />
+            </xsl:when>
+            <xsl:when test="ends-with($ntext, 'Type')">
+                <xsl:value-of select="concat(substring($ntext, 0, string-length($ntext) - 3), 'CodeSimpleType')"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat($ntext, 'CodeSimpleType')"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="ccodeTypeName">
+        <xsl:param name="ntext"/>
+        <xsl:choose>
+            <xsl:when test="ends-with($ntext, 'CodeType')">
+                <xsl:value-of
+                    select="concat(substring($ntext, 0, string-length($ntext) - 3), 'SimpleType')"/>
+            </xsl:when>
+            <xsl:when test="ends-with($ntext, 'Code')">
+                <xsl:value-of select="concat($ntext, 'SimpleType')"/>
+            </xsl:when>
+            <xsl:when test="ends-with($ntext, 'Type')">
+                <xsl:value-of
+                    select="concat(substring($ntext, 0, string-length($ntext) - 3), 'CodeSimpleType')"
+                />
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    
 
     <xsl:variable name="codelisttypes">
         <xsl:for-each select="$codelists/*">
@@ -159,7 +234,7 @@
             <xsl:variable name="codes" select="Codes"/>
             <xs:simpleType name="{@niemsimpletype}">
                 <xs:annotation>
-                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{concat('DoD-Dist-',*:appinfo/*:Field/@dist)}">
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{concat('DoD-Dist-',*//@dist)}">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xsl:if test="*:appinfo/*">
@@ -186,7 +261,7 @@
             </xs:simpleType>
             <xs:complexType name="{@niemtype}">
                 <xs:annotation>
-                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{concat('DoD-Dist-',*:appinfo/*:Field/@dist)}">
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{concat('DoD-Dist-',*//@dist)}">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xs:appinfo>
@@ -205,7 +280,7 @@
             <xsl:if test="@niemelementname">
                 <xs:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
                     <xs:annotation>
-                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{concat('DoD-Dist-',*:appinfo/*:Field/@dist)}">
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{concat('DoD-Dist-',*//@dist)}">
                             <xsl:value-of select="@niemelementdoc"/>
                         </xs:documentation>
                         <xs:appinfo>

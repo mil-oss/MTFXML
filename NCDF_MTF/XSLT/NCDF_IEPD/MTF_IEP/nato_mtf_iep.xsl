@@ -5,10 +5,11 @@
     <xsl:variable name="srcpath" select="'../../../XSD/NCDF_MTF/'"/>
     <xsl:variable name="Outdir" select="'../../../XSD/IEPD/'"/>
     <xsl:variable name="ALLMTF" select="document(concat($srcpath, 'NCDF_MTF.xsd'))"/>
-    <xsl:variable name="mtfappinf" select="document(concat($srcpath, 'NCDF/mtfappinfo.xsd'))"/>
-    <xsl:variable name="appinf" select="document(concat($srcpath, 'NCDF/appinfo.xsd'))"/>
-    <xsl:variable name="struct" select="document(concat($srcpath, 'NCDF/structures.xsd'))"/>
-    <xsl:variable name="locterm" select="document(concat($srcpath, 'NCDF/localTerminology.xsd'))"/>
+    <xsl:variable name="appinf" select="document(concat($srcpath, 'ncdf/utility/appinfo/4.0/appinfo.xsd'))"/>
+    <xsl:variable name="struct" select="document(concat($srcpath, 'ncdf/utility/structures/4.0/structures.xsd'))"/>
+    <xsl:variable name="locterm" select="document(concat($srcpath, 'ncdf/localTerminology.xsd'))"/>
+    <xsl:variable name="mtfappinf" select="document(concat($srcpath, 'ncdf/mtfappinfo.xsd'))"/>
+    <xsl:variable name="nsmxsd" select="document(concat($srcpath, 'nsm/nsm-iep.xsd'))"/>
     <xsl:variable name="q" select="'&quot;'"/>
     <xsl:variable name="lt" select="'&lt;'"/>
     <xsl:variable name="gt" select="'&gt;'"/>
@@ -16,35 +17,18 @@
     <xsl:variable name="ALLIEP">
         <xsl:apply-templates select="$ALLMTF/xs:schema/*" mode="milstd"/>
     </xsl:variable>
+    <xsl:variable name="iep-xsd-template">
+        <xs:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:inf="urn:int:nato:ncdf:mtf:appinfo" xmlns:nsm="urn:int:nato:ncdf:nsm" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:ncdf:mtf" xml:lang="en-US" elementFormDefault="unqualified"
+            attributeFormDefault="unqualified" version="1.0">
+            <xs:import namespace="urn:int:nato:ncdf:nsm" schemaLocation="ext/nsm/nsm-iep.xsd"/>
+        </xs:schema>
+    </xsl:variable>
 
     <xsl:template name="main">
-        <!--COPY REF XSD TO ext FOLDER-->
-        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/NCDF_MTF_REF.xsd')}">
-            <xsl:copy-of select="$ALLMTF"/>
-        </xsl:result-document>
-        <!--CREATE CUMULATIVE IEPD AND COPY TO EXT FOLDER-->
-        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/NCDF_MTF.xsd')}">
-            <xs:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:ncdf:mtf"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xsl:copy-of select="$ALLIEP" copy-namespaces="no"/>
-            </xs:schema>
-        </xsl:result-document>
-        <!--COPY NCDF RESOURCES TO EXT FOLDER-->
-        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/NCDF/appinfo.xsd')}">
-            <xsl:copy-of select="$appinf/xs:schema"/>
-        </xsl:result-document>
-        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/NCDF/mtfappinfo.xsd')}">
-            <xsl:copy-of select="$mtfappinf/xs:schema"/>
-        </xsl:result-document>
-        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/NCDF/structures.xsd')}">
-            <xsl:copy-of select="$struct/xs:schema"/>
-        </xsl:result-document>
-        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/NCDF/localTerminology.xsd')}">
-            <xsl:copy-of select="$locterm/xs:schema"/>
-        </xsl:result-document>
-
-        <!--COPY CREATED MSG IEPD TO MSG IEPD FOLDER-->
-        <!-- <xsl:for-each select="$ALLIEP/xs:element[xs:annotation/xs:appinfo/*:Msg]">
+        <!--Create REF Folder-->
+       <xsl:call-template name="RefFolder"/>
+        <!--CREATE MSG IEPD AND COPY TO MSG IEPD FOLDER-->
+        <xsl:for-each select="$ALLIEP/xs:element[xs:annotation/xs:appinfo/*:Msg]">
             <xsl:sort select="xs:annotation/xs:appinfo/*:Msg/@mtfid"/>
             <xsl:variable name="t" select="@type"/>
             <xsl:variable name="mid" select="translate(xs:annotation/xs:appinfo/*:Msg/@mtfid, ' .', '')"/>
@@ -54,6 +38,36 @@
             </xsl:call-template>
         </xsl:for-each>-->
     </xsl:template>
+    
+    <xsl:template name="RefFolder">
+        <!--COPY REF XSD TO ext FOLDER-->
+        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/NCDF_MTF_REF.xsd')}">
+            <xsl:copy-of select="$ALLMTF"/>
+        </xsl:result-document>
+        <!--CREATE CUMULATIVE IEPD AND COPY TO EXT FOLDER-->
+        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/NCDF_MTF.xsd')}">
+            <xs:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:inf="urn:int:nato:ncdf:mtf:appinfo" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:int:nato:ncdf:mtf"
+                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
+                <xsl:copy-of select="$ALLIEP" copy-namespaces="no"/>
+            </xs:schema>
+        </xsl:result-document>
+        <!--COPY NCDF RESOURCES TO EXT FOLDER-->
+        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/ncdf/utility/appinfo/4.0/appinfo.xsd')}">
+            <xsl:copy-of select="$mtfappinf/xs:schema"/>
+        </xsl:result-document>
+        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/ncdf/utility/structures/4.0/structures.xsd')}">
+            <xsl:copy-of select="$struct/xs:schema"/>
+        </xsl:result-document>
+        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/ncdf/localTerminology.xsd')}">
+            <xsl:copy-of select="$locterm/xs:schema"/>
+        </xsl:result-document>
+        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/ncdf/appinfo.xsd')}">
+            <xsl:copy-of select="$appinf/xs:schema"/>
+        </xsl:result-document>
+        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/nsm/nsm-iep.xsd')}">
+            <xsl:copy-of select="$nsmxsd/xs:schema"/>
+        </xsl:result-document>
+    </xsl:template>
 
     <!--Exctract IEPD-->
     <xsl:template name="ExtractIepSchema">
@@ -61,18 +75,11 @@
         <xsl:param name="outdir"/>
         <xsl:variable name="mid" select="translate($msgelement/xs:annotation/xs:appinfo/*:Msg/@mtfid, ' .', '')"/>
         <xsl:variable name="t" select="$msgelement/@type"/>
-        <xsl:variable name="schtron">
-            <xsl:value-of
-                select="concat($lt, '?xml-model', ' href=', $q, '../../../APP-11C-ch1/Consolidated/MTF_Schema_Tests/', $mid, '.sch', $q, ' type=', $q, 'application/xml', $q, ' schematypens=', $q, 'http://purl.oclc.org/dsdl/schematron', $q, '?', $gt)"
-            />
-        </xsl:variable>
         <xsl:result-document href="{$outdir}/{concat($mid,'-iep.xsd')}">
-            <!--<xsl:text>&#10;</xsl:text>
-            <xsl:value-of select="$schtron" disable-output-escaping="yes"/>
-            <xsl:text>&#10;</xsl:text>-->
-            <xs:schema xmlns="urn:int:nato:ncdf:mtf" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" targetNamespace="urn:int:nato:ncdf:mtf"
-                xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-                <xs:import namespace="urn:int:nato:ncdf:mtf:appinfo" schemaLocation="ext/NCDF/mtfappinfo.xsd"/>
+            <xsl:for-each select="$iep-xsd-template/*">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*" mode="identity"/>
+                    <xsl:apply-templates select="*" mode="identity"/>
                 <xs:annotation>
                     <xs:documentation>
                         <xsl:value-of select="concat($msgelement/*:annotation/*:appinfo/*:Msg/@mtfname, ' MESSAGE SCHEMA')"/>
@@ -128,8 +135,10 @@
                         <xsl:copy-of select="." copy-namespaces="no"/>
                     </xsl:if>
                 </xsl:for-each>
-            </xs:schema>
+                </xsl:copy>
+            </xsl:for-each>
         </xsl:result-document>
+        
     </xsl:template>
 
     <xsl:template match="*" mode="iterateNode">
@@ -251,7 +260,9 @@
             <xsl:apply-templates select="*" mode="milstd"/>
         </xs:element>
     </xsl:template>
-    <xsl:template match="xs:attributeGroup[@ref = 'structures:SimpleObjectAttributeGroup']" mode="milstd"/>
+    <xsl:template match="xs:attributeGroup[@ref = 'structures:SimpleObjectAttributeGroup']" mode="milstd">
+        <xs:attributeGroup ref="nsm:SecurityAttributesOptionGroup"/>
+    </xsl:template>
     <xsl:template match="xs:schema/xs:import" mode="milstd"/>
     <xsl:template match="xs:schema/xs:element[@abstract]" mode="milstd"/>
     <xsl:template match="*[contains(@ref, 'AugmentationPoint')]" mode="milstd"/>

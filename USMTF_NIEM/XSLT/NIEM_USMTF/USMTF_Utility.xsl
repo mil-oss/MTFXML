@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
-    xmlns:inf="urn:mtf:mil:6040b:appinfo"
-    xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism"
-    xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
+    xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
+    exclude-result-prefixes="xs" version="2.0">
 
     <!-- ************ Identity Transform ***********-->
     <!-- This will allow application of any templates without mode qualifier -->
@@ -298,8 +295,7 @@
         <Change from="_9UnitCommentsType" to="NineUnitCommentsType"/>
         <Change from="_2DigitYearType" to="TwoDigitYearType"/>
         <Change from="_2DigitYear" to="TwoDigitYear"/>
-        <Change from="_4WDispositionGridParametersType"
-            to="FourWhiskeyDispositionGridParametersType"/>
+        <Change from="_4WDispositionGridParametersType" to="FourWhiskeyDispositionGridParametersType"/>
         <Change from="_4WDispositionGridParameters" to="FourWhiskeyDispositionGridParameters"/>
         <Change from="_4WGridSegmentType" to="FourWhiskeySegmentType"/>
         <Change from="_4WGridSegment" to="FourWhiskeySegment"/>
@@ -436,22 +432,15 @@
                     <xsl:variable name="doctxt">
                         <xsl:choose>
                             <xsl:when test="ancestor::*:enumeration">
-                                <xsl:value-of
-                                    select="normalize-space(parent::*:annotation/*:appinfo/*:DataItem/text())"
-                                />
+                                <xsl:value-of select="normalize-space(parent::*:annotation/*:appinfo/*:DataItem/text())"/>
                             </xsl:when>
                             <xsl:when test="parent::*:annotation/*:appinfo/*:FieldFormatDefinition">
-                                <xsl:value-of
-                                    select="normalize-space(*:appinfo[1]/*:FieldFormatDefinition)"/>
+                                <xsl:value-of select="normalize-space(*:appinfo[1]/*:FieldFormatDefinition)"/>
                             </xsl:when>
-                            <xsl:when
-                                test="parent::*:annotation/*:appinfo/*:FieldFormatPositionConcept">
-                                <xsl:value-of
-                                    select="normalize-space(*:appinfo[1]/*:FieldFormatPositionConcept)"
-                                />
+                            <xsl:when test="parent::*:annotation/*:appinfo/*:FieldFormatPositionConcept">
+                                <xsl:value-of select="normalize-space(*:appinfo[1]/*:FieldFormatPositionConcept)"/>
                             </xsl:when>
-                            <xsl:when
-                                test="string-length(*:appinfo[1]/*:FudExplanation/text()) &gt; 0">
+                            <xsl:when test="string-length(*:appinfo[1]/*:FudExplanation/text()) &gt; 0">
                                 <xsl:value-of select="*:appinfo/*:FudExplanation"/>
                             </xsl:when>
                             <xsl:when test="string-length(*:appinfo[1]/*:FudName/text()) &gt; 0">
@@ -463,19 +452,16 @@
                             <xsl:when test="*:appinfo/*:Field/@name">
                                 <xsl:value-of select="*:appinfo/*:Field/@name"/>
                             </xsl:when>
-                            <xsl:when
-                                test="string-length(*:appinfo[1]/*:SetFormatDescription/text()) &gt; 0">
+                            <xsl:when test="string-length(*:appinfo[1]/*:SetFormatDescription/text()) &gt; 0">
                                 <xsl:value-of select="*:appinfo/*:SetFormatDescription"/>
                             </xsl:when>
                             <!--<xsl:when test="string-length(*:appinfo[1]/*:SetFormatRemark/text()) &gt; 0">
                                 <xsl:value-of select="*:appinfo/*:SetFormatRemark"/>
                             </xsl:when>-->
-                            <xsl:when
-                                test="string-length(*:appinfo[1]/*:SetFormatName/text()) &gt; 0">
+                            <xsl:when test="string-length(*:appinfo[1]/*:SetFormatName/text()) &gt; 0">
                                 <xsl:value-of select="*:appinfo/*:SetFormatName"/>
                             </xsl:when>
-                            <xsl:when
-                                test="string-length(*:appinfo[1]/*:SetFormatIdentifier/text()) &gt; 0">
+                            <xsl:when test="string-length(*:appinfo[1]/*:SetFormatIdentifier/text()) &gt; 0">
                                 <xsl:value-of select="*:appinfo/*:SetFormatIdentifier"/>
                             </xsl:when>
                             <xsl:otherwise>
@@ -487,25 +473,19 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <xs:documentation ism:classification="U" ism:ownerProducer="USA"
-                        ism:noticeType="DoD-Dist-A">
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
                         <xsl:choose>
                             <xsl:when test="starts-with($doctxt, 'A data type for')">
                                 <xsl:value-of select="."/>
                             </xsl:when>
                             <xsl:when test="ends-with($doctxt, 'Simple Type')">
-                                <xsl:value-of
-                                    select="concat('A data type for ', lower-case(substring-before($doctxt, 'Simple Type')))"
-                                />
+                                <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Simple Type')))"/>
                             </xsl:when>
                             <xsl:when test="ends-with($doctxt, 'Type')">
-                                <xsl:value-of
-                                    select="concat('A data type for ', lower-case(substring-before($doctxt, 'Type')))"
-                                />
+                                <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Type')))"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of
-                                    select="concat('A data type for ', lower-case($doctxt))"/>
+                                <xsl:value-of select="concat('A data type for ', lower-case($doctxt))"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xs:documentation>
@@ -539,15 +519,13 @@
                     <xsl:apply-templates select="text()"/>
                 </xsl:when>
                 <xsl:when test="ancestor::*:enumeration">
-                    <xsl:value-of
-                        select="normalize-space(parent::*:annotation/*:appinfo/*:DataItem/text())"/>
+                    <xsl:value-of select="normalize-space(parent::*:annotation/*:appinfo/*:DataItem/text())"/>
                 </xsl:when>
                 <xsl:when test="parent::*:annotation/*:appinfo/*:FieldFormatDefinition">
                     <xsl:value-of select="normalize-space(*:appinfo[1]/*:FieldFormatDefinition)"/>
                 </xsl:when>
                 <xsl:when test="parent::*:annotation/*:appinfo/*:FieldFormatPositionConcept">
-                    <xsl:value-of
-                        select="normalize-space(*:appinfo[1]/*:FieldFormatPositionConcept)"/>
+                    <xsl:value-of select="normalize-space(*:appinfo[1]/*:FieldFormatPositionConcept)"/>
                 </xsl:when>
                 <xsl:when test="parent::*:annotation/*:appinfo/*:FudExplanation">
                     <xsl:value-of select="normalize-space(*:appinfo[1]/*:FudExplanation)"/>
@@ -576,19 +554,13 @@
                     <xsl:value-of select="."/>
                 </xsl:when>
                 <xsl:when test="ends-with($doctxt, 'Simple Type')">
-                    <xsl:value-of
-                        select="concat('A data type for ', lower-case(substring-before($doctxt, 'Simple Type')))"
-                    />
+                    <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Simple Type')))"/>
                 </xsl:when>
                 <xsl:when test="ends-with($doctxt, 'Type')">
-                    <xsl:value-of
-                        select="concat('A data type for ', lower-case(substring-before($doctxt, 'Type')))"
-                    />
+                    <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Type')))"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of
-                        select="concat('A data type for ', concat(lower-case(substring($doctxt, 1, 1)), substring($doctxt, 2)))"
-                    />
+                    <xsl:value-of select="concat('A data type for ', concat(lower-case(substring($doctxt, 1, 1)), substring($doctxt, 2)))"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xs:documentation>
@@ -619,36 +591,55 @@
                 <xsl:when test="*:Msg">
                     <xsl:copy-of select="*:Msg"/>
                 </xsl:when>
-                <xsl:when
-                    test="child::*[starts-with(name(), 'Field')] and starts-with(ancestor::*:element[1]/*:complexType/*/*:extension/@base, 'c:')">
+                <xsl:when test="child::*[starts-with(name(), 'Field')] and starts-with(ancestor::*:element[1]/*:complexType/*/*:extension/@base, 'c:')">
                     <xsl:element name="inf:Composite">
                         <!--<xsl:apply-templates select="@*[not(name()='name')]"/>-->
                         <xsl:apply-templates select="*" mode="attr"/>
-                        <xsl:apply-templates
-                            select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*"
-                            mode="attr"/>
+                        <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
                         <xsl:if test="$appattr">
                             <xsl:apply-templates select="$appattr" mode="addattr"/>
                         </xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
+                                <xsl:attribute name="dist">
+                                    <xsl:text>C</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="diststatement">
+                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
+                                </xsl:attribute>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="dist">
+                                    <xsl:text>A</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="diststatement">
+                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                                </xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
                         <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Field')]">
                     <xsl:element name="inf:Field">
                         <xsl:apply-templates select="*" mode="attr"/>
-                        <xsl:apply-templates
-                            select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*"
-                            mode="attr"/>
+                        <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
                         <xsl:if test="$appattr">
                             <xsl:apply-templates select="$appattr" mode="addattr"/>
                         </xsl:if>
                         <xsl:choose>
                             <xsl:when test="$appattr and $appattr/@dist = 'C'">
+                                <xsl:attribute name="dist">
+                                    <xsl:text>C</xsl:text>
+                                </xsl:attribute>
                                 <xsl:attribute name="diststatement">
                                     <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
                                 </xsl:attribute>
                             </xsl:when>
                             <xsl:otherwise>
+                                <xsl:attribute name="dist">
+                                    <xsl:text>A</xsl:text>
+                                </xsl:attribute>
                                 <xsl:attribute name="diststatement">
                                     <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
                                 </xsl:attribute>
@@ -660,35 +651,83 @@
                 <xsl:when test="child::*[starts-with(name(), 'Set')]">
                     <xsl:element name="inf:Set">
                         <xsl:apply-templates select="*" mode="attr"/>
-                        <xsl:apply-templates
-                            select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*"
-                            mode="attr"/>
+                        <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
                         <xsl:if test="$appattr">
                             <xsl:apply-templates select="$appattr" mode="addattr"/>
                         </xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
+                                <xsl:attribute name="dist">
+                                    <xsl:text>C</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="diststatement">
+                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
+                                </xsl:attribute>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="dist">
+                                    <xsl:text>A</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="diststatement">
+                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                                </xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
                         <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Segment')]">
                     <xsl:element name="inf:Segment">
                         <xsl:apply-templates select="*" mode="attr"/>
-                        <xsl:apply-templates
-                            select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*"
-                            mode="attr"/>
+                        <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
                         <xsl:if test="$appattr">
                             <xsl:apply-templates select="$appattr" mode="addattr"/>
                         </xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
+                                <xsl:attribute name="dist">
+                                    <xsl:text>C</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="diststatement">
+                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
+                                </xsl:attribute>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="dist">
+                                    <xsl:text>A</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="diststatement">
+                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                                </xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Mtf')]">
                     <xsl:element name="inf:Msg">
                         <xsl:apply-templates select="*" mode="attr"/>
-                        <xsl:apply-templates
-                            select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*"
-                            mode="attr"/>
+                        <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
                         <xsl:if test="$appattr">
                             <xsl:apply-templates select="$appattr" mode="addattr"/>
                         </xsl:if>
+                        <xsl:choose>
+                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
+                                <xsl:attribute name="dist">
+                                    <xsl:text>C</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="diststatement">
+                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
+                                </xsl:attribute>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:attribute name="dist">
+                                    <xsl:text>A</xsl:text>
+                                </xsl:attribute>
+                                <xsl:attribute name="diststatement">
+                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                                </xsl:attribute>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </xsl:element>
                 </xsl:when>
             </xsl:choose>
@@ -716,8 +755,7 @@
 
     <xsl:template match="*:enumeration/*:annotation">
         <xs:annotation>
-            <xsl:element name="documentation" ism:classification="U" ism:ownerProducer="USA"
-                ism:noticeType="DoD-Dist-A">
+            <xsl:element name="documentation" ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
                 <xsl:value-of select="normalize-space(*:appinfo/*:DataItem/text())"/>
             </xsl:element>
             <xsl:apply-templates select="*:appinfo"/>
@@ -733,8 +771,7 @@
     </xsl:template>
 
     <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
-        <xsl:if
-            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '') and not(normalize-space(text()) = 'NONE')">
             <xsl:if test="not(preceding-sibling::*:FieldFormatRelatedDocument)">
                 <xsl:element name="inf:Document" inherit-namespaces="yes">
                     <xsl:value-of select="normalize-space(text())"/>
@@ -749,8 +786,7 @@
     </xsl:template>
 
     <xsl:template match="*:SetFormatExample" mode="examples">
-        <xsl:if
-            test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
+        <xsl:if test="not(normalize-space(text()) = ' ') and not(*) and not(normalize-space(text()) = '')">
             <xsl:if test="not(preceding-sibling::*:SetFormatExample)">
                 <xsl:element name="inf:Example" inherit-namespaces="yes">
                     <xsl:value-of select="normalize-space(text())"/>
@@ -789,11 +825,8 @@
 
     <xsl:template name="CamelCaseWord">
         <xsl:param name="text"/>
-        <xsl:value-of
-            select="translate(substring($text, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
-        <xsl:value-of
-            select="translate(substring($text, 2, string-length($text) - 1), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"
-        />
+        <xsl:value-of select="translate(substring($text, 1, 1), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
+        <xsl:value-of select="translate(substring($text, 2, string-length($text) - 1), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')"/>
     </xsl:template>
 
     <xsl:template name="breakIntoWords">
@@ -820,20 +853,17 @@
             <xsl:when test="string-length($string) = string-length($token)">
                 <xsl:value-of select="$token"/>
             </xsl:when>
-            <xsl:when
-                test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($string, string-length($token) + 1, 1))">
+            <xsl:when test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($string, string-length($token) + 1, 1))">
                 <xsl:value-of select="concat($token, ' ')"/>
                 <xsl:call-template name="breakIntoWordsHelper">
                     <xsl:with-param name="string" select="substring-after($string, $token)"/>
-                    <xsl:with-param name="token"
-                        select="substring($string, string-length($token), 1)"/>
+                    <xsl:with-param name="token" select="substring($string, string-length($token), 1)"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="breakIntoWordsHelper">
                     <xsl:with-param name="string" select="$string"/>
-                    <xsl:with-param name="token"
-                        select="substring($string, 1, string-length($token) + 1)"/>
+                    <xsl:with-param name="token" select="substring($string, 1, string-length($token) + 1)"/>
                 </xsl:call-template>
             </xsl:otherwise>
         </xsl:choose>
@@ -843,16 +873,13 @@
         <xsl:param name="ntext"/>
         <xsl:choose>
             <xsl:when test="ends-with($ntext, 'CodeType')">
-                <xsl:value-of
-                    select="concat(substring($ntext, 0, string-length($ntext) - 3), 'SimpleType')"/>
+                <xsl:value-of select="concat(substring($ntext, 0, string-length($ntext) - 3), 'SimpleType')"/>
             </xsl:when>
             <xsl:when test="ends-with($ntext, 'Code')">
                 <xsl:value-of select="replace($ntext, 'Code', 'ValueCodeSimpleType')"/>
             </xsl:when>
             <xsl:when test="ends-with($ntext, 'TypeType')">
-                <xsl:value-of
-                    select="concat(substring($ntext, 0, string-length($ntext) - 3), 'CodeSimpleType')"
-                />
+                <xsl:value-of select="concat(substring($ntext, 0, string-length($ntext) - 3), 'CodeSimpleType')"/>
             </xsl:when>
             <xsl:when test="ends-with($ntext, 'Type')">
                 <xsl:value-of select="concat($ntext, 'CodeSimpleType')"/>
@@ -867,16 +894,13 @@
         <xsl:param name="ntext"/>
         <xsl:choose>
             <xsl:when test="ends-with($ntext, 'CodeType')">
-                <xsl:value-of
-                    select="concat(substring($ntext, 0, string-length($ntext) - 3), 'SimpleType')"/>
+                <xsl:value-of select="concat(substring($ntext, 0, string-length($ntext) - 3), 'SimpleType')"/>
             </xsl:when>
             <xsl:when test="ends-with($ntext, 'Code')">
                 <xsl:value-of select="concat($ntext, 'SimpleType')"/>
             </xsl:when>
             <xsl:when test="ends-with($ntext, 'Type')">
-                <xsl:value-of
-                    select="concat(substring($ntext, 0, string-length($ntext) - 3), 'CodeSimpleType')"
-                />
+                <xsl:value-of select="concat(substring($ntext, 0, string-length($ntext) - 3), 'CodeSimpleType')"/>
             </xsl:when>
         </xsl:choose>
     </xsl:template>
@@ -931,8 +955,7 @@
             <term:LocalTerm term="NICS" literal="NATO Integrated Communications System"/>
             <term:LocalTerm term="SIC" literal="Subject Identifier Code"/>
             <term:LocalTerm term="UTM" literal="Universal Transverse Mercator"/>
-            <ddms:security ism:classification="U" ism:ownerProducer="USA"
-                ism:nonICmarkings="DIST_STMT_C"/>
+            <ddms:security ism:classification="U" ism:ownerProducer="USA" ism:nonICmarkings="DIST_STMT_C"/>
             <Distro
                 statement="DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22, U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties.  Disseminate in accordance with provisions of DOD Directive 5230.25."
             />
@@ -980,7 +1003,7 @@
             <xsl:value-of select="."/>
         </xsl:attribute>
     </xsl:template>
-    
+
     <xsl:template match="*" mode="normlize">
         <xsl:value-of select="normalize-space(translate(., '&#34;&#xA;', ''))"/>
     </xsl:template>

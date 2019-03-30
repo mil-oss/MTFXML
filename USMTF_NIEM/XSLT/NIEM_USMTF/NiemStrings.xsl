@@ -172,6 +172,9 @@
         </xsl:variable>
         <xsl:variable name="niemtypename">
             <xsl:choose>
+                <xsl:when test="$change/@niemtype">
+                    <xsl:value-of select="$change/@niemtype"/>
+                </xsl:when>
                 <xsl:when test="ends-with($n, 'Code')">
                     <xsl:value-of select="replace($n, 'Code', 'Text')"/>
                 </xsl:when>

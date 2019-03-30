@@ -599,10 +599,10 @@
                     <xs:complexContent>
                         <xs:extension base="SetBaseType">
                             <xs:sequence>
-                                <xs:element ref="{concat(@mtfname,'TextIndicator')}" minOccurs="1" maxOccurs="1">
+                                <xs:element ref="{concat(@mtfname,'SubjectText')}" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>
-                                            <xsl:value-of select="concat('A data item for ', @mtfname, ' Text Indicator')"/>
+                                            <xsl:value-of select="concat('A data item for ', @mtfname, ' Subject Text')"/>
                                         </xs:documentation>
                                     </xs:annotation>
                                 </xs:element>
@@ -628,10 +628,10 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="{concat(@mtfname,'TextIndicator')}" type="TextIndicatorType">
+                <xs:element name="{concat(@mtfname,'SubjectText')}" type="SubjectTextType">
                     <xs:annotation>
                         <xs:documentation>
-                            <xsl:value-of select="concat('A data item for ', @ncdfelementname, ' Text Indicator')"/>
+                            <xsl:value-of select="concat('A data item for ', @ncdfelementname, ' Subject Text')"/>
                         </xs:documentation>
                         <xs:appinfo>
                             <inf:Field fixed="{info/*/@textindicator}"/>
@@ -1006,10 +1006,10 @@
                     <xs:complexContent>
                         <xs:extension base="SetBaseType">
                             <xs:sequence>
-                                <xs:element ref="{concat(@mtfname,'TextIndicator')}" minOccurs="1" maxOccurs="1">
+                                <xs:element ref="{concat(@mtfname,'SubjectText')}" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>
-                                            <xsl:value-of select="concat('A data item for ', @ncdfelementname, ' Text Indicator')"/>
+                                            <xsl:value-of select="concat('A data item for ', @ncdfelementname, ' Subject Text')"/>
                                         </xs:documentation>
                                     </xs:annotation>
                                 </xs:element>
@@ -1028,10 +1028,10 @@
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
-                <xs:element name="{concat(@mtfname,'TextIndicator')}" type="TextIndicatorType">
+                <xs:element name="{concat(@mtfname,'SubjectText')}" type="SubjectTextType">
                     <xs:annotation>
                         <xs:documentation>
-                            <xsl:value-of select="concat('A data item for ', @mtfname, ' Text Indicator')"/>
+                            <xsl:value-of select="concat('A data item for ', @mtfname, ' Subject Text')"/>
                         </xs:documentation>
                         <xs:appinfo>
                             <inf:Field fixed="{@positionname}"/>

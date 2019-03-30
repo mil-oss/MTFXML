@@ -594,10 +594,10 @@
                     <xs:complexContent>
                         <xs:extension base="SetBaseType">
                             <xs:sequence>
-                                <xs:element ref="{concat(@niemelementname,'TextIndicator')}" minOccurs="1" maxOccurs="1">
+                                <xs:element ref="{concat(@niemelementname,'SubjectText')}" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>
-                                            <xsl:value-of select="concat('A data item for ', @niemelementname, ' Text Indicator')"/>
+                                            <xsl:value-of select="concat('A data item for ', @niemelementname, '  Subject Text')"/>
                                         </xs:documentation>
                                     </xs:annotation>
                                 </xs:element>
@@ -623,10 +623,10 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="{concat(@niemelementname,'TextIndicator')}" type="GentextTextIndicatorType">
+                <xs:element name="{concat(@niemelementname,'SubjectText')}" type="SubjectTextType">
                     <xs:annotation>
                         <xs:documentation>
-                            <xsl:value-of select="concat('A data item for ', @niemelementname, ' Text Indicator')"/>
+                            <xsl:value-of select="concat('A data item for ', @niemelementname, ' Subject Text')"/>
                         </xs:documentation>
                         <xs:appinfo>
                             <inf:Field fixed="{info/*/@textindicator}"/>
@@ -649,10 +649,10 @@
                     <xs:complexContent>
                         <xs:extension base="SetBaseType">
                             <xs:sequence>
-                                <xs:element ref="{concat(@niemelementname,'TextIndicator')}" minOccurs="1" maxOccurs="1">
+                                <xs:element ref="{concat(@niemelementname,'SubjectText')}" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>
-                                            <xsl:value-of select="concat('A data item for ', @niemelementname,' Heading Information ', 'Text Indicator')"/>
+                                            <xsl:value-of select="concat('A data item for ', @niemelementname,' Heading Information ', ' Subject Text')"/>
                                         </xs:documentation>
                                     </xs:annotation>
                                 </xs:element>
@@ -678,10 +678,10 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="{concat(@niemelementname,'TextIndicator')}" type="GentextTextIndicatorType">
+                <xs:element name="{concat(@niemelementname,'SubjectText')}" type="SubjectTextType">
                     <xs:annotation>
                         <xs:documentation>
-                            <xsl:value-of select="concat('A data item for ', @niemelementname, ' Text Indicator')"/>
+                            <xsl:value-of select="concat('A data item for ', @niemelementname, ' Subject Text')"/>
                         </xs:documentation>
                         <xs:appinfo>
                             <inf:Field fixed="{info/*/@textindicator}"/>
@@ -831,6 +831,11 @@
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xs:documentation>
+                            <xsl:for-each select="info/*">
+                                <xs:appinfo>
+                                    <xsl:copy-of select="."/>
+                                </xs:appinfo>
+                            </xsl:for-each>
                             <xsl:if test="@substgrpname">
                                 <xs:appinfo>
                                     <inf:Choice substitutionGroup="{@substgrpname}">
@@ -895,6 +900,9 @@
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
+            <xsl:variable name="aug" select="ends-with(@name,'AugmentationPoint')"/>
+            <xsl:variable name="fg" select="ends-with(@name,'FieldGroup')"/>
+            <xsl:variable name="setf" select="ends-with(@name,'Set')"/>
             <xsl:choose>
                 <xsl:when test="count(preceding-sibling::*:element[@name = $n and @type = $t]) &gt; 0"/>
                 <xsl:when test="count(preceding-sibling::*:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
@@ -913,7 +921,7 @@
     <!-- _______________________________________________________ -->
     <!--Segments-->
     <xsl:variable name="segmentelements">
-        <xsl:for-each select="$niem_segments_map//Sequence/Element">
+        <xsl:for-each select="$niem_segments_map//Element">
             <xsl:sort select="@niemelementname"/>
             <xsl:variable name="n" select="@niemelementname"/>
             <xsl:choose>
@@ -1051,6 +1059,11 @@
                                 <xs:documentation>
                                     <xsl:value-of select="@niemelementdoc"/>
                                 </xs:documentation>
+                                <xsl:for-each select="info/*">
+                                    <xs:appinfo>
+                                        <xsl:copy-of select="."/>
+                                    </xs:appinfo>
+                                </xsl:for-each>
                             </xs:annotation>
                         </xs:element>
                     </xsl:otherwise>

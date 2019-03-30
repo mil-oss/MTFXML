@@ -76,7 +76,7 @@
                         <xsl:value-of select="concat(substring($changeto, 0, string-length($changeto) - 3), 'CodeSimpleType')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($ncdfelementname, 'TypeType')">
-                        <xsl:value-of select="concat(substring($ncdfelementname, 0, string-length($ncdfelementname) - 6), 'CodeSimpleType')"/>
+                        <xsl:value-of select="concat(substring($ncdfelementname, 0, string-length($ncdfelementname) - 6), 'CategoryCodeSimpleType')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($ncdfelementname, 'Type')">
                         <xsl:value-of select="concat(substring($ncdfelementname, 0, string-length($ncdfelementname) - 3), 'CodeSimpleType')"/>
@@ -96,6 +96,9 @@
                 <xsl:choose>
                     <xsl:when test="$cfld_changes/CodeList/@name = $n">
                         <xsl:value-of select="concat(substring($changeto, 0, string-length($changeto) - 3), 'CodeType')"/>
+                    </xsl:when>
+                    <xsl:when test="ends-with($ncdfelementname, 'TypeType')">
+                        <xsl:value-of select="concat(substring($ncdfelementname, 0, string-length($ncdfelementname) - 6), 'CategoryCodeType')"/>
                     </xsl:when>
                     <xsl:when test="ends-with($ncdfelementname, 'Type')">
                         <xsl:value-of select="concat(substring($ncdfelementname, 0, string-length($ncdfelementname) - 3), 'CodeType')"/>
@@ -279,7 +282,6 @@
         </xsl:for-each>
     </xsl:variable>
 
-    <!--Create SimpleType from Normalized SimpleTypes -->
     <xsl:template match="*" mode="makeCodeSimpleType">
         <xsl:variable name="n" select="translate(@ncdfname, ',()', '')"/>
         <xsl:choose>

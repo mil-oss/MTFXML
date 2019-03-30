@@ -771,6 +771,31 @@
             <xsl:text>'</xsl:text>
         </xsl:variable>
         <xsl:variable name="TextIndicator" select="$annot/*/info/inf:Set/@positionName"/>
+        <xsl:variable name="ncdftypevar">
+            <xsl:choose>
+                <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]/@ncdftype">
+                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]/@ncdftype"/>
+                </xsl:when>
+                <xsl:when test="$segmentnamevar and $segment_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype">
+                    <xsl:value-of select="$segment_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype"/>
+                </xsl:when>
+                <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype">
+                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtftypevar, 'GeneralTextType')">
+                    <xsl:value-of select="concat($mtfnamevar, 'GeneralTextType')"/>
+                </xsl:when>
+                <xsl:when test="string-length($ncdfmatch//@ncdftype) &gt; 0">
+                    <xsl:apply-templates select="$ncdfmatch//@ncdftype" mode="txt"/>
+                </xsl:when>
+                <xsl:when test="$isSet and $ncdf_sets_map/Set[@mtfname = $mtftypevar]">
+                    <xsl:value-of select="$ncdf_sets_map/Set[@mtfname = $mtftypevar]/@ncdftype"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="*:complexType/*/*:extension/@base" mode="txt"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xsl:variable name="ncdfel">
             <xsl:choose>
                 <xsl:when test="$isField">
@@ -785,14 +810,23 @@
                         <xsl:when test="$set_chg/@ncdfelementname">
                             <xsl:value-of select="$set_chg/@ncdfelementname"/>
                         </xsl:when>
-                        <xsl:when test="ends-with($mtftypevar, 'GeneralTextType')">
+                        <xsl:when test="ends-with($ncdftypevar, 'GeneralTextType')">
                             <xsl:value-of select="$n"/>
                         </xsl:when>
-                        <xsl:when test="ends-with($mtftypevar, 'TextType') and not(ends-with($n, 'Text'))">
+                        <xsl:when test="ends-with($ncdftypevar, 'TextType') and not(ends-with($n, 'Text'))">
                             <xsl:value-of select="concat($n, 'Text')"/>
                         </xsl:when>
-                        <xsl:when test="ends-with($mtftypevar, 'CodeType') and not(ends-with($mtfnamevar, 'Code'))">
+                        <xsl:when test="ends-with($ncdftypevar, 'CodeType') and not(ends-with($mtfnamevar, 'Code'))">
                             <xsl:value-of select="concat($mtfnamevar, 'Code')"/>
+                        </xsl:when>
+                        <xsl:when test="contains($ncdftypevar, 'Integer') and not(ends-with($mtfnamevar, 'Numeric'))">
+                            <xsl:value-of select="concat($mtfnamevar, 'Numeric')"/>
+                        </xsl:when>
+                        <xsl:when test="contains($ncdftypevar, 'Decimal') and not(ends-with($mtfnamevar, 'Numeric'))">
+                            <xsl:value-of select="concat($mtfnamevar, 'Numeric')"/>
+                        </xsl:when>
+                        <xsl:when test="ends-with($niemtypevar, 'IndicatorType') and not(ends-with($mtfnamevar, 'Indicator'))">
+                            <xsl:value-of select="concat($mtfnamevar, 'Indicator')"/>
                         </xsl:when>
                         <!--<xsl:when test="$ncdfmatch/*/@ncdfelementname">
                             <xsl:value-of select="$ncdfmatch/*/@ncdfelementname"/>
@@ -981,31 +1015,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="ncdftypevar">
-            <xsl:choose>
-                <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]/@ncdftype">
-                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]/@ncdftype"/>
-                </xsl:when>
-                <xsl:when test="$segmentnamevar and $segment_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype">
-                    <xsl:value-of select="$segment_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype"/>
-                </xsl:when>
-                <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype">
-                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][1]/@ncdftype"/>
-                </xsl:when>
-                <xsl:when test="ends-with($mtftypevar, 'GeneralTextType')">
-                    <xsl:value-of select="concat($mtfnamevar, 'GeneralTextType')"/>
-                </xsl:when>
-                <xsl:when test="string-length($ncdfmatch//@ncdftype) &gt; 0">
-                    <xsl:apply-templates select="$ncdfmatch//@ncdftype" mode="txt"/>
-                </xsl:when>
-                <xsl:when test="$isSet and $ncdf_sets_map/Set[@mtfname = $mtftypevar]">
-                    <xsl:value-of select="$ncdf_sets_map/Set[@mtfname = $mtftypevar]/@ncdftype"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:apply-templates select="*:complexType/*/*:extension/@base" mode="txt"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
+       
         <xsl:variable name="fixedval">
             <xsl:choose>
                 <xsl:when test="contains($mtftypevar, 'GeneralText')">
@@ -1463,9 +1473,7 @@
                     <xsl:with-param name="settypevar" select="$settypevar"/>
                     <xsl:with-param name="segmentnamevar" select="$segmentnamevar"/>
                     <xsl:with-param name="messagenamevar" select="$messagenamevar"/>
-                    <xsl:with-param name="sbstgrp">
-                        <xsl:value-of select="$substgrpnamevar"/>
-                    </xsl:with-param>
+                    <xsl:with-param name="sbstgrp" select="$substgrpnamevar"/>
                 </xsl:apply-templates>
             </Choice>
         </Element>
@@ -1711,27 +1719,30 @@
         </xsl:variable>
         <xsl:value-of select="concat($n, 'HeadingSet')"/>
     </xsl:template>
-    <xsl:template name="ncdfName">
+    <xsl:template name="makeNcdfName">
         <xsl:param name="n"/>
         <xsl:param name="suffix"/>
+        <xsl:variable name="sn">
+            <xsl:value-of select="$n"/>
+        </xsl:variable>
         <xsl:choose>
-            <xsl:when test="$n = 'TargetIdentification'">
+            <xsl:when test="$sn = 'TargetIdentification'">
                 <xsl:text>TargetID</xsl:text>
             </xsl:when>
-            <xsl:when test="$n = 'TextIndicator'">
-                <xsl:value-of select="$n"/>
+            <xsl:when test="starts-with($sn, 'Gentext')">
+                <xsl:value-of select="$sn"/>
             </xsl:when>
-            <xsl:when test="ends-with($n, 'Indicator')">
-                <xsl:value-of select="replace($n, 'Indicator', $suffix)"/>
+            <xsl:when test="ends-with($sn, 'Indicator')">
+                <xsl:value-of select="replace($sn, 'Indicator', $suffix)"/>
             </xsl:when>
-            <xsl:when test="ends-with($n, 'Number')">
-                <xsl:value-of select="concat(substring($n, 0, string-length($n) - 5), $suffix)"/>
+            <xsl:when test="ends-with($sn, 'Number')">
+                <xsl:value-of select="concat(substring($sn, 0, string-length($sn) - 5), $suffix)"/>
             </xsl:when>
-            <xsl:when test="ends-with($n, 'Code')">
-                <xsl:value-of select="replace($n, 'Code', $suffix)"/>
+            <xsl:when test="ends-with($sn, 'Code')">
+                <xsl:value-of select="replace($sn, 'Code', $suffix)"/>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="concat($n, $suffix)"/>
+                <xsl:value-of select="concat($sn, $suffix)"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>

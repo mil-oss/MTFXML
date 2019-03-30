@@ -17,15 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo" exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mtfappinfo="urn:int:nato:ncdf:mtf:appinfo"
+    exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <xsl:variable name="strings_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/*:schema/*:simpleType[*:restriction[@base = 'xs:string']/*:pattern]"/>
+    <xsl:variable name="strings_xsd"
+        select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/*:schema/*:simpleType[*:restriction[@base = 'xs:string']/*:pattern]"/>
 
     <!--Test Output-->
     <xsl:variable name="xsdstroutputdoc" select="'../../XSD/Analysis/Normalized/Strings.xsd'"/>
     <xsl:variable name="stringsout" select="'../../XSD/Test/MTF_XML_Maps/NCDF_Strings.xml'"/>
-    <xsl:variable name="sfld_changes" select="document('../../XSD/Refactor_Changes/FieldChanges.xml')/FieldChanges"/>
+    <xsl:variable name="sfld_changes"
+        select="document('../../XSD/Refactor_Changes/FieldChanges.xml')/FieldChanges"/>
 
     <xsl:variable name="strings">
         <xsl:apply-templates select="$strings_xsd" mode="maptype">
@@ -100,19 +104,24 @@
             <!--If Ends with max min strip off-->
             <xsl:when test="ends-with($pattern, '}')">
                 <xsl:choose>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 6), '{')">
+                    <xsl:when
+                        test="starts-with(substring($pattern, string-length($pattern) - 6), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 6)"/>
                     </xsl:when>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 5), '{')">
+                    <xsl:when
+                        test="starts-with(substring($pattern, string-length($pattern) - 5), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 5)"/>
                     </xsl:when>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 4), '{')">
+                    <xsl:when
+                        test="starts-with(substring($pattern, string-length($pattern) - 4), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 4)"/>
                     </xsl:when>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 3), '{')">
+                    <xsl:when
+                        test="starts-with(substring($pattern, string-length($pattern) - 3), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 3)"/>
                     </xsl:when>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 2), '{')">
+                    <xsl:when
+                        test="starts-with(substring($pattern, string-length($pattern) - 2), '{')">
                         <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 2)"/>
                     </xsl:when>
                 </xsl:choose>
@@ -151,8 +160,8 @@
         </xsl:variable>
         <xsl:variable name="ncdftypename">
             <xsl:choose>
-                <xsl:when test="$change/@ncdfelementname">
-                    <xsl:value-of select="$change/@ncdfelementname"/>
+                <xsl:when test="$change/@ncdftype">
+                    <xsl:value-of select="$change/@ncdftype"/>
                 </xsl:when>
                 <xsl:when test="ends-with($n, 'Code')">
                     <xsl:value-of select="replace($n, 'Code', 'Text')"/>
@@ -214,14 +223,15 @@
                     <xsl:value-of select="$change/@ncdftypedoc"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat('A data type for ',lower-case($mtfdoc))"/>
+                    <xsl:value-of select="concat('A data type for ', lower-case($mtfdoc))"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="ncdfelementdoc">
             <xsl:choose>
                 <xsl:when test="$change/@ncdftypedoc">
-                    <xsl:value-of select="replace($change/@ncdftypedoc, 'A data type', 'A data item')"/>
+                    <xsl:value-of
+                        select="replace($change/@ncdftypedoc, 'A data type', 'A data item')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="replace($ncdftypedocvar, 'A data type', 'A data item')"/>
@@ -240,8 +250,10 @@
         <xsl:variable name="appinfovar">
             <xsl:apply-templates select="*:annotation/*:appinfo"/>
         </xsl:variable>
-        <Field ncdfelementname="{$ncdfelementnamevar}" ncdfsimpletype="{$ncdfsimpletype}" ncdftype="{$ncdfcomplextype}" base="xs:string" pattern="{$pattern}" ncdfpattern="{$ncdfpattern}"
-            ncdfelementdoc="{$ncdfelementdoc}" ncdftypedoc="{$ncdftypedocvar}" mtftype="{@name}" mtfdoc="{$mtfdoc}">
+        <Field ncdfelementname="{$ncdfelementnamevar}" ncdfsimpletype="{$ncdfsimpletype}"
+            ncdftype="{$ncdfcomplextype}" base="xs:string" pattern="{$pattern}"
+            ncdfpattern="{$ncdfpattern}" ncdfelementdoc="{$ncdfelementdoc}"
+            ncdftypedoc="{$ncdftypedocvar}" mtftype="{@name}" mtfdoc="{$mtfdoc}">
             <xsl:if test="string-length($lengthvar) &gt; 0">
                 <xsl:attribute name="length" select="$lengthvar"/>
             </xsl:if>
@@ -261,7 +273,8 @@
                     </xsl:attribute>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:attribute name="ffirn" select="*:annotation/*:appinfo/*:FieldFormatIndexReferenceNumber"/>
+                    <xsl:attribute name="ffirn"
+                        select="*:annotation/*:appinfo/*:FieldFormatIndexReferenceNumber"/>
                     <xsl:attribute name="fud" select="*:annotation/*:appinfo/*:FudNumber"/>
                 </xsl:otherwise>
             </xsl:choose>
