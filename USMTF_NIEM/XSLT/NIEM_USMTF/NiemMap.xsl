@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/* 
+ * Copyright (C) 2019 JD NEUSHUL
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:inf="urn:mtf:mil:6040b:appinfo" version="2.0">
 
     <xsl:include href="USMTF_Utility.xsl"/>
@@ -102,7 +120,17 @@
                 </xsl:choose>
             </xsl:variable>
             <xsl:variable name="niemcomplextype">
-                <xsl:value-of select="concat($n, 'Type')"/>
+                <xsl:choose>
+                    <xsl:when test="ends-with($n, 'Indicator')">
+                        <xsl:value-of select="concat($change/@niemelementname, 'Type')"/>
+                    </xsl:when>
+                    <xsl:when test="$change/@niemtype">
+                        <xsl:value-of select="$change/@niemtype"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($n, 'Type')"/>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:variable>
             <xsl:variable name="niemelementname">
                 <xsl:value-of select="$niemname"/>
@@ -133,101 +161,84 @@
             <xsl:variable name="annot">
                 <xsl:apply-templates select="*:annotation"/>
             </xsl:variable>
+            <xsl:variable name="fappinfo">
+                <xsl:apply-templates select="*:annotation/*:appinfo"/>
+            </xsl:variable>
+            <xsl:variable name="DistStmnt">
+                <xsl:choose>
+                    <xsl:when test="$change/@dist = 'A'">
+                        <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be
+   referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22,
+   U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties. Disseminate in
+   accordance with provisions of DOD Directive 5230.25.</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="Version">
+                <xsl:choose>
+                    <xsl:when test="$change/@version">
+                        <xsl:value-of select="$change/@version"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>C.0.01.00</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="Date">
+                <xsl:choose>
+                    <xsl:when test="$change/@versiondate">
+                        <xsl:value-of select="$change/@versiondate"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>October 2018</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="Remark">
+                <xsl:choose>
+                    <xsl:when test="$change/@remark">
+                        <xsl:value-of select="$change/@remark"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:variable name="appinfo">
-                <xsl:for-each select="$annot/*/*:appinfo">
+                <xsl:for-each select="$annot/*/info">
                     <inf:Composite>
                         <xsl:for-each select="*:Field/@*">
                             <xsl:copy-of select="."/>
                         </xsl:for-each>
+                        <xsl:attribute name="version">
+                            <xsl:value-of select="$Version"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="date">
+                            <xsl:value-of select="$Date"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="remark">
+                            <xsl:value-of select="$Remark"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="doddist">
+                            <xsl:choose>
+                                <xsl:when test="$change/@dist = 'A'">
+                                    <xsl:text>DoD-Dist-A</xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:text>DoD-Dist-C</xsl:text>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:attribute>
+                        <!--<xsl:attribute name="diststatement">
+                            <xsl:value-of select="$DistStmnt"/>
+                        </xsl:attribute>-->
                     </inf:Composite>
                 </xsl:for-each>
             </xsl:variable>
-            <!--<xsl:variable name="seq_fields">
-                <xsl:for-each select="*:sequence/*:element">
-                    <xsl:variable name="n">
-                        <xsl:apply-templates select="@name" mode="txt"/>
-                    </xsl:variable>
-                    <xsl:variable name="mtftypevar" select="@type"/>
-                    <xsl:variable name="niemmatch" select="$niem_fields_map/*[@mtftype = $mtftypevar]"/>
-                    <xsl:variable name="niemtypevar">
-                        <xsl:choose>
-                            <xsl:when test="contains($niemelementname,'BlankSpace')">
-                                <xsl:text>BlankSpaceTextType</xsl:text>
-                            </xsl:when>
-                            <xsl:when test="starts-with(@type, 'f:')">
-                                <xsl:value-of select="$niemmatch/@niemtype"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="$mtftypevar"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:variable>
-                    <xsl:variable name="field_chg" select="$field_changes/*/*[@name = $n]"/>
-                    <xsl:variable name="comp_chg" select="$comp_changes/CompositeTypeChanges/Element[@mtfname = $n][@mtftype = $mtftypevar]"/>
-                    <xsl:variable name="seqniemelementname">
-                        <xsl:choose>
-                            <xsl:when test="$field_chg/@niemelementname">
-                                <xsl:value-of select="$field_chg/@niemelementname"/>
-                            </xsl:when>
-                            <xsl:when test="$comp_chg/@niemelementname">
-                                <xsl:value-of select="$comp_chg/@niemelementname"/>
-                            </xsl:when>
-                            <xsl:when test="ends-with($niemtypevar, 'TextType') and not(ends-with($n, 'Text'))">
-                                <xsl:value-of select="concat($n, 'Text')"/>
-                            </xsl:when>
-                            <xsl:when test="ends-with($niemtypevar, 'NumericType') and not(ends-with($n, 'Numeric'))">
-                                <xsl:value-of select="concat($n, 'Numeric')"/>
-                            </xsl:when>
-                            <xsl:when test="contains($niemtypevar, 'Integer') and not(ends-with($n, 'Numeric'))">
-                                <xsl:value-of select="concat($n, 'Numeric')"/>
-                            </xsl:when>
-                            <xsl:when test="ends-with($niemtypevar, 'CodeType') and not(ends-with($n, 'Code'))">
-                                <xsl:value-of select="concat($n, 'Code')"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="$n"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:variable>
-                    <xsl:variable name="annot">
-                        <xsl:apply-templates select="*:annotation"/>
-                    </xsl:variable>
-                    <xsl:variable name="tpyeannot">
-                        <xsl:apply-templates select="$niemmatch/*/*:annotation"/>
-                    </xsl:variable>
-                    <Element mtfname="{$n}" mtftype="{@type}" niemtype="{$niemtypevar}" niemelementname="{$seqniemelementname}">
-                        <xsl:for-each select="@*[not(name() = 'name')]">
-                            <xsl:copy-of select="."/>
-                        </xsl:for-each>
-                        <xsl:attribute name="niemelementdoc">
-                            <xsl:choose>
-                                <xsl:when test="$n = 'BlankSpace'">
-                                    <xsl:text>A data type for a blank space character that is used to separate elements within a data chain, or to mark the beginning or end of a unit of data.</xsl:text>
-                                </xsl:when>
-                                <xsl:when test="$comp_changes/CompositeTypeChanges/Element[@mtfname = $n][@mtftype = $mtftypevar]/@niemelementdoc">
-                                    <xsl:value-of select="$comp_changes/CompositeTypeChanges/Element[@name = $n][@mtftype = $mtftypevar]/@niemelementdoc"/>
-                                </xsl:when>
-                                <xsl:when test="$niem_fields_map/*[@mtftype = $mtftypevar]/@niemelementdoc">
-                                    <xsl:value-of select="$niem_fields_map/*[@mtftype = $mtftypevar]/@niemelementdoc"/>
-                                </xsl:when>
-                            </xsl:choose>
-                        </xsl:attribute>
-                        <xsl:attribute name="seq">
-                            <xsl:value-of select="*:annotation/*:appinfo/*:ElementalFfirnFudnSequence"/>
-                        </xsl:attribute>
-                        <xsl:choose>
-                            <xsl:when test="$annot/info">
-                                <xsl:copy-of select="$annot/info"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:copy-of select="$tpyeannot/info"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </Element>
-                </xsl:for-each>
-            </xsl:variable>-->
-            <Composite niemelementname="{$niemelementname}" niemtype="{$niemcomplextype}" niemname="{$niemname}" niemelementdoc="{$niemelementdoc}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedoc}"
-                mtfname="{@name}">
+            <Composite niemelementname="{$niemelementname}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdoc}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedoc}" mtfname="{@name}">
                 <info>
                     <xsl:for-each select="$appinfo">
                         <xsl:copy-of select="."/>
@@ -297,9 +308,9 @@
                     <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Field'">
                         <xsl:variable name="n" select="@niemelementname"/>
                         <xsl:variable name="t" select="@niemtype"/>
-                        <xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:if>
+                        <!--<xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">-->
+                        <xsl:copy-of select="." copy-namespaces="no"/>
+                        <!--</xsl:if>-->
                     </xsl:if>
                 </xsl:for-each>
                 <xsl:for-each select="$all_field_elements_map/*">
@@ -307,9 +318,9 @@
                     <xsl:if test="string-length(@niemtype) &gt; 0 and name() = 'Element'">
                         <xsl:variable name="n" select="@niemelementname"/>
                         <xsl:variable name="t" select="@niemtype"/>
-                        <xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:if>
+                        <!--<xsl:if test="count(preceding-sibling::*[@niemelementname = $n][@niemtype = $t]) = 0">-->
+                        <xsl:copy-of select="." copy-namespaces="no"/>
+                        <!--</xsl:if>-->
                     </xsl:if>
                 </xsl:for-each>
             </Fields>
@@ -385,14 +396,18 @@
             <xsl:apply-templates select="*:annotation"/>
         </xsl:variable>
         <xsl:variable name="mtfname" select="@name"/>
-        <xsl:variable name="change" select="$set_changes/Set[@mtfname = $mtfname]"/>
         <xsl:variable name="n">
             <xsl:apply-templates select="@name" mode="fromtype"/>
         </xsl:variable>
+        <xsl:variable name="setid" select="$annot/*/*/@setid"/>
+        <xsl:variable name="change" select="$set_changes/Set[@setid = $setid]"/>
         <xsl:variable name="niemelementnamevar">
             <xsl:choose>
                 <xsl:when test="$change/@niemelementname">
                     <xsl:value-of select="$change/@niemelementname"/>
+                </xsl:when>
+                <xsl:when test="$mtfname = 'SetBaseType'">
+                    <xsl:text>SetBase</xsl:text>
                 </xsl:when>
                 <xsl:when test="ends-with($n, 'Set')">
                     <xsl:value-of select="$n"/>
@@ -437,14 +452,86 @@
         <xsl:variable name="niemelementdocvar">
             <xsl:apply-templates select="replace($niemtypedocvar, 'A data type', 'A data item')" mode="normlize"/>
         </xsl:variable>
-        <xsl:variable name="appinfovar">
-            <xsl:for-each select="$annot/*/*:appinfo">
-                <xsl:copy-of select="*:Set" copy-namespaces="no"/>
+        <xsl:variable name="fappinfo">
+            <xsl:apply-templates select="*:annotation/*:appinfo"/>
+        </xsl:variable>
+        <xsl:variable name="DistStmnt">
+            <xsl:choose>
+                <xsl:when test="$change/@dist = 'A'">
+                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be
+   referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22,
+   U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties. Disseminate in
+   accordance with provisions of DOD Directive 5230.25.</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Version">
+            <xsl:choose>
+                <xsl:when test="$change/@version">
+                    <xsl:value-of select="$change/@version"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>C.0.01.00</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Date">
+            <xsl:choose>
+                <xsl:when test="$change/@versiondate">
+                    <xsl:value-of select="$change/@versiondate"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>October 2018</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Remark">
+            <xsl:choose>
+                <xsl:when test="$change/@remark">
+                    <xsl:value-of select="$change/@remark"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Created by ICP M2018-02</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="appinfo">
+            <xsl:for-each select="$annot/*/info">
+                <inf:Set>
+                    <xsl:for-each select="*:Field/@*">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:attribute name="version">
+                        <xsl:value-of select="$Version"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="date">
+                        <xsl:value-of select="$Date"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="remark">
+                        <xsl:value-of select="$Remark"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="doddist">
+                        <xsl:choose>
+                            <xsl:when test="$change/@dist = 'C'">
+                                <xsl:text>DoD-Dist-C</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>DoD-Dist-A</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                  <!--  <xsl:attribute name="diststatement">
+                        <xsl:value-of select="$DistStmnt"/>
+                    </xsl:attribute>-->
+                </inf:Set>
             </xsl:for-each>
         </xsl:variable>
         <Set niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextypevar}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" niemtypedoc="{$niemtypedocvar}">
             <info>
-                <xsl:for-each select="$appinfovar">
+                <xsl:for-each select="$appinfo">
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
             </info>
@@ -459,11 +546,11 @@
         </xsl:variable>
         <xsl:variable name="mtfname" select="@name"/>
         <xsl:variable name="messagename" select="ancestor::*:element[parent::*:schema]/@name"/>
-        <xsl:variable name="changename" select="$segment_changes/Segment[@mtfname = $mtfname]"/>
+        <xsl:variable name="change" select="$segment_changes/Segment[@mtfname = $mtfname]"/>
         <xsl:variable name="niemelementnamevar">
             <xsl:choose>
-                <xsl:when test="$changename/@niemelementname">
-                    <xsl:value-of select="$changename/@niemelementname"/>
+                <xsl:when test="$change/@niemelementname">
+                    <xsl:value-of select="$change/@niemelementname"/>
                 </xsl:when>
                 <xsl:when test="ends-with($mtfname, 'Segment')">
                     <xsl:value-of select="$mtfname"/>
@@ -485,8 +572,8 @@
         </xsl:variable>
         <xsl:variable name="niemcomplextype">
             <xsl:choose>
-                <xsl:when test="$changename/@niemcomplextype">
-                    <xsl:value-of select="$changename/@niemcomplextype"/>
+                <xsl:when test="$change/@niemtype">
+                    <xsl:value-of select="$change/@niemtype"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="concat($niemelementnamevar, 'Type')"/>
@@ -527,9 +614,81 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xsl:variable name="appinfovar">
-            <xsl:for-each select="$annot/*/*:appinfo">
-                <xsl:copy-of select="*:Segment" copy-namespaces="no"/>
+        <xsl:variable name="fappinfo">
+            <xsl:apply-templates select="*:annotation/*:appinfo"/>
+        </xsl:variable>
+        <xsl:variable name="DistStmnt">
+            <xsl:choose>
+                <xsl:when test="$change/@dist = 'A'">
+                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be
+   referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22,
+   U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties. Disseminate in
+   accordance with provisions of DOD Directive 5230.25.</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Version">
+            <xsl:choose>
+                <xsl:when test="$change/@version">
+                    <xsl:value-of select="$change/@version"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>C.0.01.00</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Date">
+            <xsl:choose>
+                <xsl:when test="$change/@versiondate">
+                    <xsl:value-of select="$change/@versiondate"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>October 2018</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Remark">
+            <xsl:choose>
+                <xsl:when test="$change/@remark">
+                    <xsl:value-of select="$change/@remark"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Created by ICP M2018-02</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="appinfo">
+            <xsl:for-each select="$annot/*/info">
+                <inf:Segment>
+                    <xsl:for-each select="*:Field/@*">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:attribute name="version">
+                        <xsl:value-of select="$Version"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="date">
+                        <xsl:value-of select="$Date"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="remark">
+                        <xsl:value-of select="$Remark"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="doddist">
+                        <xsl:choose>
+                            <xsl:when test="$change/@dist = 'A'">
+                                <xsl:text>DoD-Dist-A</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>DoD-Dist-C</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                  <!--  <xsl:attribute name="diststatement">
+                        <xsl:value-of select="$DistStmnt"/>
+                    </xsl:attribute>-->
+                </inf:Segment>
             </xsl:for-each>
         </xsl:variable>
         <Segment niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" messagename="{$messagename}" mtfdoc="{$mtfdoc}"
@@ -540,7 +699,7 @@
                 </xsl:attribute>
             </xsl:if>
             <info>
-                <xsl:for-each select="$appinfovar/*">
+                <xsl:for-each select="$appinfo/*">
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
             </info>
@@ -553,12 +712,8 @@
         <xsl:variable name="annot">
             <xsl:apply-templates select="*:annotation"/>
         </xsl:variable>
-        <xsl:variable name="appinfovar">
-            <xsl:for-each select="$annot/*/*:appinfo">
-                <xsl:copy-of select="*" copy-namespaces="no"/>
-            </xsl:for-each>
-        </xsl:variable>
         <xsl:variable name="mtfnamevar" select="@name"/>
+        <xsl:variable name="change" select="$message_changes/Message[@mtfname = $mtfnamevar]"/>
         <xsl:variable name="n" select="@name"/>
         <xsl:variable name="niemelementnamevar">
             <xsl:choose>
@@ -612,10 +767,87 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+        <xsl:variable name="fappinfo">
+            <xsl:apply-templates select="*:annotation/*:appinfo"/>
+        </xsl:variable>
+        <xsl:variable name="DistStmnt">
+            <xsl:choose>
+                <xsl:when test="$change/@dist = 'A'">
+                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be
+   referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22,
+   U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties. Disseminate in
+   accordance with provisions of DOD Directive 5230.25.</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Version">
+            <xsl:choose>
+                <xsl:when test="$change/@version">
+                    <xsl:value-of select="$change/@version"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>C.0.01.00</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Date">
+            <xsl:choose>
+                <xsl:when test="$change/@versiondate">
+                    <xsl:value-of select="$change/@versiondate"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>October 2018</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Remark">
+            <xsl:choose>
+                <xsl:when test="$change/@remark">
+                    <xsl:value-of select="$change/@remark"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Created by ICP M2018-02</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="appinfo">
+            <xsl:for-each select="$annot/*/info">
+                <inf:Msg>
+                    <xsl:for-each select="*:Msg/@*">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:attribute name="version">
+                        <xsl:value-of select="$Version"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="date">
+                        <xsl:value-of select="$Date"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="remark">
+                        <xsl:value-of select="$Remark"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="doddist">
+                        <xsl:choose>
+                            <xsl:when test="$change/@dist = 'A'">
+                                <xsl:text>DoD-Dist-A</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>DoD-Dist-C</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <xsl:attribute name="diststatement">
+                        <xsl:value-of select="$DistStmnt"/>
+                    </xsl:attribute>
+                </inf:Msg>
+            </xsl:for-each>
+        </xsl:variable>
         <Message niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" mtfid="{$mtfid}" mtfdoc="{$mtfdoc}"
             niemtypedoc="{$niemtypedocvar}">
             <info>
-                <xsl:for-each select="$appinfovar/*">
+                <xsl:for-each select="$appinfo/*">
                     <xsl:copy-of select="." copy-namespaces="no"/>
                 </xsl:for-each>
             </info>
@@ -694,11 +926,9 @@
         </xsl:variable>
         <xsl:variable name="annot">
             <xsl:apply-templates select="*:annotation"/>
-        </xsl:variable>
-        <xsl:variable name="appinfovar">
-            <xsl:for-each select="$annot/*/*:appinfo">
-                <xsl:copy-of select="*" copy-namespaces="no"/>
-            </xsl:for-each>
+            <xsl:if test="contains($mtfbase, 'f:')">
+                <xsl:apply-templates select="$baseline_fields_xsd/*[@name = $mtftypevar]/*:annotation"/>
+            </xsl:if>
         </xsl:variable>
         <xsl:variable name="typeannot">
             <xsl:choose>
@@ -717,10 +947,10 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="segmentname" select="ancestor::*:element[ends-with(@name, 'Segment')][1]/@name"/>
-        <xsl:variable name="isField" select="exists($annot/*/*:appinfo/inf:Field) or starts-with($mtfbase, 'f:')"/>
-        <xsl:variable name="isComposite" select="exists($annot/*/*:appinfo/inf:Composite) or starts-with($mtfbase, 'c:')"/>
-        <xsl:variable name="isSet" select="exists($annot/*/*:appinfo/inf:Set) or starts-with($mtfbase, 's:')"/>
-        <xsl:variable name="isSegment" select="exists($annot/*/*:appinfo/inf:Segment)"/>
+        <xsl:variable name="isField" select="exists($annot/*/info/inf:Field) or starts-with($mtfbase, 'f:')"/>
+        <xsl:variable name="isComposite" select="exists($annot/*/info/inf:Composite) or starts-with($mtfbase, 'c:')"/>
+        <xsl:variable name="isSet" select="exists($annot/*/info/inf:Set) or starts-with($mtfbase, 's:')"/>
+        <xsl:variable name="isSegment" select="exists($annot/*/info/inf:Segment)"/>
         <xsl:variable name="niemmatch">
             <xsl:choose>
                 <xsl:when test="$isSet">
@@ -756,7 +986,7 @@
         <xsl:variable name="mtftypedoc">
             <xsl:apply-templates select="$typeannot/*/*:documentation" mode="normlize"/>
         </xsl:variable>
-        <xsl:variable name="UseDesc" select="$appinfovar/*/@usage"/>
+        <xsl:variable name="UseDesc" select="$annot/*/info/*[1]/@usage"/>
         <xsl:variable name="apos">
             <xsl:text>'</xsl:text>
         </xsl:variable>
@@ -798,6 +1028,9 @@
                 <xsl:when test="$messagenamevar and $message_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype">
                     <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][1]/@niemtype"/>
                 </xsl:when>
+                <xsl:when test="$comp_changes//CompositeTypeChanges/Composite[@name = $mtftypevar]/@niemtype">
+                    <xsl:value-of select="$comp_changes//CompositeTypeChanges/Composite[@name = $mtftypevar]/@niemtype"/>
+                </xsl:when>
                 <!--BlankText -->
                 <xsl:when test="contains($mtftypevar, 'BlankSpace')">
                     <xsl:text>BlankSpaceTextType</xsl:text>
@@ -805,11 +1038,15 @@
                 <xsl:when test="string-length($niemmatch//@niemtype) &gt; 0">
                     <xsl:apply-templates select="$niemmatch//@niemtype" mode="txt"/>
                 </xsl:when>
+
                 <xsl:when test="$isSet and $niem_sets_map/Set[@mtfname = $mtftypevar]">
                     <xsl:value-of select="$niem_sets_map/Set[@mtfname = $mtftypevar]/@niemtype"/>
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="*:complexType/*/*:extension/@base">
                     <xsl:apply-templates select="*:complexType/*/*:extension/@base" mode="txt"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat($mtfnamevar, 'Type')"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -818,11 +1055,11 @@
                 <xsl:when test="$isField">
                     <xsl:variable name="set_chg" select="$set_changes/Element[@mtfname = $mtfnamevar][@setname = $settypevar]"/>
                     <xsl:choose>
-                        <xsl:when test="$field_changes/*[@name = $mtfnamevar][@mtftype = $mtftypevar]">
-                            <xsl:value-of select="$field_changes/*[@name = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementname"/>
-                        </xsl:when>
                         <xsl:when test="$field_changes/*[@name = $mtfnamevar]">
                             <xsl:value-of select="$field_changes/*[@name = $mtfnamevar]/@niemelementname"/>
+                        </xsl:when>
+                        <xsl:when test="$field_changes/*[@name = $mtfname]">
+                            <xsl:value-of select="$field_changes/*[@name = $mtfname]/@niemelementname"/>
                         </xsl:when>
                         <xsl:when test="$set_chg/@niemelementname">
                             <xsl:value-of select="$set_chg/@niemelementname"/>
@@ -932,15 +1169,24 @@
                         <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $messagenamevar]">
                             <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $messagenamevar]/@niemname"/>
                         </xsl:when>
-                        <xsl:when test="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]">
-                            <xsl:variable name="subgrpchg" select="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]"/>
+                        <xsl:when test="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase]">
                             <xsl:variable name="shortSubgrp">
                                 <xsl:call-template name="removeStrings">
                                     <xsl:with-param name="targetStr" select="$sbstgrp"/>
-                                    <xsl:with-param name="strings" select="$subgrpchg/@filter"/>
+                                    <xsl:with-param name="strings" select="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase]/@filter"/>
                                 </xsl:call-template>
                             </xsl:variable>
-                            <xsl:variable name="shortOption" select="$subgrpchg/@shortname"/>
+                            <xsl:variable name="shortOption" select="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase]/@shortname"/>
+                            <xsl:value-of select="concat($shortSubgrp, $shortOption)"/>
+                        </xsl:when>
+                        <xsl:when test="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]">
+                            <xsl:variable name="shortSubgrp">
+                                <xsl:call-template name="removeStrings">
+                                    <xsl:with-param name="targetStr" select="$sbstgrp"/>
+                                    <xsl:with-param name="strings" select="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@filter"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <xsl:variable name="shortOption" select="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@shortname"/>
                             <xsl:value-of select="concat($shortSubgrp, $shortOption)"/>
                         </xsl:when>
                         <xsl:when test="$niem_composites_map/*[@niemelementname = $niemel]">
@@ -955,10 +1201,10 @@
                             </xsl:call-template>
                         </xsl:when>
                         <xsl:when test="@name = $niemel">
-                            <xsl:value-of select="concat($sbstgrp, @name)"/>
+                            <xsl:value-of select="concat($sbstgrp, $niemel)"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat($sbstgrp, $mtfroot)"/>
+                            <xsl:value-of select="concat($sbstgrp, $niemel)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:when>
@@ -978,10 +1224,6 @@
         </xsl:variable>
         <xsl:variable name="niemelementnamevar">
             <xsl:choose>
-                <!--Use Element Change-->
-                <xsl:when test="$segment_changes/Element[@mtfname = $n]/@niemelementname">
-                    <xsl:value-of select="$segment_changes/Element[@mtfname = $n]/@niemelementname"/>
-                </xsl:when>
                 <!--Use Set Change-->
                 <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementname">
                     <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementname"/>
@@ -992,6 +1234,13 @@
                 <!--Use Set Field Change-->
                 <xsl:when test="$isField and $set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase][1]/@niemelementname">
                     <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase][1]/@niemelementname"/>
+                </xsl:when>
+                <!--Use Segment Change-->
+                <xsl:when test="$segment_changes/Element[@mtfname = $n]/@niemelementname">
+                    <xsl:value-of select="$segment_changes/Element[@mtfname = $n]/@niemelementname"/>
+                </xsl:when>
+                <xsl:when test="$isComposite and $comp_changes/Composite[@name = $mtfnamevar]/@niemelementname">
+                    <xsl:value-of select="$comp_changes/Composite[@name = $mtfnamevar]/@niemelementname"/>
                 </xsl:when>
                 <!--Use Segment Change-->
                 <xsl:when test="$isSegment and $segment_changes/Element[@mtfname = $mtfnamevar][1]/@niemelementname">
@@ -1061,6 +1310,9 @@
         </xsl:variable>
         <xsl:variable name="niemdocvar">
             <xsl:choose>
+                <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase]/@niemelementdoc">
+                    <xsl:apply-templates select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase]/@niemelementdoc" mode="normlize"/>
+                </xsl:when>
                 <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementdoc">
                     <xsl:apply-templates select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementdoc" mode="normlize"/>
                 </xsl:when>
@@ -1103,6 +1355,83 @@
         <xsl:variable name="typeappinfo">
             <xsl:for-each select="$typeannot/*/info">
                 <xsl:copy-of select="*:Field" copy-namespaces="no"/>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:variable name="fappinfo">
+            <xsl:apply-templates select="*:annotation/*:appinfo"/>
+        </xsl:variable>
+        <xsl:variable name="DistStmnt">
+            <xsl:choose>
+                <xsl:when test="$niemmatch/info/*/@dist = 'A'">
+                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be
+   referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22,
+   U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties. Disseminate in
+   accordance with provisions of DOD Directive 5230.25.</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Version">
+            <xsl:choose>
+                <xsl:when test="$niemmatch/*/info/*/@version">
+                    <xsl:value-of select="$niemmatch/*/info/*/@version"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>C.0.01.00</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Date">
+            <xsl:choose>
+                <xsl:when test="$niemmatch/*/info/*/@versiondate">
+                    <xsl:value-of select="$niemmatch/*/info/*/@versiondate"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>October 2018</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="Remark">
+            <xsl:choose>
+                <xsl:when test="$niemmatch/*/info/*/@remark">
+                    <xsl:value-of select="$niemmatch/*/info/*/@remark"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>Created by ICP M2018-02</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="appinfovar">
+            <xsl:for-each select="$annot/*/info/*">
+                <xsl:copy>
+                    <xsl:for-each select="@*">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:attribute name="version">
+                        <xsl:value-of select="$Version"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="date">
+                        <xsl:value-of select="$Date"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="remark">
+                        <xsl:value-of select="$Remark"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="doddist">
+                        <xsl:choose>
+                            <xsl:when test="$niemmatch/*/info/*/@dist = 'A'">
+                                <xsl:text>DoD-Dist-A</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>DoD-Dist-C</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                   <!-- <xsl:attribute name="diststatement">
+                        <xsl:value-of select="$DistStmnt"/>
+                    </xsl:attribute>-->
+                </xsl:copy>
             </xsl:for-each>
         </xsl:variable>
         <Element niemelementname="{$niemelementnamevar}" niemtype="{$niemtypevar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" niemtypedoc="{$niemtypedocvar}" niemelementdoc="{$niemelementdocvar}"
@@ -1362,7 +1691,7 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="appinfovar">
-            <xsl:for-each select="$annot/*/*:appinfo">
+            <xsl:for-each select="$annot/*/info">
                 <xsl:copy-of select="*:Field" copy-namespaces="no"/>
             </xsl:for-each>
         </xsl:variable>

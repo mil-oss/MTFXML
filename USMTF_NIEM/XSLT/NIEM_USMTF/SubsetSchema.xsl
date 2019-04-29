@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/* 
+ * Copyright (C) 2019 JD NEUSHUL
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:variable name="allmtf" select="document('../../XSD/NIEM_MTF/NIEM_MTF.xsd')/*:schema"/>
@@ -11,7 +29,7 @@
     </xsl:variable>
 
     <xsl:variable name="messagenodes">
-        <xsl:apply-templates select="$allnodes/*[@name][@type][@mtfid]" mode="msglist"/>
+        <xsl:apply-templates select="$allnodes/*[@name][@name][@type][@mtfid]" mode="msglist"/>
     </xsl:variable>
 
     <xsl:template match="*" mode="msglist">
@@ -41,6 +59,9 @@
                 <xsl:variable name="n" select="."/>
                 <xsl:copy-of select="$allnodes/*[@name = $n][1]"/>
             </xsl:for-each>
+            <xsl:if test="@mtfid = 'ATO' or @mtfid = 'AIRSUPREQ'">
+                <xsl:copy-of select="$allnodes/*[@name = 'EmitterTypeAbstract']"/>
+            </xsl:if>
         </xsl:variable>
         <Message mtfid="{@mtfid}">
             <xsl:copy-of select="$nlist/element[@mtfid = $m]"/>
@@ -64,6 +85,7 @@
         <xsl:param name="nlist"/>
         <xsl:variable name="n" select="@ref | @name"/>
         <xsl:variable name="t" select="@type"/>
+        <xsl:variable name="s" select="@substitutionGroup"/>
         <xsl:if test="@type">
             <!--<node name="{$t}" type="{name()}"/>-->
             <xsl:element name="{replace(name(),'xs:','')}">
@@ -72,9 +94,6 @@
                 </xsl:attribute>
             </xsl:element>
         </xsl:if>
-        <!--<node name="{$n}" type="{name()}">
-            <xsl:copy-of select="@type"/>
-        </node>-->
         <xsl:element name="{replace(name(),'xs:','')}">
             <xsl:attribute name="name">
                 <xsl:value-of select="$n"/>
@@ -129,51 +148,20 @@
             <xsl:variable name="msg" select="."/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
-            <xsl:variable name="mid" select="@mtfid"/>
-            <xsl:result-document href="{concat($outDir,'/lists/',@mtfid,'-List.xml')}">
+            <xsl:variable name="mid" select="translate(@mtfid, ' .', '')"/>
+            <xsl:result-document href="{concat($outDir,'/lists/',$mid,'-List.xml')}">
                 <xsl:copy-of select="." copy-namespaces="no"/>
             </xsl:result-document>
-            <xsl:result-document href="{concat($outDir,'/xsd/',@mtfid,'-Ref.xsd')}">
+            <xsl:result-document href="{concat($outDir,'/xsd/',$mid,'-Ref.xsd')}">
                 <xsl:for-each select="$ref-xsd-template/*">
                     <xsl:copy>
                         <xsl:apply-templates select="@*" mode="identity"/>
                         <xsl:apply-templates select="*" mode="identity"/>
+                        <xsl:apply-templates select="$allmtf/*[@name = $msg/element[1]/@name]/*:annotation" mode="identity"/>
                         <xsl:for-each select="$msg/*">
                             <xsl:variable name="nn" select="@name"/>
                             <xsl:copy-of select="$allmtf/*[@name = $nn]"/>
                         </xsl:for-each>
-<!--                        <xsl:variable name="nodelist">
-                            <xsl:for-each select="$msg/*">
-                                <xsl:variable name="nn" select="@name"/>
-                                <xsl:copy-of select="$allmtf/*[@name = $nn]"/>
-                            </xsl:for-each>
-                        </xsl:variable>
-                        <xsl:copy-of select="$nodelist/xs:complexType[@name = $t]/xs:annotation"/>
-                        
-                        <xsl:copy-of select="$nodelist/xs:element[@name = $n]"/>
-                        <xsl:copy-of select="$nodelist/xs:complexType[@name = $t]"/>
-                        
-                        <xsl:for-each select="$nodelist/xs:simpleType">
-                            <xsl:sort select="@name"/>
-                            <xsl:variable name="n" select="@name"/>
-                            <xsl:if test="count(preceding-sibling::xs:simpleType[@name = $n]) = 0">
-                                <xsl:copy-of select="." copy-namespaces="no"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                        <xsl:for-each select="$nodelist/xs:complexType[not(@name = $t)]">
-                            <xsl:sort select="@name"/>
-                            <xsl:variable name="n" select="@name"/>
-                            <xsl:if test="count(preceding-sibling::xs:complexType[@name = $n]) = 0">
-                                <xsl:copy-of select="." copy-namespaces="no"/>
-                            </xsl:if>
-                        </xsl:for-each>
-                        <xsl:for-each select="$nodelist/xs:element[not(@name = $n)]">
-                            <xsl:sort select="@name"/>
-                            <xsl:variable name="n" select="@name"/>
-                            <xsl:if test="count(preceding-sibling::xs:element[@name = $n]) = 0">
-                                <xsl:copy-of select="." copy-namespaces="no"/>
-                            </xsl:if>
-                        </xsl:for-each>-->
                     </xsl:copy>
                 </xsl:for-each>
             </xsl:result-document>

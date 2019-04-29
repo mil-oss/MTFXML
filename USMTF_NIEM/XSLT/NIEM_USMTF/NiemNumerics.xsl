@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /* 
- * Copyright (C) 2017 JD NEUSHUL
+ * Copyright (C) 2019 JD NEUSHUL
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,10 +45,6 @@
         </xsl:for-each>
     </xsl:variable>
 
-    <xsl:variable name="Version" select="'C.0.01.00'"/>
-    <xsl:variable name="Date" select="'October 2018'"/>
-    <xsl:variable name="Remark" select="'Created by ICP M2018-02.'"/>
-    <xsl:variable name="Dist" select="'DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.'"/>
 
     <!--Create XML Map of Original XML Schema-->
     <xsl:variable name="numerics">
@@ -152,11 +148,65 @@
             <xsl:variable name="fappinfo">
                 <xsl:apply-templates select="xs:annotation/xs:appinfo"/>
             </xsl:variable>
+            <xsl:variable name="numnormstype" select="$numsimpletypes/*:Numeric[@base = $base][@min = $min][@max = $max][1]"/>
+            <xsl:variable name="DistStmnt">
+                <xsl:choose>
+                    <xsl:when test="contains($numnormstype/@dist,'DISTRIBUTION STATEMENT C')">
+                        <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be
+   referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22,
+   U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties. Disseminate in
+   accordance with provisions of DOD Directive 5230.25.</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="contains($DistStmnt,'DISTRIBUTION STATEMENT C')">
+                        <xsl:text>DoD-Dist-C</xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="Version">
+                <xsl:choose>
+                    <xsl:when test="$numnormstype/@version">
+                        <xsl:value-of select="$numnormstype/@version"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>C.0.01.00</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="Date">
+                <xsl:choose>
+                    <xsl:when test="$numnormstype/@versiondate">
+                        <xsl:value-of select="$numnormstype/@versiondate"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>October 2018</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="Remark">
+                <xsl:choose>
+                    <xsl:when test="$numnormstype/@remarks">
+                        <xsl:value-of select="$numnormstype/@remarks"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>Created by ICP M2018-02</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            
             <xsl:variable name="ffirn" select="xs:annotation/xs:appinfo/*:FieldFormatIndexReferenceNumber"/>
             <xsl:variable name="fud" select="xs:annotation/xs:appinfo/*:FudNumber"/>
             <xsl:choose>
                 <xsl:when test="$base = 'xs:integer'">
-                    <xsl:variable name="numnormstype" select="$numsimpletypes/*:Numeric[@base = $base][@min = $min][@max = $max]"/>
                     <xsl:variable name="niemsimpletypename">
                         <xsl:choose>
                             <xsl:when test="$numchange/@niemsimpletypename">
@@ -182,7 +232,7 @@
                     </xsl:variable>
                     <Field mtftype="{@name}" niemelementname="{$niemelementname}" niemsimpletype="{$niemsimpletypename}" niemtype="{$complextypename}" base="xs:integer" min="{$min}" max="{$max}"
                         pattern="{$pattern}" niempattern="{$niempattern}" niemelementdoc="{$niemelementdoc}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedoc}" ffirn="{$ffirn}" fud="{$fud}"
-                        format="{$numnormstype/*/@format}" version="{$Version}" date="{$Date}" dist="{$numnormstype/*/@dist}" remark="{$Remark}">
+                        format="{$numnormstype/*/@format}">
                         <info>
                             <!--<xsl:copy-of select="$fappinfo"/>-->
                             <inf:Field>
@@ -205,9 +255,12 @@
                                     <xsl:attribute name="remark">
                                         <xsl:value-of select="$Remark"/>
                                     </xsl:attribute>
-                                    <xsl:attribute name="dist">
-                                        <xsl:value-of select="$Dist"/>
+                                    <xsl:attribute name="doddist">
+                                        <xsl:value-of select="$DodDist"/>
                                     </xsl:attribute>
+                                   <!-- <xsl:attribute name="diststatement">
+                                        <xsl:value-of select="$DistStmnt"/>
+                                    </xsl:attribute>-->
                                 </xsl:for-each>
                             </inf:Field>
                         </info>
@@ -322,9 +375,12 @@
                                     <xsl:attribute name="remark">
                                         <xsl:value-of select="$Remark"/>
                                     </xsl:attribute>
-                                    <xsl:attribute name="dist">
-                                        <xsl:value-of select="$Dist"/>
+                                    <xsl:attribute name="doddist">
+                                        <xsl:value-of select="$DodDist"/>
                                     </xsl:attribute>
+                                   <!-- <xsl:attribute name="diststatement">
+                                        <xsl:value-of select="$DistStmnt"/>
+                                    </xsl:attribute>-->
                                 </xsl:for-each>
                             </inf:Field>
                         </info>
@@ -384,18 +440,16 @@
             <xsl:variable name="nst" select="@niemsimpletype"/>
             <xs:complexType name="{@niemtype}">
                 <xs:annotation>
-                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{info/*/@doddist}">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
-                    <xsl:if test="*:fappinfo/*">
-                        <xs:appinfo>
-                            <xsl:for-each select="*:fappinfo/*">
-                                <xsl:element name="{name()}">
-                                    <xsl:apply-templates select="@*" mode="appinfoatts"/>
-                                </xsl:element>
-                            </xsl:for-each>
-                        </xs:appinfo>
-                    </xsl:if>
+                    <xs:appinfo>
+                        <xsl:for-each select="info/*">
+                            <xsl:element name="{name()}">
+                                <xsl:apply-templates select="@*" mode="appinfoatts"/>
+                            </xsl:element>
+                        </xsl:for-each>
+                    </xs:appinfo>
                 </xs:annotation>
                 <xs:simpleContent>
                     <xs:extension base="{@niemsimpletype}">
@@ -405,28 +459,40 @@
             </xs:complexType>
             <xs:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
                 <xs:annotation>
-                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{info/*/@doddist}">
                         <xsl:value-of select="normalize-space(@niemelementdoc)"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="*:fappinfo/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
+                        <xsl:for-each select="info/*">
+                            <xsl:element name="{name()}">
+                                <xsl:apply-templates select="@*" mode="appinfoatts"/>
+                            </xsl:element>
                         </xsl:for-each>
                     </xs:appinfo>
                 </xs:annotation>
             </xs:element>
         </xsl:for-each>
     </xsl:variable>
-    
+
     <!--Create SimpleType from Normalized SimpleTypes -->
     <xsl:template match="*:Numeric" mode="makeSimpleType">
+        <xsl:variable name="DodDist">
+            <xsl:choose>
+                <xsl:when test="contains(@dist,'DISTRIBUTION STATEMENT C')">
+                    <xsl:text>DoD-Dist-C</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>DoD-Dist-A</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
         <xs:simpleType name="{@niemsimpletypename}">
             <xs:annotation>
-                <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
+                <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                     <xsl:value-of select="@niemtypedoc"/>
                 </xs:documentation>
                 <xs:appinfo>
-                    <inf:SimpleType name="{@simpletypename}">
+                    <inf:Field name="{@simpletypename}">
                         <xsl:if test="@format != '.'">
                             <xsl:attribute name="format">
                                 <xsl:value-of select="@format"/>
@@ -447,10 +513,10 @@
                         <xsl:attribute name="remark">
                             <xsl:value-of select="@remark"/>
                         </xsl:attribute>
-                        <xsl:attribute name="distribution">
-                            <xsl:value-of select="@dist"/>
+                        <xsl:attribute name="doddist">
+                            <xsl:value-of select="$DodDist"/>
                         </xsl:attribute>
-                    </inf:SimpleType>
+                    </inf:Field>
                 </xs:appinfo>
             </xs:annotation>
             <xs:restriction base="{@base}">

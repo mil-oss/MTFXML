@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" xmlns:inf="urn:mtf:mil:6040b:appinfo" version="2.0">
+<!--
+/* 
+ * Copyright (C) 2019 JD NEUSHUL
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" xmlns:ism="urn:us:gov:ic:ism"
+    xmlns:inf="urn:mtf:mil:6040b:appinfo" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NiemMap.xsl"/>
 
@@ -68,6 +87,16 @@
         </xsl:for-each>-->
         <xsl:for-each select="$all_field_elements_map/*">
             <xsl:sort select="@niemelementname"/>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:choose>
                 <xsl:when test="@niemtype">
                     <xsl:variable name="n" select="@niemelementname"/>
@@ -94,8 +123,11 @@
                                     <xsl:text>true</xsl:text>
                                 </xsl:attribute>
                             </xsl:if>
+                            <xsl:attribute name="nillable">
+                                <xsl:text>true</xsl:text>
+                            </xsl:attribute>
                             <xs:annotation>
-                                <xs:documentation>
+                                <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                     <xsl:value-of select="@niemelementdoc"/>
                                 </xs:documentation>
                                 <xs:appinfo>
@@ -113,7 +145,7 @@
                             <xsl:text>true</xsl:text>
                         </xsl:attribute>
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
@@ -187,6 +219,16 @@
                 <xsl:value-of select="@niemtype"/>
             </xsl:variable>
             <xsl:variable name="s" select="@substgrpname"/>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:choose>
                 <xsl:when test="$niem_fields_map//*[@mtfname = $m][@mtftype = $mt]"/>
                 <xsl:when test="$niem_fields_map//*[@niemelementname = $n]"/>
@@ -201,7 +243,7 @@
                             </xsl:attribute>
                         </xsl:if>
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:value-of select="@niemelementdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
@@ -219,6 +261,16 @@
         <xsl:for-each select="$niem_composites_map//Sequence/Element[starts-with(@mtftype, 'c:')]">
             <xsl:sort select="@niemelementname"/>
             <xsl:variable name="n" select="@niemelementname"/>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xs:element name="{@niemelementname}">
                 <xsl:attribute name="type">
                     <xsl:value-of select="@niemelementtype"/>
@@ -232,7 +284,7 @@
                     <xsl:text>true</xsl:text>
                 </xsl:attribute>
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:choose>
                             <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                 <xsl:value-of select="@substgrpdoc"/>
@@ -261,12 +313,23 @@
             <xsl:copy-of select="."/>
         </xsl:for-each>
     </xsl:variable>
+    
     <xsl:variable name="compositexsd">
         <xsl:for-each select="$niem_composites_map/Composite">
             <xsl:sort select="@niemtype"/>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xs:complexType name="{@niemtype}">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xs:appinfo>
@@ -291,7 +354,7 @@
             </xs:complexType>
             <xs:element name="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" abstract="true">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="concat('An augmentation point for ', @niemtype)"/>
                     </xs:documentation>
                 </xs:annotation>
@@ -303,7 +366,7 @@
                     </xsl:attribute>
                 </xsl:if>
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:choose>
                             <xsl:when test="@niemelementname = 'BlankSpace'">
                                 <xsl:text>A data item for a blank space character that is used to separate elements within a data chain, or to mark the beginning or end of a unit of data.</xsl:text>
@@ -423,18 +486,28 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
+                    <xsl:variable name="DodDist">
+                        <xsl:choose>
+                            <xsl:when test="info/*[1]/@doddist">
+                                <xsl:value-of select="info/*[1]/@doddist"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:text>DoD-Dist-A</xsl:text>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
                     <xs:element name="{$fgname}" type="{concat($fgname,'Type')}" nillable="true">
                         <!--<xsl:copy-of select="@minOccurs"/>
                         <xsl:copy-of select="@maxOccurs"/>-->
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:value-of select="replace($datadefdoc, 'type', 'item')"/>
                             </xs:documentation>
                         </xs:annotation>
                     </xs:element>
                     <xs:complexType name="{concat($fgname,'Type')}">
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:value-of select="$datadefdoc"/>
                             </xs:documentation>
                         </xs:annotation>
@@ -456,6 +529,7 @@
                                             <xsl:copy-of select="@minOccurs"/>
                                             <xsl:copy-of select="@maxOccurs"/>
                                             <xs:annotation>
+                                                <!--<xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{info/*/@doddist}">-->
                                                 <xs:documentation>
                                                     <xsl:choose>
                                                         <xsl:when test="string-length(@substgrpdoc) &gt; 0">
@@ -469,11 +543,11 @@
                                                         </xsl:otherwise>
                                                     </xsl:choose>
                                                 </xs:documentation>
-                                                <xsl:for-each select="info/*">
+                                                <!--<xsl:for-each select="info/*">
                                                     <xs:appinfo>
                                                         <xsl:copy-of select="."/>
                                                     </xs:appinfo>
-                                                </xsl:for-each>
+                                                </xsl:for-each>-->
                                                 <xsl:if test="@substgrpname">
                                                     <xs:appinfo>
                                                         <inf:Choice substitutionGroup="{@substgrpname}">
@@ -494,7 +568,7 @@
                     </xs:complexType>
                     <xs:element name="{concat($fgname,'AugmentationPoint')}" abstract="true">
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:value-of select="concat('An augmentation point for ', replace($datadefdoc, 'A data type for', ''))"/>
                             </xs:documentation>
                         </xs:annotation>
@@ -512,6 +586,16 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="@niemelementname"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -543,8 +627,11 @@
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
                         </xsl:if>
+                        <xsl:attribute name="nillable">
+                            <xsl:text>true</xsl:text>
+                        </xsl:attribute>
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:choose>
                                     <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                         <xsl:value-of select="@substgrpdoc"/>
@@ -582,8 +669,8 @@
             <xsl:if test="ends-with(@mtftype, 'GeneralTextType')">
                 <xs:complexType name="{@niemtype}">
                     <xs:annotation>
-                        <xs:documentation>
-                            <xsl:value-of select="@niemelementdoc"/>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
+                            <xsl:value-of select="@niemtypedoc"/>
                         </xs:documentation>
                         <xsl:for-each select="info/*">
                             <xs:appinfo>
@@ -596,6 +683,7 @@
                             <xs:sequence>
                                 <xs:element ref="{concat(@niemelementname,'SubjectText')}" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
+                                        <!--<xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">-->
                                         <xs:documentation>
                                             <xsl:value-of select="concat('A data item for ', @niemelementname, '  Subject Text')"/>
                                         </xs:documentation>
@@ -604,28 +692,28 @@
                                 <xs:element ref="FreeText" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>A data item for text entry</xs:documentation>
-                                        <xs:appinfo>
+                                        <!--<xs:appinfo>
                                             <inf:Field positionName="FREE TEXT" identifier="A" justification="Left"
                                                 definition="AN UNFORMATTED FREE TEXT FIELD CONTAINING AN UNLIMITED NUMBER OF CHARACTERS. USED IN THE FREE TEXT SETS AMPN, GENTEXT, NARR, AND REMARKS."
                                                 remark="ANY NUMBER AND TYPE OF CHARACTERS ALLOWED EXCEPT DOUBLE SLANTS (//)." version="1.0" ffirn="1006" fud="1"/>
-                                        </xs:appinfo>
+                                        </xs:appinfo>-->
                                     </xs:annotation>
                                 </xs:element>
-                                <xs:element ref="{concat(@niemelementname,'GeneralTextSetAugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                                <xs:element ref="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
                             </xs:sequence>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
-                <xs:element name="{concat(@niemelementname,'GeneralTextSetAugmentationPoint')}" abstract="true">
+                <xs:element name="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" abstract="true">
                     <xs:annotation>
-                        <xs:documentation>
-                            <xsl:value-of select="concat('An augmentation point for ', @niemelementname, ' General Text Set')"/>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
+                            <xsl:value-of select="concat('An augmentation point for ', @niemtype)"/>
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="{concat(@niemelementname,'SubjectText')}" type="SubjectTextType">
+                <xs:element name="{concat(@niemelementname,'SubjectText')}" type="SubjectTextType" nillable="true">
                     <xs:annotation>
-                        <xs:documentation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                             <xsl:value-of select="concat('A data item for ', @niemelementname, ' Subject Text')"/>
                         </xs:documentation>
                         <xs:appinfo>
@@ -637,8 +725,8 @@
             <xsl:if test="ends-with(@mtftype, 'HeadingInformationType')">
                 <xs:complexType name="{@niemtype}">
                     <xs:annotation>
-                        <xs:documentation>
-                            <xsl:value-of select="@niemelementdoc"/>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
+                            <xsl:value-of select="@niemtypedoc"/>
                         </xs:documentation>
                         <xsl:for-each select="info/*">
                             <xs:appinfo>
@@ -652,35 +740,35 @@
                                 <xs:element ref="{concat(@niemelementname,'SubjectText')}" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>
-                                            <xsl:value-of select="concat('A data item for ', @niemelementname,' Heading Information ', ' Subject Text')"/>
+                                            <xsl:value-of select="concat('A data item for ', @niemelementname, ' Heading Information ', ' Subject Text')"/>
                                         </xs:documentation>
                                     </xs:annotation>
                                 </xs:element>
                                 <xs:element ref="FreeText" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>A data item for text entry</xs:documentation>
-                                        <xs:appinfo>
+                                        <!--<xs:appinfo>
                                             <inf:Field positionName="FREE TEXT" identifier="A" justification="Left"
                                                 definition="AN UNFORMATTED FREE TEXT FIELD CONTAINING AN UNLIMITED NUMBER OF CHARACTERS. USED IN THE FREE TEXT SETS AMPN, GENTEXT, NARR, AND REMARKS."
                                                 remark="ANY NUMBER AND TYPE OF CHARACTERS ALLOWED EXCEPT DOUBLE SLANTS (//)." version="1.0" ffirn="1006" fud="1"/>
-                                        </xs:appinfo>
+                                        </xs:appinfo>-->
                                     </xs:annotation>
                                 </xs:element>
-                                <xs:element ref="{concat(@niemelementname,'HeadingInformationAugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
+                                <xs:element ref="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" minOccurs="0" maxOccurs="unbounded"/>
                             </xs:sequence>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
-                <xs:element name="{concat(@niemelementname,'HeadingInformationAugmentationPoint')}" abstract="true">
+                <xs:element name="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" abstract="true">
                     <xs:annotation>
-                        <xs:documentation>
-                            <xsl:value-of select="concat('An augmentation point for ', @niemelementname, ' General Text Set')"/>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
+                            <xsl:value-of select="concat('An augmentation point for ', @niemtype)"/>
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="{concat(@niemelementname,'SubjectText')}" type="SubjectTextType">
+                <xs:element name="{concat(@niemelementname,'SubjectText')}" type="SubjectTextType" nillable="true">
                     <xs:annotation>
-                        <xs:documentation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                             <xsl:value-of select="concat('A data item for ', @niemelementname, ' Subject Text')"/>
                         </xs:documentation>
                         <xs:appinfo>
@@ -713,9 +801,19 @@
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xs:complexType name="{@niemtype}">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xsl:for-each select="info/*">
@@ -786,11 +884,11 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xs:documentation>
-                                        <xsl:for-each select="info/*">
+                                        <!-- <xsl:for-each select="info/*">
                                             <xs:appinfo>
                                                 <xsl:copy-of select="." copy-namespaces="no"/>
                                             </xs:appinfo>
-                                        </xsl:for-each>
+                                        </xsl:for-each>-->
                                         <xsl:if test="@substgrpname">
                                             <xs:appinfo>
                                                 <inf:Choice substitutionGroup="{@substgrpname}">
@@ -811,7 +909,7 @@
             </xs:complexType>
             <xs:element name="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" abstract="true">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="concat('An augmentation point for ', @niemtype)"/>
                     </xs:documentation>
                 </xs:annotation>
@@ -821,7 +919,7 @@
                 <xsl:otherwise>
                     <xs:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:choose>
                                     <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                         <xsl:value-of select="@substgrpdoc"/>
@@ -871,7 +969,7 @@
                 <xsl:otherwise>
                     <xs:element name="{Choice/@substgrpname}" abstract="true">
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
                                 <xsl:value-of select="Choice/@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
@@ -892,7 +990,7 @@
         <xsl:for-each select="$setsxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="count(preceding-sibling::*:complexType[@name = $n])=0">
+            <xsl:if test="count(preceding-sibling::*:complexType[@name = $n]) = 0">
                 <xsl:copy-of select="."/>
             </xsl:if>
         </xsl:for-each>
@@ -900,9 +998,9 @@
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
-            <xsl:variable name="aug" select="ends-with(@name,'AugmentationPoint')"/>
-            <xsl:variable name="fg" select="ends-with(@name,'FieldGroup')"/>
-            <xsl:variable name="setf" select="ends-with(@name,'Set')"/>
+            <xsl:variable name="aug" select="ends-with(@name, 'AugmentationPoint')"/>
+            <xsl:variable name="fg" select="ends-with(@name, 'FieldGroup')"/>
+            <xsl:variable name="setf" select="ends-with(@name, 'Set')"/>
             <xsl:choose>
                 <xsl:when test="count(preceding-sibling::*:element[@name = $n and @type = $t]) &gt; 0"/>
                 <xsl:when test="count(preceding-sibling::*:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
@@ -955,8 +1053,11 @@
                                 <xsl:text>true</xsl:text>
                             </xsl:attribute>
                         </xsl:if>
+                        <xsl:attribute name="nillable">
+                            <xsl:text>true</xsl:text>
+                        </xsl:attribute>
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
                                 <xsl:choose>
                                     <xsl:when test="@niemtype = 'GeneralTextType'">
                                         <xsl:value-of select="@niemelementdoc"/>
@@ -1003,7 +1104,7 @@
                 <xsl:otherwise>
                     <xs:element name="{@substgrpname}" abstract="true">
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
@@ -1021,6 +1122,16 @@
             <xsl:for-each select="Choice/Element">
                 <xsl:sort select="@niemelementname"/>
                 <xsl:variable name="nn" select="@niemelementname"/>
+                <xsl:variable name="DodDist">
+                    <xsl:choose>
+                        <xsl:when test="info/*[1]/@doddist">
+                            <xsl:value-of select="info/*[1]/@doddist"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:text>DoD-Dist-A</xsl:text>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
                 <xsl:choose>
                     <xsl:when test="$all_set_elements_map/Element[@niemelementname = $nn]"/>
                     <xsl:otherwise>
@@ -1056,7 +1167,7 @@
                                 </xsl:attribute>
                             </xsl:if>
                             <xs:annotation>
-                                <xs:documentation>
+                                <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                     <xsl:value-of select="@niemelementdoc"/>
                                 </xs:documentation>
                                 <xsl:for-each select="info/*">
@@ -1079,6 +1190,16 @@
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="@niemelementname"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
                     </xsl:otherwise>
                 </xsl:choose>
             </xsl:variable>
@@ -1108,7 +1229,7 @@
                             </xsl:attribute>
                         </xsl:if>
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:choose>
                                     <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                         <xsl:value-of select="@substgrpdoc"/>
@@ -1153,9 +1274,19 @@
     <xsl:variable name="segmentsxsd">
         <xsl:for-each select="$niem_segments_map/Segment">
             <xsl:sort select="@niemtype"/>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xs:complexType name="{@niemtype}">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                 </xs:annotation>
@@ -1197,7 +1328,7 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xs:documentation>
-                                        <xsl:for-each select="info/*">
+                                        <!--<xsl:for-each select="info/*">
                                             <xs:appinfo>
                                                 <xsl:copy>
                                                     <xsl:copy-of select="@positionName"/>
@@ -1205,7 +1336,7 @@
                                                     <xsl:copy-of select="@usage"/>
                                                 </xsl:copy>
                                             </xs:appinfo>
-                                        </xsl:for-each>
+                                        </xsl:for-each>-->
                                         <xsl:if test="@substgrpname">
                                             <xs:appinfo>
                                                 <inf:Choice substitutionGroup="{@substgrpname}">
@@ -1226,14 +1357,14 @@
             </xs:complexType>
             <xs:element name="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" abstract="true">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="concat('An augmentation point for ', @niemtype)"/>
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="@niemelementdoc"/>
                     </xs:documentation>
                     <xsl:for-each select="info/*">
@@ -1276,14 +1407,8 @@
         <xsl:for-each select="$segmentsxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:variable name="pre1" select="preceding-sibling::*:complexType[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::*:complexType[@name = $n][2]"/>
-            <xsl:variable name="pre3" select="preceding-sibling::*:complexType[@name = $n][3]"/>
             <xsl:choose>
-                <xsl:when test="$n = $pre1/@name"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
-                <xsl:when test="deep-equal(., $pre3)"/>
+                <xsl:when test="count(preceding-sibling::*:complexType[@name = $n]) &gt; 0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
@@ -1294,8 +1419,6 @@
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
             <xsl:choose>
-                <xsl:when test="string-length(@type) = 0 and not(@abstract)"/>
-                <xsl:when test="not(@type) and not(@abstract)"/>
                 <xsl:when test="count(preceding-sibling::*:element[@name = $n and @type = $t]) &gt; 0"/>
                 <xsl:when test="count(preceding-sibling::*:element[@name = $n][ends-with(@name, 'Abstract') or ends-with(@name, 'AugmentationPoint')]) &gt; 0"/>
                 <xsl:otherwise>
@@ -1316,6 +1439,16 @@
         <xsl:for-each select="$niem_messages_map//Sequence/Element">
             <xsl:sort select="@niemelementname"/>
             <xsl:variable name="n" select="@niemelementname"/>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:choose>
                 <xsl:when test="$all_set_elements_map//*[@niemelementname = $n]"/>
                 <xsl:when test="$all_segment_elements_map//*[@niemelementname = $n]"/>
@@ -1334,7 +1467,7 @@
                                     <xsl:text>true</xsl:text>
                                 </xsl:attribute>
                                 <xs:annotation>
-                                    <xs:documentation>
+                                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                         <xsl:choose>
                                             <xsl:when test="@niemtypedoc">
                                                 <xsl:value-of select="replace(@niemtypedoc, 'A data type', 'A data item')"/>
@@ -1362,13 +1495,23 @@
         </xsl:for-each>
         <xsl:for-each select="$niem_messages_map//Element[Choice]">
             <xsl:variable name="substgrp" select="@substgrpname"/>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xsl:choose>
                 <xsl:when test="$all_set_elements_map//*[@substgrpname = $substgrp]"/>
                 <xsl:when test="$all_segment_elements_map//*[@substgrpname = $substgrp]"/>
                 <xsl:when test="@substgrpname">
                     <xs:element name="{@substgrpname}" abstract="true">
                         <xs:annotation>
-                            <xs:documentation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                 <xsl:value-of select="@substgrpdoc"/>
                             </xs:documentation>
                             <xs:appinfo>
@@ -1384,7 +1527,7 @@
                         <xsl:variable name="n" select="@niemelementname"/>
                         <xs:element name="{@niemelementname}" type="{@niemtype}" substitutionGroup="{$substgrp}" nillable="true">
                             <xs:annotation>
-                                <xs:documentation>
+                                <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                                     <xsl:choose>
                                         <xsl:when test="@niemtypedoc">
                                             <xsl:value-of select="@niemtypedoc"/>
@@ -1404,9 +1547,19 @@
     <xsl:variable name="messagesxsd">
         <xsl:for-each select="$niem_messages_map/Message">
             <xsl:sort select="@niemtype"/>
+            <xsl:variable name="DodDist">
+                <xsl:choose>
+                    <xsl:when test="info/*[1]/@doddist">
+                        <xsl:value-of select="info/*[1]/@doddist"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>DoD-Dist-A</xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
             <xs:complexType name="{@niemtype}">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xsl:for-each select="info/*">
@@ -1451,11 +1604,11 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xs:documentation>
-                                        <xsl:for-each select="info/*">
+                                        <!-- <xsl:for-each select="info/*">
                                             <xs:appinfo>
                                                 <xsl:copy-of select="."/>
                                             </xs:appinfo>
-                                        </xsl:for-each>
+                                        </xsl:for-each>-->
                                         <xsl:if test="@substgrpname">
                                             <xs:appinfo>
                                                 <inf:Choice substitutionGroup="{@substgrpname}">
@@ -1476,14 +1629,14 @@
             </xs:complexType>
             <xs:element name="{concat(substring(@niemtype,0,string-length(@niemtype)-3),'AugmentationPoint')}" abstract="true">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="concat('An augmentation point for ', @niemtype)"/>
                     </xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="{@niemelementname}" type="{@niemtype}" nillable="true">
                 <xs:annotation>
-                    <xs:documentation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
                         <xsl:value-of select="@niemelementdoc"/>
                     </xs:documentation>
                     <xsl:for-each select="info/*">
@@ -1501,12 +1654,9 @@
         <xsl:for-each select="$messagesxsd/*:complexType">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:variable name="pre1" select="preceding-sibling::*:complexType[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::*:complexType[@name = $n][2]"/>
             <xsl:choose>
-                <xsl:when test="$n = $pre1/@name"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
+                <xsl:when test="$mtf_segments_xsd/*:complexType[@name = $n]"/>
+                <xsl:when test="count(preceding-sibling::*:complexType[@name = $n]) &gt; 0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
@@ -1517,11 +1667,9 @@
             <xsl:sort select="@type"/>
             <xsl:variable name="n" select="@name"/>
             <xsl:variable name="t" select="@type"/>
-            <xsl:variable name="pre1" select="preceding-sibling::*:element[@name = $n][1]"/>
-            <xsl:variable name="pre2" select="preceding-sibling::*:element[@name = $n][2]"/>
             <xsl:choose>
-                <xsl:when test="deep-equal(., $pre1)"/>
-                <xsl:when test="deep-equal(., $pre2)"/>
+                <xsl:when test="ends-with($n, 'Segment')"/>
+                <xsl:when test="count(preceding-sibling::*:element[@name = $n][@type = $t]) &gt; 0"/>
                 <xsl:otherwise>
                     <xsl:copy-of select="."/>
                 </xsl:otherwise>
@@ -1555,6 +1703,15 @@
             <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="ext/niem/mtfappinfo.xsd"/>
         </xs:schema>
     </xsl:variable>
+    <xsl:variable name="DodDistC" select="'C'"/>
+    <xsl:variable name="DodDistA" select="'A'"/>
+    <xsl:variable name="DistCStmnt"
+        select="
+            'DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be
+        referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22,
+        U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties. Disseminate in
+        accordance with provisions of DOD Directive 5230.25.'"/>
+    <xsl:variable name="DistAStmnt" select="'DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.'"/>
 
     <xsl:template name="main">
         <!--Schema-->
@@ -1565,9 +1722,12 @@
                     <xsl:apply-templates select="*" mode="identity"/>
                     <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
                     <xs:annotation>
-                        <xs:documentation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Fields for MTF Messages</xsl:text>
                         </xs:documentation>
+                        <xs:appinfo>
+                            <inf:Distro distro="{$DodDistC}" statement="{normalize-space($DistCStmnt)}"/>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xsl:copy-of select="$mtf_fields_xsd" copy-namespaces="no"/>
                 </xsl:copy>
@@ -1581,9 +1741,12 @@
                     <xs:include schemaLocation="NIEM_MTF_Fields.xsd"/>
                     <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
                     <xs:annotation>
-                        <xs:documentation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Composite fields for MTF Composite Fields</xsl:text>
                         </xs:documentation>
+                        <xs:appinfo>
+                            <inf:Distro distro="{$DodDistC}" statement="{normalize-space($DistCStmnt)}"/>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xsl:copy-of select="$mtf_composites_xsd" copy-namespaces="no"/>
                 </xsl:copy>
@@ -1597,9 +1760,12 @@
                     <xs:include schemaLocation="NIEM_MTF_Fields.xsd"/>
                     <xs:include schemaLocation="NIEM_MTF_Composites.xsd"/>
                     <xs:annotation>
-                        <xs:documentation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Set structures for MTF Messages</xsl:text>
                         </xs:documentation>
+                        <xs:appinfo>
+                            <inf:Distro distro="{$DodDistC}" statement="{normalize-space($DistCStmnt)}"/>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xsl:copy-of select="$mtf_sets_xsd" copy-namespaces="no"/>
                 </xsl:copy>
@@ -1612,9 +1778,12 @@
                     <xsl:apply-templates select="*" mode="identity"/>
                     <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
                     <xs:annotation>
-                        <xs:documentation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Segment structures for MTF Segments</xsl:text>
                         </xs:documentation>
+                        <xs:appinfo>
+                            <inf:Distro distro="{$DodDistC}" statement="{normalize-space($DistCStmnt)}"/>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xsl:copy-of select="$mtf_segments_xsd" copy-namespaces="no"/>
                 </xsl:copy>
@@ -1628,9 +1797,12 @@
                     <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
                     <xs:include schemaLocation="NIEM_MTF_Segments.xsd"/>
                     <xs:annotation>
-                        <xs:documentation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Message structures for MTF Messages</xsl:text>
                         </xs:documentation>
+                        <xs:appinfo>
+                            <inf:Distro distro="{$DodDistC}" statement="{normalize-space($DistCStmnt)}"/>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xsl:copy-of select="$mtf_messages_xsd" copy-namespaces="no"/>
                 </xsl:copy>
@@ -1642,9 +1814,12 @@
                     <xsl:apply-templates select="@*" mode="identity"/>
                     <xsl:apply-templates select="*" mode="identity"/>
                     <xs:annotation>
-                        <xs:documentation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>UNIFIED MTF MESSAGE SCHEMA</xsl:text>
                         </xs:documentation>
+                        <xs:appinfo>
+                            <inf:Distro distro="{$DodDistC}" statement="{normalize-space($DistCStmnt)}"/>
+                        </xs:appinfo>
                     </xs:annotation>
                     <xsl:for-each select="$ALLMTF/*:complexType">
                         <xsl:sort select="@name"/>

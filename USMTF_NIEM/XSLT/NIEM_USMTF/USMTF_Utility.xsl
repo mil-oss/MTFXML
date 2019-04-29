@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/* 
+ * Copyright (C) 2019 JD NEUSHUL
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/"
     xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:ism="urn:us:gov:ic:ism" xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/"
     exclude-result-prefixes="xs" version="2.0">
@@ -421,7 +439,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xs:annotation>
+        <xsl:copy copy-namespaces="no">
             <xsl:choose>
                 <xsl:when test="*:documentation">
                     <xsl:apply-templates select="*:documentation">
@@ -446,12 +464,6 @@
                             <xsl:when test="string-length(*:appinfo[1]/*:FudName/text()) &gt; 0">
                                 <xsl:value-of select="*:appinfo/*:FudName"/>
                             </xsl:when>
-                            <xsl:when test="*:appinfo/*:Field/@explanation">
-                                <xsl:value-of select="*:appinfo/*:Field/@explanation"/>
-                            </xsl:when>
-                            <xsl:when test="*:appinfo/*:Field/@name">
-                                <xsl:value-of select="*:appinfo/*:Field/@name"/>
-                            </xsl:when>
                             <xsl:when test="string-length(*:appinfo[1]/*:SetFormatDescription/text()) &gt; 0">
                                 <xsl:value-of select="*:appinfo/*:SetFormatDescription"/>
                             </xsl:when>
@@ -464,6 +476,12 @@
                             <xsl:when test="string-length(*:appinfo[1]/*:SetFormatIdentifier/text()) &gt; 0">
                                 <xsl:value-of select="*:appinfo/*:SetFormatIdentifier"/>
                             </xsl:when>
+                            <xsl:when test="string-length(*:appinfo[1]/*:SegmentStructureConcept/text()) &gt; 0">
+                                <xsl:value-of select="*:appinfo/*:SegmentStructureConcept"/>
+                            </xsl:when>
+                            <xsl:when test="string-length(*:appinfo[1]/*:SegmentStructureUseDescription/text()) &gt; 0">
+                                <xsl:value-of select="*:appinfo/*:SegmentStructureUseDescription"/>
+                            </xsl:when>
                             <xsl:otherwise>
                                 <xsl:call-template name="breakIntoWords">
                                     <xsl:with-param name="string">
@@ -473,26 +491,13 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
-                        <xsl:choose>
-                            <xsl:when test="starts-with($doctxt, 'A data type for')">
-                                <xsl:value-of select="."/>
-                            </xsl:when>
-                            <xsl:when test="ends-with($doctxt, 'Simple Type')">
-                                <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Simple Type')))"/>
-                            </xsl:when>
-                            <xsl:when test="ends-with($doctxt, 'Type')">
-                                <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Type')))"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:value-of select="concat('A data type for ', lower-case($doctxt))"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                    <xs:documentation>
+                        <xsl:value-of select="$doctxt"/>
                     </xs:documentation>
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:apply-templates select="*:appinfo"/>
-        </xs:annotation>
+        </xsl:copy>
     </xsl:template>
 
     <xsl:template match="*:annotation" mode="doc">
@@ -548,7 +553,7 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
+        <xs:documentation>
             <xsl:choose>
                 <xsl:when test="starts-with($doctxt, 'A data type for')">
                     <xsl:value-of select="."/>
@@ -560,15 +565,14 @@
                     <xsl:value-of select="concat('A data type for ', lower-case(substring-before($doctxt, 'Type')))"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat('A data type for ', concat(lower-case(substring($doctxt, 1, 1)), substring($doctxt, 2)))"/>
+                    <xsl:value-of select="concat('A data type for ', lower-case($doctxt))"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xs:documentation>
     </xsl:template>
 
     <xsl:template match="*:appinfo">
-        <xsl:param name="appattr"/>
-        <xs:appinfo>
+        <info>
             <xsl:choose>
                 <xsl:when test="*:Enum">
                     <xsl:copy-of select="*:Enum"/>
@@ -596,55 +600,14 @@
                         <!--<xsl:apply-templates select="@*[not(name()='name')]"/>-->
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
-                        <xsl:if test="$appattr">
-                            <xsl:apply-templates select="$appattr" mode="addattr"/>
-                        </xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
-                                <xsl:attribute name="dist">
-                                    <xsl:text>C</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:attribute name="dist">
-                                    <xsl:text>A</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:otherwise>
-                        </xsl:choose>
                         <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Field')]">
                     <xsl:element name="inf:Field">
+                        <!--<xsl:apply-templates select="@*[not(name()='name')]"/>-->
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
-                        <xsl:if test="$appattr">
-                            <xsl:apply-templates select="$appattr" mode="addattr"/>
-                        </xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
-                                <xsl:attribute name="dist">
-                                    <xsl:text>C</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:attribute name="dist">
-                                    <xsl:text>A</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:otherwise>
-                        </xsl:choose>
                         <xsl:apply-templates select="*:FieldFormatRelatedDocument" mode="docs"/>
                     </xsl:element>
                 </xsl:when>
@@ -652,27 +615,6 @@
                     <xsl:element name="inf:Set">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
-                        <xsl:if test="$appattr">
-                            <xsl:apply-templates select="$appattr" mode="addattr"/>
-                        </xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
-                                <xsl:attribute name="dist">
-                                    <xsl:text>C</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:attribute name="dist">
-                                    <xsl:text>A</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:otherwise>
-                        </xsl:choose>
                         <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
                     </xsl:element>
                 </xsl:when>
@@ -680,59 +622,20 @@
                     <xsl:element name="inf:Segment">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
-                        <xsl:if test="$appattr">
-                            <xsl:apply-templates select="$appattr" mode="addattr"/>
-                        </xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
-                                <xsl:attribute name="dist">
-                                    <xsl:text>C</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:attribute name="dist">
-                                    <xsl:text>A</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:otherwise>
-                        </xsl:choose>
+                        <xsl:apply-templates select="*:SetFormatExample" mode="examples"/>
                     </xsl:element>
                 </xsl:when>
                 <xsl:when test="child::*[starts-with(name(), 'Mtf')]">
                     <xsl:element name="inf:Msg">
                         <xsl:apply-templates select="*" mode="attr"/>
                         <xsl:apply-templates select="ancestor::*:element[1]/*:complexType/*:extension/*:annotation/*:appinfo/*" mode="attr"/>
-                        <xsl:if test="$appattr">
-                            <xsl:apply-templates select="$appattr" mode="addattr"/>
-                        </xsl:if>
-                        <xsl:choose>
-                            <xsl:when test="$appattr and $appattr/@dist = 'C'">
-                                <xsl:attribute name="dist">
-                                    <xsl:text>C</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <xsl:attribute name="dist">
-                                    <xsl:text>A</xsl:text>
-                                </xsl:attribute>
-                                <xsl:attribute name="diststatement">
-                                    <xsl:text>DISTRIBUTION STATEMENT A. Approved for public release. Distribution is unlimited.</xsl:text>
-                                </xsl:attribute>
-                            </xsl:otherwise>
-                        </xsl:choose>
                     </xsl:element>
                 </xsl:when>
             </xsl:choose>
-        </xs:appinfo>
+        </info>
     </xsl:template>
+
+    <xsl:template match="*:appinfo[child::*[starts-with(name(), 'Elemental')]]"/>
 
     <xsl:template match="*" mode="addattr">
         <xsl:copy-of select="@version" copy-namespaces="no"/>
@@ -751,8 +654,6 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="*:appinfo[child::*[starts-with(name(), 'Elemental')]]"/>
-
     <xsl:template match="*:enumeration/*:annotation">
         <xs:annotation>
             <xsl:element name="documentation" ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">
@@ -763,11 +664,9 @@
     </xsl:template>
 
     <xsl:template match="*:enumeration/*:annotation/*:appinfo">
-        <xs:appinfo>
-            <xsl:element name="inf:Code">
-                <xsl:apply-templates select="*" mode="attr"/>
-            </xsl:element>
-        </xs:appinfo>
+        <xsl:element name="inf:Code">
+            <xsl:apply-templates select="*" mode="attr"/>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="*:FieldFormatRelatedDocument" mode="docs">
@@ -945,21 +844,19 @@
     </xsl:template>
 
     <xsl:variable name="niemschemadoc">
-        <xs:appinfo>
-            <term:LocalTerm term="Email" literal="Electronic Mail"/>
-            <term:LocalTerm term="ICAO" literal="International Civil Aviation Organization"/>
-            <term:LocalTerm term="ID" literal="Identifier"/>
-            <term:LocalTerm term="Lat" literal="Latitude"/>
-            <term:LocalTerm term="Long" literal="Longitude"/>
-            <term:LocalTerm term="MGRS" literal="Military Grid Reference System"/>
-            <term:LocalTerm term="NICS" literal="NATO Integrated Communications System"/>
-            <term:LocalTerm term="SIC" literal="Subject Identifier Code"/>
-            <term:LocalTerm term="UTM" literal="Universal Transverse Mercator"/>
-            <ddms:security ism:classification="U" ism:ownerProducer="USA" ism:nonICmarkings="DIST_STMT_C"/>
-            <Distro
-                statement="DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22, U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties.  Disseminate in accordance with provisions of DOD Directive 5230.25."
-            />
-        </xs:appinfo>
+        <term:LocalTerm term="Email" literal="Electronic Mail"/>
+        <term:LocalTerm term="ICAO" literal="International Civil Aviation Organization"/>
+        <term:LocalTerm term="ID" literal="Identifier"/>
+        <term:LocalTerm term="Lat" literal="Latitude"/>
+        <term:LocalTerm term="Long" literal="Longitude"/>
+        <term:LocalTerm term="MGRS" literal="Military Grid Reference System"/>
+        <term:LocalTerm term="NICS" literal="NATO Integrated Communications System"/>
+        <term:LocalTerm term="SIC" literal="Subject Identifier Code"/>
+        <term:LocalTerm term="UTM" literal="Universal Transverse Mercator"/>
+        <ddms:security ism:classification="U" ism:ownerProducer="USA" ism:nonICmarkings="DIST_STMT_C"/>
+        <Distro
+            statement="DISTRIBUTION STATEMENT C. Distribution authorized to U.S. Government Agencies and their contractors only for administrative or operational use. Other requests for this document shall be referred to Defense Information Systems Agency Interoperability Directorate. WARNING - This document contains technical data whose export is restricted by the Arms Export Control Act (Title 22, U.S.C., Sec. 2751) or the Export Administration Act of 1979, as amended, Title 50, U.S.C., App. 2401. Violations of these export laws are subject to severe criminal penalties.  Disseminate in accordance with provisions of DOD Directive 5230.25."
+        />
     </xsl:variable>
 
     <!-- ***************** ********** *****************-->

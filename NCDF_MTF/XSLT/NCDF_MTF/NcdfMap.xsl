@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/* 
+ * Copyright (C) 2019 JD NEUSHUL
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:inf="urn:int:nato:ncdf:mtf:appinfo" version="2.0">
 
     <xsl:include href="NMTF_Utility.xsl"/>
@@ -825,7 +843,7 @@
                         <xsl:when test="contains($ncdftypevar, 'Decimal') and not(ends-with($mtfnamevar, 'Numeric'))">
                             <xsl:value-of select="concat($mtfnamevar, 'Numeric')"/>
                         </xsl:when>
-                        <xsl:when test="ends-with($niemtypevar, 'IndicatorType') and not(ends-with($mtfnamevar, 'Indicator'))">
+                        <xsl:when test="ends-with($ncdftypevar, 'IndicatorType') and not(ends-with($mtfnamevar, 'Indicator'))">
                             <xsl:value-of select="concat($mtfnamevar, 'Indicator')"/>
                         </xsl:when>
                         <!--<xsl:when test="$ncdfmatch/*/@ncdfelementname">
