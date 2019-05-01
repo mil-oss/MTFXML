@@ -45,14 +45,15 @@
     <xsl:variable name="lt" select="'&lt;'"/>
     <xsl:variable name="gt" select="'&gt;'"/>
     <xsl:variable name="cm" select="','"/>
-
     <xsl:variable name="srcdir" select="'../../XSD/'"/>
+    
     <!--Baseline-->
     <xsl:variable name="baseline_fields_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/fields.xsd')/*:schema"/>
     <xsl:variable name="baseline_composites_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/composites.xsd')/*:schema"/>
     <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/sets.xsd')/*:schema"/>
     <xsl:variable name="baseline_msgs_xsd" select="document('../../XSD/APP-11C-ch1/Consolidated/messages.xsd')/*:schema"/>
     <xsl:variable name="baseline_segments_xsd" select="$baseline_msgs_xsd/*//*:element[*:annotation/*:appinfo/*:SegmentStructureName]"/>
+    
     <!--Changes-->
     <xsl:variable name="field_changes" select="document('../../XSD/Refactor_Changes/FieldChanges.xml')/FieldChanges"/>
     <xsl:variable name="comp_changes" select="document('../../XSD/Refactor_Changes/CompositeChanges.xml')"/>
@@ -61,6 +62,7 @@
     <xsl:variable name="segment_changes" select="document('../../XSD/Refactor_Changes/SegmentChanges.xml')/*"/>
     <xsl:variable name="substGrp_Changes" select="document('../../XSD/Refactor_Changes/SubstitutionGroupChanges.xml')/*"/>
     <xsl:variable name="substGrp_Element_Changes" select="document('../../XSD/Refactor_Changes/ChoiceElementNames.xml')/*"/>
+    
     <!--Maps-->
     <xsl:variable name="ncdf_fields_map">
         <xsl:for-each select="$strings/*">
@@ -1252,6 +1254,7 @@
             </xsl:apply-templates>
         </Element>
     </xsl:template>
+    
     <!--  Choice / Substitution Groups Map -->
     <xsl:template match="*:element[*:complexType/*:choice]">
         <xsl:param name="settypevar"/>
@@ -1511,6 +1514,7 @@
             </xsl:apply-templates>
         </Sequence>
     </xsl:template>
+    
     <!--sets.xsd choice occur in *:element complexType-->
     <xsl:template match="*:complexType/*:choice">
         <xsl:param name="settypevar"/>
@@ -1525,6 +1529,7 @@
             </xsl:apply-templates>
         </Choice>
     </xsl:template>
+    
     <!--messages.xsd choice occur in sequence-->
     <xsl:template match="*:sequence/*:choice">
         <xsl:param name="settypevar"/>

@@ -20,26 +20,25 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ism="urn:us:gov:ic:ism" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="text"/>
 
-    <xsl:variable name="msglistdoc" select="'../../XSD/NIEM_MTF/SepMsgs/msgmap.xml'"/>
-
-    <xsl:variable name="tgtdir" select="'../../XSD/IEPD/configs/'"/>
-
+    <xsl:variable name="msglistdoc" select="'../../instance/msgmap.xml'"/>
+    <xsl:variable name="tgtdir" select="'../../configs/'"/>
+    
     <xsl:variable name="project" select="'USMTF'"/>
     <xsl:variable name="name" select="'usmtf'"/>
     <xsl:variable name="title" select="concat($project, '-XML Information Exchange Package (IEP)')"/>
     <xsl:variable name="host" select="concat('https://', $name, '.specchain.org/')"/>
     <xsl:variable name="port" select="'8080'"/>
-    <xsl:variable name="dbloc" select="concat('tmp/', $name, '-xml/db/', $name, '-xml.db')"/>
-    <xsl:variable name="configfile" select="concat('config/', $name, '-xml-cfg.json')"/>
-    <xsl:variable name="reflink" select="concat('https://', $name, '.specchain.org/', $name, '-xml/file/refxsd')"/>
-    <xsl:variable name="testlink" select="concat('https://', $name, '.specchain.org/', $name, '-xml/file/testdataxml')"/>
+    <xsl:variable name="dbloc" select="concat('tmp/', $name, '/db/', $name, '.db')"/>
+    <xsl:variable name="configfile" select="concat('configs/', $name, '-config.json')"/>
+    <xsl:variable name="reflink" select="concat('https://', $name, '.specchain.org/', $name, '/file/refxsd')"/>
+    <xsl:variable name="testlink" select="concat('https://', $name, '.specchain.org/', $name, '/file/testdataxml')"/>
     <xsl:variable name="configurl" select="concat('https://', $name, '.specchain.org/config')"/>
     <xsl:variable name="tempdir" select="'tmp/'"/>
-    <xsl:variable name="temppath" select="concat('tmp/', $name, '-xml/')"/>
+    <xsl:variable name="temppath" select="concat('tmp/', $name, '/')"/>
 
     <xsl:variable name="msglist">
         <xsl:for-each select="document($msglistdoc)/*/*[@mtfid]">
-            <xsl:variable name="mid" select="translate(@mtfid, ' .', '')"/>
+            <xsl:variable name="mid" select="translate(@mtfid, ' .()', '')"/>
             <xsl:variable name="lmid" select="lower-case($mid)"/>
             <msg mid="{$mid}" lcmid="{$lmid}"/>
         </xsl:for-each>
@@ -62,23 +61,23 @@
         <xsl:call-template name="resourcelisting">
             <xsl:with-param name="rname" select="'refxsd'"/>
             <xsl:with-param name="filename" select="concat($name, '-niem-ref.xsd')"/>
-            <xsl:with-param name="src" select="concat('xml/xsd/', $name, '-niem-ref.xsd')"/>
-            <xsl:with-param name="path" select="concat('xml/xsd/', $name, '-niem-ref.xsd')"/>
+            <xsl:with-param name="src" select="concat('xml/xsd/ext/refxsd/','NIEM_MTF-ref.xsd')"/>
+            <xsl:with-param name="path" select="concat('xml/xsd/', $name, '-ref.xsd')"/>
             <xsl:with-param name="description" select="concat('NIEM Conformant Reference XML Schema for ', $project, '-XML data')"/>
         </xsl:call-template>
         <xsl:value-of select="$cm"/>
         <xsl:call-template name="resourcelisting">
             <xsl:with-param name="rname" select="'refxsdjson'"/>
             <xsl:with-param name="filename" select="concat($name, '-niem-ref-xsd.json')"/>
-            <xsl:with-param name="src" select="concat('json/', $name, '-niem-ref-xsd.json')"/>
-            <xsl:with-param name="path" select="concat('json/', $name, '-niem-ref-xsd.json')"/>
+            <xsl:with-param name="src" select="concat('json/', $name, '-ref-xsd.json')"/>
+            <xsl:with-param name="path" select="concat('json/', $name, '-ref-xsd.json')"/>
             <xsl:with-param name="description" select="concat('JSON Representation of Reference XML Schema for ', $project, '-XML data')"/>
         </xsl:call-template>
         <xsl:value-of select="$cm"/>
         <xsl:call-template name="resourcelisting">
             <xsl:with-param name="rname" select="'testdataxml'"/>
-            <xsl:with-param name="filename" select="concat($name, '-xml-test-data.xml')"/>
-            <xsl:with-param name="src" select="concat('xml/instance/', $name, '-testdata.xml')"/>
+            <xsl:with-param name="filename" select="concat($name, '-testdata.xml')"/>
+            <xsl:with-param name="src" select="concat('xml/instance/common/', $name, '-testdata.xml')"/>
             <xsl:with-param name="path" select="concat('xml/instance/', $name, '-testdata.xml')"/>
             <xsl:with-param name="description" select="concat('Test values for all ', $project, '-XML data items')"/>
         </xsl:call-template>
@@ -96,10 +95,10 @@
         <xsl:for-each select="$msglist/*">
             <xsl:call-template name="implementationlisting">
                 <xsl:with-param name="ititle" select="@mid"/>
-                <xsl:with-param name="iname" select="concat(@lcmid, '-iep')"/>
-                <xsl:with-param name="isrc" select="concat('config/', @lcmid, '-cfg.json')"/>
+                <xsl:with-param name="iname" select="@lcmid"/>
+                <xsl:with-param name="isrc" select="concat('configs/msgcfgs/', @lcmid, '-config.json')"/>
                 <xsl:with-param name="isrcurl" select="concat('https://', $name, '.specchain.org/', @lcmid, '/file/config')"/>
-                <xsl:with-param name="ipath" select="concat('config/', @lcmid, '-cfg.json')"/>
+                <xsl:with-param name="ipath" select="concat('configs/msgcfgs/', @lcmid, '-config.json')"/>
                 <xsl:with-param name="idescription" select="concat(@mid, ' XML Information Exchange Package')"/>
             </xsl:call-template>
             <xsl:if test="following-sibling::*">
@@ -178,24 +177,24 @@
         <xsl:value-of select="concat($q, 'resources', $q, ':', $lbr)"/>
         <xsl:call-template name="resourcelisting">
             <xsl:with-param name="rname" select="'config'"/>
-            <xsl:with-param name="filename" select="concat(@lcmid, '-cfg.json')"/>
-            <xsl:with-param name="src" select="concat('config/', @lcmid, '-cfg.json')"/>
-            <xsl:with-param name="path" select="concat('config/', @lcmid, '-cfg.json')"/>
+            <xsl:with-param name="filename" select="concat(@lcmid, '-config.json')"/>
+            <xsl:with-param name="src" select="concat('configs/msgcfgs/', @lcmid, '-config.json')"/>
+            <xsl:with-param name="path" select="concat('config/', @lcmid, '-config.json')"/>
             <xsl:with-param name="description" select="concat(@mid, ' XML IEP Configuration Information')"/>
         </xsl:call-template>
         <xsl:value-of select="$cm"/>
         <xsl:call-template name="resourcelisting">
             <xsl:with-param name="rname" select="'refxsd'"/>
-            <xsl:with-param name="filename" select="concat($name, '-niem-ref.xsd')"/>
-            <xsl:with-param name="src" select="concat('xml/xsd/', $name, '-niem-ref.xsd')"/>
-            <xsl:with-param name="path" select="concat('xml/xsd/ext/', $name, '-niem-ref.xsd')"/>
+            <xsl:with-param name="filename" select="concat(@lcmid, '-ref.xsd')"/>
+            <xsl:with-param name="src" select="concat('xml/xsd/ext/refxsd/', @mid, '-Ref.xsd')"/>
+            <xsl:with-param name="path" select="concat('xml/xsd/ext/', @lcmid, '-ref.xsd')"/>
             <xsl:with-param name="description" select="concat('XML Schema for ', $title, ' information exchange')"/>
         </xsl:call-template>
         <xsl:value-of select="$cm"/>
         <xsl:call-template name="resourcelisting">
             <xsl:with-param name="rname" select="'iepxsd'"/>
             <xsl:with-param name="filename" select="concat(@lcmid, '-iep.xsd')"/>
-            <xsl:with-param name="src" select="concat('iepd/', @lcmid, '/xml/xsd/', @lcmid, '-iep.xsd')"/>
+            <xsl:with-param name="src" select="concat('iepd/', @lcmid, '/xml/xsd/', @mid, '-iep.xsd')"/>
             <xsl:with-param name="path" select="concat('xml/xsd/', @lcmid, '-iep.xsd')"/>
             <xsl:with-param name="description" select="concat('XML Schema for ', @mid, ' information exchange')"/>
         </xsl:call-template>
@@ -204,7 +203,7 @@
             <xsl:with-param name="rname" select="'xmlschemaxsd'"/>
             <xsl:with-param name="filename" select="'xml/xsd/ext/w3c/XMLSchema.xsd'"/>
             <xsl:with-param name="src" select="'xml/xsd/ext/w3c/XMLSchema.xsd'"/>
-            <xsl:with-param name="path" select="concat('config/', @lcmid, '-cfg.json')"/>
+            <xsl:with-param name="path" select="concat('config/', @lcmid, '-config.json')"/>
             <xsl:with-param name="description" select="'W3C XML Schema for XSD validation'"/>
         </xsl:call-template>
         <xsl:value-of select="$cm"/>
@@ -219,7 +218,7 @@
         <xsl:call-template name="resourcelisting">
             <xsl:with-param name="rname" select="'iepxsdxsl'"/>
             <xsl:with-param name="filename" select="concat(@lcmid, '-iep.xsl')"/>
-            <xsl:with-param name="src" select="concat('iepd/ic-boe/xml/xsl/', @lcmid, '-iep.xsl')"/>
+            <xsl:with-param name="src" select="concat('iepd/', @lcmid, '/xml/xsl/', @lcmid, '-iep.xsl')"/>
             <xsl:with-param name="path" select="concat('xml/xsl/', @lcmid, '-iep.xsl')"/>
             <xsl:with-param name="description" select="concat('XSLT to generate the ', @mid, ' Implementation Schema')"/>
         </xsl:call-template>
@@ -227,7 +226,7 @@
         <xsl:call-template name="resourcelisting">
             <xsl:with-param name="rname" select="'instancexsl'"/>
             <xsl:with-param name="filename" select="concat(@lcmid, '-instance.xsl')"/>
-            <xsl:with-param name="src" select="concat('iepd/ic-boe/xml/xsl/', @lcmid, '-instance.xsl')"/>
+            <xsl:with-param name="src" select="concat('iepd/', @lcmid, '/xml/xsl/', @lcmid, '-instance.xsl')"/>
             <xsl:with-param name="path" select="concat('xml/xsl/', @lcmid, '-instance.xsl')"/>
             <xsl:with-param name="description" select="concat('XSLT to generate an ', @mid, ' instance using test values')"/>
         </xsl:call-template>
@@ -310,8 +309,8 @@
         <xsl:value-of select="$cm"/>
         <xsl:call-template name="directorylisting">
             <xsl:with-param name="rname" select="'gostruct'"/>
-            <xsl:with-param name="src" select="'src/icboe'"/>
-            <xsl:with-param name="path" select="'src/icboe'"/>
+            <xsl:with-param name="src" select="concat('src/mtfmsg/',@lcmid)"/>
+            <xsl:with-param name="path" select="concat('src/mtfmsg/',@lcmid)"/>
         </xsl:call-template>
         <xsl:value-of select="$cm"/>
         <xsl:call-template name="directorylisting">
@@ -328,19 +327,19 @@
             <xsl:call-template name="implementationconfig">
                 <xsl:with-param name="cproject" select="@lcmid"/>
                 <xsl:with-param name="ctitle" select="concat(@mid,' XML Information Exchange Package Definition')"/>
-                <xsl:with-param name="cconfigfile" select="concat(@lcmid,'-cfg.json')"/>
-                <xsl:with-param name="creflink" select="concat('https://', @lcmid, '.specchain.org/', @lcmid, '-xml/file/refxsd')"/>
-                <xsl:with-param name="ctestlink" select="concat('https://', @lcmid, '.specchain.org/', @lcmid, '-xml/file/testdataxml')"/>
+                <xsl:with-param name="cconfigfile" select="concat(@lcmid,'-config.json')"/>
+                <xsl:with-param name="creflink" select="concat('https://', $name, '.specchain.org/', @lcmid, '/file/refxsd')"/>
+                <xsl:with-param name="ctestlink" select="concat('https://', $name, '.specchain.org/', @lcmid, '/file/testdataxml')"/>
                 <xsl:with-param name="chost" select="concat('https://', $name, '.specchain.org/',@lcmid)"/>
                 <xsl:with-param name="cport" select="'8080'"/>
-                <xsl:with-param name="cdbloc" select="concat('tmp/', @lcmid, '-xml/db/', @lcmid, '-xml.db')"/>
+                <xsl:with-param name="cdbloc" select="concat('tmp/', @lcmid, '/db/', @lcmid, '.db')"/>
                 <xsl:with-param name="ctempdir" select="'tmp/'"/>
-                <xsl:with-param name="ctemppath" select="concat('tmp/', @lcmid, '-xml/')"/>
+                <xsl:with-param name="ctemppath" select="concat('tmp/', @lcmid, '/')"/>
             </xsl:call-template>
         </xsl:result-document>
     </xsl:template>
 
-    <xsl:template name="main">
+    <xsl:template name="cfgmain">
         <xsl:result-document href="{$tgtdir}/{concat($name,'-config.json')}">
             <xsl:call-template name="prjcfg"/>
         </xsl:result-document>
