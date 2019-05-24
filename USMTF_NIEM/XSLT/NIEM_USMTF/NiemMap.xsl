@@ -29,17 +29,17 @@
     <xsl:variable name="setspath" select="'../../XSD/Baseline_Schema/sets.xsd'"/>
     <xsl:variable name="messagespath" select="'../../XSD/Baseline_Schema/messages.xsd'"/>
 
-    <xsl:variable name="fieldsxsdoutpath" select="'../../XSD/NIEM_MTF/NIEM_MTF_Fields.xsd'"/>
-    <xsl:variable name="compositesxsdoutpath" select="'../../XSD/NIEM_MTF/NIEM_MTF_Composites.xsd'"/>
-    <xsl:variable name="setsxsdoutpath" select="'../../XSD/NIEM_MTF/NIEM_MTF_Sets.xsd'"/>
-    <xsl:variable name="segmentsxsdoutpath" select="'../../XSD/NIEM_MTF/NIEM_MTF_Segments.xsd'"/>
-    <xsl:variable name="messagesxsdoutpath" select="'../../XSD/NIEM_MTF/NIEM_MTF_Messages.xsd'"/>
+    <xsl:variable name="fieldsxsdoutpath" select="'../../XSD/NIEM_MTF/niem-mtf-fields.xsd'"/>
+    <xsl:variable name="compositesxsdoutpath" select="'../../XSD/NIEM_MTF/niem-mtf-composites.xsd'"/>
+    <xsl:variable name="setsxsdoutpath" select="'../../XSD/NIEM_MTF/niem-mtf-sets.xsd'"/>
+    <xsl:variable name="segmentsxsdoutpath" select="'../../XSD/NIEM_MTF/niem-mtf-segments.xsd'"/>
+    <xsl:variable name="messagesxsdoutpath" select="'../../XSD/NIEM_MTF/niem-mtf-messages.xsd'"/>
 
-    <xsl:variable name="fieldsmapoutpath" select="'../../XSD/NIEM_MTF/Maps/NIEM_MTF_Fieldmaps.xml'"/>
-    <xsl:variable name="compositesmapoutpath" select="'../../XSD/NIEM_MTF/Maps/NIEM_MTF_Compositemaps.xml'"/>
-    <xsl:variable name="setsmapoutpath" select="'../../XSD/NIEM_MTF/Maps/NIEM_MTF_Setmaps.xml'"/>
-    <xsl:variable name="segmentsmapoutpath" select="'../../XSD/NIEM_MTF/Maps/NIEM_MTF_Segmntmaps.xml'"/>
-    <xsl:variable name="messagesmapoutpath" select="'../../XSD/NIEM_MTF/Maps/NIEM_MTF_Msgsmaps.xml'"/>
+    <xsl:variable name="fieldsmapoutpath" select="'../../XSD/NIEM_MTF/maps/niem-mtf-fieldmaps.xml'"/>
+    <xsl:variable name="compositesmapoutpath" select="'../../XSD/NIEM_MTF/maps/niem-mtf-compositemaps.xml'"/>
+    <xsl:variable name="setsmapoutpath" select="'../../XSD/NIEM_MTF/maps/niem-mtf-setmaps.xml'"/>
+    <xsl:variable name="segmentsmapoutpath" select="'../../XSD/NIEM_MTF/maps/niem-mtf-segmntmaps.xml'"/>
+    <xsl:variable name="messagesmapoutpath" select="'../../XSD/NIEM_MTF/maps/niem-mtf-msgsmaps.xml'"/>
 
     <xsl:variable name="q" select="'&quot;'"/>
     <xsl:variable name="lt" select="'&lt;'"/>

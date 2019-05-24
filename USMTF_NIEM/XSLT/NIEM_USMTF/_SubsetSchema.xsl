@@ -19,7 +19,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="allmtf" select="document('../../XSD/NIEM_MTF/NIEM_MTF.xsd')/*:schema"/>
+    <xsl:variable name="allmtf" select="document('../../XSD/NIEM_MTF/refxsd/niem-mtf.xsd')/*:schema"/>
     <xsl:variable name="outDir" select="'../../XSD/NIEM_MTF/subsetxsd/'"/>
 
     <!--<xsl:variable name="allnodes" select="document('../../XSD/NIEM_MTF/Maps/NIEM_MTF_AllMaps.xsd')/*"/>-->
@@ -122,12 +122,12 @@
         <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
             xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:inf="urn:mtf:mil:6040b:appinfo"
             xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:niem:mtf"
-            ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
-            attributeFormDefault="unqualified" version="1.0">
-            <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
-            <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="ext/niem/localTerminology.xsd"/>
-            <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
-            <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="ext/niem/mtfappinfo.xsd"/>
+            ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="qualified"
+            attributeFormDefault="qualified" version="1.0">
+            <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../ext/niem/utility/structures/4.0/structures.xsd"/>
+            <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../ext/niem/localTerminology.xsd"/>
+            <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+            <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../ext/niem/mtfappinfo.xsd"/>
         </xs:schema>
     </xsl:variable>
 
@@ -213,9 +213,7 @@
                 </xsl:for-each>
             </xsl:result-document>
         </xsl:for-each>
-
     </xsl:template>
-
 
     <!--*****************************************************-->
 

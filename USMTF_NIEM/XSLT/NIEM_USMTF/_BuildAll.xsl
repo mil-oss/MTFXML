@@ -22,7 +22,7 @@
     <xsl:output method="xml" indent="yes"/>
     <xsl:include href="NiemMap.xsl"/>
 
-    <xsl:variable name="dirpath" select="concat($srcdir, 'NIEM_MTF/')"/>
+    <xsl:variable name="dirpath" select="concat($srcdir, 'NIEM_MTF/refxsd/')"/>
 
     <!-- _______________________________________________________ -->
 
@@ -1695,12 +1695,12 @@
         <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
             xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:inf="urn:mtf:mil:6040b:appinfo"
             xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:niem:mtf"
-            ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="unqualified"
-            attributeFormDefault="unqualified" version="1.0">
-            <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="ext/niem/utility/structures/4.0/structures.xsd"/>
-            <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="ext/niem/localTerminology.xsd"/>
-            <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
-            <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="ext/niem/mtfappinfo.xsd"/>
+            ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="qualified"
+            attributeFormDefault="qualified" version="1.0">
+            <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../ext/niem/utility/structures/4.0/structures.xsd"/>
+            <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/" schemaLocation="../ext/niem/localTerminology.xsd"/>
+            <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/" schemaLocation="../ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+            <xs:import namespace="urn:mtf:mil:6040b:appinfo" schemaLocation="../ext/niem/mtfappinfo.xsd"/>
         </xs:schema>
     </xsl:variable>
     <xsl:variable name="DodDistC" select="'C'"/>
@@ -1715,7 +1715,7 @@
 
     <xsl:template name="main">
         <!--Schema-->
-        <xsl:result-document href="{$dirpath}/NIEM_MTF_Fields.xsd">
+        <xsl:result-document href="{$dirpath}/niem-mtf-fields.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1733,7 +1733,7 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/NIEM_MTF_Composites.xsd">
+        <xsl:result-document href="{$dirpath}/niem-mtf-composites.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1752,7 +1752,7 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/NIEM_MTF_Sets.xsd">
+        <xsl:result-document href="{$dirpath}/niem-mtf-sets.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1771,7 +1771,7 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/NIEM_MTF_Segments.xsd">
+        <xsl:result-document href="{$dirpath}/niem-mtf-segments.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1789,13 +1789,13 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/NIEM_MTF_Messages.xsd">
+        <xsl:result-document href="{$dirpath}/niem-mtf-messages.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
                     <xsl:apply-templates select="*" mode="identity"/>
-                    <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
-                    <xs:include schemaLocation="NIEM_MTF_Segments.xsd"/>
+                    <xs:include schemaLocation="niem-mtf-Sets.xsd"/>
+                    <xs:include schemaLocation="niem-mtf-Segments.xsd"/>
                     <xs:annotation>
                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Message structures for MTF Messages</xsl:text>
@@ -1808,7 +1808,7 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/NIEM_MTF.xsd">
+        <xsl:result-document href="{$dirpath}/niem-mtf.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1837,32 +1837,32 @@
             </xsl:for-each>
         </xsl:result-document>
         <!--Maps-->
-        <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Fieldmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/niem-mtf-fieldmaps.xml">
             <Fields>
                 <xsl:copy-of select="$mtf_fields_map"/>
             </Fields>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Compositemaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/niem-mtf-compositemaps.xml">
             <Composites>
                 <xsl:copy-of select="$mtf_composites_map" copy-namespaces="no"/>
             </Composites>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Setmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/niem-mtf-setmaps.xml">
             <Sets>
                 <xsl:copy-of select="$mtf_sets_map"/>
             </Sets>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Segmntmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/niem-mtf-segmntmaps.xml">
             <Segments>
                 <xsl:copy-of select="$mtf_segments_map" copy-namespaces="no"/>
             </Segments>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_Msgsmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/niem-mtf-msgsmaps.xml">
             <Messages>
                 <xsl:copy-of select="$mtf_messages_map"/>
             </Messages>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/Maps/NIEM_MTF_AllMaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/niem-mtf-allmaps.xml">
             <MTF>
                 <xsl:copy-of select="$mtf_messages_map" copy-namespaces="no"/>
                 <xsl:copy-of select="$mtf_segments_map" copy-namespaces="no"/>

@@ -21,7 +21,15 @@
     exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     <!-- <xsl:include href="USMTF_Utility.xsl"/>-->
-
+    <xsl:variable name="bq">
+        <xsl:text>&#96;</xsl:text>
+    </xsl:variable>
+    <xsl:variable name="lbr">
+        <xsl:text>[</xsl:text>
+    </xsl:variable>
+    <xsl:variable name="rbr">
+        <xsl:text>]</xsl:text>
+    </xsl:variable>
     <xsl:variable name="strings_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema/*:simpleType[*:restriction[@base = 'xsd:string']/*:pattern]"/>
 
     <!--Test Output-->
@@ -42,7 +50,6 @@
 
     <xsl:variable name="stringsxsd">
         <xsl:for-each select="$strings/*">
-            <xsl:sort select="@niemsimpletype"/>
             <xsl:variable name="DodDist">
                 <xsl:choose>
                     <xsl:when test="info/*[1]/@doddist">
@@ -109,36 +116,11 @@
         </xsl:for-each>
     </xsl:variable>
 
-    <!--Remove min and max length qualifiers in RegEx for matching with normaized types-->
-    <xsl:template name="patternValue">
-        <xsl:param name="pattern"/>
-        <!--TEST FOR MIN MAX IN REGEX-->
-        <xsl:choose>
-            <!--If Ends with max min strip off-->
-            <xsl:when test="ends-with($pattern, '}')">
-                <xsl:choose>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 6), '{')">
-                        <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 6)"/>
-                    </xsl:when>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 5), '{')">
-                        <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 5)"/>
-                    </xsl:when>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 4), '{')">
-                        <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 4)"/>
-                    </xsl:when>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 3), '{')">
-                        <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 3)"/>
-                    </xsl:when>
-                    <xsl:when test="starts-with(substring($pattern, string-length($pattern) - 2), '{')">
-                        <xsl:value-of select="substring($pattern, 0, string-length($pattern) - 2)"/>
-                    </xsl:when>
-                </xsl:choose>
-            </xsl:when>
-            <xsl:otherwise>
-                <xsl:value-of select="$pattern"/>
-            </xsl:otherwise>
-        </xsl:choose>
-    </xsl:template>
+    <xsl:variable name="regexfixes">
+        <regex match="[A-Za-f0-9 \.,@] {7,80}" changeto="[A-Za-f0-9 \.,@]{7,80}"/>
+        <regex match="[\.A-Za-f0-9] {1,70}" changeto="[\.A-Za-f0-9]{1,70}"/>
+        <regex match="([0-9][0-9]{0,2}([0-9]|[0-8]?d*(\.[0-9]{0,2}[1-9]))?)(KPH|MPS|KTS|MPH)" changeto="([0-9][0-9]{0,2}([0-9]|[0-8]?\d*(\.[0-9]{0,2}[1-9]))?)(KPH|MPS|KTS|MPH)"/>
+    </xsl:variable>
 
     <xsl:template match="*:simpleType" mode="maptype">
         <xsl:param name="mtfsimpletype"/>
@@ -187,26 +169,19 @@
         </xsl:variable>
         <xsl:variable name="pattern" select="*:restriction/*:pattern/@value"/>
         <xsl:variable name="patternvalue">
-            <!-- Remove length qualifiers-->
-            <xsl:call-template name="patternValue">
-                <xsl:with-param name="pattern">
-                    <xsl:value-of select="$pattern"/>
-                </xsl:with-param>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:variable name="niempattern">
             <xsl:choose>
-                <xsl:when test="ends-with($patternvalue, '}')">
-                    <xsl:value-of select="$patternvalue"/>
+                <xsl:when test="@name='RoutingIdentifierType'">
+                    <xsl:text>[A-Za-f0-9 \.,@]{7,80}</xsl:text>
                 </xsl:when>
-                <xsl:when test="ends-with($patternvalue, '*')">
-                    <xsl:value-of select="$patternvalue"/>
+                <xsl:when test="@name='CommonUserNameAndPkiCredentialsType'">
+                    <xsl:text>[\.A-Za-f0-9]{1,70}</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="concat($patternvalue, '+')"/>
+                    <xsl:value-of select="$pattern"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
+        <xsl:variable name="niempattern" select="$patternvalue"/>
         <xsl:variable name="niemsimpletype" select="concat($niemtypename, 'SimpleType')"/>
         <xsl:variable name="niemcomplextype" select="concat($niemtypename, 'Type')"/>
         <xsl:variable name="mtfdoc">

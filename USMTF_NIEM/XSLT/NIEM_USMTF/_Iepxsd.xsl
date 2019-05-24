@@ -20,11 +20,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-    <xsl:include href="SubsetSchema.xsl"/>
+<!--    <xsl:include href="SubsetSchema.xsl"/>-->
 
     <xsl:variable name="srcpath" select="'../../XSD/NIEM_MTF/'"/>
-    <xsl:variable name="Outdir" select="'../../XSD/IEPD/'"/>
-    <xsl:variable name="ALLMTF" select="document(concat($srcpath, 'NIEM_MTF.xsd'))"/>
+    <xsl:variable name="Outdir" select="'../../XSD/NIEM_MTF/iepdxsd/'"/>
+    <xsl:variable name="ALLMTF" select="document(concat($srcpath, 'refxsd/niem-mtf.xsd'))"/>
     <xsl:variable name="mtfappinf" select="document(concat($srcpath, 'ext/niem/mtfappinfo.xsd'))"/>
     <xsl:variable name="locterm" select="document(concat($srcpath, 'ext/niem/localTerminology.xsd'))"/>
     <xsl:variable name="appinf" select="document(concat($srcpath, 'ext/niem/utility/appinfo/4.0/appinfo.xsd'))"/>
@@ -40,16 +40,20 @@
     </xsl:variable>
     <xsl:variable name="iep-xsd-template">
         <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="urn:mtf:mil:6040b:niem:mtf" xml:lang="en-US" elementFormDefault="unqualified" attributeFormDefault="unqualified" version="1.0">
-            <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="ext/ic-xml/ic-ism.xsd"/>
+            targetNamespace="urn:mtf:mil:6040b:niem:mtf" xml:lang="en-US" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.0">
+            <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="../ext/ic-xml/ic-ism.xsd"/>
         </xs:schema>
     </xsl:variable>
 
     <xsl:template name="main">
         <!--Create REF Folder-->
         <!--<xsl:call-template name="RefFolder"/>-->
-        <!--CREATE CUMULATIVE IEPD AND COPY TO EXT FOLDER-->
-        <xsl:result-document href="{concat($Outdir,'xml/xsd/ext/usmtf-iep.xsd')}">
+        <!--COPY REF XSD TO ext FOLDER-->
+        <!--<xsl:result-document href="{concat($Outdir,'xml/xsd/ext/usmtf-ref.xsd')}">
+            <xsl:copy-of select="$ALLMTF"/>
+        </xsl:result-document>-->
+        <!--CREATE CUMULATIVE IEPD-->
+        <xsl:result-document href="{concat($Outdir,'usmtf-iep.xsd')}">
             <xsl:for-each select="$iep-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -59,21 +63,14 @@
             </xsl:for-each>
         </xsl:result-document>
         <!--CREATE MSG IEPD AND COPY TO MSG IEPD FOLDER-->
-        <xsl:for-each select="$messagenodes/*">
-            <xsl:sort select="@mtfid"/>
-            <xsl:variable name="msg" select="."/>
-            <xsl:variable name="n" select="@name"/>
+        <xsl:for-each select="$ALLIEP/xs:element[xs:annotation/xs:appinfo/*:Msg]">
+            <xsl:sort select="xs:annotation/xs:appinfo/*:Msg/@mtfid"/>
             <xsl:variable name="t" select="@type"/>
-            <xsl:variable name="mid" select="lower-case(translate(@mtfid, ' .()', ''))"/>
-            <!--<xsl:variable name="subsetxsd">
-                <xsl:call-template name="subsetXSD">
-                    <xsl:with-param name="msgid" select="@mtfid"/>
-                </xsl:call-template>
-            </xsl:variable>-->
-            <xsl:variable name="subsetxsd" select="document(concat($srcpath,'subsetxsd/',$mid,'-ref.xsd'))"/>             
-            <xsl:apply-templates select="$subsetxsd/xs:schema" mode="ExtractIepSchema">
-                <xsl:with-param name="outdir" select="concat($Outdir,'xml/xsd/')"/>
-            </xsl:apply-templates>
+            <xsl:variable name="mid" select="translate(xs:annotation/xs:appinfo/*:Msg/@mtfid, ' .', '')"/>
+            <xsl:call-template name="ExtractIepSchema">
+                <xsl:with-param name="msgelement" select="."/>
+                <xsl:with-param name="outdir" select="$Outdir"/>
+            </xsl:call-template>
         </xsl:for-each>
     </xsl:template>
 
