@@ -24,7 +24,7 @@
 
     <xsl:variable name="srcpath" select="'../../XSD/NIEM_MTF/'"/>
     <xsl:variable name="Outdir" select="'../../XSD/NIEM_MTF/iepdxsd/'"/>
-    <xsl:variable name="ALLMTF" select="document(concat($srcpath, 'refxsd/niem-mtf.xsd'))"/>
+    <xsl:variable name="ALLMTF" select="document(concat($srcpath, 'refxsd/usmtf-ref.xsd'))"/>
     <xsl:variable name="mtfappinf" select="document(concat($srcpath, 'ext/niem/mtfappinfo.xsd'))"/>
     <xsl:variable name="locterm" select="document(concat($srcpath, 'ext/niem/localTerminology.xsd'))"/>
     <xsl:variable name="appinf" select="document(concat($srcpath, 'ext/niem/utility/appinfo/4.0/appinfo.xsd'))"/>
@@ -40,7 +40,7 @@
     </xsl:variable>
     <xsl:variable name="iep-xsd-template">
         <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="urn:mtf:mil:6040b:niem:mtf" xml:lang="en-US" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.0">
+            targetNamespace="urn:mtf:mil:6040b:niem:mtf" xml:lang="en-US" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
             <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="../ext/ic-xml/ic-ism.xsd"/>
         </xs:schema>
     </xsl:variable>

@@ -139,7 +139,7 @@
                         </xs:element>
                     </xsl:if>
                 </xsl:when>
-                <xsl:when test="name() = 'Choice'">
+                <xsl:when test="name()='Choice'">
                     <xs:element name="{@substgrpname}">
                         <xsl:attribute name="abstract">
                             <xsl:text>true</xsl:text>
@@ -1715,12 +1715,12 @@
 
     <xsl:template name="main">
         <!--Schema-->
-        <xsl:result-document href="{$dirpath}/niem-mtf-fields.xsd">
+        <xsl:result-document href="{$dirpath}/usmtf-fields.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
                     <xsl:apply-templates select="*" mode="identity"/>
-                    <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
+                    <xs:include schemaLocation="usmtf-sets.xsd"/>
                     <xs:annotation>
                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Fields for MTF Messages</xsl:text>
@@ -1733,7 +1733,7 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/niem-mtf-composites.xsd">
+        <xsl:result-document href="{$dirpath}/usmtf-composites.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1752,7 +1752,7 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/niem-mtf-sets.xsd">
+        <xsl:result-document href="{$dirpath}/usmtf-sets.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1771,7 +1771,7 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/niem-mtf-segments.xsd">
+        <xsl:result-document href="{$dirpath}/usmtf-segments.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1789,13 +1789,13 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/niem-mtf-messages.xsd">
+        <xsl:result-document href="{$dirpath}/usmtf-messages.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
                     <xsl:apply-templates select="*" mode="identity"/>
-                    <xs:include schemaLocation="niem-mtf-Sets.xsd"/>
-                    <xs:include schemaLocation="niem-mtf-Segments.xsd"/>
+                    <xs:include schemaLocation="usmtf-Sets.xsd"/>
+                    <xs:include schemaLocation="usmtf-Segments.xsd"/>
                     <xs:annotation>
                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Message structures for MTF Messages</xsl:text>
@@ -1808,7 +1808,7 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/niem-mtf.xsd">
+        <xsl:result-document href="{$dirpath}/usmtf-ref.xsd">
             <xsl:for-each select="$ref-xsd-template/*">
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
@@ -1837,32 +1837,32 @@
             </xsl:for-each>
         </xsl:result-document>
         <!--Maps-->
-        <xsl:result-document href="{$dirpath}/maps/niem-mtf-fieldmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/usmtf-fieldmaps.xml">
             <Fields>
                 <xsl:copy-of select="$mtf_fields_map"/>
             </Fields>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/maps/niem-mtf-compositemaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/usmtf-compositemaps.xml">
             <Composites>
                 <xsl:copy-of select="$mtf_composites_map" copy-namespaces="no"/>
             </Composites>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/maps/niem-mtf-setmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/usmtf-setmaps.xml">
             <Sets>
                 <xsl:copy-of select="$mtf_sets_map"/>
             </Sets>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/maps/niem-mtf-segmntmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/usmtf-segmntmaps.xml">
             <Segments>
                 <xsl:copy-of select="$mtf_segments_map" copy-namespaces="no"/>
             </Segments>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/maps/niem-mtf-msgsmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/usmtf-msgsmaps.xml">
             <Messages>
                 <xsl:copy-of select="$mtf_messages_map"/>
             </Messages>
         </xsl:result-document>
-        <xsl:result-document href="{$dirpath}/maps/niem-mtf-allmaps.xml">
+        <xsl:result-document href="{$dirpath}/maps/usmtf-allmaps.xml">
             <MTF>
                 <xsl:copy-of select="$mtf_messages_map" copy-namespaces="no"/>
                 <xsl:copy-of select="$mtf_segments_map" copy-namespaces="no"/>

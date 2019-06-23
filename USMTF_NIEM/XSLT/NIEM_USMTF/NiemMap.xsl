@@ -986,10 +986,10 @@
         <xsl:variable name="mtftypedoc">
             <xsl:apply-templates select="$typeannot/*/*:documentation" mode="normlize"/>
         </xsl:variable>
-        <xsl:variable name="UseDesc" select="$annot/*/info/*[1]/@usage"/>
         <xsl:variable name="apos">
             <xsl:text>'</xsl:text>
         </xsl:variable>
+        <xsl:variable name="UseDesc" select="replace($annot/*/info/*[1]/@usage,'”&quot;',$apos)"/>
         <xsl:variable name="TextIndicator">
             <xsl:if test="contains($UseDesc, 'must equal')">
                 <xsl:value-of select="normalize-space(substring-before(substring-after($UseDesc, concat('must equal ', $apos)), $apos))"/>
@@ -1254,10 +1254,6 @@
                 <xsl:when test="string-length($sbstgrp) &gt; 0">
                     <xsl:value-of select="$niemelement"/>
                 </xsl:when>
-                <!--BlankText -->
-                <xsl:when test="contains($mtftypevar, 'BlankSpace')">
-                    <xsl:text>BlankSpaceText</xsl:text>
-                </xsl:when>
                 <!--Create GenText Name -->
                 <xsl:when test="contains($mtftypevar, 'GeneralText')">
                     <xsl:value-of select="$GenText"/>
@@ -1273,9 +1269,31 @@
                 <xsl:when test="starts-with($niemelement, '_')">
                     <xsl:apply-templates select="@name" mode="txt"/>
                 </xsl:when>
-                <!--Remove underscore in name -->
-                <xsl:when test="contains($niemelement, '_')">
-                    <xsl:value-of select="substring-before($niemelement, '_')"/>
+                <!--Numeric repetition -->
+                <xsl:when test="ends-with($mtfname, '_1')">
+                    <xsl:value-of select="concat('First',replace($niemelement,'_1',''))"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtfname, '_2')">
+                    <xsl:value-of select="concat('Second',replace($niemelement,'_2',''))"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtfname, '_3')">
+                    <xsl:value-of select="concat('Third',replace($niemelement,'_3',''))"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtfname, '_4')">
+                    <xsl:value-of select="concat('Fourth',replace($niemelement,'_4',''))"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtfname, '_5')">
+                    <xsl:value-of select="concat('Fifth',replace($niemelement,'_5',''))"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtfname, '_6')">
+                    <xsl:value-of select="concat('Sixth',replace($niemelement,'_6',''))"/>
+                </xsl:when>
+                <xsl:when test="ends-with($mtfname, '_7')">
+                    <xsl:value-of select="concat('Seventh',replace($niemelement,'_7',''))"/>
+                </xsl:when>
+                <!--BlankText -->
+                <xsl:when test="contains($mtftypevar, 'BlankSpace')">
+                    <xsl:text>BlankSpaceText</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="$niemelement"/>

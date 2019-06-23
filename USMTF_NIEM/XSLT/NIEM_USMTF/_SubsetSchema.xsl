@@ -19,7 +19,7 @@
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <xsl:variable name="allmtf" select="document('../../XSD/NIEM_MTF/refxsd/niem-mtf.xsd')/*:schema"/>
+    <xsl:variable name="allmtf" select="document('../../XSD/NIEM_MTF/refxsd/usmtf-ref.xsd')/*:schema"/>
     <xsl:variable name="outDir" select="'../../XSD/NIEM_MTF/subsetxsd/'"/>
 
     <!--<xsl:variable name="allnodes" select="document('../../XSD/NIEM_MTF/Maps/NIEM_MTF_AllMaps.xsd')/*"/>-->

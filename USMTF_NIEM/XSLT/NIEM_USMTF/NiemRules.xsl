@@ -27,9 +27,9 @@
 
     <xsl:variable name="messages_xsd" select="document('../../XSD/Baseline_Schema/messages.xsd')"/>
 
-    <xsl:variable name="msgmap_xsd" select="document('../../XSD/NIEM_MTF/refxsd/maps/niem-mtf-msgsmaps.xml')"/>
-    <xsl:variable name="setmap_xsd" select="document('../../XSD/NIEM_MTF/refxsd/maps/niem-mtf-setmaps.xml')"/>
-    <xsl:variable name="segmap_xsd" select="document('../../XSD/NIEM_MTF/refxsd/maps/niem-mtf-segmntmaps.xml')"/>
+    <xsl:variable name="msgmap_xsd" select="document('../../XSD/NIEM_MTF/refxsd/maps/usmtf-msgsmaps.xml')"/>
+    <xsl:variable name="setmap_xsd" select="document('../../XSD/NIEM_MTF/refxsd/maps/usmtf-setmaps.xml')"/>
+    <xsl:variable name="segmap_xsd" select="document('../../XSD/NIEM_MTF/refxsd/maps/usmtf-segmntmaps.xml')"/>
 
     <xsl:variable name="q" select="'&quot;'"/>
     <xsl:variable name="a" select='"&apos;"'/>
@@ -245,7 +245,6 @@
                 <!--</xsl:variable>-->
             </xsl:for-each>
         </xsl:variable>
-
         <xsl:variable name="msgname" select="$msgmap_xsd/Messages/Message[@mtfname = $parent]/@mtfname"/>
         <xsl:variable name="namednodes">
             <xsl:call-template name="nodeNames">
@@ -308,6 +307,9 @@
         </xsl:variable>
         <xsl:attribute name="context">
             <xsl:choose>
+                <xsl:when test="ends-with($context, '/*')">
+                    <xsl:value-of select="substring($context, 0, string-length($context)-1)"/>
+                </xsl:when>
                 <xsl:when test="ends-with($context, '/')">
                     <xsl:value-of select="substring($context, 0, string-length($context))"/>
                 </xsl:when>
@@ -886,7 +888,8 @@
         <xsl:param name="segno"/>
         <xsl:choose>
             <xsl:when test="contains($segno, '..')">
-                <xsl:choose>
+                <xsl:text>*/</xsl:text>
+                <!--<xsl:choose>
                     <xsl:when test="$msgmap_xsd/Messages/Message[@mtfname = $parent]/*/Element[info/*/@initialPosition = substring-before($segno, '..')]/@niemelementname">
                         <xsl:value-of select="$msgmap_xsd/Messages/Message[@mtfname = $parent]/*/Element[info/*/@initialPosition = substring-before($segno, '..')][1]/@niemelementname"/>
                     </xsl:when>
@@ -894,7 +897,7 @@
                         <xsl:value-of select="$segmap_xsd/Segments/Segment[@niemelementname = $parent]/*/Element[info/*/@initialPosition = substring-before($segno, '..')][1]/@niemelementname"/>
                         <xsl:value-of select="$segmap_xsd/Segments/Segment[@niemelementname = $parent]/*/Element[info/*/@initialPosition = substring-before($segno, '..')][1]/@niemelementname"/>
                     </xsl:when>
-                </xsl:choose>
+                </xsl:choose>-->
             </xsl:when>
             <xsl:otherwise>
                 <xsl:choose>
