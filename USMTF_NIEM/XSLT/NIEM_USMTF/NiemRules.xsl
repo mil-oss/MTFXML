@@ -433,7 +433,7 @@
                         <xsl:text>)</xsl:text>
                         <xsl:choose>
                             <xsl:when test="not(contains($rexsts, '*'))">
-                                <xsl:text>and exists(</xsl:text>
+                                <xsl:text> and exists(</xsl:text>
                                 <xsl:value-of select="$rexsts"/>
                                 <xsl:text>)</xsl:text>
                             </xsl:when>
@@ -445,9 +445,9 @@
                     </xsl:variable>
                     <xsl:choose>
                         <xsl:when test="contains($path, '*')">
-                            <xsl:value-of select="substring-before($path, 'and ')"/>
-                            <xsl:text>and substring(</xsl:text>
-                            <xsl:value-of select="substring-before(substring-after($path, 'and '), '=')"/>
+                            <xsl:value-of select="substring-before($path, ' and ')"/>
+                            <xsl:text> and substring(</xsl:text>
+                            <xsl:value-of select="substring-before(substring-after($path, ' and '), '=')"/>
                             <xsl:text>,1,1)=</xsl:text>
                             <xsl:value-of select="translate(substring-after($path, '='), '*', '')"/>
                         </xsl:when>
@@ -590,16 +590,16 @@
                         <xsl:value-of select="$exsts"/>
                         <xsl:text>)</xsl:text>
                         <xsl:if test="not(contains($rexsts, '*'))">
-                            <xsl:text>and exists(</xsl:text>
+                            <xsl:text> and exists(</xsl:text>
                             <xsl:value-of select="$rexsts"/>
                             <xsl:text>)</xsl:text>
                         </xsl:if>
                     </xsl:variable>
                     <xsl:choose>
                         <xsl:when test="contains($path, '*')">
-                            <xsl:value-of select="substring-before($path, 'and ')"/>
+                            <xsl:value-of select="substring-before($path, ' and ')"/>
                             <xsl:text>substring(</xsl:text>
-                            <xsl:value-of select="substring-before(substring-after($path, 'and '), '*')"/>
+                            <xsl:value-of select="substring-before(substring-after($path, ' and '), '*')"/>
                             <xsl:text>,1,1)=</xsl:text>
                             <xsl:value-of select="translate(substring-after($path, '='), '*', '')"/>
                         </xsl:when>
@@ -754,7 +754,6 @@
         </xsl:element>
     </xsl:template>
 
-
     <!--// -\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\- ///-->
 
     <xsl:template name="commonContext">
@@ -888,7 +887,6 @@
         <xsl:param name="segno"/>
         <xsl:choose>
             <xsl:when test="contains($segno, '..')">
-                <xsl:text>*/</xsl:text>
                 <!--<xsl:choose>
                     <xsl:when test="$msgmap_xsd/Messages/Message[@mtfname = $parent]/*/Element[info/*/@initialPosition = substring-before($segno, '..')]/@niemelementname">
                         <xsl:value-of select="$msgmap_xsd/Messages/Message[@mtfname = $parent]/*/Element[info/*/@initialPosition = substring-before($segno, '..')][1]/@niemelementname"/>
