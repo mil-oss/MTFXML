@@ -577,7 +577,7 @@
             </xsl:choose>
         </xsl:for-each>
         <!--Process all elements that reference set objects -->
-        <xsl:for-each select="$all_set_elements_map/*">
+        <xsl:for-each select="$all_set_elements_map/*"> 
             <xsl:sort select="@niemelementname"/>
             <xsl:variable name="n">
                 <xsl:choose>
@@ -1738,8 +1738,8 @@
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
                     <xsl:apply-templates select="*" mode="identity"/>
-                    <xs:include schemaLocation="NIEM_MTF_Fields.xsd"/>
-                    <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
+                    <xs:include schemaLocation="usmtf-fields.xsd"/>
+                    <xs:include schemaLocation="usmtf-sets.xsd"/>
                     <xs:annotation>
                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Composite fields for MTF Composite Fields</xsl:text>
@@ -1757,8 +1757,8 @@
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
                     <xsl:apply-templates select="*" mode="identity"/>
-                    <xs:include schemaLocation="NIEM_MTF_Fields.xsd"/>
-                    <xs:include schemaLocation="NIEM_MTF_Composites.xsd"/>
+                    <xs:include schemaLocation="usmtf-fields.xsd"/>
+                    <xs:include schemaLocation="usmtf-composites.xsd"/>
                     <xs:annotation>
                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Set structures for MTF Messages</xsl:text>
@@ -1776,7 +1776,7 @@
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
                     <xsl:apply-templates select="*" mode="identity"/>
-                    <xs:include schemaLocation="NIEM_MTF_Sets.xsd"/>
+                    <xs:include schemaLocation="usmtf-sets.xsd"/>
                     <xs:annotation>
                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Segment structures for MTF Segments</xsl:text>
@@ -1794,8 +1794,8 @@
                 <xsl:copy>
                     <xsl:apply-templates select="@*" mode="identity"/>
                     <xsl:apply-templates select="*" mode="identity"/>
-                    <xs:include schemaLocation="usmtf-Sets.xsd"/>
-                    <xs:include schemaLocation="usmtf-Segments.xsd"/>
+                    <xs:include schemaLocation="usmtf-sets.xsd"/>
+                    <xs:include schemaLocation="usmtf-segments.xsd"/>
                     <xs:annotation>
                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDistC}">
                             <xsl:text>Message structures for MTF Messages</xsl:text>

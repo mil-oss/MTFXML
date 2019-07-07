@@ -20,7 +20,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:inf="urn:mtf:mil:6040b:appinfo"
     exclude-result-prefixes="xs" version="2.0">
     <xsl:output method="xml" indent="yes"/>
-    <!-- <xsl:include href="USMTF_Utility.xsl"/>-->
+    <!--<xsl:include href="USMTF_Utility.xsl"/>-->
     <xsl:variable name="bq">
         <xsl:text>&#96;</xsl:text>
     </xsl:variable>
@@ -30,7 +30,7 @@
     <xsl:variable name="rbr">
         <xsl:text>]</xsl:text>
     </xsl:variable>
-    <xsl:variable name="strings_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema/*:simpleType[*:restriction[@base = 'xsd:string']/*:pattern]"/>
+    <xsl:variable name="strings_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema/*:simpleType[*:restriction[contains(@base,':string')]/*:pattern]"/>
 
     <!--Test Output-->
     <xsl:variable name="xsdstroutputdoc" select="'../../XSD/Analysis/Normalized/Strings.xsd'"/>

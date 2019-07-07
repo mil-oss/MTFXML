@@ -232,6 +232,10 @@
             <xsl:when test="@* = 'structures:ObjectType'">
                 <xsl:apply-templates select="*" mode="map"/>
             </xsl:when>
+            <xsl:when test="$r='TargetTypeAbstract'">
+                <xsl:apply-templates select="$allmtf/*[@name = $r]" mode="map"/>
+                <xsl:apply-templates select="$allmtf/*[@substitutionGroup = $r]" mode="map"/>
+            </xsl:when>
             <xsl:when test="ends-with(@ref, 'Abstract')">
                 <xsl:apply-templates select="$allmtf/*[@name = $r]" mode="map"/>
                 <xsl:apply-templates select="$allmtf/*[@substitutionGroup = $r]" mode="map"/>
@@ -263,12 +267,6 @@
                 <xsl:apply-templates select="*" mode="map"/>
             </xsl:when>
             <xsl:when test="@name">
-                <!-- <node name="{@name}" type="{name()}">
-                    <xsl:copy-of select="@type"/>
-                    <!-\-<xsl:apply-templates select="@*" mode="map"/>-\->
-                    <xsl:copy-of select="*:annotation/*:appinfo/*/@mtfid"/>
-                    <xsl:apply-templates select="*" mode="map"/>
-                </node>-->
                 <xsl:element name="{replace(name(),'xs:','')}">
                     <xsl:copy-of select="@name"/>
                     <xsl:copy-of select="@type"/>
@@ -277,11 +275,6 @@
                 </xsl:element>
             </xsl:when>
             <xsl:when test="@base | @type">
-                <!--node name="{@base | @type}" type="{name()}">
-                    <!-\-<xsl:apply-templates select="@*" mode="map"/>-\->
-                    <xsl:copy-of select="*:annotation/*:appinfo/*/@mtfid"/>
-                    <xsl:apply-templates select="*" mode="map"/>
-                </node>-->
                 <xsl:element name="{replace(name(),'xs:','')}">
                     <xsl:attribute name="name">
                         <xsl:value-of select="@base | @type"/>
@@ -290,12 +283,12 @@
                     <xsl:apply-templates select="*" mode="map"/>
                 </xsl:element>
             </xsl:when>
-            <xsl:when test="@substitutionGroup">
-                <element name="{@substitutionGroup}">
-                    <xsl:apply-templates select="*" mode="map"/>
-                </element>
-            </xsl:when>
         </xsl:choose>
+        <xsl:if test="@substitutionGroup">
+            <element name="{@substitutionGroup}">
+                <xsl:apply-templates select="*" mode="map"/>
+            </element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="@*" mode="map">
@@ -312,7 +305,7 @@
         <xsl:for-each select="distinct-values($node//@*[name() = 'ref' or name() = 'type' or name() = 'base' or name() = 'substitutionGroup' or name() = 'abstract'][not(. = $node/@name)])">
             <xsl:variable name="n" select="."/>
             <xsl:choose>
-                <xsl:when test="$n = 'abstract' and $node/*:annotation/*:appinfo/*:Choice">
+                <xsl:when test="$node/*:annotation/*:appinfo/*:Choice">
                     <xsl:variable name="s" select="$node/@name"/>
                     <node name="{$s}"/>
                     <xsl:for-each select="$allmtf/*[@substitutionGroup = $s]">
