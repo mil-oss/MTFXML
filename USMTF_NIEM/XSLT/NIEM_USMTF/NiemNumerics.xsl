@@ -29,7 +29,7 @@
     <xsl:variable name="nsdir" select="'../../XSD/'"/>
     <xsl:variable name="nfld_changes" select="document(concat($nsdir, 'Refactor_Changes/FieldChanges.xml'))/FieldChanges"/>
 
-    <xsl:variable name="numsimpletypes" select="document(concat($nsdir, 'Refactor_Changes/M201804C0IF-NumericSimpleTypes-NORM.xml'))/NumericSimpleTypes"/>
+    <xsl:variable name="numsimpletypes" select="document(concat($nsdir, 'Refactor_Changes/M201804C0IF-NumericSimpleTypes.xml'))/NumericSimpleTypes"/>
 
     <xsl:variable name="integers_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base, ':integer')]]"/>
 
