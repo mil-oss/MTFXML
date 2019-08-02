@@ -121,7 +121,7 @@
     <xsl:variable name="ref-xsd-template">
         <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/" xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
             xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/" xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:inf="urn:mtf:mil:6040b:appinfo"
-            xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+            xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ism="urn:us:gov:ic:ism" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:niem:mtf"
             ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument" xml:lang="en-US" elementFormDefault="qualified"
             attributeFormDefault="qualified" version="1.0">
             <xs:import namespace="http://release.niem.gov/niem/structures/4.0/" schemaLocation="../ext/niem/utility/structures/4.0/structures.xsd"/>
@@ -146,7 +146,7 @@
         </xsl:result-document>
         <xsl:for-each select="$messagenodes/*">
             <xsl:variable name="msg" select="."/>
-            <xsl:variable name="n" select="@name"/>
+            <xsl:variable name="msgname" select="@name"/>
             <xsl:variable name="t" select="@type"/>
             <xsl:variable name="mid" select="lower-case(translate(@mtfid, ' .()', ''))"/>
             <xsl:result-document href="{concat($outDir,'/lists/',$mid,'-list.xml')}">
@@ -158,7 +158,18 @@
                         <xsl:apply-templates select="@*" mode="identity"/>
                         <xsl:apply-templates select="*" mode="identity"/>
                         <xsl:apply-templates select="$allmtf/*[@name = $msg/element[1]/@name]/*:annotation" mode="identity"/>
-                        <xsl:for-each select="$msg/*">
+                        <xsl:for-each select="$allmtf/*[@name = $msg/element[1]/@name]">
+                            <xsl:copy>
+                                <xsl:apply-templates select="@*" mode="identity"/>
+                                <xs:annotation>
+                                    <xsl:copy-of select="xs:annotation/xs:documentation"/>
+                                    <xs:appinfo>
+                                        <xsl:copy-of select="xs:annotation/xs:appinfo/*:Msg"/>
+                                    </xs:appinfo>
+                                </xs:annotation>
+                            </xsl:copy>
+                        </xsl:for-each>
+                        <xsl:for-each select="$msg/*[not(@name = $msg/element[1]/@name)]">
                             <xsl:variable name="nn" select="@name"/>
                             <xsl:copy-of select="$allmtf/*[@name = $nn]"/>
                         </xsl:for-each>

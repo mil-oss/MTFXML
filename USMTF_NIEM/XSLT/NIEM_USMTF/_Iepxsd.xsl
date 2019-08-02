@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
+ <!--
 /* 
  * Copyright (C) 2019 JD NEUSHUL
  *
@@ -39,7 +39,7 @@
         <xsl:apply-templates select="$ALLMTF/xs:schema/*" mode="iepd"/>
     </xsl:variable>
     <xsl:variable name="iep-xsd-template">
-        <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:ism="urn:us:gov:ic:ism" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:ism="urn:us:gov:ic:ism" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema"
             targetNamespace="urn:mtf:mil:6040b:niem:mtf" xml:lang="en-US" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
             <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="../ext/ic-xml/ic-ism.xsd"/>
         </xs:schema>
@@ -125,7 +125,17 @@
                         </xs:documentation>
                         <xsl:copy-of select="$msgelement/*:annotation/*:appinfo"/>
                     </xs:annotation>
-                    <xsl:copy-of select="$msgelement" copy-namespaces="no"/>
+                    <xsl:for-each select="$msgelement">
+                        <xsl:copy>
+                            <xsl:apply-templates select="@*" mode="identity"/>
+                            <xs:annotation>
+                                <xsl:copy-of select="*:annotation/*:documnentation"/>
+                                <xs:appinfo>
+                                    <xsl:copy-of select="*:annotation/*:appinfo/*:Msg"/>
+                                </xs:appinfo>
+                            </xs:annotation>
+                        </xsl:copy>
+                    </xsl:for-each>
                     <xsl:copy-of select="$ALLIEP/*:complexType[@name = $t]" copy-namespaces="no"/>
                     <xsl:variable name="msgnodes">
                         <xsl:for-each select="$ALLIEP/*:complexType[@name = $t]//*[@ref]">
@@ -197,7 +207,17 @@
                         </xs:documentation>
                         <xsl:copy-of select="$msgelement/*:annotation/*:appinfo"/>
                     </xs:annotation>
-                    <xsl:copy-of select="$msgelement" copy-namespaces="no"/>
+                    <xsl:for-each select="$msgelement">
+                        <xsl:copy>
+                            <xsl:apply-templates select="@*" mode="identity"/>
+                            <xs:annotation>
+                                <xsl:copy-of select="xs:documentation"/>
+                                <xs:appinfo>
+                                    <xsl:copy-of select="xs:appinfo/*:Msg"/>
+                                </xs:appinfo>
+                            </xs:annotation>
+                        </xsl:copy>
+                    </xsl:for-each>
                     <xsl:copy-of select="$xsd/*:complexType[@name = $t]" copy-namespaces="no"/>
                     <xsl:variable name="msgnodes">
                         <xsl:for-each select="$xsd/*:complexType[@name = $t]//*[@ref]">
