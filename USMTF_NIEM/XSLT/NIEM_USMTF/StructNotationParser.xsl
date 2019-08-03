@@ -222,11 +222,19 @@
     <xsl:template match="*" mode="makemtfxpath">
         <xsl:param name="type"/>
         <xsl:variable name="rul" select="./@txt"/>
+        <xsl:variable name="msg" select="./@msg"/>
         <xsl:variable name="fr" select="$fixrules/Rule[@rtxt = $rul]"/>
         <xsl:choose>
             <xsl:when test="$type = 'mtfname' and $fr/@mtfcontext">
                 <xsl:attribute name="context">
-                    <xsl:value-of select="$fr/@mtfcontext"/>
+                    <xsl:choose>
+                        <xsl:when test="$fr/@mtfcontext = '/'">
+                            <xsl:value-of select="$msg"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="concat($msg, '/', $fr/@mtfcontext)"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:attribute>
                 <xsl:attribute name="xpath">
                     <xsl:value-of select="$fr/@mtfxpath"/>
@@ -234,7 +242,14 @@
             </xsl:when>
             <xsl:when test="$type = 'niemname' and $fr/@niemcontext">
                 <xsl:attribute name="context">
-                    <xsl:value-of select="$fr/@niemcontext"/>
+                    <xsl:choose>
+                        <xsl:when test="$fr/@niemcontext = '/'">
+                            <xsl:value-of select="$msg"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="concat($msg, '/', $fr/@niemcontext)"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:attribute>
                 <xsl:attribute name="xpath">
                     <xsl:value-of select="$fr/@niemxpath"/>
@@ -309,17 +324,17 @@
                 </xsl:variable>
                 <xsl:variable name="contxt">
                     <xsl:choose>
-                        <xsl:when test="$context=''">
+                        <xsl:when test="$context = ''">
                             <xsl:value-of select="@msg"/>
                         </xsl:when>
-                        <xsl:when test="$context='/'">
+                        <xsl:when test="$context = '/'">
                             <xsl:value-of select="@msg"/>
                         </xsl:when>
                         <xsl:when test="ends-with($context, '/')">
-                            <xsl:value-of select="concat(@msg,'/',substring($context, 0, string-length($context)))"/>
+                            <xsl:value-of select="concat(@msg, '/', substring($context, 0, string-length($context)))"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat(@msg,'/',$context)"/>
+                            <xsl:value-of select="concat(@msg, '/', $context)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
@@ -360,11 +375,11 @@
                 </xsl:variable>
                 <xsl:variable name="rval">
                     <xsl:value-of select="Val/@txt"/>
-                </xsl:variable> 
+                </xsl:variable>
                 <xsl:variable name="xpth">
                     <xsl:choose>
                         <xsl:when test="contains($val, '|')">
-                            <xsl:variable name="rpth" select="substring-before($rightpath,'=')"/>
+                            <xsl:variable name="rpth" select="substring-before($rightpath, '=')"/>
                             <xsl:value-of select="concat($lpath, ' and contains(', $a, $val, $a, ',', $rpth, ')')"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -372,7 +387,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <xsl:attribute name="context" select="$contxt "/>
+                <xsl:attribute name="context" select="$contxt"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
                 <xsl:copy-of select="@expl"/>
             </xsl:when>
@@ -380,7 +395,7 @@
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = 'RP']">
                         <xsl:value-of select="@*[name() = $type]"/>
-                            <xslText>/</xslText>
+                        <xslText>/</xslText>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rightpath">
@@ -413,17 +428,17 @@
                 </xsl:variable>
                 <xsl:variable name="contxt">
                     <xsl:choose>
-                        <xsl:when test="$context=''">
+                        <xsl:when test="$context = ''">
                             <xsl:value-of select="@msg"/>
                         </xsl:when>
-                        <xsl:when test="$context='/'">
+                        <xsl:when test="$context = '/'">
                             <xsl:value-of select="@msg"/>
                         </xsl:when>
                         <xsl:when test="ends-with($context, '/')">
-                            <xsl:value-of select="concat(@msg,'/',substring($context, 0, string-length($context)))"/>
+                            <xsl:value-of select="concat(@msg, '/', substring($context, 0, string-length($context)))"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat(@msg,'/',$context)"/>
+                            <xsl:value-of select="concat(@msg, '/', $context)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
@@ -464,11 +479,11 @@
                 </xsl:variable>
                 <xsl:variable name="rval">
                     <xsl:value-of select="Val/@txt"/>
-                </xsl:variable> 
+                </xsl:variable>
                 <xsl:variable name="xpth">
                     <xsl:choose>
                         <xsl:when test="contains($val, '|')">
-                            <xsl:variable name="rpth" select="substring-before($rightpath,'=')"/>
+                            <xsl:variable name="rpth" select="substring-before($rightpath, '=')"/>
                             <xsl:value-of select="concat($lpath, ' and contains(', $a, $val, $a, ',', $rpth, ')')"/>
                         </xsl:when>
                         <xsl:otherwise>
@@ -476,7 +491,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <xsl:attribute name="context" select="replace($contxt,'//','/')"/>
+                <xsl:attribute name="context" select="replace($contxt, '//', '/')"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
                 <xsl:copy-of select="@expl"/>
             </xsl:when>
@@ -1509,8 +1524,8 @@
             </xsl:variable>
             <xsl:attribute name="niemname">
                 <xsl:choose>
-                    <xsl:when test="contains($niemname,' ')">
-                        <xsl:value-of select="substring-before($niemname,' ')"/>
+                    <xsl:when test="contains($niemname, ' ')">
+                        <xsl:value-of select="substring-before($niemname, ' ')"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="$niemname"/>
@@ -1523,8 +1538,8 @@
         <xsl:param name="mname"/>
         <xsl:param name="pname"/>
         <xsl:choose>
-            <xsl:when test="$setmaps//*[@name = $mname][Element/@setname=$pname]">
-                <xsl:value-of select="$setmaps//*[@name = $mname][Element/@setname=$pname][1]/@niemname"/>
+            <xsl:when test="$setmaps//*[@name = $mname][Element/@setname = $pname]">
+                <xsl:value-of select="$setmaps//*[@name = $mname][Element/@setname = $pname][1]/@niemname"/>
             </xsl:when>
             <xsl:when test="$setmaps//*[@mtfname = $mname][@setname = $pname]">
                 <xsl:value-of select="$setmaps//*[@mtfname = $mname][@setname = $pname][1]/@niemelementname"/>

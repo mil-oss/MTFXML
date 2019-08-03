@@ -27,7 +27,7 @@
     <xsl:variable name="dirpath" select="concat($srcdir, 'NIEM_MTF/refxsd/')"/>
 
     <xsl:variable name="structRel"
-        select="document(concat($srcdir, 'NIEM_MTF/schematron/structural-relationships-niem.sch'))/*"/>
+        select="document(concat($srcdir, 'NIEM_MTF/schematron/usmtf-structural-relationships.sch'))/*"/>
 
     <!-- _______________________________________________________ -->
 
