@@ -147,7 +147,8 @@
                         <xs:complexType name="{@niemtype}">
                             <xs:annotation>
                                 <xs:documentation ism:classification="U" ism:ownerProducer="USA"
-                                    ism:noticeType="{$DodDist}">A data type for alternative content.</xs:documentation>
+                                    ism:noticeType="{$DodDist}">A data type for alternative
+                                    content.</xs:documentation>
                             </xs:annotation>
                             <xs:complexContent>
                                 <xs:extension base="structures:ObjectType">
@@ -278,9 +279,15 @@
         <xsl:for-each select="$fieldsxsd/*:element">
             <xsl:sort select="@name"/>
             <xsl:variable name="n" select="@name"/>
-            <xsl:if test="count(preceding-sibling::*:element[@name = $n]) = 0">
-                <xsl:copy-of select="."/>
-            </xsl:if>
+            <xsl:variable name="s" select="@substitutionGroup"/>
+            <xsl:choose>
+                <xsl:when test="@substitutionGroup and count(preceding-sibling::*:element[@name = $n][@substitutionGroup = $s]) = 0">
+                    <xsl:copy-of select="."/>
+                </xsl:when>
+                <xsl:when test="count(preceding-sibling::*:element[@name = $n]) = 0">
+                    <xsl:copy-of select="."/>
+                </xsl:when>
+            </xsl:choose>
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="mtf_fields_map">
@@ -823,7 +830,7 @@
                                         </xs:documentation>
                                     </xs:annotation>
                                 </xs:element>
-                                <xs:element ref="FreeText" minOccurs="1" maxOccurs="1">
+                                <xs:element ref="UnformattedFreeText" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>A data item for text
                                             entry</xs:documentation>
@@ -892,7 +899,7 @@
                                         </xs:documentation>
                                     </xs:annotation>
                                 </xs:element>
-                                <xs:element ref="FreeText" minOccurs="1" maxOccurs="1">
+                                <xs:element ref="UnformattedFreeText" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>A data item for text
                                             entry</xs:documentation>
@@ -1017,8 +1024,8 @@
                                     <xs:annotation>
                                         <xs:documentation>
                                             <xsl:choose>
-                                                <xsl:when test="$refname = 'FreeText'">
-                                                  <xsl:text>A data item for text entry</xsl:text>
+                                                <xsl:when test="$refname = 'UnformattedFreeText'">
+                                                  <xsl:text>A data item for unformatted text entry</xsl:text>
                                                 </xsl:when>
                                                 <xsl:when test="string-length(@substgrpdoc) &gt; 0">
                                                   <xsl:value-of select="@substgrpdoc"/>

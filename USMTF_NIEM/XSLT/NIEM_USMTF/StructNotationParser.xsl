@@ -23,7 +23,7 @@
 
     <xsl:variable name="Analdir" select="'../../XSD/Analysis/Rules/'"/>
 
-    <xsl:variable name="Mtfdir" select="'../../XSD/NIEM_MTF/refxsd/'"/>
+    <xsl:variable name="Mtfdir" select="'../../XSD/NIEM_MTF/schematron/'"/>
 
     <xsl:variable name="fixrules" select="document('../../XSD/Analysis/Rules/fixrules6040B.xml')/FixRules"/>
 
@@ -118,16 +118,13 @@
         <xsl:result-document href="{concat($Analdir,'mtf-all-rules.xml')}">
             <xsl:copy-of select="$msgrules"/>
         </xsl:result-document>
-        <!-- <xsl:result-document href="{concat($Analdir,'mtf-rules-6040BC.xml')}">
-            <xsl:copy-of select="$rulenodes6040C"/>
-        </xsl:result-document> -->
         <xsl:result-document href="{concat($Analdir,'mtf-rules-6040BC.xml')}">
             <xsl:copy-of select="$rulepaths6040BC"/>
         </xsl:result-document>
         <xsl:result-document href="{concat($Analdir,'mtf-rules-6040B.sch')}">
             <xsl:copy-of select="$sch6040B"/>
         </xsl:result-document>
-        <xsl:result-document href="{concat($Analdir,'mtf-rules-6040C.sch')}">
+        <xsl:result-document href="{concat($Mtfdir,'usmtf-structural-relationships.sch')}">
             <xsl:copy-of select="$sch6040C"/>
         </xsl:result-document>
     </xsl:template>

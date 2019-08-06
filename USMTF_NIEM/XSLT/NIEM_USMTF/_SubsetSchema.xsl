@@ -23,14 +23,14 @@
     <xsl:variable name="allmtf" select="document('../../XSD/NIEM_MTF/refxsd/usmtf-ref.xsd')/*:schema"/>
     <xsl:variable name="outDir" select="'../../XSD/NIEM_MTF/subsetxsd/'"/>
 
-    <!--<xsl:variable name="allnodes" select="document('../../XSD/NIEM_MTF/Maps/NIEM_MTF_AllMaps.xsd')/*"/>-->
+   <!-- <xsl:variable name="allnodes" select="document('../../XSD/NIEM_MTF/refxsd/maps/usmtf-allmaps.xml')/*"/>-->
 
     <xsl:variable name="allnodes">
         <xsl:apply-templates select="$allmtf/*" mode="map"/>
     </xsl:variable>
 
     <xsl:variable name="messagenodes">
-        <xsl:apply-templates select="$allnodes/*[@name][@name][@type][@mtfid]" mode="msglist"/>
+        <xsl:apply-templates select="$allnodes/*[@name][@type][@mtfid]" mode="msglist"/>
     </xsl:variable>
 
     <xsl:template match="*" mode="msglist">
@@ -172,7 +172,10 @@
                         </xsl:for-each>
                         <xsl:for-each select="$msg/*[not(@name = $msg/element[1]/@name)]">
                             <xsl:variable name="nn" select="@name"/>
-                            <xsl:copy-of select="$allmtf/*[@name = $nn]"/>
+                            <!--<xsl:copy-of select="$allmtf/*[@name = $nn]"/>-->
+                            <xsl:apply-templates select="$allmtf/*[@name = $nn]"  mode="filter">
+                                <xsl:with-param name="msg" select="$msg"/>
+                            </xsl:apply-templates>
                         </xsl:for-each>
                     </xsl:copy>
                 </xsl:for-each>
@@ -194,12 +197,33 @@
                     <xsl:apply-templates select="$allmtf/*[@name = $msg/element[1]/@name]/*:annotation" mode="identity"/>
                     <xsl:for-each select="$msg/*">
                         <xsl:variable name="nn" select="@name"/>
-                        <xsl:copy-of select="$allmtf/*[@name = $nn]"/>
+                        <xsl:apply-templates select="$allmtf/*[@name = $nn]"  mode="filter">
+                            <xsl:with-param name="msg" select="$msg"/>
+                        </xsl:apply-templates>
                     </xsl:for-each>
                 </xsl:copy>
             </xsl:for-each>
         </xsl:for-each>
     </xsl:template>
+    
+    <xsl:template match="*" mode="filter">
+        <xsl:param name="msg"/>
+        <xsl:variable name="s" select="@substitutionGroup"/>
+        <xsl:choose>
+            <xsl:when test="exists(@substitutionGroup) and not($msg/*[@name = $s])">
+                <xsl:copy>
+                    <xsl:apply-templates select="@*[not(name()='substitutionGroup')]" mode="identity"/>
+                    <xsl:apply-templates select="*" mode="identity"/>
+                </xsl:copy>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
+        
+        
+    </xsl:template>
+    
 
     <xsl:template name="subsetXSDout">
         <xsl:param name="msgid"/>

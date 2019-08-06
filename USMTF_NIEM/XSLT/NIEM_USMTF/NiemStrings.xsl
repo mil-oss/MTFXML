@@ -134,8 +134,8 @@
                 <xsl:when test="$change/@niemelementname">
                     <xsl:value-of select="$change/@niemelementname"/>
                 </xsl:when>
-                <xsl:when test="$n = 'FreeTextSimple'">
-                    <xsl:text>FreeText</xsl:text>
+                <xsl:when test="starts-with($n,'FreeText')">
+                    <xsl:text>UnformattedFreeText</xsl:text>
                 </xsl:when>
                 <xsl:when test="ends-with($n, 'Text')">
                     <xsl:value-of select="$n"/>
@@ -149,6 +149,9 @@
             <xsl:choose>
                 <xsl:when test="$change/@niemtype">
                     <xsl:value-of select="$change/@niemtype"/>
+                </xsl:when>
+                <xsl:when test="starts-with($n,'FreeText')">
+                    <xsl:text>UnformattedFreeText</xsl:text>
                 </xsl:when>
                 <xsl:when test="ends-with($n, 'Code')">
                     <xsl:value-of select="replace($n, 'Code', 'Text')"/>

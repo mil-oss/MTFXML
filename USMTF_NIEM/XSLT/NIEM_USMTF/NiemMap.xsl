@@ -93,17 +93,8 @@
         </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="all_field_elements_map">
-        <xsl:copy-of select="$niem_fields_map"/>
         <xsl:for-each
-            select="$niem_composites_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
-            <xsl:copy-of select="." copy-namespaces="no"/>
-        </xsl:for-each>
-        <xsl:for-each
-            select="$niem_sets_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
-            <xsl:copy-of select="." copy-namespaces="no"/>
-        </xsl:for-each>
-        <xsl:for-each
-            select="$niem_sets_map//Choice[Element[starts-with(@mtftype, 'f:') or Element/info/inf:Field]]">
+            select="$niem_messages_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <xsl:for-each
@@ -111,9 +102,18 @@
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
         <xsl:for-each
-            select="$niem_messages_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
+            select="$niem_sets_map//Choice[Element[starts-with(@mtftype, 'f:') or Element/info/inf:Field]]">
             <xsl:copy-of select="." copy-namespaces="no"/>
         </xsl:for-each>
+        <xsl:for-each
+            select="$niem_sets_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
+            <xsl:copy-of select="." copy-namespaces="no"/>
+        </xsl:for-each>
+        <xsl:for-each
+            select="$niem_composites_map//Element[starts-with(@mtftype, 'f:') or info/inf:Field]">
+            <xsl:copy-of select="." copy-namespaces="no"/>
+        </xsl:for-each>
+        <xsl:copy-of select="$niem_fields_map"/>
     </xsl:variable>
 
     <xsl:variable name="niem_composites_map">
