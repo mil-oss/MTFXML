@@ -17,10 +17,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs"
+    version="2.0">
     <xsl:output method="xml" indent="yes"/>
 
-<!--    <xsl:include href="SubsetSchema.xsl"/>-->
+    <!--    <xsl:include href="SubsetSchema.xsl"/>-->
 
     <xsl:variable name="srcpath" select="'../../XSD/NIEM_MTF/'"/>
     <xsl:variable name="Outdir" select="'../../XSD/NIEM_MTF/iepdxsd/'"/>
@@ -39,13 +40,18 @@
         <xsl:apply-templates select="$ALLMTF/xs:schema/*" mode="iepd"/>
     </xsl:variable>
     <xsl:variable name="iep-xsd-template">
-        <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:ism="urn:us:gov:ic:ism" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-            targetNamespace="urn:mtf:mil:6040b:niem:mtf" xml:lang="en-US" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+        <xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf" xmlns:inf="urn:mtf:mil:6040b:appinfo" xmlns:ism="urn:us:gov:ic:ism" xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:mtf:mil:6040b:niem:mtf" xml:lang="en-US" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" version="1.0">
             <xs:import namespace="urn:us:gov:ic:ism" schemaLocation="../ext/ic-xml/ic-ism.xsd"/>
         </xs:schema>
     </xsl:variable>
 
     <xsl:template name="main">
+        <!--<xsl:call-template name="ExtractIepSchema">
+            <xsl:with-param name="msgelement" select="$ALLMTF/xs:schema/xs:element[@name='IntelligenceSummary']"/>
+            <xsl:with-param name="outdir" select="$Outdir"/>
+        </xsl:call-template>-->
         <!--Create REF Folder-->
         <!--<xsl:call-template name="RefFolder"/>-->
         <!--COPY REF XSD TO ext FOLDER-->
@@ -66,11 +72,24 @@
         <xsl:for-each select="$ALLIEP/xs:element[xs:annotation/xs:appinfo/*:Msg]">
             <xsl:sort select="xs:annotation/xs:appinfo/*:Msg/@mtfid"/>
             <xsl:variable name="t" select="@type"/>
-            <xsl:variable name="mid" select="translate(xs:annotation/xs:appinfo/*:Msg/@mtfid, ' .', '')"/>
-            <xsl:call-template name="ExtractIepSchema">
+            <xsl:variable name="mid" select="lower-case(translate(xs:annotation/xs:appinfo/*:Msg/@mtfid, ' .()', ''))"/>
+            <xsl:variable name="reflist" select="document(concat($srcpath, 'subsetxsd/lists/', $mid, '-list.xml'))"/>
+            <xsl:result-document href="{$Outdir}/{concat(lower-case($mid),'-iep.xsd')}">
+                <xsl:for-each select="$iep-xsd-template/*">
+                    <xsl:copy>
+                        <xsl:apply-templates select="@*" mode="identity"/>
+                        <xsl:apply-templates select="*" mode="identity"/>
+                        <xsl:for-each select="$reflist/Message/*">
+                            <xsl:variable name="n" select="@name"/>
+                            <xsl:apply-templates select="$ALLMTF/*/*[@name = $n]" mode="iepd"/>
+                        </xsl:for-each>
+                    </xsl:copy>
+                </xsl:for-each>
+            </xsl:result-document>
+            <!-- <xsl:call-template name="ExtractIepSchema">
                 <xsl:with-param name="msgelement" select="."/>
                 <xsl:with-param name="outdir" select="$Outdir"/>
-            </xsl:call-template>
+            </xsl:call-template>-->
         </xsl:for-each>
     </xsl:template>
 

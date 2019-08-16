@@ -66,9 +66,7 @@
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="info/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:for-each>
+                        <xsl:apply-templates select="info/*[1]" mode="strinfo"/>
                     </xs:appinfo>
                 </xs:annotation>
                 <xs:restriction base="{@base}">
@@ -90,9 +88,7 @@
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="info/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:for-each>
+                        <xsl:apply-templates select="info/*[1]" mode="strinfo"/>
                     </xs:appinfo>
                 </xs:annotation>
                 <xs:simpleContent>
@@ -107,14 +103,34 @@
                         <xsl:value-of select="@niemelementdoc"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="info/*">
-                            <xsl:copy-of select="." copy-namespaces="no"/>
-                        </xsl:for-each>
+                        <xsl:apply-templates select="info/*[1]" mode="strinfo"/>
                     </xs:appinfo>
                 </xs:annotation>
             </xs:element>
         </xsl:for-each>
     </xsl:variable>
+    
+    <xsl:template match="info/*" mode="strinfo">
+        <xsl:copy>
+            <xsl:copy-of select="@name" copy-namespaces="no"/>
+            <xsl:copy-of select="@positionName" copy-namespaces="no"/>
+            <xsl:copy-of select="@version" copy-namespaces="no"/>
+            <xsl:copy-of select="@ffirn" copy-namespaces="no"/>
+            <xsl:copy-of select="@fud" copy-namespaces="no"/>
+            <xsl:copy-of select="@date" copy-namespaces="no"/>
+            <xsl:copy-of select="@remark" copy-namespaces="no"/>
+            <xsl:if test="parent::info/parent::*/@niemtype and not(parent::info/Choice)">
+                <xsl:attribute name="type">
+                    <xsl:value-of select="parent::info/parent::*/@niemtype"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:copy-of select="@segseq" copy-namespaces="no"/>
+            <xsl:copy-of select="@setseq" copy-namespaces="no"/>
+            <xsl:if test="not(@segseq) and not(@setseq)">
+                <xsl:copy-of select="@fieldseq" copy-namespaces="no"/>
+            </xsl:if>
+        </xsl:copy>
+    </xsl:template>
 
     <xsl:variable name="regexfixes">
         <regex match="[A-Za-f0-9 \.,@] {7,80}" changeto="[A-Za-f0-9 \.,@]{7,80}"/>

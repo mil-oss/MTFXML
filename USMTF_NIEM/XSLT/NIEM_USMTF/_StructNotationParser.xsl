@@ -46,6 +46,7 @@
     <xsl:variable name="rp">
         <xsl:text>)</xsl:text>
     </xsl:variable>
+    <xsl:variable name="ns" select="'mtf:'"/>
 
     <xsl:variable name="ffisel">
         <!--<List>-->
@@ -208,8 +209,8 @@
                 </XPaths>
             </xsl:variable>
             <xsl:copy-of select="$xpaths"/>
-            <sch:rule context="{$xpaths/*/@context}" fpi="{@txt}">
-                <sch:assert test="{$xpaths/*/@xpath}">
+            <sch:rule context="{$xpaths/*/@context}">
+                <sch:assert fpi="{@txt}" test="{$xpaths/*/@xpath}">
                     <xsl:value-of select="@expl"/>
                 </sch:assert>
             </sch:rule>
@@ -226,10 +227,10 @@
                 <xsl:attribute name="context">
                     <xsl:choose>
                         <xsl:when test="$fr/@mtfcontext = '/'">
-                            <xsl:value-of select="$msg"/>
+                            <xsl:value-of select="concat($ns,$msg)"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat($msg, '/', $fr/@mtfcontext)"/>
+                            <xsl:value-of select="concat($ns,$msg, '/', $fr/@mtfcontext)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
@@ -241,10 +242,10 @@
                 <xsl:attribute name="context">
                     <xsl:choose>
                         <xsl:when test="$fr/@niemcontext = '/'">
-                            <xsl:value-of select="$msg"/>
+                            <xsl:value-of select="concat($ns,$msg)"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat($msg, '/', $fr/@niemcontext)"/>
+                            <xsl:value-of select="concat($ns,$msg, '/', $fr/@niemcontext)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
@@ -255,7 +256,7 @@
             <xsl:when test="Instr/@txt = 'A'">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr]">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rightpath">
@@ -265,7 +266,7 @@
                                 <xsl:value-of select="concat('=', @txt)"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                                <xsl:value-of select="concat('/',$ns, @*[name() = $type])"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:for-each>
@@ -280,14 +281,14 @@
                         <xsl:with-param name="substr" select="'/'"/>
                     </xsl:call-template>
                 </xsl:variable>
-                <xsl:variable name="context" select="concat(@msg, '/', substring-before($xpth, concat('/', $lastel)))"/>
+                <xsl:variable name="context" select="concat($ns,@msg, '/', substring-before($xpth, concat('/', $lastel)))"/>
                 <xsl:attribute name="context" select="$context"/>
                 <xsl:attribute name="xpath" select="concat($lastel, ' = ', $a, $aval, $a)"/>
             </xsl:when>
             <xsl:when test="Instr/@txt = 'R' and Instr/@txt = 'EQ'">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = 'R']">
-                        <xsl:value-of select="@*[name() = $type]"/>
+                        <xsl:value-of select="concat($ns,@*[name() = $type])"/>
                         <xslText>/</xslText>
                     </xsl:for-each>
                 </xsl:variable>
@@ -295,12 +296,12 @@
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][preceding-sibling::Instr/@txt = 'R']">
                         <xsl:choose>
                             <xsl:when test="following-sibling::*[1]/@txt = 'EQ'">
-                                <xsl:value-of select="@*[name() = $type]"/>
+                                <xsl:value-of select="concat($ns,@*[name() = $type])"/>
                                 <xslText>=</xslText>
                                 <xsl:value-of select="concat($a, following-sibling::Val[1]/@txt, $a)"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="@*[name() = $type]"/>
+                                <xsl:value-of select="concat($ns,@*[name() = $type])"/>
                                 <xslText>/</xslText>
                             </xsl:otherwise>
                         </xsl:choose>
@@ -322,16 +323,16 @@
                 <xsl:variable name="contxt">
                     <xsl:choose>
                         <xsl:when test="$context = ''">
-                            <xsl:value-of select="@msg"/>
+                            <xsl:value-of select="concat($ns,@msg)"/>
                         </xsl:when>
                         <xsl:when test="$context = '/'">
-                            <xsl:value-of select="@msg"/>
+                            <xsl:value-of select="concat($ns,@msg)"/>
                         </xsl:when>
                         <xsl:when test="ends-with($context, '/')">
-                            <xsl:value-of select="concat(@msg, '/', substring($context, 0, string-length($context)))"/>
+                            <xsl:value-of select="concat($ns,@msg, '/', substring($context, 0, string-length($context)))"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat(@msg, '/', $context)"/>
+                            <xsl:value-of select="concat($ns,@msg, '/', $context)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
@@ -391,7 +392,7 @@
             <xsl:when test="Instr/@txt = 'RP' and Instr/@txt = 'EQ'">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = 'RP']">
-                        <xsl:value-of select="@*[name() = $type]"/>
+                        <xsl:value-of select="concat($ns,@*[name() = $type])"/>
                         <xslText>/</xslText>
                     </xsl:for-each>
                 </xsl:variable>
@@ -399,12 +400,12 @@
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][preceding-sibling::Instr/@txt = 'RP']">
                         <xsl:choose>
                             <xsl:when test="following-sibling::*[1]/@txt = 'EQ'">
-                                <xsl:value-of select="@*[name() = $type]"/>
+                                <xsl:value-of select="concat($ns,@*[name() = $type])"/>
                                 <xslText>=</xslText>
                                 <xsl:value-of select="concat($a, following-sibling::Val[1]/@txt, $a)"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="@*[name() = $type]"/>
+                                <xsl:value-of select="concat($ns,@*[name() = $type])"/>
                                 <xslText>/</xslText>
                             </xsl:otherwise>
                         </xsl:choose>
@@ -426,16 +427,16 @@
                 <xsl:variable name="contxt">
                     <xsl:choose>
                         <xsl:when test="$context = ''">
-                            <xsl:value-of select="@msg"/>
+                            <xsl:value-of select="concat($ns,@msg)"/>
                         </xsl:when>
                         <xsl:when test="$context = '/'">
-                            <xsl:value-of select="@msg"/>
+                            <xsl:value-of select="concat($ns,@msg)"/>
                         </xsl:when>
                         <xsl:when test="ends-with($context, '/')">
-                            <xsl:value-of select="concat(@msg, '/', substring($context, 0, string-length($context)))"/>
+                            <xsl:value-of select="concat($ns,@msg, '/', substring($context, 0, string-length($context)))"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="concat(@msg, '/', $context)"/>
+                            <xsl:value-of select="concat($ns,@msg, '/', $context)"/>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
@@ -495,12 +496,12 @@
             <xsl:when test="Instr/@txt = 'RP' and Instr/@txt = '='">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = 'RP']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rightpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][preceding-sibling::Instr/@txt = 'RP'][following-sibling::Instr/@txt = '=']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rval">
@@ -521,19 +522,19 @@
                 </xsl:variable>
                 <xsl:variable name="lpath" select="substring-after($leftpath, concat($contxt, '/'))"/>
                 <xsl:variable name="rpath" select="substring-after($rightpath, concat($contxt, '/'))"/>
-                <xsl:attribute name="context" select="concat(@msg, $contxt)"/>
+                <xsl:attribute name="context" select="concat($ns,@msg, $contxt)"/>
                 <xsl:attribute name="xpath" select="concat($lpath, ' and ', $rpath, '/', $rval, ' or not(', $lpath, ')')"/>
                 <xsl:copy-of select="@expl"/>
             </xsl:when>
             <xsl:when test="Instr/@txt = 'R'">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = 'R']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rightpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][preceding-sibling::Instr/@txt = 'R']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="ls" select="tokenize($leftpath, '/')"/>
@@ -574,19 +575,19 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <xsl:attribute name="context" select="concat(@msg, $contxt)"/>
+                <xsl:attribute name="context" select="concat($ns,@msg, $contxt)"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
                 <xsl:copy-of select="@expl"/>
             </xsl:when>
             <xsl:when test="Instr/@txt = 'RP'">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = 'RP']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rightpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][preceding-sibling::Instr/@txt = 'RP']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="ls" select="tokenize($leftpath, '/')"/>
@@ -617,18 +618,21 @@
                 <xsl:variable name="xpth">
                     <xsl:value-of select="concat($lpath, ' and ', $rpath, ' or not(', $lpath, ')')"/>
                 </xsl:variable>
-                <xsl:attribute name="context" select="concat(@msg, $contxt)"/>
+                <xsl:attribute name="context" select="concat($ns,@msg, $contxt)"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
             </xsl:when>
             <xsl:when test="Instr/@txt = 'P'">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = 'P']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rightpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field' or name() = 'Instr' or name() = 'Val'][preceding-sibling::Instr/@txt = 'P']">
                         <xsl:choose>
+                            <xsl:when test="@txt = '|'">
+                                <xsl:text>/or/</xsl:text>
+                            </xsl:when>
                             <xsl:when test="@txt = '&amp;'">
                                 <xsl:text>/and/</xsl:text>
                             </xsl:when>
@@ -642,7 +646,7 @@
                                 <xsl:value-of select="concat('/', @txt)"/>
                             </xsl:when>
                             <xsl:otherwise>
-                                <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                                <xsl:value-of select="concat('/',$ns, @*[name() = $type])"/>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:for-each>
@@ -681,6 +685,11 @@
                             <xsl:variable name="rl" select="substring-after(substring-before($rightpath, '/and'), '/')"/>
                             <xsl:variable name="rr" select="substring-after($rightpath, 'and//')"/>
                             <xsl:value-of select="concat('not(', $lpath, ') and not(', $rl, ') and not(', $rr, ')')"/>
+                        </xsl:when>
+                        <xsl:when test="Instr[@txt='|']">
+                            <xsl:variable name="rl" select="substring-after(substring-before($rightpath, '/or'), '/')"/>
+                            <xsl:variable name="rr" select="substring-after($rightpath, 'or//')"/>
+                            <xsl:value-of select="concat('not(', $lpath, ') and ', $rl, ' or ', $rr)"/>
                         </xsl:when>
                         <xsl:when test="Instr[@txt = 'EQ']">
                             <xsl:variable name="rl" select="substring-after(substring-before($rightpath, '/EQ'), '/')"/>
@@ -744,18 +753,18 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <xsl:attribute name="context" select="concat(@msg, $contxt)"/>
+                <xsl:attribute name="context" select="concat($ns,@msg, $contxt)"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
             </xsl:when>
             <xsl:when test="Instr/@txt = 'EQ'">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = 'EQ']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rightpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][preceding-sibling::Instr/@txt = 'EQ']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/',$ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="ls" select="tokenize($leftpath, '/')"/>
@@ -784,18 +793,18 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <xsl:attribute name="context" select="concat(@msg, $contxt)"/>
+                <xsl:attribute name="context" select="concat($ns,@msg, $contxt)"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
             </xsl:when>
             <xsl:when test="Instr/@txt = '!EQ'">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][following-sibling::Instr/@txt = '!EQ']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="rightpath">
                     <xsl:for-each select="*[name() = 'Segment' or name() = 'Set' or name() = 'Field'][preceding-sibling::Instr/@txt = '!EQ']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="ls" select="tokenize($leftpath, '/')"/>
@@ -824,13 +833,13 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <xsl:attribute name="context" select="concat(@msg, $contxt)"/>
+                <xsl:attribute name="context" select="concat($ns,@msg, $contxt)"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
             </xsl:when>
             <xsl:when test="Field[contains(@txt, 'FF')]">
                 <xsl:variable name="leftpath">
                     <xsl:for-each select="*[@*[name() = $type]][following-sibling::Instr[@txt = '=']][not(preceding-sibling::Instr[@txt = '='])]">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="sel1">
@@ -841,7 +850,7 @@
                 </xsl:variable>
                 <xsl:variable name="rightpath">
                     <xsl:for-each select="*[@*[name() = $type]][preceding-sibling::Field[contains(@txt, 'FF')]][following-sibling::Instr/@txt = '=']">
-                        <xsl:value-of select="concat('/', @*[name() = $type])"/>
+                        <xsl:value-of select="concat('/', $ns,@*[name() = $type])"/>
                     </xsl:for-each>
                 </xsl:variable>
                 <xsl:variable name="ls" select="tokenize($leftpath, '/')"/>
@@ -872,7 +881,7 @@
                 <xsl:variable name="xpth">
                     <xsl:value-of select="concat($lpath, ' and ', $rpath)"/>
                 </xsl:variable>
-                <xsl:attribute name="context" select="concat(@msg, $contxt)"/>
+                <xsl:attribute name="context" select="concat($ns,@msg, $contxt)"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
             </xsl:when>
             <xsl:when test="Instr[@txt = '@=']">
@@ -927,7 +936,7 @@
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:variable>
-                <xsl:attribute name="context" select="concat(@msg, $contxt)"/>
+                <xsl:attribute name="context" select="concat($ns,@msg, $contxt)"/>
                 <xsl:attribute name="xpath" select="$xpth"/>
             </xsl:when>
         </xsl:choose>
@@ -944,26 +953,37 @@
     <xsl:variable name="sch6040B">
         <sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
             queryBinding="xslt">
+            <sch:ns uri="urn:mtf:mil:6040b:niem:mtf" prefix="mtf"/> 
+            <sch:ns uri="urn:us:gov:ic:ism" prefix="ism"/> 
             <sch:title>Structural Relationship Rules for USMTF MIL STD 6040B</sch:title>
-            <xsl:variable name="msgrules">
-                <xsl:for-each select="$rulepaths6040BC/*/Rule">
-                    <xsl:sort select="@msg"/>
-                    <xsl:variable name="m" select="@msg"/>
-                    <xsl:if test="not(preceding-sibling::*[@msg = $m])">
-                        <sch:pattern id="{@msg}">
-                            <sch:title>
-                                <xsl:text>Structural Relationship Rules</xsl:text>
-                            </sch:title>
-                            <xsl:copy-of select="XPaths6040B/sch:rule"/>
-                            <xsl:for-each select="following-sibling::*[@msg = $m]">
-                                <xsl:copy-of select="XPaths6040B/sch:rule"/>
-                            </xsl:for-each>
-                        </sch:pattern>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsl:variable>
-            <xsl:for-each select="$msgrules/sch:pattern[sch:rule]">
-                <xsl:copy-of select="."/>
+            <xsl:for-each select="$rulepaths6040BC/*/Rule">
+                <xsl:sort select="@msg"/>
+                <xsl:variable name="m" select="@msg"/>
+                <xsl:if test="not(preceding-sibling::*[@msg = $m])">
+                    <xsl:variable name="rules">
+                        <xsl:copy-of select="XPaths6040C/sch:rule"/>
+                        <xsl:for-each select="following-sibling::Rule[@msg = $m]">
+                            <xsl:copy-of select="XPaths6040C/sch:rule" copy-namespaces="no"/>
+                        </xsl:for-each>
+                    </xsl:variable>
+                    <sch:pattern id="{@msg}">
+                        <sch:title>
+                            <xsl:text>Structural Relationship Rules</xsl:text>
+                        </sch:title>
+                        <xsl:for-each select="$rules/*">
+                            <xsl:variable name="c" select="@context"/>
+                            <xsl:if test="not(preceding-sibling::sch:rule[@context = $c])">
+                                <xsl:copy>
+                                    <xsl:copy-of select="@context"/>
+                                    <xsl:copy-of select="sch:assert"/>
+                                    <xsl:for-each select="following-sibling::sch:rule[@context = $c]">
+                                        <xsl:copy-of select="sch:assert"/>
+                                    </xsl:for-each>
+                                </xsl:copy>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </sch:pattern>
+                </xsl:if>
             </xsl:for-each>
         </sch:schema>
     </xsl:variable>
@@ -982,8 +1002,8 @@
             <XPaths6040B>
                 <xsl:copy-of select="XPaths/@context"/>
                 <xsl:copy-of select="XPaths/@xpath"/>
-                <sch:rule context="{XPaths/@context}" fpi="{@txt}">
-                    <sch:assert test="{XPaths/@xpath}">
+                <sch:rule context="{XPaths/@context}">
+                    <sch:assert fpi="{@txt}" test="{XPaths/@xpath}">
                         <xsl:value-of select="@expl"/>
                     </sch:assert>
                 </sch:rule>
@@ -1000,8 +1020,8 @@
                     <xsl:for-each select="@*">
                         <xsl:copy-of select="."/>
                     </xsl:for-each>
-                    <sch:rule context="{@context}" fpi="{$r}">
-                        <sch:assert test="{@xpath}">
+                    <sch:rule context="{@context}">
+                        <sch:assert fpi="{$r}" test="{@xpath}">
                             <xsl:value-of select="$e"/>
                         </sch:assert>
                     </sch:rule>
@@ -1013,26 +1033,37 @@
     <xsl:variable name="sch6040C">
         <sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
             queryBinding="xslt">
+            <sch:ns uri="urn:mtf:mil:6040b:niem:mtf" prefix="mtf"/> 
+            <sch:ns uri="urn:us:gov:ic:ism" prefix="ism"/> 
             <sch:title>Structural Relationship Rules for USMTF MIL STD 6040C</sch:title>
-            <xsl:variable name="msgrules">
-                <xsl:for-each select="$rulepaths6040BC/*/Rule">
-                    <xsl:sort select="@msg"/>
-                    <xsl:variable name="m" select="@msg"/>
-                    <xsl:if test="not(preceding-sibling::*[@msg = $m])">
-                        <sch:pattern id="{@msg}">
-                            <sch:title>
-                                <xsl:text>Structural Relationship Rules</xsl:text>
-                            </sch:title>
-                            <xsl:copy-of select="XPaths6040C/sch:rule"/>
-                            <xsl:for-each select="following-sibling::*[@msg = $m]">
-                                <xsl:copy-of select="XPaths6040C/sch:rule"/>
-                            </xsl:for-each>
-                        </sch:pattern>
-                    </xsl:if>
-                </xsl:for-each>
-            </xsl:variable>
-            <xsl:for-each select="$msgrules/sch:pattern[sch:rule]">
-                <xsl:copy-of select="."/>
+            <xsl:for-each select="$rulepaths6040BC/*/Rule">
+                <xsl:sort select="@msg"/>
+                <xsl:variable name="m" select="@msg"/>
+                <xsl:if test="not(preceding-sibling::*[@msg = $m])">
+                    <xsl:variable name="rules">
+                        <xsl:copy-of select="XPaths6040C/sch:rule"/>
+                        <xsl:for-each select="following-sibling::Rule[@msg = $m]">
+                            <xsl:copy-of select="XPaths6040C/sch:rule" copy-namespaces="no"/>
+                        </xsl:for-each>
+                    </xsl:variable>
+                    <sch:pattern id="{@msg}">
+                        <sch:title>
+                            <xsl:text>Structural Relationship Rules</xsl:text>
+                        </sch:title>
+                        <xsl:for-each select="$rules/*">
+                            <xsl:variable name="c" select="@context"/>
+                            <xsl:if test="not(preceding-sibling::sch:rule[@context = $c])">
+                                <xsl:copy>
+                                    <xsl:copy-of select="@context"/>
+                                    <xsl:copy-of select="sch:assert"/>
+                                    <xsl:for-each select="following-sibling::sch:rule[@context = $c]">
+                                        <xsl:copy-of select="sch:assert"/>
+                                    </xsl:for-each>
+                                </xsl:copy>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </sch:pattern>
+                </xsl:if>
             </xsl:for-each>
         </sch:schema>
     </xsl:variable>

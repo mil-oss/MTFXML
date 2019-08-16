@@ -138,14 +138,14 @@
                 <xsl:copy-of select="$allnodes" copy-namespaces="no"/>
             </nodes>
         </xsl:result-document>
-        <xsl:result-document href="{concat($outDir,'/msgmap.xml')}">
+        <xsl:result-document href="{concat($outDir,'/lists/msgmap.xml')}">
             <Messages>
                 <xsl:for-each select="$messagenodes/*">
                     <xsl:copy-of select="."/>
                 </xsl:for-each>
             </Messages>
         </xsl:result-document>
-        <xsl:for-each select="$messagenodes/*">
+        <xsl:for-each select="$messagenodes/*[@mtfid]">
             <xsl:variable name="msg" select="."/>
             <xsl:variable name="msgname" select="@name"/>
             <xsl:variable name="t" select="@type"/>
@@ -224,7 +224,6 @@
         
     </xsl:template>
     
-
     <xsl:template name="subsetXSDout">
         <xsl:param name="msgid"/>
         <xsl:for-each select="$messagenodes/*[@mtfid = $msgid]">

@@ -444,11 +444,7 @@
                         <xsl:value-of select="@niemtypedoc"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="info/*">
-                            <xsl:element name="{name()}">
-                                <xsl:apply-templates select="@*" mode="appinfoatts"/>
-                            </xsl:element>
-                        </xsl:for-each>
+                        <xsl:apply-templates select="info/*[1]" mode="numinfo"/>
                     </xs:appinfo>
                 </xs:annotation>
                 <xs:simpleContent>
@@ -463,11 +459,7 @@
                         <xsl:value-of select="normalize-space(@niemelementdoc)"/>
                     </xs:documentation>
                     <xs:appinfo>
-                        <xsl:for-each select="info/*">
-                            <xsl:element name="{name()}">
-                                <xsl:apply-templates select="@*" mode="appinfoatts"/>
-                            </xsl:element>
-                        </xsl:for-each>
+                        <xsl:apply-templates select="info/*[1]" mode="numinfo"/>
                     </xs:appinfo>
                 </xs:annotation>
             </xs:element>
@@ -498,24 +490,11 @@
                                 <xsl:value-of select="@format"/>
                             </xsl:attribute>
                         </xsl:if>
-                        <!--<xsl:attribute name="ffirn">
-                            <xsl:value-of select="@ffirn"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="fud">
-                            <xsl:value-of select="@fud"/>
-                        </xsl:attribute>-->
-                        <xsl:attribute name="version">
-                            <xsl:value-of select="@version"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="versiondate">
-                            <xsl:value-of select="@versiondate"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="remark">
-                            <xsl:value-of select="@remark"/>
-                        </xsl:attribute>
-                        <xsl:attribute name="doddist">
-                            <xsl:value-of select="$DodDist"/>
-                        </xsl:attribute>
+                        <xsl:copy-of select="@ffirn"/>
+                        <xsl:copy-of select="@fud"/>
+                        <xsl:copy-of select="@version"/>
+                        <xsl:copy-of select="@versiondate"/>
+                        <xsl:copy-of select="@remark"/>
                     </inf:Field>
                 </xs:appinfo>
             </xs:annotation>
@@ -685,6 +664,28 @@
                 </xsl:for-each>
             </Numerics>
         </xsl:result-document>
+    </xsl:template>
+    
+    <xsl:template match="info/*" mode="numinfo">
+        <xsl:copy>
+            <xsl:copy-of select="@name" copy-namespaces="no"/>
+            <xsl:copy-of select="@positionName" copy-namespaces="no"/>
+            <xsl:copy-of select="@version" copy-namespaces="no"/>
+            <xsl:copy-of select="@ffirn" copy-namespaces="no"/>
+            <xsl:copy-of select="@fud" copy-namespaces="no"/>
+            <xsl:copy-of select="@date" copy-namespaces="no"/>
+            <xsl:copy-of select="@remark" copy-namespaces="no"/>
+            <xsl:if test="parent::info/parent::*/@niemtype and not(parent::info/Choice)">
+                <xsl:attribute name="type">
+                    <xsl:value-of select="parent::info/parent::*/@niemtype"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:copy-of select="@segseq" copy-namespaces="no"/>
+            <xsl:copy-of select="@setseq" copy-namespaces="no"/>
+            <xsl:if test="not(@segseq) and not(@setseq)">
+                <xsl:copy-of select="@fieldseq" copy-namespaces="no"/>
+            </xsl:if>
+        </xsl:copy>
     </xsl:template>
 
 </xsl:stylesheet>

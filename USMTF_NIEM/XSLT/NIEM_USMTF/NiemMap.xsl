@@ -244,7 +244,7 @@
                         <xsl:attribute name="remark">
                             <xsl:value-of select="$Remark"/>
                         </xsl:attribute>
-                        <xsl:attribute name="doddist">
+                        <!--<xsl:attribute name="doddist">
                             <xsl:choose>
                                 <xsl:when test="$change/@dist = 'A'">
                                     <xsl:text>DoD-Dist-A</xsl:text>
@@ -253,7 +253,7 @@
                                     <xsl:text>DoD-Dist-C</xsl:text>
                                 </xsl:otherwise>
                             </xsl:choose>
-                        </xsl:attribute>
+                        </xsl:attribute>-->
                         <!--<xsl:attribute name="diststatement">
                             <xsl:value-of select="$DistStmnt"/>
                         </xsl:attribute>-->
@@ -551,7 +551,7 @@
                     <xsl:attribute name="remark">
                         <xsl:value-of select="$Remark"/>
                     </xsl:attribute>
-                    <xsl:attribute name="doddist">
+                    <!--<xsl:attribute name="doddist">
                         <xsl:choose>
                             <xsl:when test="$change/@dist = 'C'">
                                 <xsl:text>DoD-Dist-C</xsl:text>
@@ -560,7 +560,7 @@
                                 <xsl:text>DoD-Dist-A</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </xsl:attribute>
+                    </xsl:attribute>-->
                     <!--  <xsl:attribute name="diststatement">
                         <xsl:value-of select="$DistStmnt"/>
                     </xsl:attribute>-->
@@ -720,7 +720,7 @@
                     <xsl:attribute name="remark">
                         <xsl:value-of select="$Remark"/>
                     </xsl:attribute>
-                    <xsl:attribute name="doddist">
+                    <!--<xsl:attribute name="doddist">
                         <xsl:choose>
                             <xsl:when test="$change/@dist = 'A'">
                                 <xsl:text>DoD-Dist-A</xsl:text>
@@ -729,7 +729,7 @@
                                 <xsl:text>DoD-Dist-C</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </xsl:attribute>
+                    </xsl:attribute>-->
                     <!--  <xsl:attribute name="diststatement">
                         <xsl:value-of select="$DistStmnt"/>
                     </xsl:attribute>-->
@@ -895,7 +895,7 @@
                     <xsl:attribute name="remark">
                         <xsl:value-of select="$Remark"/>
                     </xsl:attribute>
-                    <xsl:attribute name="doddist">
+                    <!--<xsl:attribute name="doddist">
                         <xsl:choose>
                             <xsl:when test="$change/@dist = 'A'">
                                 <xsl:text>DoD-Dist-A</xsl:text>
@@ -904,10 +904,10 @@
                                 <xsl:text>DoD-Dist-C</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </xsl:attribute>
-                    <xsl:attribute name="diststatement">
+                    </xsl:attribute>-->
+                    <!--<xsl:attribute name="diststatement">
                         <xsl:value-of select="$DistStmnt"/>
-                    </xsl:attribute>
+                    </xsl:attribute>-->
                 </inf:Msg>
             </xsl:for-each>
         </xsl:variable>
@@ -1061,6 +1061,9 @@
                         select="*:complexType/*:simpleContent/*:extension/*:attribute[@name = 'ffSeq'][1]/@fixed"
                     />
                 </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="position()"/>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="segseq">
@@ -1606,7 +1609,7 @@
                     <xsl:attribute name="remark">
                         <xsl:value-of select="$Remark"/>
                     </xsl:attribute>
-                    <xsl:attribute name="doddist">
+                    <!--<xsl:attribute name="doddist">
                         <xsl:choose>
                             <xsl:when test="$niemmatch/*/info/*/@dist = 'A'">
                                 <xsl:text>DoD-Dist-A</xsl:text>
@@ -1615,7 +1618,7 @@
                                 <xsl:text>DoD-Dist-C</xsl:text>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </xsl:attribute>
+                    </xsl:attribute>-->
                     <!-- <xsl:attribute name="diststatement">
                         <xsl:value-of select="$DistStmnt"/>
                     </xsl:attribute>-->
