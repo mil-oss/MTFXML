@@ -746,6 +746,11 @@
                     </xs:element>
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:variable name="label">
+                <xsl:call-template name="breakIntoWords">
+                    <xsl:with-param name="string" select="@niemelementname"/>
+                </xsl:call-template>
+            </xsl:variable>
             <xsl:if test="ends-with(@mtftype, 'GeneralTextType')">
                 <xs:complexType name="{@niemtype}">
                     <xs:annotation>
@@ -759,15 +764,14 @@
                     <xs:complexContent>
                         <xs:extension base="SetBaseType">
                             <xs:sequence>
-                                <xs:element ref="{concat(@niemelementname,'SubjectText')}" minOccurs="1" maxOccurs="1">
+                                <xs:element ref="{concat(substring(@niemelementname,0,string-length(@niemelementname)-10),'TextIndicator')}" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
-                                            <xsl:value-of select="concat('A data item for ', @niemelementname, '  Subject Text')"/>
+                                            <xsl:value-of select="concat('A data item for ', $label, '  Text Indicator')"/>
                                         </xs:documentation>
                                         <xs:appinfo>
-                                            <inf:Field positionName="TEXT INDICATOR"
+                                            <inf:Field positionName="TEXT INDICATOR" fixed="{@fixed}"
                                                 concept="An indication of the subject matter addressed in a General Text (GENTEXT) set. Field 1 in the GENTEXT set is assigned at the message level. Therefore refer to the message instructions for the correct entry."
-                                                definition="A word or phrase which identifies the subject of information contained in the free-text field of a General Text (GENTEXT) set or that identifies the subject of subsequent consecutive related sets as defined in a Heading (HEADING) set."
                                                 fieldseq="1"/>
                                         </xs:appinfo>
                                     </xs:annotation>
@@ -795,13 +799,13 @@
                         </xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="{concat(@niemelementname,'SubjectText')}" type="SubjectTextType" nillable="true">
+                <xs:element name="{concat(substring(@niemelementname,0,string-length(@niemelementname)-10),'TextIndicator')}" type="TextIndicatorType" nillable="true">
                     <xs:annotation>
                         <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="{$DodDist}">
-                            <xsl:value-of select="concat('A data item for ', @niemelementname, ' Subject Text')"/>
+                            <xsl:value-of select="concat('A data item for ', @niemelementname, 'Text Indicator')"/>
                         </xs:documentation>
                         <xs:appinfo>
-                            <inf:Field fixed="{info/*/@textindicator}"/>
+                            <inf:Field name="TEXT INDICATOR" fixed="{info/*/@textindicator}"/>
                         </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
@@ -822,12 +826,11 @@
                                 <xs:element ref="{concat(@niemelementname,'SubjectText')}" minOccurs="1" maxOccurs="1">
                                     <xs:annotation>
                                         <xs:documentation>
-                                            <xsl:value-of select="concat('A data item for ', @niemelementname, ' Heading Information ', ' Subject Text')"/>
+                                            <xsl:value-of select="concat('A data item for ', $label, ' Subject Text')"/>
                                         </xs:documentation>
                                         <xs:appinfo>
-                                            <inf:Field positionName="HEADING INFORMATION"
+                                            <inf:Field positionName="'SUBJECT TEXT'" fixed="{@fixed}"
                                                 concept="A word or phrase used to identify the particular subject matter (HEADING) of a group of related subsequent consecutive sets. Field 1 in the HEADING set is assigned at the message level. Refer to the message instructions for the correct entry of Field 1 in the HEADING set as it occurs in the message."
-                                                definition="A word or phrase which identifies the subject of information contained in the free-text field of a General Text (GENTEXT) set or that identifies the subject of subsequent consecutive related sets as defined in a Heading (HEADING) set."
                                                 fieldseq="1"/>
                                         </xs:appinfo>
                                     </xs:annotation>
@@ -861,7 +864,8 @@
                             <xsl:value-of select="concat('A data item for ', @niemelementname, ' Subject Text')"/>
                         </xs:documentation>
                         <xs:appinfo>
-                            <inf:Field fixed="{info/*/@textindicator}"/>
+                            <inf:Field positionName="SUBJECT TEXT" fixed="{@fixed}"
+                                concept="A word or phrase used to identify the particular subject matter (HEADING) of a group of related subsequent consecutive sets. Field 1 in the HEADING set is assigned at the message level. Refer to the message instructions for the correct entry of Field 1 in the HEADING set as it occurs in the message."/>
                         </xs:appinfo>
                     </xs:annotation>
                 </xs:element>
@@ -919,7 +923,7 @@
                                             <xsl:choose>
                                                 <xsl:when test="count(Element) = 1">
                                                     <xsl:choose>
-                                                        <xsl:when test="string-length(Element/@substgrpname) &gt; 0">
+                                                        <xsl:when test="string-length(Element/@substgrpname) &gt; 0">Fil
                                                             <xsl:value-of select="Element/@substgrpname"/>
                                                         </xsl:when>
                                                         <xsl:otherwise>
@@ -972,17 +976,26 @@
                                                 </xsl:otherwise>
                                             </xsl:choose>
                                         </xs:documentation>
-                                        <xs:appinfo>
-                                            <xsl:apply-templates select="info/*[1]" mode="refinfo"/>
-                                            <xsl:if test="@substgrpname">
-                                                <inf:Choice substitutionGroup="{@substgrpname}">
-                                                    <xsl:for-each select="Choice/Element">
-                                                        <xsl:sort select="@name"/>
-                                                        <inf:Element name="{@niemelementname}" type="{@niemtype}"/>
-                                                    </xsl:for-each>
-                                                </inf:Choice>
-                                            </xsl:if>
-                                        </xs:appinfo>
+                                       <xsl:choose>
+                                           <xsl:when test="@name = 'GroupOfFields'">
+                                               <xs:appinfo>
+                                                   <inf:Field positionName='FIELD GROUP'/>
+                                               </xs:appinfo>
+                                           </xsl:when>
+                                           <xsl:otherwise>
+                                               <xs:appinfo>
+                                                   <xsl:apply-templates select="info/*[1]" mode="refinfo"/>
+                                                   <xsl:if test="@substgrpname">
+                                                       <inf:Choice substitutionGroup="{@substgrpname}">
+                                                           <xsl:for-each select="Choice/Element">
+                                                               <xsl:sort select="@name"/>
+                                                               <inf:Element name="{@niemelementname}" type="{@niemtype}"/>
+                                                           </xsl:for-each>
+                                                       </inf:Choice>
+                                                   </xsl:if>
+                                               </xs:appinfo> 
+                                           </xsl:otherwise>
+                                       </xsl:choose>
                                     </xs:annotation>
                                 </xs:element>
                             </xsl:for-each>
@@ -1436,26 +1449,6 @@
         </xsl:for-each>
         <!--Global Set Elements-->
         <xsl:copy-of select="$segmentelements"/>
-        <!--Set Elements with Choice to Substitution Groups-->
-        <!--<xsl:for-each select="$niem_segments_map//Element[Choice]">
-            <xsl:variable name="substgrp" select="@substgrpname"/>
-            <xs:element name="{@substgrpname}" abstract="true">
-                <xs:annotation>
-                    <xs:documentation>
-                        <xsl:value-of select="normalize-space(@substgrpdoc)"/>
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xsl:for-each select="Choice/Element">
-                <xs:element name="{@niemelementname}" type="{@niemtype}" substitutionGroup="{$substgrp}" nillable="true">
-                    <xs:annotation>
-                        <xs:documentation>
-                            <xsl:value-of select="normalize-space(@niemelementdoc)"/>
-                        </xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-            </xsl:for-each>
-        </xsl:for-each>-->
     </xsl:variable>
     <xsl:variable name="mtf_segments_xsd">
         <xsl:for-each select="$segmentsxsd/*:complexType">
@@ -1929,6 +1922,8 @@
     
     <xsl:template match="info/*" mode="refinfo">
         <xsl:copy>
+            <xsl:copy-of select="@mtfid" copy-namespaces="no"/>
+            <xsl:copy-of select="@setid" copy-namespaces="no"/>
             <xsl:copy-of select="@name" copy-namespaces="no"/>
             <xsl:copy-of select="@positionName" copy-namespaces="no"/>
             <xsl:copy-of select="@version" copy-namespaces="no"/>
@@ -1946,6 +1941,7 @@
             <xsl:if test="not(@segseq) and not(@setseq)">
                 <xsl:copy-of select="@fieldseq" copy-namespaces="no"/>
             </xsl:if>
+            <xsl:apply-templates select="*" mode="copy"/>
         </xsl:copy>
     </xsl:template>
 

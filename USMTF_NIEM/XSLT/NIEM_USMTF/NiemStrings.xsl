@@ -368,4 +368,45 @@
             </Strings>
         </xsl:result-document>
     </xsl:template>
+    
+    
+    <xsl:template name="wordBreak">
+        <xsl:param name="string"/>
+        <xsl:choose>
+            <xsl:when test="string-length($string) &lt; 2">
+                <xsl:value-of select="$string"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="wordbreakHelper">
+                    <xsl:with-param name="string" select="$string"/>
+                    <xsl:with-param name="token" select="substring($string, 1, 1)"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="wordbreakHelper">
+        <xsl:param name="string" select="''"/>
+        <xsl:param name="token" select="''"/>
+        <xsl:choose>
+            <xsl:when test="string-length($string) = 0"/>
+            <xsl:when test="string-length($token) = 0"/>
+            <xsl:when test="string-length($string) = string-length($token)">
+                <xsl:value-of select="$token"/>
+            </xsl:when>
+            <xsl:when test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($string, string-length($token) + 1, 1))">
+                <xsl:value-of select="concat($token, ' ')"/>
+                <xsl:call-template name="wordbreakHelper">
+                    <xsl:with-param name="string" select="substring-after($string, $token)"/>
+                    <xsl:with-param name="token" select="substring($string, string-length($token), 1)"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="wordbreakHelper">
+                    <xsl:with-param name="string" select="$string"/>
+                    <xsl:with-param name="token" select="substring($string, 1, string-length($token) + 1)"/>
+                </xsl:call-template>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 </xsl:stylesheet>

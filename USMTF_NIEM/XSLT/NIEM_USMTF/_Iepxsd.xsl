@@ -74,11 +74,13 @@
             <xsl:variable name="t" select="@type"/>
             <xsl:variable name="mid" select="lower-case(translate(xs:annotation/xs:appinfo/*:Msg/@mtfid, ' .()', ''))"/>
             <xsl:variable name="reflist" select="document(concat($srcpath, 'subsetxsd/lists/', $mid, '-list.xml'))"/>
+            <xsl:variable name="mname" select="$reflist/Message/element[1]/@name"/> 
             <xsl:result-document href="{$Outdir}/{concat(lower-case($mid),'-iep.xsd')}">
                 <xsl:for-each select="$iep-xsd-template/*">
                     <xsl:copy>
                         <xsl:apply-templates select="@*" mode="identity"/>
                         <xsl:apply-templates select="*" mode="identity"/>
+                        <xsl:copy-of select="$ALLMTF/*/xs:element[@name = $mname]/xs:annotation"/>
                         <xsl:for-each select="$reflist/Message/*">
                             <xsl:variable name="n" select="@name"/>
                             <xsl:apply-templates select="$ALLMTF/*/*[@name = $n]" mode="iepd"/>
@@ -127,7 +129,7 @@
     </xsl:template>
 
     <!--Exctract IEPD-->
-    <xsl:template name="ExtractIepSchema">
+<!--    <xsl:template name="ExtractIepSchema">
         <xsl:param name="msgelement"/>
         <xsl:param name="outdir"/>
         <xsl:variable name="mid" select="translate($msgelement/xs:annotation/xs:appinfo/*:Msg/@mtfid, ' .()', '')"/>
@@ -322,7 +324,8 @@
             </xsl:if>
         </xsl:for-each>
     </xsl:template>
-
+-->
+   
     <!--Convert to IEPD-->
     <xsl:template match="*" mode="iepd">
         <xsl:variable name="r" select="@ref"/>
@@ -403,6 +406,7 @@
         </xs:choice>
     </xsl:template>
     <xsl:template match="*[contains(@ref, 'AugmentationPoint')]" mode="iepd"/>
+    <xsl:template match="xs:element/xs:annotation/xs:appinfo/*:StructuralRelationships" mode="iepd"/>
     <xsl:template match="@abstract" mode="iepd"/>
     <xsl:template match="*" mode="identity">
         <xsl:copy copy-namespaces="no">

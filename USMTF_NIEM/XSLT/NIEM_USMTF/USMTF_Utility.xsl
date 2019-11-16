@@ -744,8 +744,8 @@
     </xsl:template>
 
     <xsl:template name="breakIntoWordsHelper">
-        <xsl:param name="string" select="''"/>
-        <xsl:param name="token" select="''"/>
+        <xsl:param name="string"/>
+        <xsl:param name="token"/>
         <xsl:choose>
             <xsl:when test="string-length($string) = 0"/>
             <xsl:when test="string-length($token) = 0"/>
@@ -753,11 +753,23 @@
                 <xsl:value-of select="$token"/>
             </xsl:when>
             <xsl:when test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($string, string-length($token) + 1, 1))">
-                <xsl:value-of select="concat($token, ' ')"/>
-                <xsl:call-template name="breakIntoWordsHelper">
-                    <xsl:with-param name="string" select="substring-after($string, $token)"/>
-                    <xsl:with-param name="token" select="substring($string, string-length($token), 1)"/>
-                </xsl:call-template>
+                <xsl:choose>
+                    <xsl:when test="contains('ABCDEFGHIJKLMNOPQRSTUVWXYZ', substring($string, string-length($token) + 2, 1))">
+                        <xsl:value-of select="$token"/>
+                        <xsl:value-of select=" substring($string, string-length($token) + 2, 1)"/>
+                        <xsl:call-template name="breakIntoWordsHelper">
+                            <xsl:with-param name="string" select="substring-after($string, $token)"/>
+                            <xsl:with-param name="token" select="substring($string, string-length($token)+1, 1)"/>
+                        </xsl:call-template>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="concat($token, ' ')"/>
+                        <xsl:call-template name="breakIntoWordsHelper">
+                            <xsl:with-param name="string" select="substring-after($string, $token)"/>
+                            <xsl:with-param name="token" select="substring($string, string-length($token), 1)"/>
+                        </xsl:call-template>
+                    </xsl:otherwise>
+                </xsl:choose>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="breakIntoWordsHelper">
