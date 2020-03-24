@@ -30,7 +30,7 @@
     <xsl:variable name="rbr">
         <xsl:text>]</xsl:text>
     </xsl:variable>
-    <xsl:variable name="strings_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema/*:simpleType[*:restriction[contains(@base,':string')]/*:pattern]"/>
+    <xsl:variable name="strings_xsd" select="document('../../XSD/Baseline_Schema/Consolidated/fields.xsd')/*:schema/*:simpleType[*:restriction[contains(@base,':string')]/*:pattern]"/>
 
     <!--Test Output-->
     <xsl:variable name="xsdstroutputdoc" select="'../../XSD/Analysis/Normalized/Strings.xsd'"/>

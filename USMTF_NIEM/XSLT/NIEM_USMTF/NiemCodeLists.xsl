@@ -23,7 +23,7 @@
     <xsl:output method="xml" indent="yes"/>
     <!--<xsl:include href="USMTF_Utility.xsl"/>-->
 
-    <xsl:variable name="enumerations_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema//*:simpleType[*:restriction[contains(@base, ':string')][*:enumeration]]"/>
+    <xsl:variable name="enumerations_xsd" select="document('../../XSD/Baseline_Schema/Consolidated/fields.xsd')/*:schema//*:simpleType[*:restriction[contains(@base, ':string')][*:enumeration]]"/>
     <xsl:variable name="sdir" select="'../../XSD/'"/>
     <xsl:variable name="cfld_changes" select="document(concat($sdir, 'Refactor_Changes/FieldChanges.xml'))/FieldChanges"/>
     <xsl:variable name="norm_enum_types" select="document(concat($sdir, 'Refactor_Changes/M201804C0IF-EnumerationSimpleTypes.xml'))/EnumerationTypes"/>

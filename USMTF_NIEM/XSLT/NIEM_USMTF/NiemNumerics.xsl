@@ -31,9 +31,9 @@
 
     <xsl:variable name="numsimpletypes" select="document(concat($nsdir, 'Refactor_Changes/M201804C0IF-NumericSimpleTypes.xml'))/NumericSimpleTypes"/>
 
-    <xsl:variable name="integers_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base, ':integer')]]"/>
+    <xsl:variable name="integers_xsd" select="document('../../XSD/Baseline_Schema/Consolidated/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base, ':integer')]]"/>
 
-    <xsl:variable name="decimals_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base, ':decimal')]]"/>
+    <xsl:variable name="decimals_xsd" select="document('../../XSD/Baseline_Schema/Consolidated/fields.xsd')/xs:schema/xs:simpleType[xs:restriction[contains(@base, ':decimal')]]"/>
 
     <!--Fragment containing all integer and decimal SimpleTypes from Original XML Schema-->
     <xsl:variable name="numerics_xsd">

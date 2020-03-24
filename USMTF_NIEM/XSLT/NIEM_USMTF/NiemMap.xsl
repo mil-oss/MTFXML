@@ -24,10 +24,10 @@
     <xsl:include href="NiemNumerics.xsl"/>
     <xsl:include href="NiemCodeLists.xsl"/>
 
-    <xsl:variable name="fieldspath" select="'../../XSD/Baseline_Schema/fields.xsd'"/>
-    <xsl:variable name="compositespath" select="'../../XSD/Baseline_Schema/composites.xsd'"/>
-    <xsl:variable name="setspath" select="'../../XSD/Baseline_Schema/sets.xsd'"/>
-    <xsl:variable name="messagespath" select="'../../XSD/Baseline_Schema/messages.xsd'"/>
+    <xsl:variable name="fieldspath" select="'../../XSD/Baseline_Schema/Consolidated/fields.xsd'"/>
+    <xsl:variable name="compositespath" select="'../../XSD/Baseline_Schema/Consolidated/composites.xsd'"/>
+    <xsl:variable name="setspath" select="'../../XSD/Baseline_Schema/Consolidated/sets.xsd'"/>
+    <xsl:variable name="messagespath" select="'../../XSD/Baseline_Schema/Consolidated/messages.xsd'"/>
 
     <xsl:variable name="fieldsxsdoutpath" select="'../../XSD/NIEM_MTF/niem-mtf-fields.xsd'"/>
     <xsl:variable name="compositesxsdoutpath" select="'../../XSD/NIEM_MTF/niem-mtf-composites.xsd'"/>
@@ -41,17 +41,12 @@
     <xsl:variable name="segmentsmapoutpath" select="'../../XSD/NIEM_MTF/maps/niem-mtf-segmntmaps.xml'"/>
     <xsl:variable name="messagesmapoutpath" select="'../../XSD/NIEM_MTF/maps/niem-mtf-msgsmaps.xml'"/>
 
-    <xsl:variable name="q" select="'&quot;'"/>
-    <xsl:variable name="lt" select="'&lt;'"/>
-    <xsl:variable name="gt" select="'&gt;'"/>
-    <xsl:variable name="cm" select="','"/>
-
     <xsl:variable name="srcdir" select="'../../XSD/'"/>
     <!--Baseline-->
-    <xsl:variable name="baseline_fields_xsd" select="document('../../XSD/Baseline_Schema/fields.xsd')/*:schema"/>
-    <xsl:variable name="baseline_composites_xsd" select="document('../../XSD/Baseline_Schema/composites.xsd')/*:schema"/>
-    <xsl:variable name="baseline_sets_xsd" select="document('../../XSD/Baseline_Schema/sets.xsd')/*:schema"/>
-    <xsl:variable name="baseline_msgs_xsd" select="document('../../XSD/Baseline_Schema/messages.xsd')/*:schema"/>
+    <xsl:variable name="baseline_fields_xsd" select="document($fieldspath)/*:schema"/>
+    <xsl:variable name="baseline_composites_xsd" select="document($compositespath)/*:schema"/>
+    <xsl:variable name="baseline_sets_xsd" select="document($setspath)/*:schema"/>
+    <xsl:variable name="baseline_msgs_xsd" select="document($messagespath)/*:schema"/>
     <xsl:variable name="baseline_segments_xsd" select="$baseline_msgs_xsd/*//*:element[*:annotation/*:appinfo/*:SegmentStructureName]"/>
 
     <!--Changes-->
@@ -1010,6 +1005,12 @@
             <xsl:if test="contains($UseDesc, 'must equal')">
                 <xsl:value-of select="normalize-space(substring-before(substring-after($UseDesc, concat('must equal ', $apos)), $apos))"/>
             </xsl:if>
+            <xsl:if test="contains($UseDesc, 'must equalL')">
+                <xsl:value-of select="normalize-space(substring-before(substring-after($UseDesc, concat('must equalL ', $apos)), $apos))"/>
+            </xsl:if>
+            <xsl:if test="contains($UseDesc, 'MUST EQUAL')">
+                <xsl:value-of select="normalize-space(substring-before(substring-after($UseDesc, concat('must equalL ', $apos)), $apos))"/>
+            </xsl:if>
         </xsl:variable>
         <xsl:variable name="GenText">
             <xsl:call-template name="GenTextName">
@@ -1026,10 +1027,7 @@
                 <xsl:when test="ends-with($mtftypevar, 'GeneralTextType')">
                     <xsl:value-of select="concat($GenText, 'Type')"/>
                 </xsl:when>
-                <xsl:when test="ends-with($mtftypevar, 'HeadingInformationType')">
-                    <xsl:value-of select="concat($HeaderInfo, 'Type')"/>
-                </xsl:when>
-                <xsl:when test="$isSet and ends-with($mtfnamevar, 'HeadingInformation')">
+                <xsl:when test="$isSet and ends-with($mtfnamevar, 'HeadingInformation') and not(contains($mtfnamevar,'Ditch'))">
                     <xsl:value-of select="concat($mtfnamevar, 'SetType')"/>
                 </xsl:when>
                 <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemtype">
@@ -1211,7 +1209,7 @@
                         <xsl:when test="$niem_fields_map/*[@niemelementname = $niemel]">
                             <xsl:value-of select="concat($sbstgrp, $niemel)"/>
                         </xsl:when>
-                        <xsl:when test="contains(@name, 'HeadingInformation')">
+                        <xsl:when test="$isSet and contains(@name, 'HeadingInformation') and not(contains(@name,'Ditch'))">
                             <xsl:call-template name="HeadingInformation">
                                 <xsl:with-param name="textind" select="$TextIndicator"/>
                             </xsl:call-template>
@@ -1227,8 +1225,14 @@
                 <xsl:when test="string-length($niemel) &gt; 0">
                     <xsl:value-of select="$niemel"/>
                 </xsl:when>
+                <xsl:when test="$message_changes/Element[@mtfname = $mtfnamevar][@messagename = $msgnamevar]/@niemelementname">
+                    <xsl:value-of select="$message_changes/Element[@mtfname = $mtfnamevar][@messagename = $msgnamevar]/@niemelementname"/>
+                </xsl:when>
                 <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementname">
                     <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementname"/>
+                </xsl:when>
+                <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@segmentname = $segmentnamevar]/@niemelementname">
+                    <xsl:value-of select="$set_changes/Element[@mtfname = $mtfnamevar][@segmentname = $segmentnamevar]/@niemelementname"/>
                 </xsl:when>
                 <xsl:when test="$segment_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementname">
                     <xsl:value-of select="$segment_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemelementname"/>
@@ -1274,7 +1278,7 @@
                 <xsl:when test="contains($mtftypevar, 'GeneralText')">
                     <xsl:value-of select="$GenText"/>
                 </xsl:when>
-                <xsl:when test="contains($mtftypevar, 'HeadingInformation')">
+                <xsl:when test="$isSet and contains($mtftypevar, 'HeadingInformation') and not(contains($mtftypevar,'Ditch'))">
                     <xsl:value-of select="$HeaderInfo"/>
                 </xsl:when>
                 <!--Create GenText Name -->
@@ -1575,10 +1579,10 @@
             </xsl:choose>
             <info>
                 <xsl:if test="$niemelementnamevar = 'UnformattedFreeText'">
-                    <Field positionName="FREE TEXT"/>
+                    <inf:Field positionName="FREE TEXT"/>
                 </xsl:if>
                 <xsl:if test="ends-with($niemelementnamevar,'GeneralTextSubjectText')">
-                    <Field positionName="SUBJECT TEXT" fixed="{$fixedval}"/>
+                    <inf:Field positionName="SUBJECT TEXT" fixed="{$fixedval}"/>
                 </xsl:if>
                 <xsl:for-each select="$appinfovar/*">
                     <xsl:copy>
