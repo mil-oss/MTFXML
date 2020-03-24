@@ -1,0 +1,155 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+                        body{
+                            width: 7in;
+                            padding: .75in;
+                        
+                            font-family: "Courier New", Courier, monospace;
+                            font-size: .9em;
+                            border: thin black solid;
+                        }
+                        pre{
+                            white-space: pre-wrap; /* css-3 */
+                            white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+                            white-space: -pre-wrap; /* Opera 4-6 */
+                            white-space: -o-pre-wrap; /* Opera 7 */
+                            word-wrap: break-word;
+                            font-family: "Courier New", Courier, monospace;
+                            font-size: .9em;
+                        }
+
+                        div{
+                            padding-bottom: 10px;
+                        }
+                        
+                        .tab{
+                            padding-right: .2in;
+                        }
+                        .lvl2{
+                            display: inline;
+                        }
+                        .lvl3{
+                            display: inline;
+                            padding-left: .3in;
+                        }
+                        .lvl4{
+                            display: inline;
+                            padding-left: .6in;
+                        }
+                        .lvl5{
+                            display: inline;
+                            padding-left: 1in;
+                        }
+                        .lvl6{
+                            display: inline;
+                            padding-left: 1.4in;
+                        }
+                        .lvl7{
+                            display: inline;
+                            padding-left: 1.8in;
+                        }
+                        .lvl8{
+                            display: inline;
+                            padding-left: 2.2in;
+                        }
+                        .uline{
+                            text-decoration: underline;
+                        }
+                        .ctr_title{
+                            text-align: center;
+                        }
+                        .center
+                        {
+                            margin-left: auto;
+                            margin-right: auto;
+                            width: 100%;
+                        }
+                        P.pagebreak
+                        {
+                            page-break-before: always
+                        }</style>
+<title>MTF XML SCHEMA DESIGN</title>
+</head>
+<body>
+<p style="text-align:center">XML Schema Design for the Message Text Format Military Standard.</p>
+<p style="text-align:right">08 Mar 2020</p>
+<p>Subj:  MTF XML SCHEMA DESIGN</p>
+
+<pre>1.  <u>Background</u>.  The US Message Text Format (MTF) configuration Control Board (CCB) has adopted National Information Exchange Model (NIEM) naming and design rules for USMTF XML Schema.  This document provides a complete overview of the resulting product, and how it serves configuration management and implementation purposes.</pre>
+<pre>2.  <u>Overview</u>.  Reference (1) provides NIEM control measures for human understanding.  Reference (2) provides the same information in a machine readable format for use in the testing and verification required for secure information exchange, as described in Reference (3).  References 4-6 provide a sample XML Schema, annotations schema and local terminology definitions.  These resources contain the basis for XML Schema design decisions to support secure information exchange using USMTF.</pre>
+<pre>3.  <u>Scope</u>.  This document describes features which accurately define data models to support MTF in a manner which includes security tagging capabilities, and  can be independently tested using NIEM rules.   Efforts that are independent of NIEM will have to meet these testing requirements independently, or assume risk without them.  All options create additional costs for the government. </pre>
+<pre>4.  <u>MTF Data Design</u>.  The logical design of MTF data objects is retained in the XML Schema using the application information elements in annotations.   Every data object in USMTF is defined using a globally scoped XML Schema SimpleType, for content, a ComplexType to add security tags, and an Element so that it can be referenced by other ComplexTypes.  Substitution Groups are used for alternative content at the namespace level, but Choice is used for implementation.  Structural Rules are provided in the annotations application information node, and implemented using Schematron XPath expressions.</pre>
+<pre>      a.  <u>Single Schema Concept</u>.  NIEM incorporates the W3C best practice in defining each namespace using a single namespace.   This has many advantages not the least of which is the ability to use older XML parsers which are not namespace aware.</pre>
+<pre>          (1)  <u>Namespaces</u>.  When an XML Schema imports an XML Schema with a different namespace, then the items it uses from that namespace will be validated against it.  When an XML Schema is extended, all of the content is included, with additional structures.  When an XML Schema is Restricted, content is removed or adjusted, but it will remain valid against the source Schema so a new namespace is not required.</pre>
+<pre>          (2)  <u>Extension Schema</u>.  An extension schema will become the Reference Schema for a new namespace.   This must then be restricted for implementation.</pre>
+<pre>          (3)  <u>Restriction Schema</u>.  Restriction Schema are expected to be dynamically generated based on operational requirements in order to meet network capacity and information security requirements.  They will retain the namespace of the Reference or Extension Schema that they restrict.</pre>
+<pre>      b.  <u>Annotations</u>.  In accordance with NIEM, all annotations must be defined using a separate XML Schema.  This is provided in Appendix (2).</pre>
+<pre>      c.  <u>Alternative Content</u>.  In accordance with NIEM design rules, USMTF XML uses Substitution Groups to model Choice in the Reference Schema, because this allows extension.  For normative implementation, using Restriction Schema, extension of alternative content is not desired, so the non extensible XML Schema Choice model is preferred.</pre>
+<pre>          (1)  <u>SubstitutionGroup</u>.  This involves the creation of an "Abstract" Element, which is never reflected in an instance but can be used as the context for choice items by adding a substitutionGroup attribute to any global element with the name of the abstract element. </pre>
+<pre>          (2)  <u>Choice</u>.  Substitution Groups make it possible to add additional alternatives, whereas the W3C XML Schema Choice element (xs:choice) cannot be extended.  For implementation, when extension of alternative content is prohibited, it is expected that Substitution Groups will be converted to Choice elements.</pre>
+<pre>          (3)  <u>MTF Considerations</u>.  When alternative content is represented within an XML Element definition, has a "Position Name" this structure is preserved with an Alternative Content type and  element.  Unnamed alternatives are represented using Abstract Substitution Groups.</pre>
+<pre>               (a)  <u>Named Alternatives</u>.   In the Reference Schema, the Alternative Content contains a reference to the Abstract Substitution Group.  For implementation the Alternative Content type will contain the W3C Choice structure.</pre>
+<pre>               (b)  <u>Unnamed Alternatives</u>.  In the Reference Schema, the Alternative Content contains a reference to the Abstract Substitution Group.  For implementation the the W3C Choice structure replaces this reference.</pre>
+<pre>      d.  <u>Fields</u>.  Fields are the data objects in which information is stored.  All other data structures are collections of Fields.</pre>
+<pre>          (1)  <u>Enumerations</u>.  Data items with values than can be expressed as a selection of codes are modelled as enumerations.   This model does not support selection of multiple values.</pre>
+<pre>          (2)  <u>Regular Expressions</u>.  A regular expression is a sequence of characters that defined a pattern that can be used to restrict a field entry to desired content.</pre>
+<pre>          (3)  <u>Value Limits</u>.  Numeric values are assigned minimum and maximum values.</pre>
+<pre>          (4)  <u>Length Limits</u>.  Text fields are defined with minimum and maximum lengths.  If numeric values must have lengths that are not reflected in numeric formats, such as leading zeros, a combination of value limits and regular expression must be used.</pre>
+<pre>      e.  <u>Composites</u>.  Composites are collections of references to globally defined Fields in a specific sequence, with occurrence information provided.</pre>
+<pre>          (1)  <u>Occurrence</u>.  Used to specify optional components, with minimum occurrence zero, required components, with minimum occurrence greater than zero, and to specify limits for repeating items.</pre>
+<pre>          (2)  <u>References</u>.  All Fields, Composites, Sets, Segments and Messages are defined using global Elements, and included in context using references to these global elements. This supports re-use of data objects by implementing software.</pre>
+<pre>      f.  <u>Sets</u>.  Sets are collections of references to globally defined Fields,Composites, and other Sets in a specific sequence, with occurrence information provided.</pre>
+<pre>      g.  <u>Segments</u>.  Segments are collections of references to globally defined Sets, Composites, Fields and other Segments in a specific sequence, with occurrence information provided.</pre>
+<pre>      h.  <u>Messages</u>.  Messages are collections of references to globally defined Sets, Composites, Fields and Segments in a specific sequence, with occurrence information provided.</pre>
+<pre>          (1)  <u>Structural Rules</u>.  These are used to define required values, and occurrence of specific objects based on the occurrence or values of other Fields, Composites, Sets, or Segments.</pre>
+<pre>          (2)  <u>Restriction</u>.  The normative definitions for MTF messages are necessarily broad to allow the further application of required mission specific restrictions for implementation.  Subset and Restriction Schema are required for implementation of MTF Messages in a consistent, and testable manner.</pre>
+<pre>5.  <u>XML Schema Validation</u></pre>
+<pre>      a.  <u>Reference Schema</u>.  All instances of a Restriction Schema must be valid against the restricted Reference Schema.   Nodes of an Extension Schema that are imported from a Reference Schema must also be valid.</pre>
+<pre>          (1)  <u>Subset Schema</u>.  For validation purposes Subset Schema are equivalent to the parent Reference Schema, and must be Restricted for implementation.  Individual messages are represented using Subset Schema.  </pre>
+<pre>          (2)  <u>Extension Schema</u>.  Any addition or adjustment that will render an instance invalid against the Reference Schema requires the creation of an Extension Schema with a new namespace.  This Extension Schema must then be Restricted for implementation.</pre>
+<pre>      b.  <u>Restriction Schema</u>.  Instances of a Restriction Schema must be valid against both the Restriction Schema and the Reference, Subset, or Extension Schema from which it is derived.  Restriction Schema are not expected to be further restricted or extended.</pre>
+<pre>      c.  <u>Default Values</u>.  When required fields are not used in Restriction Schema, fixed values are specified in the Restriction Schema. </pre>
+<pre>      d.  <u>Required Nodes</u>.  When required fields cannot be used due to restrictive Distribution Statements, or other reasons, an Extension Schema will be created without the restricted node.</pre>
+<pre>      e.  <u>Structural Relationship Rules</u>.  Conditional rules are provided using XPath statements formatted using the Schematron namespace, and evaluated using XSLT.  This method is used to verify rules applying to any XML document, to include XML Schema, XML instances, and other XSLT products.</pre>
+<pre>6.  <u>XSLT Processing</u>.  The Extensible Stylesheet Language for Translation (XSLT) is an XML defined language that is used to process conditional rules associated with messages and security tags.  XSLT processing is required for validation of MTF XML Schema,and is also used to create XML extension and restriction schema from the reference schema.</pre>
+<pre>7.  <u>XML Schema Restriction</u>.  This is a derivation that is achieved by removing or altering XML Schema nodes in such a way as to create subsets of the original definition.  This is considered a Normative Approach to implementing MTF using XML.</pre>
+<pre>8.  <u>XML Schema Extension</u>.  This is a derivation that adds or alters information in a way that will support instances that will not be valid against the Extended Schema.  This is appropriate for special use-cases.  These include backward compatible XML Schema, and alterations required for security purposes.</pre>
+<pre>9.  <u>Implementation</u></pre>
+<pre>      a.  <u>Code Generation</u>.  The machine readable functionality of XML Schema is applied primary to auto-generation of software artifacts for implementation.   These include data structures, and tests to verify that valid messages can be generated and parsed.</pre>
+<pre>      b.  <u>Authority To Operate</u>.  All MTF implementations are expected to implement security tags.  Proper evaluation and handling of these security tags is required for deployment.  The potential for spillage is reduced by restricting messaged content in accordance to mission specifications.  Implementations must support continuous, independent evaluation of functional parameters using external test data.</pre>
+<pre>10.  <u>Appendix A:  MTF XML Schema Design</u>.  A representative example schema is provided ain Reference (4) to demonstrate the design of the MTF data model.  Samples of  the Restriction schema format are provided inline for comparison.</pre>
+<pre>      a.  <u>Annotations</u>.  The top level annotation demonstrates the inclusion of structural relationship rules.  Annotations throughout the document reflect the items defined in Reference (5).</pre>
+<pre>      b.  <u>SimpleTypes</u></pre>
+<pre>          (1)  <u>FieldTextSimpleType</u>.  This example shows the use of a Regular Expression, as well as minimum and maximum lengths.  Length restriction scan be included in the Regular expression, but to prevent the need to parse this field to get the values, MTF fields will always specify length limits explicitly.  All text names will have a naming pattern that includes "Text"</pre>
+<pre>          (2)  <u>EnumerationCodeSimpleType</u>.  This example shows the use of enumerations, which are termed "Code Lists" by NIEM.  All enumeration names will have a naming patten that includes "Code."</pre>
+<pre>          (3)  <u>IntegerSimpleType</u>.  This example shows the definition of integer data.  A Regular expression can be used to enforce leading zeroes or other formatting requirements.  All integer names will have a naming patten that includes "Numeric."</pre>
+<pre>          (4)  <u>DecimalSimpleType</u>.  This example shows the definition of decimal data.  totallDigits and fractionDigits elements are used to determine the position of the decimal point.  All decimal names will have a naming patten that includes "Numeric."</pre>
+<pre>      c.  <u>ComplexTypes</u>.  Each CompexType extends a SimpleType by adding the "structures:SimpleObjectAttributeGroup."  This NIEM resource contains a reference to ISM XML Schema for security tags.   Restriction Schema used for IEPDs replace this broad option with a specific reference to ISM.</pre>
+<pre>          (1)  <span>FieldTextType</span></pre>
+<pre>          (2)  <span>EnumerationCodeType</span></pre>
+<pre>          (3)  <span>IntegerType</span></pre>
+<pre>          (4)  <span>DecimalType</span></pre>
+<pre>          (5)  <span>CompositeType</span></pre>
+<pre>          (6)  <span>SetType</span></pre>
+<pre>          (7)  <span>SegmentType</span></pre>
+<pre>          (8)  <span>MessageType</span></pre>
+<pre>      d.  <span>AttributeGroups</span></pre>
+<pre>      e.  <u>Elements</u></pre>
+<pre>          (1)  <span>FieldText</span></pre>
+<pre>          (2)  <span>EnumerationCode</span></pre>
+<pre>          (3)  <span>IntegerNumeric</span></pre>
+<pre>          (4)  <span>DecimalNumeric</span></pre>
+<pre>      f.  <span>Attributes</span></pre>
+<pre>      g.  <span>Conditional Rules</span></pre>
+<pre>      h.  <span>Security Rules</span></pre>
+<pre>11.  <u>References</u></pre>
+<pre>      a.  <u>National Information Exchange Model (NIEM) Naming and Design Rules</u>.  https://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/niem-ndr-4.0.html</pre>
+<pre>      b.  <u>NIEM NDR Machine-Readable Rules</u>.  https://github.com/NIEM/NIEM-NDR</pre>
+<pre>      c.  <span>Secure Information Exchange</span></pre>
+<pre>      d.  <span>MTF Sample Schema Structure</span></pre>
+<pre>      e.  <span>MTF Annotations Schema</span></pre>
+<pre>      f.  <span>MTF Local Terminology</span></pre>
+</body>
+</html>
