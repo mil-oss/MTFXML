@@ -1,3 +1,0 @@
-CnrWeaponKeyEncryptionKeySplit0ShortTitleTextSimpleType .. pattern=""
-
-ReportTitleTextSimpleType .. pattern="[\-\.,\(\)\?A-Z0-9][ ]{1,68}"
