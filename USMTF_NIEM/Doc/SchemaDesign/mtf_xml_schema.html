@@ -121,12 +121,17 @@
 <pre>      b.  <u>Authority To Operate</u>.  All MTF implementations are expected to implement security tags.  Proper evaluation and handling of these security tags is required for deployment.  The potential for spillage is reduced by restricting messaged content in accordance to mission specifications.  Implementations must support continuous, independent evaluation of functional parameters using external test data.</pre>
 <pre>10.  <u>Appendix A:  MTF XML Schema Design</u>.  A representative example schema is provided ain Reference (4) to demonstrate the design of the MTF data model.  Samples of  the Restriction schema format are provided inline for comparison.</pre>
 <pre>      a.  <u>Annotations</u>.  The top level annotation demonstrates the inclusion of structural relationship rules.  Annotations throughout the document reflect the items defined in Reference (5).</pre>
-<pre>      b.  <u>SimpleTypes</u></pre>
+<pre>      b.  <u>Alternative Content</u>.  In accordance with NIEM design rules, USMTF XML uses Substitution Groups to model Choice in the Reference Schema, because this allows extension.  For normative implementation, using Restriction Schema, extension of alternative content is not desired, so the non extensible XML Schema Choice model is preferred.</pre>
+<pre>          (1)  <u>SubstitutionGroup</u>.  This involves the creation of an "Abstract" Element, which is never reflected in an instance but can be used as the context for choice items by adding a substitutionGroup attribute to any global element with the name of the abstract element. </pre>
+<pre>          (2)  <u>Choice</u>.  Substitution Groups make it possible to add additional alternatives, whereas the W3C XML Schema Choice element (xs:choice) cannot be extended.  For implementation, when extension of alternative content is prohibited, it is expected that Substitution Groups will be converted to Choice elements.</pre>
+<pre>          (3)  <u>Named Alternatives</u>.   In the Reference Schema, the Alternative Content contains a reference to the Abstract Substitution Group.  For implementation the Alternative Content type will contain the W3C Choice structure.</pre>
+<pre>          (4)  <u>Unnamed Alternatives</u>.  In the Reference Schema, the Alternative Content contains a reference to the Abstract Substitution Group.  For implementation the the W3C Choice structure replaces this reference.</pre>
+<pre>      c.  <u>SimpleTypes</u>.  As the base data definitions for the namespace, SimpleTypes  remain the same in Reference and Restriction Schema.  Further restrictions are accomplished in the ComplexTypes.</pre>
 <pre>          (1)  <u>FieldTextSimpleType</u>.  This example shows the use of a Regular Expression, as well as minimum and maximum lengths.  Length restriction scan be included in the Regular expression, but to prevent the need to parse this field to get the values, MTF fields will always specify length limits explicitly.  All text names will have a naming pattern that includes "Text"</pre>
 <pre>          (2)  <u>EnumerationCodeSimpleType</u>.  This example shows the use of enumerations, which are termed "Code Lists" by NIEM.  All enumeration names will have a naming patten that includes "Code."</pre>
 <pre>          (3)  <u>IntegerSimpleType</u>.  This example shows the definition of integer data.  A Regular expression can be used to enforce leading zeroes or other formatting requirements.  All integer names will have a naming patten that includes "Numeric."</pre>
 <pre>          (4)  <u>DecimalSimpleType</u>.  This example shows the definition of decimal data.  totallDigits and fractionDigits elements are used to determine the position of the decimal point.  All decimal names will have a naming patten that includes "Numeric."</pre>
-<pre>      c.  <u>ComplexTypes</u>.  Each CompexType extends a SimpleType by adding the "structures:SimpleObjectAttributeGroup."  This NIEM resource contains a reference to ISM XML Schema for security tags.   Restriction Schema used for IEPDs replace this broad option with a specific reference to ISM.</pre>
+<pre>      d.  <u>ComplexTypes</u>.  Each CompexType extends a SimpleType by adding the "structures:SimpleObjectAttributeGroup."  This NIEM resource contains a reference to ISM XML Schema for security tags.   Restriction Schema used for IEPDs replace this broad option with a specific reference to ISM.</pre>
 <pre>          (1)  <span>FieldTextType</span></pre>
 <pre>          (2)  <span>EnumerationCodeType</span></pre>
 <pre>          (3)  <span>IntegerType</span></pre>
@@ -135,21 +140,22 @@
 <pre>          (6)  <span>SetType</span></pre>
 <pre>          (7)  <span>SegmentType</span></pre>
 <pre>          (8)  <span>MessageType</span></pre>
-<pre>      d.  <span>AttributeGroups</span></pre>
-<pre>      e.  <u>Elements</u></pre>
+<pre>      e.  <u>AttributeGroups</u>.  The only use of Attribute Groups in NIEM is from IC-ISM XML Schema.</pre>
+<pre>      f.  <u>Elements</u>.  Each of the Complex Types above has references to Elements defined at the Global level.  Element definitions are the same for Reference and Restriction Schema.  Global elements do not have position names.</pre>
 <pre>          (1)  <span>FieldText</span></pre>
 <pre>          (2)  <span>EnumerationCode</span></pre>
 <pre>          (3)  <span>IntegerNumeric</span></pre>
 <pre>          (4)  <span>DecimalNumeric</span></pre>
-<pre>      f.  <span>Attributes</span></pre>
-<pre>      g.  <span>Conditional Rules</span></pre>
-<pre>      h.  <span>Security Rules</span></pre>
+<pre>      g.  <u>Attributes</u>.  Attribute nodes always have a Simple Type.  This shows how they are used to define security tags for IC-ISM which uses a Simple Type with enumerations to specify attribute values.</pre>
+<pre>      h.  <u>Structural Relationship Rules</u>.  These are provided using thing Schematron language, which is designed for processing by XSLT to run the XPath defined assertions.</pre>
+<pre>      i.  <u>Security Rules</u>.  Security markings are tested using Schematron provided by the IC.</pre>
 <pre>11.  <u>References</u></pre>
 <pre>      a.  <u>National Information Exchange Model (NIEM) Naming and Design Rules</u>.  https://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/niem-ndr-4.0.html</pre>
 <pre>      b.  <u>NIEM NDR Machine-Readable Rules</u>.  https://github.com/NIEM/NIEM-NDR</pre>
-<pre>      c.  <span>Secure Information Exchange</span></pre>
-<pre>      d.  <span>MTF Sample Schema Structure</span></pre>
-<pre>      e.  <span>MTF Annotations Schema</span></pre>
-<pre>      f.  <span>MTF Local Terminology</span></pre>
+<pre>      c.  <span>MIL STD Implementation Recommendations</span></pre>
+<pre>      d.  <span>MTF Sample Reference Schema Structure</span></pre>
+<pre>      e.  <span>MTF Sample Restriction Schema Structure</span></pre>
+<pre>      f.  <span>MTF Annotations Schema</span></pre>
+<pre>      g.  <span>MTF Local Terminology</span></pre>
 </body>
 </html>
