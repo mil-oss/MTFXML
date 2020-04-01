@@ -29,9 +29,9 @@
 
     <xsl:variable name="msgxsd" select="document('../../XSD/Baseline_Schema/Consolidated/messages.xsd')"/>
     <xsl:variable name="setxsd" select="document('../../XSD/Baseline_Schema/Consolidated/sets.xsd')"/>
-    <xsl:variable name="msgmaps" select="document('../../XSD/NIEM_MTF/refxsd/maps/usmtf-msgsmaps.xml')/*"/>
-    <xsl:variable name="segmaps" select="document('../../XSD/NIEM_MTF/refxsd/maps/usmtf-segmntmaps.xml')/*"/>
-    <xsl:variable name="setmaps" select="document('../../XSD/NIEM_MTF/refxsd/maps/usmtf-setmaps.xml')/*"/>
+    <xsl:variable name="msgmaps" select="document('../../XSD/NIEM_MTF/maps/usmtf-msgsmaps.xml')/*"/>
+    <xsl:variable name="segmaps" select="document('../../XSD/NIEM_MTF/maps/usmtf-segmntmaps.xml')/*"/>
+    <xsl:variable name="setmaps" select="document('../../XSD/NIEM_MTF/maps/usmtf-setmaps.xml')/*"/>
     
     <xsl:variable name="a" select='"&apos;"'/>
     <xsl:variable name="lb" select='"["'/>

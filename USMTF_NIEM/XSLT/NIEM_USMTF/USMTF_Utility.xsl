@@ -133,6 +133,7 @@
         <Change from="MtfNote" to="note"/>
         <Change from="VersionIndicator" to="version"/>
         <Change from="AssignedFfirnFudUseDescription" to="usage"/>
+        <Change from="MtfIndexReferenceNumber" to="mtfindex"/>
     </xsl:variable>
 
     <!-- *************** NODE NAME CHANGES ****************-->
@@ -342,9 +343,7 @@
     </xsl:variable>
 
     <!-- ***************** FILTERS *****************-->
-    <xsl:template match="*[@name = 'BlankSpaceCharacterType']">
-        <FUCK/>
-    </xsl:template>
+    <xsl:template match="*[@name = 'BlankSpaceCharacterType']"/>
     <!--- Remove Pattern from type containing base of *:integer -->
     <xsl:template match="*:pattern[parent::*:restriction/@base = '*:integer']"/>
     <!--- Remove Pattern from type containing base of *:decimal -->
@@ -422,7 +421,6 @@
     <!-- ***************** SEGMENTS *****************-->
     <xsl:template match="*:AlternativeType" mode="attr"/>
     <!-- ***************** MSGS *****************-->
-    <xsl:template match="*:MtfIndexReferenceNumber" mode="attr"/>
     <xsl:template match="*:MtfStructuralRelationship" mode="attr"/>
     <xsl:template match="*:MtfStructuralRelationshipExplanation" mode="attr"/>
 

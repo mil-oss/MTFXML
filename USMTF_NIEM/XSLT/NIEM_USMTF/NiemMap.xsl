@@ -233,8 +233,7 @@
                     </inf:Composite>
                 </xsl:for-each>
             </xsl:variable>
-            <Composite niemelementname="{$niemelementname}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdoc}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedoc}"
-                mtfname="{@name}">
+            <Composite niemelementname="{$niemelementname}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdoc}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedoc}" mtfname="{@name}">
                 <info>
                     <xsl:for-each select="$appinfo">
                         <xsl:copy-of select="."/>
@@ -528,8 +527,8 @@
                 </inf:Set>
             </xsl:for-each>
         </xsl:variable>
-        <Set niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextypevar}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}"
-            niemtypedoc="{$niemtypedocvar}">
+        <Set niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextypevar}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" niemtypedoc="{$niemtypedocvar}">
+            <xsl:copy-of select="$substGrp_Changes/Element[@niemname = $niemelementnamevar]/@substitutionGroup" copy-namespaces="no"/>
             <xsl:apply-templates select="$annot/*:annotation/info" mode="copy"/>
             <xsl:apply-templates select="*[not(contains(name(), ':annotation'))]">
                 <xsl:with-param name="settypevar" select="$mtfname"/>
@@ -687,8 +686,7 @@
                 </inf:Segment>
             </xsl:for-each>
         </xsl:variable>
-        <Segment niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" messagename="{$messagename}"
-            mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedocvar}">
+        <Segment niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" messagename="{$messagename}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedocvar}">
             <xsl:if test="string-length($segseq) &gt; 0">
                 <xsl:attribute name="segseq">
                     <xsl:value-of select="$segseq"/>
@@ -750,9 +748,7 @@
         <xsl:variable name="niemtypedocvar">
             <xsl:choose>
                 <xsl:when test="$message_changes/Element[@mtfname = $mtfnamevar][@niemname = $niemelementnamevar]/@niemtypedoc">
-                    <xsl:apply-templates
-                        select="concat('A data type for the', $message_changes/Element[@mtfname = $mtfnamevar][@niemname = $niemelementnamevar]/@niemtypedoc, 'The')"
-                        mode="normlize"/>
+                    <xsl:apply-templates select="concat('A data type for the', $message_changes/Element[@mtfname = $mtfnamevar][@niemname = $niemelementnamevar]/@niemtypedoc, 'The')" mode="normlize"/>
                 </xsl:when>
                 <xsl:when test="starts-with($mtfdoc, 'A data type')">
                     <xsl:value-of select="$mtfdoc"/>
@@ -849,8 +845,7 @@
                 </inf:Msg>
             </xsl:for-each>
         </xsl:variable>
-        <Message niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" mtfid="{$mtfid}" mtfdoc="{$mtfdoc}"
-            niemtypedoc="{$niemtypedocvar}">
+        <Message niemelementname="{$niemelementnamevar}" niemtype="{$niemcomplextype}" niemelementdoc="{$niemelementdocvar}" mtfname="{@name}" mtfid="{$mtfid}" mtfdoc="{$mtfdoc}" niemtypedoc="{$niemtypedocvar}">
             <info>
                 <xsl:for-each select="$appinfo/*">
                     <xsl:copy-of select="." copy-namespaces="no"/>
@@ -1027,7 +1022,7 @@
                 <xsl:when test="ends-with($mtftypevar, 'GeneralTextType')">
                     <xsl:value-of select="concat($GenText, 'Type')"/>
                 </xsl:when>
-                <xsl:when test="$isSet and ends-with($mtfnamevar, 'HeadingInformation') and not(contains($mtfnamevar,'Ditch'))">
+                <xsl:when test="$isSet and ends-with($mtfnamevar, 'HeadingInformation') and not(contains($mtfnamevar, 'Ditch'))">
                     <xsl:value-of select="concat($mtfnamevar, 'SetType')"/>
                 </xsl:when>
                 <xsl:when test="$set_changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]/@niemtype">
@@ -1183,6 +1178,10 @@
                         <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $messagenamevar]">
                             <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = $messagenamevar]/@niemname"/>
                         </xsl:when>
+                        <xsl:when test="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = 'ExerciseOperation']">
+                            <xsl:value-of select="$substGrp_Changes/Element[@mtfname = $mtfroot][@parentname = 'ExerciseOperation']/@niemname"/>
+                        </xsl:when>
+
                         <xsl:when test="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase]">
                             <xsl:variable name="shortSubgrp">
                                 <xsl:call-template name="removeStrings">
@@ -1193,6 +1192,7 @@
                             <xsl:variable name="shortOption" select="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtfbase]/@shortname"/>
                             <xsl:value-of select="concat($shortSubgrp, $shortOption)"/>
                         </xsl:when>
+
                         <xsl:when test="$substGrp_Element_Changes/Element[@mtfname = $mtfnamevar][@mtftype = $mtftypevar]">
                             <xsl:variable name="shortSubgrp">
                                 <xsl:call-template name="removeStrings">
@@ -1209,7 +1209,7 @@
                         <xsl:when test="$niem_fields_map/*[@niemelementname = $niemel]">
                             <xsl:value-of select="concat($sbstgrp, $niemel)"/>
                         </xsl:when>
-                        <xsl:when test="$isSet and contains(@name, 'HeadingInformation') and not(contains(@name,'Ditch'))">
+                        <xsl:when test="$isSet and contains(@name, 'HeadingInformation') and not(contains(@name, 'Ditch'))">
                             <xsl:call-template name="HeadingInformation">
                                 <xsl:with-param name="textind" select="$TextIndicator"/>
                             </xsl:call-template>
@@ -1278,7 +1278,7 @@
                 <xsl:when test="contains($mtftypevar, 'GeneralText')">
                     <xsl:value-of select="$GenText"/>
                 </xsl:when>
-                <xsl:when test="$isSet and contains($mtftypevar, 'HeadingInformation') and not(contains($mtftypevar,'Ditch'))">
+                <xsl:when test="$isSet and contains($mtftypevar, 'HeadingInformation') and not(contains($mtftypevar, 'Ditch'))">
                     <xsl:value-of select="$HeaderInfo"/>
                 </xsl:when>
                 <!--Create GenText Name -->
@@ -1320,7 +1320,6 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-
         <xsl:variable name="fixedval">
             <xsl:choose>
                 <xsl:when test="contains($mtftypevar, 'GeneralText')">
@@ -1470,14 +1469,18 @@
                 </xsl:copy>
             </xsl:for-each>
         </xsl:variable>
-        <Element niemelementname="{$niemelementnamevar}" niemtype="{$niemtypevar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" niemtypedoc="{$niemtypedocvar}"
-            niemelementdoc="{$niemelementdocvar}">
+        <Element niemelementname="{$niemelementnamevar}" niemtype="{$niemtypevar}" mtfname="{@name}" mtfdoc="{$mtfdocvar}" niemtypedoc="{$niemtypedocvar}" niemelementdoc="{$niemelementdocvar}">
             <xsl:for-each select="@*[not(name() = 'name')]">
                 <xsl:copy-of select="."/>
             </xsl:for-each>
             <xsl:if test="string-length($sbstgrp) &gt; 0">
-                <xsl:attribute name="substitutiongroup">
+                <xsl:attribute name="substitutionGroup">
                     <xsl:value-of select="concat($sbstgrp, 'Abstract')"/>
+                </xsl:attribute>
+            </xsl:if>
+            <xsl:if test="$substGrp_Changes/SubstitionGroups/Element[@mtfname = $mtfname][@niemname = $niemelementnamevar]/@substitutionGroup">
+                <xsl:attribute name="substitutionGroup">
+                    <xsl:value-of select="$substGrp_Changes/Element[@niemname = $niemelementnamevar]/@substitutionGroup"/>
                 </xsl:attribute>
             </xsl:if>
             <xsl:if test="string-length($fixedval) &gt; 0">
@@ -1581,7 +1584,7 @@
                 <xsl:if test="$niemelementnamevar = 'UnformattedFreeText'">
                     <inf:Field positionName="FREE TEXT"/>
                 </xsl:if>
-                <xsl:if test="ends-with($niemelementnamevar,'GeneralTextSubjectText')">
+                <xsl:if test="ends-with($niemelementnamevar, 'GeneralTextSubjectText')">
                     <inf:Field positionName="SUBJECT TEXT" fixed="{$fixedval}"/>
                 </xsl:if>
                 <xsl:for-each select="$appinfovar/*">
@@ -1670,7 +1673,6 @@
                 <xsl:with-param name="messagenamevar" select="$messagenamevar"/>
             </xsl:apply-templates>
         </Element>
-
     </xsl:template>
 
     <!--  Choice / Substitution Groups Map -->
@@ -1938,8 +1940,7 @@
                                                 <xsl:value-of select="substring($niemelementnamevar, 0, string-length($niemelementnamevar) - 3)"/>
                                             </xsl:when>
                                             <xsl:when test="ends-with($niemelementnamevar, 'InKOrM')">
-                                                <xsl:value-of
-                                                    select="concat(substring($niemelementnamevar, 0, string-length($niemelementnamevar) - 5), ' in Thousands or Milllions')"/>
+                                                <xsl:value-of select="concat(substring($niemelementnamevar, 0, string-length($niemelementnamevar) - 5), ' in Thousands or Milllions')"/>
                                             </xsl:when>
                                             <xsl:otherwise>
                                                 <xsl:value-of select="$niemelementnamevar"/>

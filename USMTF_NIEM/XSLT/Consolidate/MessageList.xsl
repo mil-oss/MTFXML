@@ -21,15 +21,15 @@
     xmlns:xsd="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xsd" version="2.0">
     <xsl:output method="xml" indent="yes"/>
     
-    <xsl:variable name="MsgList" select="document('../../XSD/Baseline_Schema/6040/messagelist.xml')"/>
-    <xsl:variable name="MsgPath" select="'../../XSD/Baseline_Schema/6040/'"/>
+    <xsl:variable name="Msgs" select="document('../../XSD/Baseline_Schema/msglist.xml')"/>
+    <xsl:variable name="MsgPath" select="'../../XSD/Baseline_Schema/Messages/'"/>
     <xsl:variable name="MsgListPath" select="'../../XSD/Baseline_Schema/Consolidated/MessageList.xml'"/>
 
 
     <xsl:template name="main">
         <xsl:variable name="list">
             <MtfMsgs>
-                <xsl:apply-templates select="$MsgList/MTF/msg" mode="msglist"/>
+                <xsl:apply-templates select="$Msgs/Messages/Msg" mode="msglist"/>
             </MtfMsgs>
         </xsl:variable>
         <xsl:result-document href="{$MsgListPath}">
@@ -39,21 +39,19 @@
         </xsl:result-document>
     </xsl:template>
 
-    <xsl:template match="*:msg" mode="msglist">
-        <xsl:variable name="pth" select="concat($MsgPath,lower-case(msgid),'/messages.xsd')"/>
+    <xsl:template match="Msg" mode="msglist">
+        <xsl:variable name="msgid" select="lower-case(@mtfid)"/>
+        <xsl:variable name="pth" select="concat($MsgPath,$msgid,'/messages.xsd')"/>
         <xsl:if test="doc-available($pth)">
             <xsl:element name="Msg">
                 <xsl:attribute name="name">
-                    <xsl:value-of select="msgid"/>
+                    <xsl:value-of select="$msgid"/>
                 </xsl:attribute>
                 <xsl:attribute name="desc">
-                    <xsl:value-of select="name"/>
-                </xsl:attribute>
-                <xsl:attribute name="version">
-                    <xsl:value-of select="version"/>
+                    <xsl:value-of select="@name"/>
                 </xsl:attribute>
                 <xsl:attribute name="path">
-                    <xsl:value-of select="concat($MsgPath,lower-case(msgid))"/>
+                    <xsl:value-of select="concat($MsgPath,lower-case($msgid))"/>
                 </xsl:attribute>
             </xsl:element>
         </xsl:if>
