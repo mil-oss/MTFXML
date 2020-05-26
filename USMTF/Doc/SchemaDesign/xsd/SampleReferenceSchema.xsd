@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="urn:mtf:mil:6040b:niem:mtf"
+    xmlns:ct="http://release.niem.gov/niem/conformanceTargets/3.0/"
+    xmlns:structures="http://release.niem.gov/niem/structures/4.0/"
+    xmlns:term="http://release.niem.gov/niem/localTerminology/3.0/"
+    xmlns:appinfo="http://release.niem.gov/niem/appinfo/4.0/" xmlns:inf="urn:mtf:mil:6040b:appinfo"
+    xmlns:ddms="http://metadata.dod.mil/mdr/ns/DDMS/2.0/" xmlns:ism="urn:us:gov:ic:ism"
+    xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="urn:mtf:mil:6040b:niem:mtf"
+    ct:conformanceTargets="http://reference.niem.gov/niem/specification/naming-and-design-rules/4.0/#ReferenceSchemaDocument"
+    xml:lang="en-US" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.0">
+    <xs:import namespace="http://release.niem.gov/niem/structures/4.0/"
+        schemaLocation="../xml/usmtf/xsd/ext/niem/utility/structures/4.0/structures.xsd"/>
+    <xs:import namespace="http://release.niem.gov/niem/localTerminology/3.0/"
+        schemaLocation="../xml/usmtf/xsd/ext/niem/localTerminology.xsd"/>
+    <xs:import namespace="http://release.niem.gov/niem/appinfo/4.0/"
+        schemaLocation="../xml/usmtf/xsd/ext/niem/utility/appinfo/4.0/appinfo.xsd"/>
+    <xs:import namespace="urn:mtf:mil:6040b:appinfo"
+        schemaLocation="../xml/usmtf/xsd/ext/niem/mtfappinfo.xsd"/>
+
+    <!--REFERENCE XSD-->
+
+    <xs:annotation>
+        <xs:documentation ism:classification="U"
+            ism:ownerProducer="USA"
+            ism:noticeType="DoD-Dist-A">A data item for the TEST is used to report on the status of a TEST.</xs:documentation>
+        <xs:appinfo>
+            <inf:Msg name="TEST MESSAGE"
+                mtfid="TEST"
+                sponsor="USAF"
+                purpose="The TEST is used to report on the status of a new or established air base indicating the capability of the air base and its supporting facilities to support joint operations and to conduct planned or anticipated operations."
+                MtfRemark="B.1.01.13 was updated by ICP M2017-04, which updated the REF Set."
+                version="C.0.01.00"
+                date="October 2018"
+                remark="Created by ICP M2018-02"/>
+            <inf:StructuralRelationships>
+                <sch:schema queryBinding="xslt">
+                    <sch:ns uri="urn:mtf:mil:6040b:niem:mtf" prefix="mtf"/>
+                    <sch:ns uri="urn:us:gov:ic:ism" prefix="ism"/>
+                    <sch:title>Structural Relationship Rules</sch:title>
+                    <sch:pattern id="TestMessage">
+                        <sch:title>Structural Relationship Rules</sch:title>
+                        <sch:rule context="mtf:TestMessage/mtf:MessageIdentifierSet">
+                            <sch:assert fpi="[3]F1 A /TEST/"
+                                test="mtf:MessageTextFormatIdentifierText = 'TEST'">Field 1 in MSGID (Set 3) is assigned the value "TEST".</sch:assert>
+                            <sch:assert fpi="[3]F2 A /MIL-STD-6040(SERIES)/"
+                                test="mtf:StandardOfMessageTextFormatCode = 'MIL-STD-6040(SERIES)'">Field 2 in MSGID (Set 3) is assigned the value "MIL-STD-6040(SERIES)".</sch:assert>
+                            <sch:assert fpi="[3]F3 A /B.1.01.14/"
+                                test="mtf:VersionOfMessageTextFormatText = 'B.1.01.14'">Field 3 in MSGID (Set 3) is assigned the value "B.1.01.14".</sch:assert>
+                        </sch:rule>
+                        <sch:rule context="mtf:TestMessage/mtf:ReferenceSet">
+                            <sch:assert fpi="[4],AF3 R ([4],AF2 EQ /CHT/ | /DOC/)"
+                                test="mtf:InformationProduct and (mtf:TypeCommunicationCode='CHT' or mtf:TypeCommunicationCode='DOC')">Field 3 in REF (Set 4) is required if Field 2 in the same REF (Set 4) lexicographically equals "CHT" or "DOC".</sch:assert>
+                        </sch:rule>
+                        <sch:rule context="mtf:TestMessage/mtf:SetOne">
+                            <sch:assert fpi="[6],AF2 R ([6],AF3 !@)"
+                                test="mtf:CompositeOne and not(mtf:CompositeTwo)">Field 1 in SETONE (Set 6) is required if Field 2 in the same SETONE (Set 6) does not occur.</sch:assert>
+                        </sch:rule>
+                    </sch:pattern>
+                </sch:schema>
+            </inf:StructuralRelationships>
+        </xs:appinfo>
+    </xs:annotation>
+
+    <xs:simpleType name="FieldTextSimpleType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for the field text.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="FIELD" version="C.0.01.00" ffirn="000" fud="00"
+                    type="FieldTextType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[\-\.,\(\)\?A-Z0-9 ]{1,38}"/>
+            <xs:minLength value="1"/>
+            <xs:maxLength value="38"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EnumerationCodeSimpleType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for the enumeration code.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="ENUMERATION" version="C.0.01.00" ffirn="35" fud="2"
+                    date="August 2018" remark="Created by ICP M2018-02" type="EnumerationCodeType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="ADD">
+                <xs:annotation>
+                    <xs:documentation>Add.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DEL">
+                <xs:annotation>
+                    <xs:documentation>Delete.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IntegerSimpleType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for integer values.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="Integer" version="C.0.01.00" versiondate="08/01/18"
+                    remark="Created by ICP M2018-01."/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:integer">
+            <xs:pattern value="[0?]{1,3}"/>
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="100"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DecimalSimpleType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for decimal values.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="Decimal" version="C.0.01.00" versiondate="October 2018"
+                    remark="Created by ICP M2018-02."/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value=".0000001"/>
+            <xs:maxInclusive value="99999999"/>
+            <xs:totalDigits value="8"/>
+            <xs:fractionDigits value="7"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="FieldTextType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for the field text.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="FIELD TEXT" version="00" ffirn="00" fud="00" type="FieldTextType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="FieldTextSimpleType">
+                <xs:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="EnumerationCodeType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for the enumeration code.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="ENUMERATION" version="C.0.00.00" ffirn="000" fud="00"
+                    type="EnumerationCodeSimpleType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="EnumerationCodeSimpleType">
+                <xs:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="IntegerType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for integer values.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="INTEGER" version="00" ffirn="00" fud="00" type="IntegerType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="IntegerSimpleType">
+                <xs:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="DecimalType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for decimal values.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="DECIMAL" version="00" ffirn="000" fud="00" date="October 2018"
+                    type="DecimalType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="DecimalSimpleType">
+                <xs:attributeGroup ref="structures:SimpleObjectAttributeGroup"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:element name="FieldText" type="FieldTextType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Field Text</xs:documentation>
+            <xs:appinfo>
+                <inf:Field positionName="FIELD" version="00" ffirn="00" fud="00"
+                    type="FieldTextType"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="EnumerationCode" type="EnumerationCodeType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Enumeration Code</xs:documentation>
+            <xs:appinfo>
+                <inf:Field positionName="ENUMERATION" version="00" ffirn="0000" fud="00"
+                    type="EnumerationCodeType"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="IntegerNumeric" type="IntegerType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Integer</xs:documentation>
+            <xs:appinfo>
+                <inf:Field positionName="INTEGER" version="00" ffirn="00" fud="0" type="IntegerType"
+                />
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="DecimalNumeric" type="DecimalType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Decimal</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="FIELD" version="00" ffirn="00" fud="0" type="DecimalType"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="CompositeType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for composite complex
+                type.</xs:documentation>
+            <xs:appinfo>
+                <inf:Composite name="COMPOSITE" version="00" type="CompositeType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="structures:ObjectType">
+                <xs:sequence>
+                    <xs:element ref="FieldText">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Field</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="FIELD"
+                                    version="00" type="FieldTextType" fieldseq="1"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="EnumerationCode">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Enumeration Code</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="ENUMERATION" version="00"
+                                    type="EnumerationCodeType" fieldseq="2"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="IntegerNumeric">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Integer</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="INTEGER" version="00" type="IntegerType"
+                                    fieldseq="3"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="DecimalNumeric" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Decimal</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="DECIMAL" version="00" type="DecimalType"
+                                    fieldseq="4"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="CompositeAugmentationPoint" minOccurs="0" maxOccurs="unbounded"
+                    />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="CompositeAugmentationPoint" abstract="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">An augmentation point for
+                CompositeType</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="CompositeOne" type="CompositeType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Composite One</xs:documentation>
+            <xs:appinfo>
+                <inf:Composite positionName="COMPOSITE ONE" version="00" ffirn="000" fud="00"
+                    type="CompositeComplexType" fieldseq="1"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="CompositeTwo" type="CompositeType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Composite Two</xs:documentation>
+            <xs:appinfo>
+                <inf:Composite positionName="COMPOSITE TWO" version="00" ffirn="000" fud="00"
+                    type="CompositeComplexType" fieldseq="1"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="SetType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for set complex type.</xs:documentation>
+            <xs:appinfo>
+                <inf:Composite name="SET" version="00" type="SetType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="structures:ObjectType">
+                <xs:sequence>
+                    <xs:element ref="CompositeOne">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Composite One</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Composite name="COMPOSITE ONE" version="00"
+                                    type="CompositeType" fieldseq="1"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="CompositeTwo">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Composite Two</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Composite name="COMPOSITE TWO" version="00"
+                                    type="CompositeType" fieldseq="2"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="FieldText">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Field Text</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="FIELD TEXT" version="00" type="FieldTextType"
+                                    fieldseq="3"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="EnumerationCode">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Enumeration Code</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="ENUMERATION" version="00"
+                                    type="EnumerationCodeType" fieldseq="4"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="IntegerNumeric">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Integer</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="INTEGER" version="00" type="IntegerType"
+                                    fieldseq="5"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="DecimalNumeric" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Decimal</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="DECIMAL" version="00" type="DecimalType"
+                                    fieldseq="6"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="SetAugmentationPoint" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="SetAugmentationPoint" abstract="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">An augmentation point for SetType</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="SetOne" type="SetType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Composite One</xs:documentation>
+            <xs:appinfo>
+                <inf:Set positionName="SET ONE" version="00" ffirn="000" fud="00" type="SetType"
+                    fieldseq="1"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="SetTwo" type="SetType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Composite Two</xs:documentation>
+            <xs:appinfo>
+                <inf:Set positionName="SET TWO" version="00" ffirn="000" fud="00" type="SetType"
+                    fieldseq="2"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="SegmentType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for set complex type.</xs:documentation>
+            <xs:appinfo>
+                <inf:Composite name="SET" version="00" type="SetType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="structures:ObjectType">
+                <xs:sequence>
+                    <xs:element ref="SetOne">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Set One</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Set name="SET ONE" version="00" type="SetType" fieldseq="1"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="SetTwo">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Set Two</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Set name="SET TWO" version="00" type="SetType" fieldseq="2"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="SegmentAugmentationPoint" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="SegmentAugmentationPoint" abstract="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">An augmentation point for SegmentType</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="SegmentOne" type="SegmentType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Segment One</xs:documentation>
+            <xs:appinfo>
+                <inf:Set positionName="SEGMENT ONE" version="00" ffirn="000" fud="00"
+                    type="SegmentType" fieldseq="1"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="SegmentTwo" type="SegmentType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Segment Two</xs:documentation>
+            <xs:appinfo>
+                <inf:Set positionName="SEGMENT TWO" version="00" ffirn="000" fud="00"
+                    type="SegmentType" fieldseq="2"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="AlternativeContentType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for alternative content.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="structures:ObjectType">
+                <xs:sequence>
+                    <xs:element ref="AlternativeContentAbstract" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                                ism:noticeType="DoD-Dist-A">A data concept for a choice of a data item for
+                                the instructions for acknowledging or the force and/or unit required to
+                                acknowledge.</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field positionName="ALTERNATIVE CONTENT"
+                                    type="AlternativeContentAbstractType" fieldseq="2"/>
+                                <inf:Choice substitutionGroup="AlternativeContentAbstract">
+                                    <inf:Element name="TextAlternative" type="FieldTextType"/>
+                                    <inf:Element name="EnumerationAlternative" type="EnumerationCodeType"/>
+                                    <inf:Element name="IntegerAlternative" type="IntegerType"/>
+                                    <inf:Element name="DecimalAlternative" type="DecimalType"/>
+                                    <inf:Element name="CompositeAlternative" type="CompositeType"/>
+                                    <inf:Element name="SetAlternative" type="SetType"/>
+                                    <inf:Element name="SegmentAlternative" type="SegmentType"/>
+                                </inf:Choice>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="AlternativeContentAugmentationPoint"
+                        minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="AlternativeContentAugmentationPoint" abstract="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">An augmentation point for AlternativeContentType</xs:documentation>
+        </xs:annotation>
+    </xs:element>  
+    <xs:element name="AlternativeContent" type="AlternativeContentType" abstract="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Alternative Content</xs:documentation>
+        </xs:annotation>
+    </xs:element>     
+    <xs:element name="AlternativeContentAbstract" abstract="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data concept for a choice of data items.</xs:documentation>
+            <xs:appinfo>
+                <inf:Field positionName="ALTERNATIVE CONTENT"
+                    type="AlternativeContentAbstractType"/>
+                <inf:Choice substitutionGroup="AlternativeContentAbstract">
+                    <inf:Element name="TextAlternative" type="FieldTextType"/>
+                    <inf:Element name="EnumerationAlternative" type="EnumerationCodeType"/>
+                    <inf:Element name="IntegerAlternative" type="IntegerType"/>
+                    <inf:Element name="DecimalAlternative" type="DecimalType"/>
+                    <inf:Element name="CompositeAlternative" type="CompositeType"/>
+                    <inf:Element name="SetAlternative" type="SetType"/>
+                    <inf:Element name="SegmentAlternative" type="SegmentType"/>
+                </inf:Choice>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="ChoiceAlternativeContentType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">A data type for alternative content.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:choice minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation ism:classification="U" ism:ownerProducer="USA" ism:noticeType="DoD-Dist-A">A data concept for a choice of a data item for the instructions for acknowledging or the force and/or unit required to acknowledge.</xs:documentation>
+                    <xs:appinfo>
+                        <inf:Field positionName="ALTERNATIVE CONTENT" type="AlternativeContentAbstractType" fieldseq="2"/>
+                        <inf:Choice substitutionGroup="AlternativeContentAbstract">
+                            <inf:Element name="TextAlternative" type="FieldTextType"/>
+                            <inf:Element name="EnumerationAlternative" type="EnumerationCodeType"/>
+                            <inf:Element name="IntegerAlternative" type="IntegerType"/>
+                            <inf:Element name="DecimalAlternative" type="DecimalType"/>
+                            <inf:Element name="CompositeAlternative" type="CompositeType"/>
+                            <inf:Element name="SetAlternative" type="SetType"/>
+                            <inf:Element name="SegmentAlternative" type="SegmentType"/>
+                        </inf:Choice>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:element ref="TextAlternative">
+                    <xs:annotation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                            ism:noticeType="DoD-Dist-A">A data item for Field Text</xs:documentation>
+                        <xs:appinfo>
+                            <inf:Field positionName="FIELD" version="00" ffirn="00" fud="00"
+                                type="FieldTextType"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="EnumerationAlternative">
+                    <xs:annotation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                            ism:noticeType="DoD-Dist-A">A data item for Enumeration Code</xs:documentation>
+                        <xs:appinfo>
+                            <inf:Field positionName="ENUMERATION" version="00" ffirn="0000" fud="00"
+                                type="EnumerationCodeType"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="IntegerAlternative">
+                    <xs:annotation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                            ism:noticeType="DoD-Dist-A">A data item for Integer</xs:documentation>
+                        <xs:appinfo>
+                            <inf:Field positionName="INTEGER" version="00" ffirn="00" fud="0" type="IntegerType"
+                            />
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="DecimalAlternative">
+                    <xs:annotation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                            ism:noticeType="DoD-Dist-A">A data item for Decimal</xs:documentation>
+                        <xs:appinfo>
+                            <inf:Field name="FIELD" version="00" ffirn="00" fud="0" type="DecimalType"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="CompositeAlternative">
+                    <xs:annotation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                            ism:noticeType="DoD-Dist-A">A data item for Composite One</xs:documentation>
+                        <xs:appinfo>
+                            <inf:Composite positionName="COMPOSITE ONE" version="00" ffirn="000" fud="00"
+                                type="CompositeComplexType" fieldseq="1"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="SetAlternative">
+                    <xs:annotation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                            ism:noticeType="DoD-Dist-A">A data item for Composite Two</xs:documentation>
+                        <xs:appinfo>
+                            <inf:Set positionName="SET TWO" version="00" ffirn="000" fud="00" type="SetType"
+                                fieldseq="2"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="SegmentAlternative">
+                    <xs:annotation>
+                        <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                            ism:noticeType="DoD-Dist-A">A data item for Segment Two</xs:documentation>
+                        <xs:appinfo>
+                            <inf:Set positionName="SEGMENT TWO" version="00" ffirn="000" fud="00"
+                                type="SegmentType" fieldseq="2"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:sequence>   
+    </xs:complexType>
+
+    <xs:element name="TextAlternative" type="FieldTextType" substitutionGroup="AlternativeContentAbstract" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Field Text</xs:documentation>
+            <xs:appinfo>
+                <inf:Field positionName="FIELD" version="00" ffirn="00" fud="00"
+                    type="FieldTextType"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="EnumerationAlternative" type="EnumerationCodeType" substitutionGroup="AlternativeContentAbstract" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Enumeration Code</xs:documentation>
+            <xs:appinfo>
+                <inf:Field positionName="ENUMERATION" version="00" ffirn="0000" fud="00"
+                    type="EnumerationCodeType"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="IntegerAlternative" type="IntegerType" substitutionGroup="AlternativeContentAbstract" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Integer</xs:documentation>
+            <xs:appinfo>
+                <inf:Field positionName="INTEGER" version="00" ffirn="00" fud="0" type="IntegerType"
+                />
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="DecimalAlternative" type="DecimalType" substitutionGroup="AlternativeContentAbstract" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Decimal</xs:documentation>
+            <xs:appinfo>
+                <inf:Field name="FIELD" version="00" ffirn="00" fud="0" type="DecimalType"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="CompositeAlternative" type="CompositeType" substitutionGroup="AlternativeContentAbstract" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Composite One</xs:documentation>
+            <xs:appinfo>
+                <inf:Composite positionName="COMPOSITE ONE" version="00" ffirn="000" fud="00"
+                    type="CompositeComplexType" fieldseq="1"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="SetAlternative" type="SetType" substitutionGroup="AlternativeContentAbstract" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Composite Two</xs:documentation>
+            <xs:appinfo>
+                <inf:Set positionName="SET TWO" version="00" ffirn="000" fud="00" type="SetType"
+                    fieldseq="2"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="SegmentAlternative" type="SegmentType" substitutionGroup="AlternativeContentAbstract" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Segment Two</xs:documentation>
+            <xs:appinfo>
+                <inf:Set positionName="SEGMENT TWO" version="00" ffirn="000" fud="00"
+                    type="SegmentType" fieldseq="2"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="MessageType">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data type for message complex type.</xs:documentation>
+            <xs:appinfo>
+                <inf:Msg mtfid="MSG1" name="MESSAGE ONE" version="00" type="MessageType"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="structures:ObjectType">
+                <xs:sequence>
+                    <xs:element ref="SetOne">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Set</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Set name="SET ONE" version="00" type="SetType" fieldseq="1"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="SetTwo">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Set</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Set name="SET TWO" version="00" type="SetType" fieldseq="2"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="SegmentOne">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Segment One</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Segment name="SEGMENT ONE" version="00" type="SegmentType"
+                                    fieldseq="3"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="SegmentTwo">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Segment</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Segment name="SEGMENT TWO" version="00" type="SegmentType"
+                                    fieldseq="4"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="CompositeOne">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Field</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Composite name="COMPOSITE ONE" version="00"
+                                    type="CompositeType" fieldseq="5"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="CompositeTwo">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Field</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Composite name="COMPOSITE TWO" version="00"
+                                    type="CompositeType" fieldseq="6"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="FieldText">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Field</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="FIELD" version="00" type="FieldTextType"
+                                    fieldseq="7"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="EnumerationCode">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Enumeration Code</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="ENUMERATION" version="00"
+                                    type="EnumerationCodeType" fieldseq="8"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="IntegerNumeric">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Integer</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="INTEGER" version="00" type="IntegerType"
+                                    fieldseq="3"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="DecimalNumeric" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>A data item for Decimal</xs:documentation>
+                            <xs:appinfo>
+                                <inf:Field name="DECIMAL" version="00" type="DecimalType"
+                                    fieldseq="4"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="MessageAugmentationPoint" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="MessageAugmentationPoint" abstract="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">An augmentation point for MessageType</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="MessageOne" type="MessageType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Message One</xs:documentation>
+            <xs:appinfo>
+                <inf:Set positionName="MESSAGE ONE" version="00" ffirn="000" fud="00"
+                    type="MessageType"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="MessageTwo" type="MessageType" nillable="true">
+        <xs:annotation>
+            <xs:documentation ism:classification="U" ism:ownerProducer="USA"
+                ism:noticeType="DoD-Dist-A">A data item for Message Two</xs:documentation>
+            <xs:appinfo>
+                <inf:Set positionName="MESSAGE TWO" version="00" ffirn="000" fud="00"
+                    type="MessageType"/>
+            </xs:appinfo>
+        </xs:annotation>
+    </xs:element>
+
+
+
+</xs:schema>
