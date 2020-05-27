@@ -66,7 +66,7 @@
 <hook NAME="AutomaticEdgeColor" COUNTER="5" RULE="ON_BRANCH_CREATION"/>
 <node TEXT="Background" POSITION="right" ID="ID_1974669059" CREATED="1586977693494" MODIFIED="1590587692271" HGAP_QUANTITY="36.49999932944776 pt" VSHIFT_QUANTITY="3.749999888241291 pt">
 <edge COLOR="#ff0000"/>
-<richcontent TYPE="DETAILS" HIDDEN="true">
+<richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -80,9 +80,9 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="Introduction" FOLDED="true" POSITION="right" ID="ID_1168979071" CREATED="1586977710894" MODIFIED="1590587686985" HGAP_QUANTITY="34.999999374151244 pt" VSHIFT_QUANTITY="1.4999999552965146 pt">
+<node TEXT="Introduction" POSITION="right" ID="ID_1168979071" CREATED="1586977710894" MODIFIED="1590587686985" HGAP_QUANTITY="34.999999374151244 pt" VSHIFT_QUANTITY="1.4999999552965146 pt">
 <edge COLOR="#0000ff"/>
-<node TEXT="Automation" ID="ID_1781666327" CREATED="1586981353940" MODIFIED="1590427876378" HGAP_QUANTITY="15.499999955296518 pt" VSHIFT_QUANTITY="134.24999599903833 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="Automation" ID="ID_1781666327" CREATED="1586981353940" MODIFIED="1590427876378" HGAP_QUANTITY="15.499999955296518 pt" VSHIFT_QUANTITY="134.24999599903833 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -96,7 +96,7 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="High Assurance" ID="ID_975332951" CREATED="1586981344487" MODIFIED="1590427869453" HGAP_QUANTITY="16.999999910593033 pt" VSHIFT_QUANTITY="-1.4999999552964987 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="High Assurance" ID="ID_975332951" CREATED="1586981344487" MODIFIED="1590427869453" HGAP_QUANTITY="16.999999910593033 pt" VSHIFT_QUANTITY="-1.4999999552964987 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -110,7 +110,7 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="XML Schema Design" ID="ID_1611008996" CREATED="1590427624037" MODIFIED="1590427872152" HGAP_QUANTITY="15.499999955296516 pt" VSHIFT_QUANTITY="-132.74999604374182 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="XML Schema Design" ID="ID_1611008996" CREATED="1590427624037" MODIFIED="1590427872152" HGAP_QUANTITY="15.499999955296516 pt" VSHIFT_QUANTITY="-132.74999604374182 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -125,9 +125,9 @@
 </richcontent>
 </node>
 </node>
-<node TEXT="XML Fundamentals" FOLDED="true" POSITION="right" ID="ID_67050633" CREATED="1586977784857" MODIFIED="1590587682211" HGAP_QUANTITY="34.249999396502986 pt" VSHIFT_QUANTITY="2.9999999105930506 pt">
+<node TEXT="XML Fundamentals" POSITION="right" ID="ID_67050633" CREATED="1586977784857" MODIFIED="1590589955449" HGAP_QUANTITY="34.249999396502986 pt" VSHIFT_QUANTITY="2.9999999105930506 pt">
 <edge COLOR="#00ff00"/>
-<node TEXT="W3C XML" ID="ID_1858223195" CREATED="1586977803604" MODIFIED="1586984483026" HGAP_QUANTITY="18.499999865889553 pt" VSHIFT_QUANTITY="43.49999870359902 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="W3C XML" ID="ID_1858223195" CREATED="1586977803604" MODIFIED="1590588980557" HGAP_QUANTITY="15.499999955296516 pt" VSHIFT_QUANTITY="-6.749999798834324 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -135,13 +135,14 @@
   </head>
   <body>
     <p>
-      The W3C provides a set of Voluntary Consensus Standards which form the basis of web technology.&#160;&#160;The rules on how Uniform Reference Information (URI) and other basic features are expressed can be combined with basic markup rules to allow disparate applications to communicate through a common layer, which in many, but not all, cases is the World Wide Web.
+      The W3C provides a set of Voluntary Consensus Standards which form the basis of web technology.&#160;&#160;The rules on how Uniform Reference Information (URI) and other basic features are expressed can be combined with basic markup rules to allow disparate applications to communicate using a common layer.
     </p>
   </body>
 </html>
+
 </richcontent>
 </node>
-<node TEXT="XML Applications" ID="ID_1426626609" CREATED="1586977822904" MODIFIED="1586984487149" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="4.218847493575595E-15 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="XML Applications" ID="ID_1426626609" CREATED="1586977822904" MODIFIED="1590588985241" HGAP_QUANTITY="16.249999932944775 pt" VSHIFT_QUANTITY="11.999999642372146 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -155,7 +156,7 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="XML Schema" ID="ID_1458600205" CREATED="1586977795864" MODIFIED="1586984489333" HGAP_QUANTITY="18.499999865889553 pt" VSHIFT_QUANTITY="1.4999999552965129 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="XML Schema" ID="ID_1458600205" CREATED="1586977795864" MODIFIED="1590588992981" HGAP_QUANTITY="16.999999910593036 pt" VSHIFT_QUANTITY="12.749999620020397 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -169,7 +170,7 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="XSLT" ID="ID_1984116726" CREATED="1586977816692" MODIFIED="1586985772792" HGAP_QUANTITY="19.249999843537815 pt" VSHIFT_QUANTITY="2.249999932944771 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="XSLT" ID="ID_1984116726" CREATED="1586977816692" MODIFIED="1590589127261" HGAP_QUANTITY="19.249999843537815 pt" VSHIFT_QUANTITY="2.249999932944771 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -177,10 +178,11 @@
   </head>
   <body>
     <p>
-      W3C XSLT is a programming language that uses XML syntax to process XML information.&#160;&#160;It is extremely useful for generating XML instances, extending and restriction XML Schema, and for validating logical business rules in XML documents.&#160;&#160;&#160;Because XSLT is XML, it can also be used auto-generate more XSLT, thus providing a consistent and automatable way to provide core functionality that can be tested and validated.
+      W3C XSLT is a programming language that uses XML syntax to process XML information.&#160;&#160;It is extremely useful for generating XML instances, extending and restriction XML Schema, and for validating logical business rules in XML documents.&#160;&#160;&#160;Because XSLT is XML, it can be validated, and can be used to auto-generate more XSLT.&#160;&#160;This provides a consistent and automatable methodology to provide core functionality that can be tested and validated.
     </p>
   </body>
 </html>
+
 </richcontent>
 </node>
 <node TEXT="JSON" ID="ID_1959254315" CREATED="1586984526289" MODIFIED="1586985785638" HGAP_QUANTITY="22.999999731779106 pt" VSHIFT_QUANTITY="-4.499999865889549 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
@@ -239,7 +241,7 @@
 </richcontent>
 </node>
 </node>
-<node TEXT="Databases" ID="ID_1888074785" CREATED="1586985777160" MODIFIED="1590430260316" HGAP_QUANTITY="22.249999754130847 pt" VSHIFT_QUANTITY="-44.999998658895535 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="Databases" ID="ID_1888074785" CREATED="1586985777160" MODIFIED="1590589918466" HGAP_QUANTITY="22.249999754130847 pt" VSHIFT_QUANTITY="-44.999998658895535 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -247,14 +249,45 @@
   </head>
   <body>
     <p>
-      The primary differentiator between an XML data object and an object in a database is that the XML object can be employed independently of a specific application, while adhering to a required format and content.&#160; An XML document is a discrete data object, while a database entry is a conceptual relationship. The Structured Query language is the database equivalent of XSLT.&#160;&#160;Most databases support XML object storage, and some support XSLT, but XML from a database can not be considered authoritative until it has been verified and validated as an XML document, so there is a strong case for just leaving it that way to begin with.
+      The primary differentiator between an XML data object and an object in a database is that an XML document is a discrete data object, while a database entry is a conceptual relationship.&#160;&#160;&#160;the XML object can be employed independently of a specific application, while adhering to a required format and content.
     </p>
   </body>
 </html>
+
+</richcontent>
+<node TEXT="Structured Query Language (SQL)" ID="ID_443249860" CREATED="1590589194182" MODIFIED="1590589918465" HGAP_QUANTITY="27.499999597668655 pt" VSHIFT_QUANTITY="-15.749999530613433 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      &#160;The Structured Query language is the database equivalent of XSLT.&#160;&#160;Most databases support XML object storage, and some support XSLT.&#160;&#160;SQL is used to employ relationships between data objects in tables, while XSLT is used to employ relationships between data objects in a hierarchical tree format.
+    </p>
+  </body>
+</html>
+
+</richcontent>
+</node>
+<node TEXT="Data Separation" ID="ID_1257085353" CREATED="1590589347173" MODIFIED="1590589956068" HGAP_QUANTITY="31.24999948590995 pt" VSHIFT_QUANTITY="-5.249999843537818 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      &#160;XML extracted from a database can not be considered authoritative until it has been verified and validated as an XML document, so there is a strong case for not storing XML in databases.&#160;
+    </p>
+  </body>
+</html>
+
 </richcontent>
 </node>
 </node>
-<node TEXT="XML Military Use Case" FOLDED="true" POSITION="right" ID="ID_1631525658" CREATED="1586979437597" MODIFIED="1590587677827" HGAP_QUANTITY="33.49999941885473 pt" VSHIFT_QUANTITY="4.499999865889556 pt">
+</node>
+<node TEXT="XML Military Use Case" POSITION="right" ID="ID_1631525658" CREATED="1586979437597" MODIFIED="1590587677827" HGAP_QUANTITY="33.49999941885473 pt" VSHIFT_QUANTITY="4.499999865889556 pt">
 <edge COLOR="#ff00ff"/>
 <richcontent TYPE="DETAILS" HIDDEN="true">
 
