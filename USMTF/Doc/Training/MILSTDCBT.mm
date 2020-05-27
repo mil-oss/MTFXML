@@ -1,6 +1,6 @@
 <map version="freeplane 1.6.0">
 <!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
-<node TEXT="MILSTD XML Training" FOLDED="false" ID="ID_1722819656" CREATED="1586977618436" MODIFIED="1586984451282" STYLE="oval">
+<node TEXT="MILSTD XML Training" FOLDED="false" ID="ID_1722819656" CREATED="1586977618436" MODIFIED="1590587692273" STYLE="oval">
 <font SIZE="18"/>
 <hook NAME="MapStyle">
     <properties fit_to_viewport="false" edgeColorConfiguration="#808080ff,#ff0000ff,#0000ffff,#00ff00ff,#ff00ffff,#00ffffff,#7c0000ff,#00007cff,#007c00ff,#7c007cff,#007c7cff,#7c7c00ff"/>
@@ -64,9 +64,9 @@
 </map_styles>
 </hook>
 <hook NAME="AutomaticEdgeColor" COUNTER="5" RULE="ON_BRANCH_CREATION"/>
-<node TEXT="Background" POSITION="right" ID="ID_1974669059" CREATED="1586977693494" MODIFIED="1586981682191" HGAP_QUANTITY="42.49999915063383 pt" VSHIFT_QUANTITY="-3.7499998882412973 pt">
+<node TEXT="Background" POSITION="right" ID="ID_1974669059" CREATED="1586977693494" MODIFIED="1590587692271" HGAP_QUANTITY="36.49999932944776 pt" VSHIFT_QUANTITY="3.749999888241291 pt">
 <edge COLOR="#ff0000"/>
-<richcontent TYPE="DETAILS">
+<richcontent TYPE="DETAILS" HIDDEN="true">
 
 <html>
   <head>
@@ -80,7 +80,7 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="Introduction" POSITION="right" ID="ID_1168979071" CREATED="1586977710894" MODIFIED="1590427876378" HGAP_QUANTITY="34.999999374151244 pt" VSHIFT_QUANTITY="7.499999776482586 pt">
+<node TEXT="Introduction" FOLDED="true" POSITION="right" ID="ID_1168979071" CREATED="1586977710894" MODIFIED="1590587686985" HGAP_QUANTITY="34.999999374151244 pt" VSHIFT_QUANTITY="1.4999999552965146 pt">
 <edge COLOR="#0000ff"/>
 <node TEXT="Automation" ID="ID_1781666327" CREATED="1586981353940" MODIFIED="1590427876378" HGAP_QUANTITY="15.499999955296518 pt" VSHIFT_QUANTITY="134.24999599903833 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
 
@@ -94,7 +94,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 <node TEXT="High Assurance" ID="ID_975332951" CREATED="1586981344487" MODIFIED="1590427869453" HGAP_QUANTITY="16.999999910593033 pt" VSHIFT_QUANTITY="-1.4999999552964987 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
@@ -109,7 +108,6 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 <node TEXT="XML Schema Design" ID="ID_1611008996" CREATED="1590427624037" MODIFIED="1590427872152" HGAP_QUANTITY="15.499999955296516 pt" VSHIFT_QUANTITY="-132.74999604374182 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
@@ -124,539 +122,10 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 </node>
-<node TEXT="Learning Objectives" POSITION="right" ID="ID_92282121" CREATED="1586981686436" MODIFIED="1590434903478" HGAP_QUANTITY="34.249999396502986 pt" VSHIFT_QUANTITY="25.499999240040793 pt">
-<edge COLOR="#00ffff"/>
-<richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Ideally most of the complex XML functions will be provided as trusted library functions that can be re-used without deep understanding of the process, but even after this happens,&#160;&#160;maintainers and implementers will require enough understanding to avoid inadvertently disabling compromising or compromising a critical function.&#160;
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="XML Syntax" ID="ID_1074999184" CREATED="1590430356480" MODIFIED="1590435253335" HGAP_QUANTITY="17.749999888241295 pt" VSHIFT_QUANTITY="38.99999883770946 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand the basic syntax rules of XML, their purpose, and their significance.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="Principles" ID="ID_1866381328" CREATED="1590430381480" MODIFIED="1590432910352" HGAP_QUANTITY="14.749999977648258 pt" VSHIFT_QUANTITY="-3.7499998882412946 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to articulate the principle of &quot;separation of presentation and data.&quot;
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Uniform Resource Identifier" ID="ID_588947318" CREATED="1590433119957" MODIFIED="1590434299084"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand W3C Uniform Resource Identifier(URI), Uniform Resource Link (URL), and Uniform Resource Name (URN) standards and how they are employed by XML technologies.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="XML Document" ID="ID_1481855053" CREATED="1590430419439" MODIFIED="1590435253334" HGAP_QUANTITY="13.250000022351742 pt" VSHIFT_QUANTITY="3.7499998882412955 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Create a basic XML document that has a practical military purpose
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-</node>
-<node TEXT="XML Schema" ID="ID_1203648223" CREATED="1590430356482" MODIFIED="1590433953435" HGAP_QUANTITY="19.24999984353781 pt" VSHIFT_QUANTITY="-0.7499999776482591 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand the purpose and use of XML Schema
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="XML Schema" ID="ID_840349696" CREATED="1590430356482" MODIFIED="1590433794305" HGAP_QUANTITY="16.249999932944775 pt" VSHIFT_QUANTITY="18.749999441206477 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Create an XML Schema that has a practical military purpose.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="W3C Schema Validation." ID="ID_1088213302" CREATED="1590430791188" MODIFIED="1590433034079" HGAP_QUANTITY="15.499999955296516 pt" VSHIFT_QUANTITY="-14.999999552965177 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Validate the XML Schema&#160;&#160;against the W3C XML Schema Schema using a W3C compliant application.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Instance" ID="ID_1275458363" CREATED="1590430356483" MODIFIED="1590433796065" HGAP_QUANTITY="14.0 pt" VSHIFT_QUANTITY="-24.74999926239254 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Validate the XML instance against the XML Schema using a W3C compliant application.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-</node>
-<node TEXT="XML Validation" ID="ID_235804224" CREATED="1590430356484" MODIFIED="1590433948430" HGAP_QUANTITY="18.499999865889553 pt" VSHIFT_QUANTITY="4.499999865889551 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to articulate the purpose and importance of XML validation.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="XML Namespaces" ID="ID_1398934861" CREATED="1590430356487" MODIFIED="1590433788941" HGAP_QUANTITY="17.749999888241295 pt" VSHIFT_QUANTITY="23.999999284744284 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to articulate the purpose and application of XML Namespaces.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Namespace Validation" ID="ID_372208543" CREATED="1590430356486" MODIFIED="1590433791108" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="-23.24999930709602 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Create an XML document that incorporates and validates against multiple XML Schemas using XML Namespace declarations and syntax.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-</node>
-<node TEXT="Processing" ID="ID_1710964681" CREATED="1590430356484" MODIFIED="1590434077459" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="-0.7499999776482618 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Use an automated method to produce an XML document that is compliant to an XML Schema.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="Development" ID="ID_1737367691" CREATED="1590430356485" MODIFIED="1590431507486" HGAP_QUANTITY="16.249999932944778 pt" VSHIFT_QUANTITY="13.499999597668669 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to describe the various ways that XML can be created and validated using common tools.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Production" ID="ID_550122747" CREATED="1590431366994" MODIFIED="1590432800949" HGAP_QUANTITY="17.749999888241295 pt" VSHIFT_QUANTITY="-17.249999485909953 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to employ command line tools.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-</node>
-<node TEXT="Extensible Stylesheet Language for Transformation (XSLT)" ID="ID_58218630" CREATED="1590430356488" MODIFIED="1590434903477" HGAP_QUANTITY="23.749999709427364 pt" VSHIFT_QUANTITY="-30.749999083578615 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to articulate the purpose and potential of XSLT.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="Transform XML" ID="ID_1723194617" CREATED="1590430356488" MODIFIED="1590433653959" HGAP_QUANTITY="23.749999709427367 pt" VSHIFT_QUANTITY="148.49999557435524 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Write an XSLT script to transform an XML document that is valid against one schema to an XML document that is valid against another Schema.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Generate HTML" ID="ID_1785995724" CREATED="1590430356489" MODIFIED="1590433825877" HGAP_QUANTITY="20.74999979883433 pt" VSHIFT_QUANTITY="1.4999999552965178 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Write an XSLT script to transform an XML document that is compliant with an XML Schema to one that is compliant with the W3C XHTML Schema specification for viewing in a web browser.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Generate XML Schema" ID="ID_1803841076" CREATED="1590433552138" MODIFIED="1590433822407" HGAP_QUANTITY="22.999999731779106 pt" VSHIFT_QUANTITY="-6.749999798834333 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Write an XSLT script to generate an XML Schema
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Generate XSLT" ID="ID_1695622641" CREATED="1590433586154" MODIFIED="1590434261832" HGAP_QUANTITY="25.999999642372146 pt" VSHIFT_QUANTITY="-142.49999575316917 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Write an XSLT script to generate another XSLT script
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-</node>
-<node TEXT="Schematron" ID="ID_359790757" CREATED="1590433853159" MODIFIED="1590435285234" HGAP_QUANTITY="19.249999843537815 pt" VSHIFT_QUANTITY="1.4999999552965155 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand the way that this specific implementation of XSLT is used to create rules to validate relational content.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="Verify XML Schema Design" ID="ID_955858469" CREATED="1590434742081" MODIFIED="1590435285233" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="22.499999329447768 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Use the Schematron for the NIEM Naming and Design Rules to evaluate an XML Schema
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Validate XML Content" ID="ID_510529262" CREATED="1590434812843" MODIFIED="1590435282353" HGAP_QUANTITY="19.999999821186073 pt" VSHIFT_QUANTITY="-2.6645352591003757E-15 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Use Schematron Rules to validate an XML instance for required contextual relationships
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Validate Security Tags" ID="ID_1098755583" CREATED="1590434905717" MODIFIED="1590435280621" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="-32.99999901652339 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Use Schematron Rules to validate the the required uses of XML Schema defined security tags
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-</node>
-<node TEXT="Design Strategies" ID="ID_1840952706" CREATED="1590431545250" MODIFIED="1590434242498" HGAP_QUANTITY="22.249999754130847 pt" VSHIFT_QUANTITY="5.999999821186069 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand the differences between presentation-centric XML, and data-centric XML
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="Data&#xad;Dentric XML" ID="ID_1461181341" CREATED="1590430356489" MODIFIED="1590432664455" HGAP_QUANTITY="14.749999977648258 pt" VSHIFT_QUANTITY="87.74999738484628 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to recognize and articulate the purpose of XML Schema that are used to define data objects and formats
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT=" Presentation&#xad;Centric XML" ID="ID_1053450959" CREATED="1590430356491" MODIFIED="1590433680986" HGAP_QUANTITY="14.0 pt" VSHIFT_QUANTITY="-64.49999807775026 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to recognize and articulate the purpose of XML Schema that are used to present or display data objects and formats.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="HTML" ID="ID_1190131667" CREATED="1590432382616" MODIFIED="1590432671270" HGAP_QUANTITY="19.249999843537815 pt" VSHIFT_QUANTITY="-5.249999843537811 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand how HTML Data Objects are used by web applications.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Communication Protocols" ID="ID_1485102975" CREATED="1590432403561" MODIFIED="1590433403126" HGAP_QUANTITY="20.749999798834327 pt" VSHIFT_QUANTITY="-4.499999865889549 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand how information is transformed for delivery purposes, and the various ways this is accomplished.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="" ID="ID_1208999641" CREATED="1590435012943" MODIFIED="1590435012943"/>
-</node>
-</node>
-</node>
-<node TEXT="Implementation" ID="ID_1814062398" CREATED="1590430356491" MODIFIED="1590435273339" HGAP_QUANTITY="22.9999997317791 pt" VSHIFT_QUANTITY="-7.105427357601002E-15 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Use a web server to create, validate, transform, query and present XML data.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="Cloud Containers" ID="ID_9768686" CREATED="1590435017859" MODIFIED="1590435270930" HGAP_QUANTITY="18.49999986588955 pt" VSHIFT_QUANTITY="47.99999856948857 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand how software is tested, build, packaged and deployed to cloud servers.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Cloud Processing" ID="ID_324553953" CREATED="1590435047206" MODIFIED="1590435273338" HGAP_QUANTITY="19.999999821186073 pt" VSHIFT_QUANTITY="-47.24999859184031 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Understand the capabilities and limitations of XML technologies in cloud compute environments, and the recommended best practices.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-</node>
-<node TEXT="Data Standards" ID="ID_1247060910" CREATED="1590430356492" MODIFIED="1590435007695" HGAP_QUANTITY="19.999999821186073 pt" VSHIFT_QUANTITY="-68.99999794363981 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Be able to articulate the role of XML in standards based architectures.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-<node TEXT="Understand the Design of MTF XML" ID="ID_1287234918" CREATED="1590434351663" MODIFIED="1590435007694" HGAP_QUANTITY="20.749999798834327 pt" VSHIFT_QUANTITY="12.7499996200204 pt"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      All of the steps in these objectives can be completed using the example resources.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-<node TEXT="Understand the Creation of IEPD Schema and Resources" ID="ID_810549211" CREATED="1590434503772" MODIFIED="1590434717031"><richcontent TYPE="DETAILS">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      Scripts for doing this are provided in the examples.&#160;&#160;If Understanding is achieved in the preceding steps, then it will be possible to re-purpose these examples for use with authoritative MIL STD data.
-    </p>
-  </body>
-</html>
-
-</richcontent>
-</node>
-</node>
-</node>
-<node TEXT="XML Fundamentals" POSITION="right" ID="ID_67050633" CREATED="1586977784857" MODIFIED="1586985791125" HGAP_QUANTITY="33.49999941885473 pt" VSHIFT_QUANTITY="14.999999552965193 pt">
+<node TEXT="XML Fundamentals" FOLDED="true" POSITION="right" ID="ID_67050633" CREATED="1586977784857" MODIFIED="1590587682211" HGAP_QUANTITY="34.249999396502986 pt" VSHIFT_QUANTITY="2.9999999105930506 pt">
 <edge COLOR="#00ff00"/>
 <node TEXT="W3C XML" ID="ID_1858223195" CREATED="1586977803604" MODIFIED="1586984483026" HGAP_QUANTITY="18.499999865889553 pt" VSHIFT_QUANTITY="43.49999870359902 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
 
@@ -782,13 +251,12 @@
     </p>
   </body>
 </html>
-
 </richcontent>
 </node>
 </node>
-<node TEXT="XML Military Use Case" POSITION="right" ID="ID_1631525658" CREATED="1586979437597" MODIFIED="1590430290769" HGAP_QUANTITY="31.249999485909953 pt" VSHIFT_QUANTITY="98.99999704957017 pt">
+<node TEXT="XML Military Use Case" FOLDED="true" POSITION="right" ID="ID_1631525658" CREATED="1586979437597" MODIFIED="1590587677827" HGAP_QUANTITY="33.49999941885473 pt" VSHIFT_QUANTITY="4.499999865889556 pt">
 <edge COLOR="#ff00ff"/>
-<richcontent TYPE="DETAILS">
+<richcontent TYPE="DETAILS" HIDDEN="true">
 
 <html>
   <head>
@@ -801,7 +269,7 @@
   </body>
 </html>
 </richcontent>
-<node TEXT="Accurate Information Exchange" ID="ID_1660603492" CREATED="1586979752125" MODIFIED="1590430290768" HGAP_QUANTITY="17.749999888241295 pt" VSHIFT_QUANTITY="67.4999979883433 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="Accurate Information Exchange" ID="ID_1660603492" CREATED="1586979752125" MODIFIED="1590587603855" HGAP_QUANTITY="16.999999910593036 pt" VSHIFT_QUANTITY="55.49999834597115 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -815,7 +283,7 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="Trusted Data" ID="ID_926566734" CREATED="1586979802173" MODIFIED="1586980710568" HGAP_QUANTITY="22.24999975413085 pt" VSHIFT_QUANTITY="0.7499999776482635 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="Trusted Data" ID="ID_926566734" CREATED="1586979802173" MODIFIED="1586980710568" HGAP_QUANTITY="22.24999975413085 pt" VSHIFT_QUANTITY="0.7499999776482635 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -829,7 +297,7 @@
 </html>
 </richcontent>
 </node>
-<node TEXT="Data Control" ID="ID_1850785304" CREATED="1586979829320" MODIFIED="1590422235762" HGAP_QUANTITY="22.999999731779102 pt" VSHIFT_QUANTITY="-77.99999767541892 pt"><richcontent TYPE="DETAILS" HIDDEN="true">
+<node TEXT="Data Control" ID="ID_1850785304" CREATED="1586979829320" MODIFIED="1590587597011" HGAP_QUANTITY="16.249999932944775 pt" VSHIFT_QUANTITY="-83.24999751895673 pt"><richcontent TYPE="DETAILS">
 
 <html>
   <head>
@@ -843,6 +311,587 @@
 </html>
 </richcontent>
 </node>
+</node>
+<node TEXT="APPENDIX A.  Learning Objectives" FOLDED="true" POSITION="right" ID="ID_92282121" CREATED="1586981686436" MODIFIED="1590587689015" HGAP_QUANTITY="34.249999396502986 pt" VSHIFT_QUANTITY="-14.999999552965186 pt">
+<edge COLOR="#00ffff"/>
+<richcontent TYPE="DETAILS" HIDDEN="true">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Ideally most of the complex XML functions will be provided as trusted library functions that can be re-used without deep understanding of the process, but even after this happens,&#160;&#160;maintainers and implementers will require enough understanding to avoid inadvertently disabling compromising a critical function.&#160;
+    </p>
+  </body>
+</html>
+
+</richcontent>
+<node TEXT="XML Syntax" FOLDED="true" ID="ID_1074999184" CREATED="1590430356480" MODIFIED="1590435253335" HGAP_QUANTITY="17.749999888241295 pt" VSHIFT_QUANTITY="38.99999883770946 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand the basic syntax rules of XML, their purpose, and their significance.
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Principles" ID="ID_1866381328" CREATED="1590430381480" MODIFIED="1590432910352" HGAP_QUANTITY="14.749999977648258 pt" VSHIFT_QUANTITY="-3.7499998882412946 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to articulate the principle of &quot;separation of presentation and data.&quot;
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Uniform Resource Identifier" ID="ID_588947318" CREATED="1590433119957" MODIFIED="1590434299084"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand W3C Uniform Resource Identifier(URI), Uniform Resource Link (URL), and Uniform Resource Name (URN) standards and how they are employed by XML technologies.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="XML Document" ID="ID_1481855053" CREATED="1590430419439" MODIFIED="1590435253334" HGAP_QUANTITY="13.250000022351742 pt" VSHIFT_QUANTITY="3.7499998882412955 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Create a basic XML document that has a practical military purpose
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node TEXT="XML Schema" FOLDED="true" ID="ID_1203648223" CREATED="1590430356482" MODIFIED="1590433953435" HGAP_QUANTITY="19.24999984353781 pt" VSHIFT_QUANTITY="-0.7499999776482591 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand the purpose and use of XML Schema
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="XML Schema" ID="ID_840349696" CREATED="1590430356482" MODIFIED="1590433794305" HGAP_QUANTITY="16.249999932944775 pt" VSHIFT_QUANTITY="18.749999441206477 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Create an XML Schema that has a practical military purpose.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="W3C Schema Validation." ID="ID_1088213302" CREATED="1590430791188" MODIFIED="1590433034079" HGAP_QUANTITY="15.499999955296516 pt" VSHIFT_QUANTITY="-14.999999552965177 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Validate the XML Schema&#160;&#160;against the W3C XML Schema Schema using a W3C compliant application.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Instance" ID="ID_1275458363" CREATED="1590430356483" MODIFIED="1590433796065" HGAP_QUANTITY="14.0 pt" VSHIFT_QUANTITY="-24.74999926239254 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Validate the XML instance against the XML Schema using a W3C compliant application.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node TEXT="XML Validation" FOLDED="true" ID="ID_235804224" CREATED="1590430356484" MODIFIED="1590433948430" HGAP_QUANTITY="18.499999865889553 pt" VSHIFT_QUANTITY="4.499999865889551 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to articulate the purpose and importance of XML validation.
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="XML Namespaces" ID="ID_1398934861" CREATED="1590430356487" MODIFIED="1590433788941" HGAP_QUANTITY="17.749999888241295 pt" VSHIFT_QUANTITY="23.999999284744284 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to articulate the purpose and application of XML Namespaces.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Namespace Validation" ID="ID_372208543" CREATED="1590430356486" MODIFIED="1590433791108" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="-23.24999930709602 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Create an XML document that incorporates and validates against multiple XML Schemas using XML Namespace declarations and syntax.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node TEXT="Processing" FOLDED="true" ID="ID_1710964681" CREATED="1590430356484" MODIFIED="1590434077459" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="-0.7499999776482618 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Use an automated method to produce an XML document that is compliant to an XML Schema.
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Development" ID="ID_1737367691" CREATED="1590430356485" MODIFIED="1590431507486" HGAP_QUANTITY="16.249999932944778 pt" VSHIFT_QUANTITY="13.499999597668669 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to describe the various ways that XML can be created and validated using common tools.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Production" ID="ID_550122747" CREATED="1590431366994" MODIFIED="1590432800949" HGAP_QUANTITY="17.749999888241295 pt" VSHIFT_QUANTITY="-17.249999485909953 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to employ command line tools.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node TEXT="Extensible Stylesheet Language for Transformation (XSLT)" FOLDED="true" ID="ID_58218630" CREATED="1590430356488" MODIFIED="1590434903477" HGAP_QUANTITY="23.749999709427364 pt" VSHIFT_QUANTITY="-30.749999083578615 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to articulate the purpose and potential of XSLT.
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Transform XML" ID="ID_1723194617" CREATED="1590430356488" MODIFIED="1590433653959" HGAP_QUANTITY="23.749999709427367 pt" VSHIFT_QUANTITY="148.49999557435524 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Write an XSLT script to transform an XML document that is valid against one schema to an XML document that is valid against another Schema.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Generate HTML" ID="ID_1785995724" CREATED="1590430356489" MODIFIED="1590433825877" HGAP_QUANTITY="20.74999979883433 pt" VSHIFT_QUANTITY="1.4999999552965178 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Write an XSLT script to transform an XML document that is compliant with an XML Schema to one that is compliant with the W3C XHTML Schema specification for viewing in a web browser.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Generate XML Schema" ID="ID_1803841076" CREATED="1590433552138" MODIFIED="1590433822407" HGAP_QUANTITY="22.999999731779106 pt" VSHIFT_QUANTITY="-6.749999798834333 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Write an XSLT script to generate an XML Schema
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Generate XSLT" ID="ID_1695622641" CREATED="1590433586154" MODIFIED="1590434261832" HGAP_QUANTITY="25.999999642372146 pt" VSHIFT_QUANTITY="-142.49999575316917 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Write an XSLT script to generate another XSLT script
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node TEXT="Schematron" FOLDED="true" ID="ID_359790757" CREATED="1590433853159" MODIFIED="1590435285234" HGAP_QUANTITY="19.249999843537815 pt" VSHIFT_QUANTITY="1.4999999552965155 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand the way that this specific implementation of XSLT is used to create rules to validate relational content.
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Verify XML Schema Design" ID="ID_955858469" CREATED="1590434742081" MODIFIED="1590435285233" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="22.499999329447768 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Use the Schematron for the NIEM Naming and Design Rules to evaluate an XML Schema
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Validate XML Content" ID="ID_510529262" CREATED="1590434812843" MODIFIED="1590435282353" HGAP_QUANTITY="19.999999821186073 pt" VSHIFT_QUANTITY="-2.6645352591003757E-15 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Use Schematron Rules to validate an XML instance for required contextual relationships
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Validate Security Tags" ID="ID_1098755583" CREATED="1590434905717" MODIFIED="1590435280621" HGAP_QUANTITY="17.74999988824129 pt" VSHIFT_QUANTITY="-32.99999901652339 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Use Schematron Rules to validate the the required uses of XML Schema defined security tags
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node TEXT="Design Strategies" FOLDED="true" ID="ID_1840952706" CREATED="1590431545250" MODIFIED="1590434242498" HGAP_QUANTITY="22.249999754130847 pt" VSHIFT_QUANTITY="5.999999821186069 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand the differences between presentation-centric XML, and data-centric XML
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Data&#xad;Dentric XML" ID="ID_1461181341" CREATED="1590430356489" MODIFIED="1590432664455" HGAP_QUANTITY="14.749999977648258 pt" VSHIFT_QUANTITY="87.74999738484628 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to recognize and articulate the purpose of XML Schema that are used to define data objects and formats
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT=" Presentation&#xad;Centric XML" ID="ID_1053450959" CREATED="1590430356491" MODIFIED="1590433680986" HGAP_QUANTITY="14.0 pt" VSHIFT_QUANTITY="-64.49999807775026 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to recognize and articulate the purpose of XML Schema that are used to present or display data objects and formats.
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="HTML" ID="ID_1190131667" CREATED="1590432382616" MODIFIED="1590432671270" HGAP_QUANTITY="19.249999843537815 pt" VSHIFT_QUANTITY="-5.249999843537811 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand how HTML Data Objects are used by web applications.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Communication Protocols" ID="ID_1485102975" CREATED="1590432403561" MODIFIED="1590433403126" HGAP_QUANTITY="20.749999798834327 pt" VSHIFT_QUANTITY="-4.499999865889549 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand how information is transformed for delivery purposes, and the various ways this is accomplished.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+</node>
+<node TEXT="Implementation" FOLDED="true" ID="ID_1814062398" CREATED="1590430356491" MODIFIED="1590435273339" HGAP_QUANTITY="22.9999997317791 pt" VSHIFT_QUANTITY="-7.105427357601002E-15 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Use a web server to create, validate, transform, query and present XML data.
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Cloud Containers" ID="ID_9768686" CREATED="1590435017859" MODIFIED="1590435270930" HGAP_QUANTITY="18.49999986588955 pt" VSHIFT_QUANTITY="47.99999856948857 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand how software is tested, build, packaged and deployed to cloud servers.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Cloud Processing" ID="ID_324553953" CREATED="1590435047206" MODIFIED="1590435273338" HGAP_QUANTITY="19.999999821186073 pt" VSHIFT_QUANTITY="-47.24999859184031 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Understand the capabilities and limitations of XML technologies in cloud compute environments, and the recommended best practices.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node TEXT="Data Standards" FOLDED="true" ID="ID_1247060910" CREATED="1590430356492" MODIFIED="1590435007695" HGAP_QUANTITY="19.999999821186073 pt" VSHIFT_QUANTITY="-68.99999794363981 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Be able to articulate the role of XML in standards based architectures.
+    </p>
+  </body>
+</html>
+</richcontent>
+<node TEXT="Understand the Design of MTF XML" ID="ID_1287234918" CREATED="1590434351663" MODIFIED="1590435007694" HGAP_QUANTITY="20.749999798834327 pt" VSHIFT_QUANTITY="12.7499996200204 pt"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      All of the steps in these objectives can be completed using the example resources.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="Understand the Creation of IEPD Schema and Resources" ID="ID_810549211" CREATED="1590434503772" MODIFIED="1590434717031"><richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      Scripts for doing this are provided in the examples.&#160;&#160;If Understanding is achieved in the preceding steps, then it will be possible to re-purpose these examples for use with authoritative MIL STD data.
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+</node>
+<node TEXT="_Fileout" POSITION="left" ID="ID_381249361" CREATED="1475710702062" MODIFIED="1590586370127">
+<edge COLOR="#0000ff"/>
+<richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      /home/jdn/DATA/Development/MILSTD/MTFXML/USMTF/Doc/Training/MILSTDCBT.html
+    </p>
+  </body>
+</html>
+
+</richcontent>
+</node>
+<node TEXT="_Subj" POSITION="left" ID="ID_1130198740" CREATED="1475711301439" MODIFIED="1590586072070" VSHIFT_QUANTITY="-20.0 px">
+<edge COLOR="#00ffff"/>
+<richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      MTF XML SCHEMA TRAINING
+    </p>
+  </body>
+</html>
+
+</richcontent>
+</node>
+<node TEXT="_Date" POSITION="left" ID="ID_299078720" CREATED="1475710798573" MODIFIED="1590586094436">
+<edge COLOR="#00ff00"/>
+<richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      27 May 2020
+    </p>
+  </body>
+</html>
+
+</richcontent>
+</node>
+<node TEXT="_Title" POSITION="left" ID="ID_1783696170" CREATED="1475710823436" MODIFIED="1590586117994">
+<edge COLOR="#ff00ff"/>
+<richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      XML Schema Design Training for the Message Text Format Military Standard.
+    </p>
+  </body>
+</html>
+
+</richcontent>
+</node>
+<node TEXT="_bash" LOCALIZED_STYLE_REF="default" POSITION="left" ID="ID_1253692164" CREATED="1513800134836" MODIFIED="1590586742948" HGAP_QUANTITY="11.000000089406964 pt" VSHIFT_QUANTITY="14.249999575316918 pt">
+<edge COLOR="#ff0000"/>
+<richcontent TYPE="DETAILS">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      #!/bin/bash
+    </p>
+    <p>
+      java -cp /home/jdn/DATA/Development/DevRepo/docformat/xslt/saxon9he.jar net.sf.saxon.Transform -s:/home/jdn/DATA/Development/MILSTD/MTFXML/USMTF/Doc/Training/MILSTDCBT.mm -xsl:/home/jdn/DATA/Development/DevRepo/docformat/xslt/mil_format_xslproc.xsl
+    </p>
+  </body>
+</html>
+
+</richcontent>
 </node>
 </node>
 </map>

@@ -1,0 +1,135 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+                        body{
+                            width: 7in;
+                            padding: .75in;
+                        
+                            font-family: "Courier New", Courier, monospace;
+                            font-size: .9em;
+                            border: thin black solid;
+                        }
+                        pre{
+                            white-space: pre-wrap; /* css-3 */
+                            white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+                            white-space: -pre-wrap; /* Opera 4-6 */
+                            white-space: -o-pre-wrap; /* Opera 7 */
+                            word-wrap: break-word;
+                            font-family: "Courier New", Courier, monospace;
+                            font-size: .9em;
+                        }
+
+                        div{
+                            padding-bottom: 10px;
+                        }
+                        
+                        .tab{
+                            padding-right: .2in;
+                        }
+                        .lvl2{
+                            display: inline;
+                        }
+                        .lvl3{
+                            display: inline;
+                            padding-left: .3in;
+                        }
+                        .lvl4{
+                            display: inline;
+                            padding-left: .6in;
+                        }
+                        .lvl5{
+                            display: inline;
+                            padding-left: 1in;
+                        }
+                        .lvl6{
+                            display: inline;
+                            padding-left: 1.4in;
+                        }
+                        .lvl7{
+                            display: inline;
+                            padding-left: 1.8in;
+                        }
+                        .lvl8{
+                            display: inline;
+                            padding-left: 2.2in;
+                        }
+                        .uline{
+                            text-decoration: underline;
+                        }
+                        .ctr_title{
+                            text-align: center;
+                        }
+                        .center
+                        {
+                            margin-left: auto;
+                            margin-right: auto;
+                            width: 100%;
+                        }
+                        P.pagebreak
+                        {
+                            page-break-before: always
+                        }</style>
+<title>MTF XML SCHEMA TRAINING</title>
+</head>
+<body>
+<p style="text-align:center">XML Schema Design Training for the Message Text Format Military Standard.</p>
+<p style="text-align:right">27 May 2020</p>
+<p>Subj:  MTF XML SCHEMA TRAINING</p>
+
+<pre>1.  <u>Background</u>.  The maintenance and implementation of military information exchange standards requires an understanding of the technical challenges and the reason that they exist.  In this course we hope to address any gaps in this understanding, and create a shared vocabulary and staring point for those interested in high assurance military information exchange capabilities.</pre>
+<pre>2.  <u>Introduction</u></pre>
+<pre>      a.  <u>Automation</u>.  XML Schema provides strong typing and relationship information that allows the creation of  data objects in software, so that automated processes will consume and produce fully controlled data items in a manner that meets requirements of High Assurance information exchanges.</pre>
+<pre>      b.  <u>High Assurance</u>.  This term is intended to convey the concept of trust, on the basis of the fact that specific processes are in place that verify whether or not information is complete, unaltered, comes from a verified source, and can only be shared with authorized recipients.   The standard way of achieving this this in US DoD at present, requires XML Schema validation and XSLT processing.  Because all security considerations must be considered holistically, the way this is done must be understood so that it does not conflict with the way that equivalent concepts are defined and handled within specific standards.</pre>
+<pre>      c.  <u>XML Schema Design</u>.  US and NATO MTF were early adopters of XML Schema as a normative expression of the MIL STDs, and USMTF has integrated XML defined security tags as part of this effort.   Recently the MTF XML Schema have been converted to a Garden of Eden design model conformant with the National Information Exchange Model (NIEM).   From a technical perspective this means that certain XML Schema and other artifacts must conform to NIEM naming and design rules.  This can be fully automated, but must be included in the verification and testing of software implementing an XML defined MIL STD.</pre>
+<pre>3.  <u>XML Fundamentals</u></pre>
+<pre>      a.  <u>W3C XML</u>.  The W3C provides a set of Voluntary Consensus Standards which form the basis of web technology.  The rules on how Uniform Reference Information (URI) and other basic features are expressed can be combined with basic markup rules to allow disparate applications to communicate through a common layer, which in many, but not all, cases is the World Wide Web.</pre>
+<pre>      b.  <u>XML Applications</u>.  A specific implementation of XML markup, with associated data processing software design rules, is considered an XML application.  XML Schema and Extensible Stylesheet Language for Transformation (XSLT) are XML applications for validating and processing any XML.  HTML is an XML defined language that is implemented by web browsers.  XML applications apply XML Schema, and follow rules which can be verified and validated, which is why they are appropriate for processing information in a manner that has inherent security requirements. </pre>
+<pre>      c.  <u>XML Schema</u>.  W3C XML Schema is a standardized way to define data objects using W3C XML rules and conventions.   W3C Schema themselves are defined using the same rules, so provide a basis for data verification and validation in which every component in the data supply chain can be validated, to include the component used for validation.  This is appropriate for high assurance information exchanges such as those used for financial, medical and military communications.</pre>
+<pre>      d.  <u>XSLT</u>.  W3C XSLT is a programming language that uses XML syntax to process XML information.  It is extremely useful for generating XML instances, extending and restriction XML Schema, and for validating logical business rules in XML documents.   Because XSLT is XML, it can also be used auto-generate more XSLT, thus providing a consistent and automatable way to provide core functionality that can be tested and validated.</pre>
+<pre>      e.  <u>JSON</u>.  JavaScript Object Notation (JSON) Schema exist, and everything XSLT can do can be done with JavaScript.  For display and user functions, this is a recommended approach, and which is why all XML implementations should provide JSON output. </pre>
+<pre>          (1)  <u>JSON Schema</u>.  It is relatively easy to generate JSON Schema from JSON Schema, and slightly more difficult to use JavaScript to generate an XML Schema from a JSON Schema, but converters exist.  The complexity of XML Schema is driven by the information defined, so JSON schema are be no less complex.   People who don't want to learn XML will need to know all the same stuff in this course, just with different markup and tools.  Anyone succeeding in replicating the power of XSLT using JavaScript or any other language should encouraged to share.  Those attempting it without considerable skills should be cautioned otherwise.</pre>
+<pre>          (2)  <u>JSON Security Tags</u>.  In order to implement IC-ISM security tags using JavaScript vice XSLT, the IC-ISM scripts will have to be converted to JavaScript, and those conversions will have to be accredited by someone.   When JSON and XML can be used interchangeably for different purposes, since they are auto-generated using the same XML Schema, this duplication of effort is avoided.</pre>
+<pre>          (3)  <u>XML Alternatives</u>.  Those who understand the complexity and known good solutions for the high assurance and automation challenges may have a better way and should be encouraged to suggest them.</pre>
+<pre>      f.  <u>Databases</u>.  The primary differentiator between an XML data object and an object in a database is that the XML object can be employed independently of a specific application, while adhering to a required format and content.  An XML document is a discrete data object, while a database entry is a conceptual relationship. The Structured Query language is the database equivalent of XSLT.  Most databases support XML object storage, and some support XSLT, but XML from a database can not be considered authoritative until it has been verified and validated as an XML document, so there is a strong case for just leaving it that way to begin with.</pre>
+<pre>4.  <u>XML Military Use Case</u>.  All military actions are dependent on authority, and decision.  Information supporting these functions must be accurate and trusted.  Information shared in support of these functions must be controlled.  At the very least this control must include metadata that provides classification,  releasability and visibility information.</pre>
+<pre>      a.  <u>Accurate Information Exchange</u>.  Military information exchanges can be defined using XML Schema, which can be used to validate messages for content and context.</pre>
+<pre>      b.  <u>Trusted Data</u>.  XML information can be extend with components that contain classification and releasability information.  An example of this is  the Intelligence Community (IC) Trusted Data Format (TDF) which is an XML application that defines these components and provides the XSLT necessary to verify them.</pre>
+<pre>      c.  <u>Data Control</u>.  The challenges of consistently tagging all data with classification,  releasability and visibility information are inherently addressed by XML tools, and organically compatible with validation and verification requirements for ensuring that this information is handled properly.</pre>
+<pre>5.  <u>APPENDIX A.  Learning Objectives</u>.  Ideally most of the complex XML functions will be provided as trusted library functions that can be re-used without deep understanding of the process, but even after this happens,  maintainers and implementers will require enough understanding to avoid inadvertently disabling compromising or compromising a critical function. </pre>
+<pre>      a.  <u>XML Syntax</u>.  Understand the basic syntax rules of XML, their purpose, and their significance.</pre>
+<pre>          (1)  <u>Principles</u>.  Be able to articulate the principle of "separation of presentation and data."</pre>
+<pre>          (2)  <u>Uniform Resource Identifier</u>.  Understand W3C Uniform Resource Identifier(URI), Uniform Resource Link (URL), and Uniform Resource Name (URN) standards and how they are employed by XML technologies.</pre>
+<pre>          (3)  <u>XML Document</u>.  Create a basic XML document that has a practical military purpose</pre>
+<pre>      b.  <u>XML Schema</u>.  Understand the purpose and use of XML Schema</pre>
+<pre>          (1)  <u>XML Schema</u>.  Create an XML Schema that has a practical military purpose.</pre>
+<pre>          (2)  <u>W3C Schema Validation.</u>.  Validate the XML Schema  against the W3C XML Schema Schema using a W3C compliant application.</pre>
+<pre>          (3)  <u>Instance</u>.  Validate the XML instance against the XML Schema using a W3C compliant application.</pre>
+<pre>      c.  <u>XML Validation</u>.  Be able to articulate the purpose and importance of XML validation.</pre>
+<pre>          (1)  <u>XML Namespaces</u>.  Be able to articulate the purpose and application of XML Namespaces.</pre>
+<pre>          (2)  <u>Namespace Validation</u>.  Create an XML document that incorporates and validates against multiple XML Schemas using XML Namespace declarations and syntax.</pre>
+<pre>      d.  <u>Processing</u>.  Use an automated method to produce an XML document that is compliant to an XML Schema.</pre>
+<pre>          (1)  <u>Development</u>.  Be able to describe the various ways that XML can be created and validated using common tools.</pre>
+<pre>          (2)  <u>Production</u>.  Be able to employ command line tools.</pre>
+<pre>      e.  <u>Extensible Stylesheet Language for Transformation (XSLT)</u>.  Be able to articulate the purpose and potential of XSLT.</pre>
+<pre>          (1)  <u>Transform XML</u>.  Write an XSLT script to transform an XML document that is valid against one schema to an XML document that is valid against another Schema.</pre>
+<pre>          (2)  <u>Generate HTML</u>.  Write an XSLT script to transform an XML document that is compliant with an XML Schema to one that is compliant with the W3C XHTML Schema specification for viewing in a web browser.</pre>
+<pre>          (3)  <u>Generate XML Schema</u>.  Write an XSLT script to generate an XML Schema</pre>
+<pre>          (4)  <u>Generate XSLT</u>.  Write an XSLT script to generate another XSLT script</pre>
+<pre>      f.  <u>Schematron</u>.  Understand the way that this specific implementation of XSLT is used to create rules to validate relational content.</pre>
+<pre>          (1)  <u>Verify XML Schema Design</u>.  Use the Schematron for the NIEM Naming and Design Rules to evaluate an XML Schema</pre>
+<pre>          (2)  <u>Validate XML Content</u>.  Use Schematron Rules to validate an XML instance for required contextual relationships</pre>
+<pre>          (3)  <u>Validate Security Tags</u>.  Use Schematron Rules to validate the the required uses of XML Schema defined security tags</pre>
+<pre>      g.  <u>Design Strategies</u>.  Understand the differences between presentation-centric XML, and data-centric XML</pre>
+<pre>          (1)  <u>Data­Dentric XML</u>.  Be able to recognize and articulate the purpose of XML Schema that are used to define data objects and formats</pre>
+<pre>          (2)  <u> Presentation­Centric XML</u>.  Be able to recognize and articulate the purpose of XML Schema that are used to present or display data objects and formats.</pre>
+<pre>               (a)  <u>HTML</u>.  Understand how HTML Data Objects are used by web applications.</pre>
+<pre>               (b)  <u>Communication Protocols</u>.  Understand how information is transformed for delivery purposes, and the various ways this is accomplished.</pre>
+<pre>      h.  <u>Implementation</u>.  Use a web server to create, validate, transform, query and present XML data.</pre>
+<pre>          (1)  <u>Cloud Containers</u>.  Understand how software is tested, build, packaged and deployed to cloud servers.</pre>
+<pre>          (2)  <u>Cloud Processing</u>.  Understand the capabilities and limitations of XML technologies in cloud compute environments, and the recommended best practices.</pre>
+<pre>      i.  <u>Data Standards</u>.  Be able to articulate the role of XML in standards based architectures.</pre>
+<pre>          (1)  <u>Understand the Design of MTF XML</u>.  All of the steps in these objectives can be completed using the example resources.</pre>
+<pre>          (2)  <u>Understand the Creation of IEPD Schema and Resources</u>.  Scripts for doing this are provided in the examples.  If Understanding is achieved in the preceding steps, then it will be possible to re-purpose these examples for use with authoritative MIL STD data.</pre>
+</body>
+</html>
